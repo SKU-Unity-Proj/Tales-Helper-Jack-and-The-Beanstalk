@@ -30,13 +30,14 @@ public class CameraDrivenManager : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         // 선택된 태그를 가진 콜라이더에 들어간 오브젝트 확인
-        if (other.tag == selectedTag && other.gameObject.name == "CS Character Controller")
+        if (other.gameObject.name == "CS Character Controller")
         {
             Debug.Log("Player entered: " + selectedTag);
 
             if (stateDrivenCamera != null)
                 stateDrivenCamera.enabled = false;
 
+            Debug.Log("ggod");
             // 예시: 첫 번째 카메라로 전환
             SwitchToCamera(0);
         }
