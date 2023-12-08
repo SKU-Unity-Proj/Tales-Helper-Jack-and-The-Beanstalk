@@ -15,8 +15,8 @@ public class CameraDrivenManager : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        // 'entrance' 태그를 가진 콜라이더에 들어간 오브젝트가 플레이어인지 확인
-        if (other.gameObject.name == "CS Character Controller")
+        // 'entrance' 태그를 가진 콜라이더\에 들어간 오브젝트가 플레이어인지 확인
+        if (other.CompareTag("entrance") || other.gameObject.name == "CS Character Controller")
         {
             Debug.Log("Player entered entrance");
 
@@ -32,7 +32,7 @@ public class CameraDrivenManager : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         // 'entrance' 태그를 가진 콜라이더를 떠난 오브젝트가 플레이어인지 확인
-        if (other.gameObject.name == "CS Character Controller")
+        if (other.CompareTag("entrance") || other.gameObject.name == "CS Character Controller")
         {
             // CinemachineStateDrivenCamera를 다시 활성화합니다.
             if (stateDrivenCamera != null)
