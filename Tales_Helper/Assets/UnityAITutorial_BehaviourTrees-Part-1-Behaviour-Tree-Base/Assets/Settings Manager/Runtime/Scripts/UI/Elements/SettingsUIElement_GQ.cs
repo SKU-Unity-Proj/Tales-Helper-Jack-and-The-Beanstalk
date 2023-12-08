@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class SettingsUIElement_GraphicsQualityAndResolution : BaseSettingsUIElement
+public class SettingsUIElement_GQ : BaseSettingsUIElement
 {
     #pragma warning disable 0649
     [SerializeField] TMP_Dropdown ResolutionSelector;
