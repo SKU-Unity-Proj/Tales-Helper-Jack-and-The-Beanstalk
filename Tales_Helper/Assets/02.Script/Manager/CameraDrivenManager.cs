@@ -5,36 +5,48 @@ using DiasGames.Controller;
 public class CameraDrivenManager : MonoBehaviour
 {
     public CinemachineVirtualCamera[] virtualCameras;
-    public CinemachineStateDrivenCamera stateDrivenCamera; // State Driven Camera 참조
+    public CinemachineStateDrivenCamera stateDrivenCamera;
+
+    public string[] availableTags; // 사용 가능한 태그들의 배열
+    public int selectedTagIndex = 0; // 인스펙터에서 선택된 태그의 인덱스. 기본값은 0
+
+    private string selectedTag; // 실제 사용될 선택된 태그
 
     private void Start()
     {
-        // CinemachineStateDrivenCamera 컴포넌트를 찾아서 참조합니다.
         stateDrivenCamera = FindObjectOfType<CinemachineStateDrivenCamera>();
+
+        // 인덱스가 유효하면 선택된 태그를 설정
+        if (selectedTagIndex >= 0 && selectedTagIndex < availableTags.Length)
+        {
+            selectedTag = availableTags[selectedTagIndex];
+        }
+        else
+        {
+            Debug.LogError("Selected tag index is out of range. Please check the availableTags array.");
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        // 'entrance' 태그를 가진 콜라이더\에 들어간 오브젝트가 플레이어인지 확인
-        if (other.CompareTag("entrance") || other.gameObject.name == "CS Character Controller")
+        // 선택된 태그를 가진 콜라이더에 들어간 오브젝트 확인
+        if (other.tag == selectedTag && other.gameObject.name == "CS Character Controller")
         {
-            Debug.Log("Player entered entrance");
+            Debug.Log("Player entered: " + selectedTag);
 
-            // CinemachineStateDrivenCamera를 비활성화합니다.
             if (stateDrivenCamera != null)
                 stateDrivenCamera.enabled = false;
 
-            // 버츄얼 카메라 전환 로직
-            SwitchToCamera(0); // 예를 들어 첫 번째 카메라로 전환
+            // 예시: 첫 번째 카메라로 전환
+            SwitchToCamera(0);
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        // 'entrance' 태그를 가진 콜라이더를 떠난 오브젝트가 플레이어인지 확인
-        if (other.CompareTag("entrance") || other.gameObject.name == "CS Character Controller")
+        // 설정된 태그를 가진 콜라이더를 떠난 오브젝트가 플레이어인지 확인
+        if (other.tag == selectedTag  && other.gameObject.name == "CS Character Controller")
         {
-            // CinemachineStateDrivenCamera를 다시 활성화합니다.
             if (stateDrivenCamera != null)
                 stateDrivenCamera.enabled = true;
         }
