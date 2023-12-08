@@ -14,7 +14,7 @@ public class VCameraManager : MonoBehaviour
 
     void OnTriggerEnter(Collider other) //콜라이더 들어갈때
     {
-        if (other.name == "CS Character Controller")
+        if (other.name == "CS Character Controller" && other.gameObject.name == "a")
         {
             Debug.Log("a");
             //거실 카메라.MoveToTopOfPrioritySubqueue();

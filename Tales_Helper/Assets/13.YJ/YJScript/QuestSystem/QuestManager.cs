@@ -15,10 +15,40 @@ public class QuestManager : MonoBehaviour
     public CinemachineVirtualCamera bridgeCam;
     public CinemachineVirtualCamera mainCam;
 
+    private CinemachineBasicMultiChannelPerlin virtualCameraNoise;
+
+    private float ShakeDuration = 0.5f;          //카메라 흔들림 효과가 지속되는 시간
+    private float ShakeAmplitude = 1.2f;         //카메라 파라미터
+    private float ShakeFrequency = 2.0f;         //카메라 파라미터
+
+    private float ShakeElapsedTime = 0f;
+
     void Awake()
     {
         questList = new Dictionary<int, QuestData>();
         GenerateData();
+
+        if (mainCam != null)
+            virtualCameraNoise = mainCam.GetCinemachineComponent<Cinemachine.CinemachineBasicMultiChannelPerlin>();
+    }
+
+    void Update()
+    {
+        if (mainCam != null && virtualCameraNoise != null)
+        {
+            if (ShakeElapsedTime > 0)
+            {
+                virtualCameraNoise.m_AmplitudeGain = ShakeAmplitude;
+                virtualCameraNoise.m_FrequencyGain = ShakeFrequency;
+
+                ShakeElapsedTime -= Time.deltaTime;
+            }
+            else
+            {
+                virtualCameraNoise.m_AmplitudeGain = 0f;
+                ShakeElapsedTime = 0f;
+            }
+        }
     }
 
     //퀘스트에 따른 오브젝트 생성
@@ -26,7 +56,7 @@ public class QuestManager : MonoBehaviour
     {
         switch (questId)
         {
-            //questObject[] = 0(엄마 느낌표) 1(상인) 2(무너진 돌) 3(CTrigger) 4(ZTrigger) 5(FTrigger) 6(상인 느낌표)
+            //questObject[] = 0(엄마 느낌표) 1(상인) 2(무너진 돌) 3(CTrigger) 4(ZTrigger) 5(FTrigger) 6(상인 느낌표) 7(울타리)
             case 10:
                 if(questActionIndex == 1) //엄마에게 심부름 받은 이후
                 {
@@ -52,10 +82,12 @@ public class QuestManager : MonoBehaviour
             case 30:
                 if (questActionIndex == 1) //콩 받은 후 엄마와 대화 이후
                 {
+                    StartCoroutine("ShowBridge");
+                    StartCoroutine("ShakeCamera");
                     questObject[1].SetActive(false); //상인 꺼짐
                     questObject[0].SetActive(false); //1000 느낌표 꺼짐
-                    StartCoroutine("ShowBridge");
                     questObject[2].SetActive(true); //Crouch rock 켜짐
+                    questObject[7].SetActive(false); //울타리 꺼짐
                     questObject[3].SetActive(true); //CTrigger 켜짐
                     questObject[4].SetActive(true); //ZTrigger 켜짐
                     questObject[0].SetActive(false); //1000 느낌표 꺼짐
@@ -117,5 +149,11 @@ public class QuestManager : MonoBehaviour
         bridgeCam.Priority = 2;
 
         yield break;
+    }
+
+    IEnumerator ShakeCamera()
+    {
+        yield return new WaitForSeconds(6f);
+        ShakeElapsedTime = ShakeDuration;
     }
 }

@@ -20,7 +20,7 @@ public class TalkManager : MonoBehaviour
     {
         //NPC1 = 1000, NPC2 = 2000
         talkData.Add(1000, new string[] { "잭 엄마:1" });
-        talkData.Add(2000, new string[] { "괜찮은 물건이 있으면 내가 바꿔주마:3" });
+        talkData.Add(2000, new string[] { "지금은 길이 물에 잠겨 마을에 갈 수 없단다.:3" });
 
         //Quest Talk ((대화+퀘스트) 순서 + 누군지)
         talkData.Add(10 + 1000, new string[] 
@@ -39,6 +39,9 @@ public class TalkManager : MonoBehaviour
         talkData.Add(30 + 1000, new string[]
             {"잭! 비싼 소를 이깟 콩이랑 바꿔오면 어떡하니!:3",
             "저기 다리 건너에 버리고 와:3"});
+
+        talkData.Add(30 + 2000, new string[]
+            {"괜찮은 물건이 있으면 내가 바꿔주마.:3"});
 
 
 
