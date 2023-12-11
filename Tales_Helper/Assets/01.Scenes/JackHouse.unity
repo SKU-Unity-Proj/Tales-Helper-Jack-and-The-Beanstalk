@@ -408,8 +408,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 7.1703467, y: 5.913302, z: 1.0000001}
-  m_Center: {x: 1.3471318, y: 2.4565887, z: -0.00000017981834}
+  m_Size: {x: 7.1703467, y: 7.616912, z: 1.0000001}
+  m_Center: {x: 1.347132, y: 3.308384, z: 0.00000023345096}
 --- !u!1 &33069492
 GameObject:
   m_ObjectHideFlags: 0
@@ -1085,8 +1085,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 7.1703467, y: 5.913302, z: 1.0000001}
-  m_Center: {x: 1.3471318, y: 2.4565887, z: -0.00000017981834}
+  m_Size: {x: 7.170347, y: 8.116847, z: 1.0000001}
+  m_Center: {x: 1.347126, y: 3.5583415, z: -0.0000001060791}
 --- !u!1001 &87649692
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1181,6 +1181,59 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 87649692}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &115054954
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 115054955}
+  - component: {fileID: 115054956}
+  m_Layer: 0
+  m_Name: House Collider (13)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &115054955
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 115054954}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.0000000013969839, y: 0.3305155, z: -0.000000008381903, w: 0.9438006}
+  m_LocalPosition: {x: 1.313, y: 0.858, z: 0.6}
+  m_LocalScale: {x: 0.55156004, y: 0.037825692, z: 0.2035281}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 154625414}
+  m_LocalEulerAnglesHint: {x: 0, y: 38.6, z: 0}
+--- !u!65 &115054956
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 115054954}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &127689106
 GameObject:
   m_ObjectHideFlags: 0
@@ -1215,6 +1268,52 @@ Transform:
   - {fileID: 469875954}
   - {fileID: 2104486991}
   m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &154625413
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 154625414}
+  m_Layer: 0
+  m_Name: House Colliders
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &154625414
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 154625413}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 954551954}
+  - {fileID: 391564811}
+  - {fileID: 1967445438}
+  - {fileID: 2061072200}
+  - {fileID: 1420781168}
+  - {fileID: 534750699}
+  - {fileID: 1567248159}
+  - {fileID: 331854847}
+  - {fileID: 1973932934}
+  - {fileID: 1233223392}
+  - {fileID: 332117254}
+  - {fileID: 2088980648}
+  - {fileID: 2095582789}
+  - {fileID: 115054955}
+  - {fileID: 168605056}
+  m_Father: {fileID: 906700409}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &160284807
 GameObject:
@@ -1449,6 +1548,59 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a94948b22bec48047bf53382340a8b96, type: 3}
+--- !u!1 &168605055
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 168605056}
+  - component: {fileID: 168605057}
+  m_Layer: 0
+  m_Name: House Collider (14)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &168605056
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 168605055}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.0000000023283062, y: 0.44068474, z: -0.000000009313225, w: 0.8976619}
+  m_LocalPosition: {x: 1.254, y: 1.042, z: 0.5519}
+  m_LocalScale: {x: 0.55156004, y: 0.037825692, z: 0.2035281}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 154625414}
+  m_LocalEulerAnglesHint: {x: 0, y: 52.295, z: 0}
+--- !u!65 &168605057
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 168605055}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &171721939
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3260,8 +3412,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 5.5624747, y: 5.913302, z: 1.0000001}
-  m_Center: {x: 2.151068, y: 2.4565887, z: -0.0000002458568}
+  m_Size: {x: 5.5624743, y: 8.87511, z: 1.0000001}
+  m_Center: {x: 2.151068, y: 3.9375012, z: -0.0000014917825}
 --- !u!1001 &325041491
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3345,6 +3497,112 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: faa94aa915bd41645a00cea0a392d94a, type: 3}
+--- !u!1 &331854846
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 331854847}
+  - component: {fileID: 331854848}
+  m_Layer: 0
+  m_Name: House Collider (7)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &331854847
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 331854846}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.10328158, y: 0.6995234, z: -0.10328157, w: 0.6995233}
+  m_LocalPosition: {x: 1.33, y: 1.009, z: -0.501}
+  m_LocalScale: {x: 1.3525312, y: 0.062054, z: 0.37436202}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 154625414}
+  m_LocalEulerAnglesHint: {x: 16.798, y: 90, z: 0}
+--- !u!65 &331854848
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 331854846}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.8825974, y: 1, z: 1.2727599}
+  m_Center: {x: 0.058700718, y: 0.00000015847446, z: -0.13638023}
+--- !u!1 &332117253
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 332117254}
+  - component: {fileID: 332117255}
+  m_Layer: 0
+  m_Name: House Collider (10)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &332117254
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 332117253}
+  serializedVersion: 2
+  m_LocalRotation: {x: -9.313226e-10, y: 0.0922012, z: -0.000000004656613, w: 0.9957404}
+  m_LocalPosition: {x: 1.5143, y: 0.341, z: 0.8447}
+  m_LocalScale: {x: 0.55156004, y: 0.037825692, z: 0.2035281}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 154625414}
+  m_LocalEulerAnglesHint: {x: 0, y: 10.581, z: 0}
+--- !u!65 &332117255
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 332117253}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &357445395
 GameObject:
   m_ObjectHideFlags: 0
@@ -3699,6 +3957,59 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 95cbe301fb0a2da4893c9a965e4de3ca, type: 3}
+--- !u!1 &391564810
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 391564811}
+  - component: {fileID: 391564812}
+  m_Layer: 0
+  m_Name: House Collider (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &391564811
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 391564810}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.16171886, y: 0.000000029802322, z: -0.000000011175871, w: 0.9868369}
+  m_LocalPosition: {x: -0.229, y: 0.916, z: 1.093}
+  m_LocalScale: {x: 1.3525312, y: 0.062054, z: 0.82016}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 154625414}
+  m_LocalEulerAnglesHint: {x: 18.613, y: 0, z: 0}
+--- !u!65 &391564812
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 391564810}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &398351401
 GameObject:
   m_ObjectHideFlags: 0
@@ -5354,6 +5665,59 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 518162835}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &534750698
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 534750699}
+  - component: {fileID: 534750700}
+  m_Layer: 0
+  m_Name: House Collider (5)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &534750699
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 534750698}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -1.172, y: 1.339, z: 0.381}
+  m_LocalScale: {x: 0.6920305, y: 0.43424, z: 0.028606}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 154625414}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!65 &534750700
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 534750698}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &551971000
 GameObject:
   m_ObjectHideFlags: 0
@@ -5458,8 +5822,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 5.5624747, y: 5.913302, z: 1.0000001}
-  m_Center: {x: 2.151068, y: 2.4565887, z: -0.0000002458568}
+  m_Size: {x: 5.5624747, y: 9.874575, z: 1.0000001}
+  m_Center: {x: 2.151068, y: 4.437219, z: -0.0000005532481}
 --- !u!1001 &558422558
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10301,6 +10665,59 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 944157122}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &954551953
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 954551954}
+  - component: {fileID: 954551955}
+  m_Layer: 0
+  m_Name: House Collider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &954551954
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 954551953}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.066, y: 0.118, z: -0.333}
+  m_LocalScale: {x: 2.2360897, y: 2.1055458, z: 2.1055458}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 154625414}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &954551955
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 954551953}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &956561483
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10726,8 +11143,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 7.1703467, y: 5.913302, z: 1.0000001}
-  m_Center: {x: 1.3471318, y: 2.4565887, z: -0.00000017981834}
+  m_Size: {x: 7.1703467, y: 8.991415, z: 1.0000001}
+  m_Center: {x: 1.3471317, y: 3.9956415, z: -0.00000017773618}
 --- !u!1 &1016178657
 GameObject:
   m_ObjectHideFlags: 0
@@ -12274,8 +12691,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 6.4621944, y: 5.913302, z: 1.0000001}
-  m_Center: {x: 0.993041, y: 2.4565887, z: -0.0000001523924}
+  m_Size: {x: 6.4622355, y: 7.126367, z: 1.0000001}
+  m_Center: {x: 0.99304557, y: 3.0630972, z: -0.00000014778858}
 --- !u!1 &1207637845
 GameObject:
   m_ObjectHideFlags: 0
@@ -12585,6 +13002,59 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1223399089}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1233223391
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1233223392}
+  - component: {fileID: 1233223393}
+  m_Layer: 0
+  m_Name: House Collider (9)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1233223392
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1233223391}
+  serializedVersion: 2
+  m_LocalRotation: {x: 9.3132235e-10, y: 0.02832552, z: -0.0000000018626447, w: 0.99959874}
+  m_LocalPosition: {x: 1.52, y: 0.161, z: 0.977}
+  m_LocalScale: {x: 0.55156004, y: 0.037825692, z: 0.2035281}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 154625414}
+  m_LocalEulerAnglesHint: {x: 0, y: 3.246, z: 0}
+--- !u!65 &1233223393
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1233223391}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &1234832616 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 882530357541938588, guid: 95cbe301fb0a2da4893c9a965e4de3ca,
@@ -12838,13 +13308,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1275524015}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.018740164, y: 0.35402986, z: -0.049426436, w: 0.9337391}
-  m_LocalPosition: {x: 5.6, y: 6.4, z: -105.33}
+  m_LocalRotation: {x: 0.0076965303, y: 0.14539917, z: -0.052296568, w: 0.98796}
+  m_LocalPosition: {x: 4.26, y: 6.54, z: -108.16}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1617299411}
-  m_LocalEulerAnglesHint: {x: 4.014, y: 41.369, z: -4.544}
+  m_LocalEulerAnglesHint: {x: 1.743, y: 16.656, z: -5.805}
 --- !u!65 &1275524017
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12864,8 +13334,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 7.1703467, y: 5.913302, z: 1.0000001}
-  m_Center: {x: 1.3471318, y: 2.4565887, z: -0.00000017981834}
+  m_Size: {x: 7.1703467, y: 9.001323, z: 1.0000001}
+  m_Center: {x: 1.3471318, y: 4.000619, z: 0.000006159067}
 --- !u!1001 &1276027487
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13354,6 +13824,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1521570701}
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 2015b5fcf82c15a439afa8e775b84660,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 154625414}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2015b5fcf82c15a439afa8e775b84660, type: 3}
 --- !u!1 &1323795292
@@ -14077,6 +14551,59 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1420781167
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1420781168}
+  - component: {fileID: 1420781169}
+  m_Layer: 0
+  m_Name: House Collider (4)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1420781168
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1420781167}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.082, y: 1.233, z: 0.714}
+  m_LocalScale: {x: 1.4494, y: 0.43424, z: 0.028606}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 154625414}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1420781169
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1420781167}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1452902586
 GameObject:
   m_ObjectHideFlags: 0
@@ -14815,6 +15342,59 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1566311700}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1567248158
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1567248159}
+  - component: {fileID: 1567248160}
+  m_Layer: 0
+  m_Name: House Collider (6)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1567248159
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1567248158}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.466, y: 1.268, z: -1.322}
+  m_LocalScale: {x: 0.9610101, y: 0.43424, z: 0.028606}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 154625414}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1567248160
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1567248158}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1567606264
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15132,6 +15712,7 @@ Transform:
   - {fileID: 1796685353}
   - {fileID: 15485518}
   - {fileID: 1275524016}
+  - {fileID: 1757219541}
   - {fileID: 1620818736}
   - {fileID: 1865450525}
   - {fileID: 1628812917}
@@ -15246,8 +15827,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 7.1703467, y: 5.913302, z: 1.0000001}
-  m_Center: {x: 1.3471318, y: 2.4565887, z: -0.00000017981834}
+  m_Size: {x: 7.170347, y: 8.936155, z: 1.0000001}
+  m_Center: {x: 1.3471317, y: 3.9680114, z: 0.0000008513704}
 --- !u!1 &1622141295
 GameObject:
   m_ObjectHideFlags: 0
@@ -15446,8 +16027,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 7.1703467, y: 5.913302, z: 1.0000001}
-  m_Center: {x: 1.3471318, y: 2.4565887, z: -0.00000017981834}
+  m_Size: {x: 7.1703467, y: 7.9800844, z: 1.0000001}
+  m_Center: {x: 1.3471317, y: 3.4899626, z: -0.0000016485202}
 --- !u!1001 &1629033450
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16402,8 +16983,61 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 7.1703467, y: 5.913302, z: 1.0000001}
-  m_Center: {x: 1.3471318, y: 2.4565887, z: -0.00000017981834}
+  m_Size: {x: 7.1703463, y: 8.104885, z: 1.0000001}
+  m_Center: {x: 1.3471333, y: 3.5523582, z: -0.00000022164784}
+--- !u!1 &1757219540
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1757219541}
+  - component: {fileID: 1757219542}
+  m_Layer: 0
+  m_Name: MapOut_Block (66)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1757219541
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1757219540}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.030820196, y: 0.58223957, z: -0.042945117, w: 0.8112971}
+  m_LocalPosition: {x: 2.34, y: 6.86, z: -103.43}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1617299411}
+  m_LocalEulerAnglesHint: {x: 5.74, y: 71.234, z: -1.946}
+--- !u!65 &1757219542
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1757219540}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 13.597303, y: 9.171879, z: 1.0000001}
+  m_Center: {x: -1.8663484, y: 4.085856, z: 0.00000079381107}
 --- !u!1 &1760184115
 GameObject:
   m_ObjectHideFlags: 0
@@ -17211,8 +17845,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 7.1703467, y: 5.913302, z: 1.0000001}
-  m_Center: {x: 1.3471318, y: 2.4565887, z: -0.00000017981834}
+  m_Size: {x: 7.1703467, y: 7.9887705, z: 1.0000001}
+  m_Center: {x: 1.3471318, y: 3.4943187, z: -0.0000002165883}
 --- !u!1 &1868847877
 GameObject:
   m_ObjectHideFlags: 0
@@ -18281,6 +18915,112 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1964728484}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1967445437
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1967445438}
+  - component: {fileID: 1967445439}
+  m_Layer: 0
+  m_Name: House Collider (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1967445438
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1967445437}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.232, y: 0.288, z: 0.943}
+  m_LocalScale: {x: 1.298184, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 154625414}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1967445439
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1967445437}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.0130092, y: 1, z: 0.99999964}
+  m_Center: {x: 0.0065045035, y: -4.54023e-12, z: -2.1136815e-11}
+--- !u!1 &1973932933
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1973932934}
+  - component: {fileID: 1973932935}
+  m_Layer: 0
+  m_Name: House Collider (8)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1973932934
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1973932933}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 1.244, y: 0.626, z: -0.648}
+  m_LocalScale: {x: 0.94691294, y: 0.7294135, z: 0.30603272}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 154625414}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!65 &1973932935
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1973932933}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.1587981, y: 1, z: 0.9999997}
+  m_Center: {x: -0.06638885, y: 6.993247e-10, z: -0.0000000122909904}
 --- !u!1 &1988416072
 GameObject:
   m_ObjectHideFlags: 0
@@ -18982,8 +19722,61 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 5.027862, y: 5.913302, z: 1.0000001}
-  m_Center: {x: 2.4183776, y: 2.4565887, z: -0.0000047937297}
+  m_Size: {x: 5.0278625, y: 8.458284, z: 1.0000001}
+  m_Center: {x: 2.418382, y: 3.7290666, z: -0.00000798513}
+--- !u!1 &2061072199
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2061072200}
+  - component: {fileID: 2061072201}
+  m_Layer: 0
+  m_Name: House Collider (3)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2061072200
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2061072199}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.632, y: 1.133, z: -0.644}
+  m_LocalScale: {x: 1.405334, y: 2.8632276, z: 1.405334}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 154625414}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &2061072201
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2061072199}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2078246906
 GameObject:
   m_ObjectHideFlags: 0
@@ -19037,6 +19830,60 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 5.781539, y: 7.7503347, z: 1.0000004}
   m_Center: {x: 0.2527213, y: 3.3752146, z: -0.0000006636409}
+--- !u!1 &2088980647
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2088980648}
+  - component: {fileID: 2088980649}
+  m_Layer: 0
+  m_Name: House Collider (11)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2088980648
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2088980647}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.0000000018626451, y: 0.17848906, z: -0.000000006519258,
+    w: 0.9839419}
+  m_LocalPosition: {x: 1.4548, y: 0.514, z: 0.7281}
+  m_LocalScale: {x: 0.55156004, y: 0.037825692, z: 0.2035281}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 154625414}
+  m_LocalEulerAnglesHint: {x: 0, y: 20.564, z: 0}
+--- !u!65 &2088980649
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2088980647}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2089809038
 GameObject:
   m_ObjectHideFlags: 0
@@ -19090,6 +19937,59 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 5.781539, y: 7.7503347, z: 1.0000004}
   m_Center: {x: 0.2527213, y: 3.3752146, z: -0.0000006636409}
+--- !u!1 &2095582788
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2095582789}
+  - component: {fileID: 2095582790}
+  m_Layer: 0
+  m_Name: House Collider (12)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2095582789
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2095582788}
+  serializedVersion: 2
+  m_LocalRotation: {x: 4.656613e-10, y: 0.26099843, z: -0.000000008381903, w: 0.96533924}
+  m_LocalPosition: {x: 1.3909, y: 0.6764, z: 0.6512}
+  m_LocalScale: {x: 0.55156004, y: 0.037825692, z: 0.2035281}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 154625414}
+  m_LocalEulerAnglesHint: {x: 0, y: 30.259, z: 0}
+--- !u!65 &2095582790
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2095582788}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2104486990
 GameObject:
   m_ObjectHideFlags: 0

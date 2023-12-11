@@ -26,6 +26,7 @@ public class TalkManager : MonoBehaviour
         talkData.Add(10 + 1000, new string[] 
             {"잭, 어디에 있다가 이제 오는거니.:0",
             "당장 내일 먹을 음식이 없으니 마을에 가서 이 소를 팔고 오렴.:1",
+            "마을은 나가서 오른쪽 길로 쭉 따라가면 돼.:1",
             "늦지 않게 와야 해.:0"});
         
         talkData.Add(11 + 2000, new string[]
