@@ -1,46 +1,99 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
+[RequireComponent(typeof(BoxCollider))] // BoxCollider 컴포넌트가 필요함을 명시
+[RequireComponent(typeof(Rigidbody))] // Rigidbody 컴포넌트가 필요함을 명시
 public class VCameraManager : MonoBehaviour
 {
-    //pulic 메인 카메라 받아오기
-    //private 바꿔줄 카메라들 담아줄 곳[]
-
-    void Start()
+    // 카메라 존을 정의하는 클래스
+    [System.Serializable]
+    public class CameraZone
     {
-        //FindOfTag 로 카메라 태그 달린 애들 [] <- 여기에 전부 담기
+        public CinemachineVirtualCamera camera; // 카메라 존에 연결된 CinemachineVirtualCamera
+        public Vector3 position; // 카메라 존의 위치
+        public Vector3 boxsize; // 카메라 존의 크기
+        public GameObject zoneObject; // 카메라 존을 나타내는 GameObject
     }
 
-    void OnTriggerEnter(Collider other) //콜라이더 들어갈때
-    {
-        if (other.name == "CS Character Controller" && other.gameObject.name == "a")
-        {
-            Debug.Log("a");
-            //거실 카메라.MoveToTopOfPrioritySubqueue();
-            //거실 카메라.Priority = 11; //카메라 순위 올려주기
-        }
+    [SerializeField] private CameraZone[] cameraZones; // 여러 카메라 존을 저장하는 배열
 
-        if (this.name == "b" && other.name == "CS Character Controller")
+    public CinemachineStateDrivenCamera stateDrivenCamera; // 상태 기반 Cinemachine 카메라
+    public CinemachineVirtualCamera bridgeCam;
+
+    private void Awake()
+    {
+        // 상태 기반 Cinemachine 카메라 찾기
+        stateDrivenCamera = FindObjectOfType<CinemachineStateDrivenCamera>();
+    }
+
+    private void Start()
+    {
+        // 카메라 존 초기화
+        foreach (var zone in cameraZones)
         {
-            Debug.Log("b");
-            //주방 카메라.MoveToTopOfPrioritySubqueue();
-            //주방 카메라.Priority = 11; 
+            // 새로운 GameObject 생성 및 설정
+            GameObject zoneObj = new GameObject(zone.camera.name + "_Zone");
+            zoneObj.transform.position = zone.position;
+            zoneObj.transform.parent = this.transform;
+
+            // BoxCollider 추가 및 설정
+            BoxCollider collider = zoneObj.AddComponent<BoxCollider>();
+            collider.size = zone.boxsize;
+            collider.isTrigger = true; // Trigger로 설정
+
+            zone.zoneObject = zoneObj; // zoneObject에 생성한 GameObject 할당
+
+            CameraSwitcher.Register(zone.camera); // 카메라 등록
         }
     }
 
-    void OnTriggerExit(Collider other) //콜라이더 나갈때
+    private void OnTriggerEnter(Collider other)
     {
-        if (this.name == "거실 콜라이더" && other.name == "플레이어")
+        // 플레이어가 카메라 존에 들어갔을 때 처리
+        if (other.CompareTag("Player"))
         {
-            //메인 카메라.MoveToTopOfPrioritySubqueue();
-            //거실 카메라.Priority = 1; //카메라 순위 낮추기
-        }
+            foreach (var zone in cameraZones)
+            {
+                // 플레이어가 해당 존 내부에 있는지 확인
+                if (zone.zoneObject.GetComponent<Collider>().bounds.Contains(other.transform.position))
+                {
+                    if (stateDrivenCamera != null)
+                        stateDrivenCamera.enabled = false; // 상태 기반 카메라 비활성화
 
-        if (this.name == "주방 콜라이더" && other.name == "플레이어")
+                    bridgeCam.MoveToTopOfPrioritySubqueue();
+                    bridgeCam.Priority = 11;
+                    break;
+                }
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        // 플레이어가 카메라 존을 벗어났을 때 처리
+        if (other.gameObject.CompareTag("Player"))
         {
-            //메인 카메라.MoveToTopOfPrioritySubqueue();
-            //주방 카메라.Priority = 1;
+            foreach (var zone in cameraZones)
+            {
+                //벗어났는지 확인
+                if (other.gameObject.CompareTag("Player") == zone.zoneObject)
+                {
+                    if (stateDrivenCamera != null)
+                        stateDrivenCamera.enabled = true; // 상태 기반 카메라 활성화
+
+                    break;
+                }
+            }
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        // 에디터에서 카메라 존의 경계를 시각화
+        foreach (var zone in cameraZones)
+        {
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireCube(zone.position, zone.boxsize);
         }
     }
 }

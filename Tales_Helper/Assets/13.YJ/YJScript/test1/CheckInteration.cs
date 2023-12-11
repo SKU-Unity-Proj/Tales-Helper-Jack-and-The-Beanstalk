@@ -20,11 +20,8 @@ public class CheckInteration : MonoBehaviour
     private LayerMask layerMask;
 
     [SerializeField]
-    private Text portalText;
-    [SerializeField]
     private Text beanText;
 
-    public GameObject portal;
     public GameObject beanStalk;
     public CinemachineVirtualCamera mainCam;
     public CinemachineVirtualCamera beanCam;
@@ -44,7 +41,7 @@ public class CheckInteration : MonoBehaviour
 
     private void TryAction()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.F))
         {
             CheckUI();
             CanInteration();
@@ -64,16 +61,13 @@ public class CheckInteration : MonoBehaviour
     private void UIAppear()
     {
         interationActivated = true;
-        portalText.gameObject.SetActive(true);
-        portalText.text = " Æ÷Å» ¿­±â " + "<color=yellow>" + "(E)" + "</color>";
         beanText.gameObject.SetActive(true);
-        beanText.text = " Äá ½É±â " + "<color=yellow>" + "(E)" + "</color>";
+        beanText.text = " Äá ½É±â " + "<color=yellow>" + "(F)" + "</color>";
     }
 
     private void UIDisappear()
     {
         interationActivated = false;
-        portalText.gameObject.SetActive(false);
         beanText.gameObject.SetActive(false);
     }
 
@@ -83,9 +77,6 @@ public class CheckInteration : MonoBehaviour
         {
             if (hitInfo.transform != null)
                 UIDisappear();
-
-            if (hitInfo.transform.name == "JackPoster")
-                portal.SetActive(true);
 
             if (hitInfo.transform.name == "BeanSpot")
                 StartCoroutine("GrowBean");
