@@ -31,6 +31,7 @@ public class TalkManager : MonoBehaviour
         
         talkData.Add(11 + 2000, new string[]
             {"이보게. 소년:1",
+            "지금은 길이 물에 잠겨 마을에 갈 수 없단다.:2",
             "소를 팔러 가는 모양인데 나한테 팔지 않겠나?:2",
             "나에게 소를 주면 이 마법의 콩을 주마:0"});
 
@@ -51,10 +52,10 @@ public class TalkManager : MonoBehaviour
         portraitData.Add(1000 + 1, portraitArr[5]);
         portraitData.Add(1000 + 2, portraitArr[6]);
         portraitData.Add(1000 + 3, portraitArr[7]);
-        portraitData.Add(2000 + 0, portraitArr[0]);
-        portraitData.Add(2000 + 1, portraitArr[1]);
-        portraitData.Add(2000 + 2, portraitArr[2]);
-        portraitData.Add(2000 + 3, portraitArr[3]);
+        portraitData.Add(2000 + 0, portraitArr[4]);
+        portraitData.Add(2000 + 1, portraitArr[5]);
+        portraitData.Add(2000 + 2, portraitArr[6]);
+        portraitData.Add(2000 + 3, portraitArr[7]);
     }
 
     public string GetTalk(int id,int talkIndex)

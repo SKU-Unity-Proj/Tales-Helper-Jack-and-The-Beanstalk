@@ -22,7 +22,7 @@ public class MainMenu : MonoBehaviour
     void PlayPauseBtn()
     {
         SoundEffect.Play();
-        SceneManager.LoadScene("JackHouse");
+        SceneManager.LoadScene("IntroAnimation");
     }
     // 처음부터 시작 버튼
     public void OnClickRestartBtn()
