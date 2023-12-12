@@ -7,15 +7,11 @@ using TMPro;
 public class KeyboardGuide : MonoBehaviour
 {
     public TextMeshProUGUI textMesh;
-    public TMP_Text tmp_Text;
     public float fadeTime = 2f;
     public GameObject[] TriggerBox;
-    //public static float indexText = 0;
-
 
     void OnTriggerEnter(Collider col)
     {
-        //indexText = indexText + 1;
         if (this.gameObject.name == "F_Trigger")
         {
             textMesh.text = "<color=red>F</color> 대화 및 상호작용";
@@ -50,6 +46,7 @@ public class KeyboardGuide : MonoBehaviour
         
     }
 
+
     void XTrigger()
     {
         textMesh.color = new Color(textMesh.color.r, textMesh.color.g, textMesh.color.b, 0);
@@ -72,8 +69,7 @@ public class KeyboardGuide : MonoBehaviour
     }
 
 
-
-
+    //페이드 인 아웃
     IEnumerator FadeFullAlpha() // 알파값 0에서 1로 전환
     {
         textMesh.color = new Color(textMesh.color.r, textMesh.color.g, textMesh.color.b, 0);

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Cinemachine;
+using TMPro;
 
 public class UIManagerT : MonoBehaviour
 {
@@ -19,6 +20,8 @@ public class UIManagerT : MonoBehaviour
 
     [SerializeField]
     private LayerMask layerMask;
+
+    public TextMeshProUGUI showQuest;
 
     private void Update()
     {
@@ -46,6 +49,7 @@ public class UIManagerT : MonoBehaviour
             isAction = false;
             talkIndex = 0;
             Debug.Log(questManager.CheckQuest(id));
+            showQuest.text = questManager.CheckQuest(id);
             return;
         }
 

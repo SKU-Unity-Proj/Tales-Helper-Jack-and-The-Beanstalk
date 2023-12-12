@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using UnityEngine.UI;
 
 public class QuestManager : MonoBehaviour
 {
@@ -17,11 +18,11 @@ public class QuestManager : MonoBehaviour
 
     private CinemachineBasicMultiChannelPerlin virtualCameraNoise;
 
-    private float ShakeDuration = 0.5f;          //카메라 흔들림 효과가 지속되는 시간
-    private float ShakeAmplitude = 1.2f;         //카메라 파라미터
-    private float ShakeFrequency = 2.0f;         //카메라 파라미터
-
+    private float ShakeDuration = 1f;          //카메라 흔들림 효과가 지속되는 시간
+    private float ShakeAmplitude = 3.0f;         //카메라 파라미터
+    private float ShakeFrequency = 3.0f;         //카메라 파라미터
     private float ShakeElapsedTime = 0f;
+
 
     void Awake()
     {
@@ -108,7 +109,7 @@ public class QuestManager : MonoBehaviour
         questList.Add(30, new QuestData("엄마랑 대화하기"
                                         , new int[] { 1000 }));
 
-        questList.Add(40, new QuestData("클리어"
+        questList.Add(40, new QuestData("콩 심기"
                                         , new int[] { 0 }));
     }
 
