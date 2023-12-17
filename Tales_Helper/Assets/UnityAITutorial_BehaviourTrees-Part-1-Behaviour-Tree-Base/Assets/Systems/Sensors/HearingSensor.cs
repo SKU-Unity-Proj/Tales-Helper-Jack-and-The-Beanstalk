@@ -2,15 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(HearingEnemyAI))]
+[RequireComponent(typeof(EnemyAI))]
 public class HearingSensor : MonoBehaviour
 {
-    HearingEnemyAI LinkedAI;
+    EnemyAI LinkedAI;
     
     // Start is called before the first frame update
     void Start()
     {
-        LinkedAI = GetComponent<HearingEnemyAI>();
+        LinkedAI = GetComponent<EnemyAI>();
         HearingManager.Instance.Register(this);
     }
 

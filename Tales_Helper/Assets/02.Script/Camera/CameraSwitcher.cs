@@ -17,6 +17,7 @@ public class CameraSwitcher : MonoBehaviour
         return camera == activeCamera;
     }
 
+    /*
     // 새 카메라로 전환하는 정적 메소드
     public static void SwitchCamera(CinemachineVirtualCamera newCamera)
     {
@@ -30,6 +31,11 @@ public class CameraSwitcher : MonoBehaviour
         activeCamera = newCamera;
         activeCamera.Priority = 11;
     }
+    */
+
+    // SwitchCamera 메소드를 CameraZone을 받도록 수정
+    // 새 카메라로 전환하는 정적 메소드
+  
 
     // 새로운 카메라를 등록하는 정적 메소드
     public static void Register(CinemachineVirtualCamera camera)

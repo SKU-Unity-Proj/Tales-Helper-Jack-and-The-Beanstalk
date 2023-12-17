@@ -62,12 +62,12 @@ public class EnemyAI : MonoBehaviour
         Awareness.ReportCanSee(seen);
     }
 
-    /*
+    
     public void ReportCanHear(GameObject source, Vector3 location, EHeardSoundCategory category, float intensity)
     {
         Awareness.ReportCanHear(source, location, category, intensity);
     }
-    */
+    
     public void ReportInProximity(DetectableTarget target)
     {
         Awareness.ReportInProximity(target);

@@ -136,14 +136,14 @@ public class AwarenessSystem : MonoBehaviour
         UpdateAwareness(seen.gameObject, seen, seen.transform.position, awareness, VisionMinimumAwareness);
     }
 
-    /*
+    
     public void ReportCanHear(GameObject source, Vector3 location, EHeardSoundCategory category, float intensity)
     {
         var awareness = intensity * HearingAwarenessBuildRate * Time.deltaTime;
 
         UpdateAwareness(source, null, location, awareness, HearingMinimumAwareness);
     }
-    */
+
     public void ReportInProximity(DetectableTarget target)
     {
         var awareness = ProximityAwarenessBuildRate * Time.deltaTime;
