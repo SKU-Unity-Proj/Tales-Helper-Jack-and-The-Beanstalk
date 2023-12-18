@@ -12,11 +12,13 @@ public class UIManagerT : MonoBehaviour
     public GameObject talkPanel;
     public Image portraitImg;
     public Text talkText;
-    public GameObject scanObject;
-    public bool isAction;
     public int talkIndex;
+    public GameObject Player;
+    public GameObject scanObject;
+
     private bool npcActivated;
-    public float radius = 3;
+    private bool isAction;
+    private float searchRadius = 3;
 
     [SerializeField]
     private LayerMask layerMask;
@@ -35,6 +37,7 @@ public class UIManagerT : MonoBehaviour
         Talk(objData.id, objData.isNpc);
 
         talkPanel.SetActive(isAction);
+        LookEachOther();
     }
 
     void Talk(int id, bool isNpc)
@@ -76,7 +79,7 @@ public class UIManagerT : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.F))
         {
-            Collider[] colliders = Physics.OverlapSphere(this.transform.position, radius, layerMask);
+            Collider[] colliders = Physics.OverlapSphere(this.transform.position, searchRadius, layerMask);
 
             foreach (Collider col in colliders)
             {
@@ -91,5 +94,11 @@ public class UIManagerT : MonoBehaviour
                 }
             }  
         }
+    }
+
+    private void LookEachOther()
+    {
+        Player.transform.LookAt(scanObject);
+        scanObject.transform.LookAt(Player);
     }
 }
