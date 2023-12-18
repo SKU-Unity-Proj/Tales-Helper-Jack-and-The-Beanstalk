@@ -13,17 +13,23 @@ public class UIManagerT : MonoBehaviour
     public Image portraitImg;
     public Text talkText;
     public int talkIndex;
-    public GameObject Player;
     public GameObject scanObject;
 
     private bool npcActivated;
     private bool isAction;
     private float searchRadius = 3;
+    private Vector3 scanPos;
+    //private CSPlayerController _CSPlayerController;
 
     [SerializeField]
     private LayerMask layerMask;
 
     public TextMeshProUGUI showQuest;
+
+    private void Awake()
+    {
+        //_CSPlayerController = this.gameObject.GetComponent<CSPlayerController>();
+    }
 
     private void Update()
     {
@@ -32,12 +38,12 @@ public class UIManagerT : MonoBehaviour
 
     public void Action()
     {
+        LookEachOther();
         //Get Current Object
         ObjData objData = scanObject.GetComponent<ObjData>();
         Talk(objData.id, objData.isNpc);
 
         talkPanel.SetActive(isAction);
-        LookEachOther();
     }
 
     void Talk(int id, bool isNpc)
@@ -45,7 +51,7 @@ public class UIManagerT : MonoBehaviour
         //Set Talk Data
         int questTalkIndex = questManager.GetQuestTalkIndex(id);
         string talkData = talkManager.GetTalk(id + questTalkIndex, talkIndex);
-
+        CantMove();
         //End Talk
         if (talkData == null)
         {
@@ -53,6 +59,7 @@ public class UIManagerT : MonoBehaviour
             talkIndex = 0;
             Debug.Log(questManager.CheckQuest(id));
             showQuest.text = questManager.CheckQuest(id);
+            CanMove();
             return;
         }
 
@@ -91,6 +98,7 @@ public class UIManagerT : MonoBehaviour
                 if (npcActivated)
                 {
                     Action();
+                    scanPos = col.gameObject.transform.position;
                 }
             }  
         }
@@ -98,7 +106,21 @@ public class UIManagerT : MonoBehaviour
 
     private void LookEachOther()
     {
-        Player.transform.LookAt(scanObject);
-        scanObject.transform.LookAt(Player);
+        scanObject.transform.LookAt(this.transform);
+        this.transform.LookAt(scanPos);
+    }
+
+    private void CantMove()
+    {
+        this.gameObject.GetComponent<DiasGames.Controller.CSPlayerController>().enabled = false;
+        this.gameObject.GetComponent<DiasGames.AbilityScheduler>().enabled = false;
+        this.gameObject.GetComponent<CharacterController>().enabled = false;
+    }
+
+    private void CanMove()
+    {
+        this.gameObject.GetComponent<DiasGames.Controller.CSPlayerController>().enabled = true;
+        this.gameObject.GetComponent<DiasGames.AbilityScheduler>().enabled = true;
+        this.gameObject.GetComponent<CharacterController>().enabled = true;
     }
 }
