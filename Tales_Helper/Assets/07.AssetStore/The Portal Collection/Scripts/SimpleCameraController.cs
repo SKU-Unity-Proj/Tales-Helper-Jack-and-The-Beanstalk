@@ -4,6 +4,10 @@ namespace UnityTemplateProjects
 {
     public class SimpleCameraController : MonoBehaviour
     {
+
+        private int counter;
+        private string number;
+
         class CameraState
         {
             public float yaw;
@@ -12,6 +16,7 @@ namespace UnityTemplateProjects
             public float x;
             public float y;
             public float z;
+  
 
             public void SetFromTransform(Transform t)
             {
@@ -108,6 +113,14 @@ namespace UnityTemplateProjects
         
         void Update()
         {
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                counter++;
+                
+                ScreenCapture.CaptureScreenshot("filename" + counter.ToString() + ".png", 1);
+            }
+
             // Exit Sample  
 
             if (Input.GetKey(KeyCode.Escape))
