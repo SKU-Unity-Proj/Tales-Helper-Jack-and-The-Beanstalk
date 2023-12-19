@@ -41,7 +41,7 @@ public class CheckInteration : MonoBehaviour
 
     private void TryAction()
     {
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.E))
         {
             CheckUI();
             CanInteration();

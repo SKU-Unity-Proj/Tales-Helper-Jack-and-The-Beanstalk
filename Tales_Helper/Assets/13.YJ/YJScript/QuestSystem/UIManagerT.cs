@@ -13,6 +13,7 @@ public class UIManagerT : MonoBehaviour
     public Image portraitImg;
     public Text talkText;
     public int talkIndex;
+    public TextMeshProUGUI showQuest;
     public GameObject scanObject;
 
     private bool npcActivated;
@@ -20,17 +21,11 @@ public class UIManagerT : MonoBehaviour
     private float searchRadius = 3;
     private Vector3 scanPos;
     private int Npcid = 0;
-    //private CSPlayerController _CSPlayerController;
 
     [SerializeField]
     private LayerMask layerMask;
 
-    public TextMeshProUGUI showQuest;
-
-    private void Awake()
-    {
-        //_CSPlayerController = this.gameObject.GetComponent<CSPlayerController>();
-    }
+    
 
     private void Update()
     {
@@ -53,6 +48,7 @@ public class UIManagerT : MonoBehaviour
         int questTalkIndex = questManager.GetQuestTalkIndex(id);
         string talkData = talkManager.GetTalk(id + questTalkIndex, talkIndex);
         CantMove();
+
         //End Talk
         if (talkData == null)
         {
@@ -60,7 +56,7 @@ public class UIManagerT : MonoBehaviour
             talkIndex = 0;
             Debug.Log(questManager.CheckQuest(id));
             showQuest.text = questManager.CheckQuest(id);
-            CanMove();
+            Invoke("CanMove", 0.2f);
             return;
         }
 
@@ -119,7 +115,7 @@ public class UIManagerT : MonoBehaviour
             transform.rotation = Quaternion.Slerp(transform.rotation, q, lookSpeed);
 
             //NPC 2000번은 제외
-            if (isAction && Npcid != 2000)
+            if (isAction && Npcid != 2000 && Npcid != 3000)
             {
                 Quaternion w = Quaternion.LookRotation(-vec);
                 scanObject.gameObject.transform.rotation = Quaternion.Slerp(scanObject.gameObject.transform.rotation, w, lookSpeed);
@@ -139,5 +135,18 @@ public class UIManagerT : MonoBehaviour
         this.gameObject.GetComponent<DiasGames.Controller.CSPlayerController>().enabled = true;
         this.gameObject.GetComponent<DiasGames.AbilityScheduler>().enabled = true;
         this.gameObject.GetComponent<CharacterController>().enabled = true;
+    }
+
+    void OnTriggerEnter(Collider col)
+    {
+        if (col.CompareTag("NPC"))
+        {
+            scanObject = col.gameObject;
+            npcActivated = true;
+            Action();
+            col.gameObject.SetActive(false);
+            Invoke("Action", 3f);
+            
+        }
     }
 }

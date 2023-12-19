@@ -21,6 +21,7 @@ public class TalkManager : MonoBehaviour
         //NPC1 = 1000, NPC2 = 2000
         talkData.Add(1000, new string[] { "잭 엄마:1" });
         talkData.Add(2000, new string[] { "지금은 길이 물에 잠겨 마을에 갈 수 없단다.:3" });
+        talkData.Add(3000, new string[] { "이 곳에 콩을 심으면 되겠다." });
 
         //Quest Talk ((대화+퀘스트) 순서 + 누군지)
         talkData.Add(10 + 1000, new string[] 
