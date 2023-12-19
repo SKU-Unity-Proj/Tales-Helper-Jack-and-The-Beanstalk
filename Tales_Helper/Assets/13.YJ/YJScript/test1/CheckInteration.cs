@@ -9,23 +9,15 @@ using UnityEngine.Timeline;
 
 public class CheckInteration : MonoBehaviour
 {
-    [SerializeField]
-    private float range;
-
-    private bool interationActivated = false;
-
-    private RaycastHit hitInfo;
-
-    [SerializeField]
-    private LayerMask layerMask;
-
-    [SerializeField]
-    private Text beanText;
-
+    public Text beanText;
     public GameObject beanStalk;
     public CinemachineVirtualCamera mainCam;
     public CinemachineVirtualCamera beanCam;
+    public LayerMask layerMask;
+    public float range;
 
+    private bool interationActivated = false;
+    private RaycastHit hitInfo;
     private PlayableDirector playableDirector;
 
     void Start()
@@ -41,7 +33,7 @@ public class CheckInteration : MonoBehaviour
 
     private void TryAction()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.F))
         {
             CheckUI();
             CanInteration();
