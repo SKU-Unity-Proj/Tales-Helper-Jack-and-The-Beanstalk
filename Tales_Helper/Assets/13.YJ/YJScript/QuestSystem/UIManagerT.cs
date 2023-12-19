@@ -34,11 +34,11 @@ public class UIManagerT : MonoBehaviour
     private void Update()
     {
         CheckNPC();
+        LookEachOther();
     }
 
     public void Action()
     {
-        LookEachOther();
         //Get Current Object
         ObjData objData = scanObject.GetComponent<ObjData>();
         Talk(objData.id, objData.isNpc);
@@ -98,7 +98,6 @@ public class UIManagerT : MonoBehaviour
                 if (npcActivated)
                 {
                     Action();
-                    scanPos = col.gameObject.transform.position;
                 }
             }  
         }
@@ -106,8 +105,17 @@ public class UIManagerT : MonoBehaviour
 
     private void LookEachOther()
     {
-        scanObject.transform.LookAt(this.transform);
-        this.transform.LookAt(scanPos);
+        if (isAction)
+        {
+            Vector3 vec = scanObject.gameObject.transform.position - transform.position;
+
+            Quaternion q = Quaternion.LookRotation(vec);
+            Quaternion w = Quaternion.LookRotation(-vec);
+
+            float lookSpeed = 2f * Time.deltaTime;
+            transform.rotation = Quaternion.Slerp(transform.rotation, q, lookSpeed);
+            scanObject.gameObject.transform.rotation = Quaternion.Slerp(scanObject.gameObject.transform.rotation, w, lookSpeed);
+        }
     }
 
     private void CantMove()
