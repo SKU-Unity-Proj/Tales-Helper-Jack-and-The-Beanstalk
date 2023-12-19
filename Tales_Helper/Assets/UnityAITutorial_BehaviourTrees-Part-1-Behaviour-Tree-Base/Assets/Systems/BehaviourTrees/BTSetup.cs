@@ -99,5 +99,29 @@ public class BTSetup : MonoBehaviour
                 return Agent.AtDestination ? BehaviourTree.ENodeStatus.Succeeded : BehaviourTree.ENodeStatus.InProgress;
             });
 
+        // 앉기 행동 노드
+        var sitDownRoot = BTRoot.Add<BTNode_Sequence>("Sit Down Sequence");
+        sitDownRoot.Add(new BTNode_Condition("Can Sit Down",
+            () => Agent.AtDestination && CheckNearbyChair()));
+        sitDownRoot.Add<BTNode_Action>("Sit Down",
+            () =>
+            {
+                Agent.TrySitDown();
+                return BehaviourTree.ENodeStatus.Succeeded;
+            });
     }
+    private bool CheckNearbyChair()
+    {
+        // 의자 감지 로직
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, 1f);
+        foreach (var hitCollider in hitColliders)
+        {
+            if (hitCollider.CompareTag("Chair")) // 'Chair'는 의자 태그
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

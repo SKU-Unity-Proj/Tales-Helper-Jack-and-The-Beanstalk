@@ -72,6 +72,7 @@ namespace DiasGames.Controller
             _mover = GetComponent<IMover>();
             _capsule = GetComponent<ICapsule>();
 
+            
             if (hideCursor)
             {
                 Cursor.visible = false;
@@ -82,7 +83,7 @@ namespace DiasGames.Controller
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
             }
-
+            
 
             // set right angle on start for camera
             _cinemachineTargetYaw = CinemachineCameraTarget.transform.eulerAngles.y;
@@ -273,7 +274,7 @@ namespace DiasGames.Controller
             _scheduler.characterActions.drop = Drop;
 
             // weapon
-            _scheduler.characterActions.zoom = Zoom;
+           // _scheduler.characterActions.zoom = Zoom;
         }
 
         #region Input receiver
@@ -288,7 +289,7 @@ namespace DiasGames.Controller
         public bool Crouch = false;
         public bool Interact = false;
         public bool Crawl = false;
-        public bool Zoom = false;
+        //public bool Zoom = false;
         public bool Drop = false;
 
         public void ResetActions()
@@ -319,7 +320,7 @@ namespace DiasGames.Controller
             Roll = Input.GetButtonDown("Roll");
             Crouch = Input.GetButton("Crouch");
             Crawl = Input.GetButtonDown("Crawl");
-            Zoom = Input.GetButtonDown("Zoom");
+            //Zoom = Input.GetButtonDown("Zoom");
             Interact = Input.GetButtonDown("Interact");
 
             // special actions for climbing
@@ -364,7 +365,7 @@ namespace DiasGames.Controller
 
         public void OnZoom(bool value)
         {
-            Zoom = value;
+            //Zoom = value;
         }
         public void OnInteract(bool value)
         {

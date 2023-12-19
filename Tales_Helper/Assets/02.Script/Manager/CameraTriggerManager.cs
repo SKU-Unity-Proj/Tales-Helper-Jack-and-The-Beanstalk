@@ -62,7 +62,7 @@ public class CameraTriggerManager : MonoBehaviour
 
                 ZoneIndex zIdx = zone.zoneObject.GetComponent<ZoneIndex>();
                 int zoneIndex = zIdx.index;
-                Debug.Log(zoneIndex);
+                Debug.Log($" in {zoneIndex}");
 
                 if (zoneCollider)
                 {
@@ -72,7 +72,7 @@ public class CameraTriggerManager : MonoBehaviour
                         Debug.Log("Entered Zone Index: " + zoneIndex);
 
                         activeCamera = cameraZones[zoneIndex].camera;
-                        activeCamera.Priority = 11;
+                        activeCamera.Priority = 13;
                     }
                
                 }          
@@ -92,7 +92,7 @@ public class CameraTriggerManager : MonoBehaviour
                 {
                     ZoneIndex zIdx = zone.zoneObject.GetComponent<ZoneIndex>();
                     int zoneIndex = zIdx.index;
-                    Debug.Log(zoneIndex);
+                    Debug.Log($" out {zoneIndex}");
                     if (zoneIndex != -1)
                     {
                         Debug.Log("Exit Zone Index: " + zoneIndex);

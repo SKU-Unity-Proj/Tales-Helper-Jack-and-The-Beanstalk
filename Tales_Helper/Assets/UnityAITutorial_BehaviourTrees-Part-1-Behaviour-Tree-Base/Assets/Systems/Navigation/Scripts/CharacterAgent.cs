@@ -14,6 +14,9 @@ public class CharacterAgent : CharacterBase
 {
     [SerializeField] float NearestPointSearchRange = 5f;
 
+    public Transform leftFootPosition = default;
+    public Transform rightFootPosition = default;
+
     NavMeshAgent Agent;
     Animator anim;
 
@@ -54,6 +57,7 @@ public class CharacterAgent : CharacterBase
                 StartCoroutine(FollowOffmeshLink());
         }
     }
+
 
     IEnumerator FollowOffmeshLink()
     {
@@ -123,6 +127,35 @@ public class CharacterAgent : CharacterBase
         anim.SetBool("Run", true);
 
         SetDestination(destination);
+    }
+    // 의자 근처에 있는지 확인하고 앉는 메서드
+    public void TrySitDown()
+    {
+        if (AtDestination)
+        {
+            Collider[] hitColliders = Physics.OverlapSphere(transform.position, 1f);
+            foreach (var hitCollider in hitColliders)
+            {
+                if (hitCollider.CompareTag("Chair")) // 의자 태그 확인
+                {
+                    Debug.Log("in col");
+                    SitDown();
+                    break;
+                }
+            }
+        }
+    }
+
+    // 앉기 메서드
+    public void SitDown()
+    {
+        anim.SetBool("Sitting", true);
+    }
+
+    // 일어나기 메서드
+    public void StandUp()
+    {
+        anim.SetBool("Sitting", false);
     }
 
     public virtual void SetDestination(Vector3 destination)
