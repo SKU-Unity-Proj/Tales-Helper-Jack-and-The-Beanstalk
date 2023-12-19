@@ -19,6 +19,7 @@ public class UIManagerT : MonoBehaviour
     public bool isAction;
     private float searchRadius = 3;
     private Vector3 scanPos;
+    private int Npcid = 0;
     //private CSPlayerController _CSPlayerController;
 
     [SerializeField]
@@ -34,7 +35,7 @@ public class UIManagerT : MonoBehaviour
     private void Update()
     {
         CheckNPC();
-        LookEachOther();
+        LookEachOther(Npcid);
     }
 
     public void Action()
@@ -103,18 +104,26 @@ public class UIManagerT : MonoBehaviour
         }
     }
 
-    private void LookEachOther()
+    private void LookEachOther(int Npcid)
     {
-        if (isAction)
+        if (scanObject != null)
         {
+            //NPCid값 가져오기
+            Npcid = scanObject.GetComponent<ObjData>().id;
+
+            //플레이어 바라볼 방향 구하기
             Vector3 vec = scanObject.gameObject.transform.position - transform.position;
-
             Quaternion q = Quaternion.LookRotation(vec);
-            Quaternion w = Quaternion.LookRotation(-vec);
-
+            //회전
             float lookSpeed = 2f * Time.deltaTime;
             transform.rotation = Quaternion.Slerp(transform.rotation, q, lookSpeed);
-            scanObject.gameObject.transform.rotation = Quaternion.Slerp(scanObject.gameObject.transform.rotation, w, lookSpeed);
+
+            //NPC 2000번은 제외
+            if (isAction && Npcid != 2000)
+            {
+                Quaternion w = Quaternion.LookRotation(-vec);
+                scanObject.gameObject.transform.rotation = Quaternion.Slerp(scanObject.gameObject.transform.rotation, w, lookSpeed);
+            }
         }
     }
 
