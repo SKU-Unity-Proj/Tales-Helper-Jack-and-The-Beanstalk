@@ -135,13 +135,14 @@ GameObject:
   - component: {fileID: 960148}
   - component: {fileID: 960150}
   - component: {fileID: 960149}
+  - component: {fileID: 960151}
   m_Layer: 5
   m_Name: TalkPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &960148
 RectTransform:
   m_ObjectHideFlags: 0
@@ -162,7 +163,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: 131}
+  m_AnchoredPosition: {x: 0, y: -500}
   m_SizeDelta: {x: -40, y: 210}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &960149
@@ -203,6 +204,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 960147}
   m_CullTransparentMesh: 0
+--- !u!95 &960151
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 960147}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e051e61066096f040b345b30ec0a3089, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &8217177
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10218,11 +10240,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   talkManager: {fileID: 509041825}
   questManager: {fileID: 509041826}
-  talkPanel: {fileID: 960147}
+  talkPanel: {fileID: 960151}
   portraitImg: {fileID: 13189881}
   talkText: {fileID: 595963922}
   talkIndex: 0
   scanObject: {fileID: 0}
+  isAction: 0
   layerMask:
     serializedVersion: 2
     m_Bits: 256
@@ -11269,7 +11292,7 @@ GameObject:
   - component: {fileID: 964789265}
   - component: {fileID: 964789264}
   m_Layer: 5
-  m_Name: Text_Space
+  m_Name: TalkNextKey
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

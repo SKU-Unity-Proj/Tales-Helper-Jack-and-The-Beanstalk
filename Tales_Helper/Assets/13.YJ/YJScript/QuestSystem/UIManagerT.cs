@@ -9,14 +9,14 @@ public class UIManagerT : MonoBehaviour
 {
     public TalkManager talkManager;
     public QuestManager questManager;
-    public GameObject talkPanel;
+    public Animator talkPanel;
     public Image portraitImg;
     public Text talkText;
     public int talkIndex;
     public GameObject scanObject;
 
     private bool npcActivated;
-    private bool isAction;
+    public bool isAction;
     private float searchRadius = 3;
     private Vector3 scanPos;
     //private CSPlayerController _CSPlayerController;
@@ -43,7 +43,7 @@ public class UIManagerT : MonoBehaviour
         ObjData objData = scanObject.GetComponent<ObjData>();
         Talk(objData.id, objData.isNpc);
 
-        talkPanel.SetActive(isAction);
+        talkPanel.SetBool("isShow", isAction);
     }
 
     void Talk(int id, bool isNpc)
