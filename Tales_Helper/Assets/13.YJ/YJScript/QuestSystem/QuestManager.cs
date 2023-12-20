@@ -59,7 +59,7 @@ public class QuestManager : MonoBehaviour
     {
         switch (questId)
         {
-            //questObject[] = 0(엄마 느낌표) 1(상인) 2(상인 느낌표) 3(무너진 돌) 4(울타리) 5(콩주머니)
+            //questObject[] = 0(엄마 느낌표) 1(상인) 2(상인 느낌표) 3(무너진 돌) 4(울타리) 5(콩주머니) 6(인벤에 넣을 콩주머니)
             case 10:
                 if(questActionIndex == 1) //엄마에게 심부름 받은 이후
                 {
@@ -80,6 +80,7 @@ public class QuestManager : MonoBehaviour
                 if (questActionIndex == 1) //콩주머니 가져간 후
                 {
                     audioSource.Play();
+                    questObject[6].SetActive(true); //인벤에 넣을 콩주머니 O
                     questObject[5].SetActive(false); //콩주머니 X
                     questObject[1].gameObject.layer = 8; //상인 레이어 O
                     questObject[0].SetActive(true); //1000 느낌표 O

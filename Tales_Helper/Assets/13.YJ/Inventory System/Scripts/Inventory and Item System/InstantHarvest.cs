@@ -14,9 +14,9 @@ namespace XEntity.InventoryItemSystem
         [SerializeField]
         private LayerMask layerMask;
 
-        void FixedUpdate()
+        void Update()
         {
-            PressGetHarvester();
+            //PressGetHarvester();
         }
 
         //The item is instantly added to the inventory of the interactor on interact.
@@ -39,6 +39,7 @@ namespace XEntity.InventoryItemSystem
 
         void OnTriggerEnter(Collider col)
         {
+            if (col.CompareTag("Player")) { }
             Interactor interactor = col.GetComponent<Interactor>();
             if (interactor != null)
             {
@@ -46,6 +47,7 @@ namespace XEntity.InventoryItemSystem
             }
         }
 
+        /*
         void PressGetHarvester()
         {
             if (Input.GetKeyDown(KeyCode.F))
@@ -63,5 +65,6 @@ namespace XEntity.InventoryItemSystem
                 }
             }
         }
+        */
     }
 }
