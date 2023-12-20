@@ -8,13 +8,13 @@ namespace XEntity.InventoryItemSystem
     {
         private bool isHarvested = false;
 
-        //The item that will be harvested on click.
+        //클릭 시 수확되는 항목입니다.
         public Item harvestItem;
 
         //The item is instantly added to the inventory of the interactor on interact.
         public void OnClickInteract(Interactor interactor)
         {
-            //Attempt to harvest if not harvested already
+            //아직 수확하지 않은 경우 수확 시도
             AttemptHarvest(interactor);
         }
 
@@ -26,6 +26,15 @@ namespace XEntity.InventoryItemSystem
                 {
                     isHarvested = true;
                 }
+            }
+        }
+
+        void OnTriggerEnter(Collider col)
+        {
+            Interactor interactor = col.GetComponent<Interactor>();
+            if (interactor != null)
+            {
+                AttemptHarvest(interactor);
             }
         }
     }

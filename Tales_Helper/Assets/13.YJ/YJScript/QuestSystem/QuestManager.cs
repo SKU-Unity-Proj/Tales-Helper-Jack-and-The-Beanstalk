@@ -57,26 +57,26 @@ public class QuestManager : MonoBehaviour
     {
         switch (questId)
         {
-            //questObject[] = 0(엄마 느낌표) 1(상인) 2(무너진 돌) 3(CTrigger) 4(ZTrigger) 5(FTrigger) 6(상인 느낌표) 7(울타리)
+            //questObject[] = 0(엄마 느낌표) 1(상인) 2(무너진 돌) 3(CTrigger) 4(ZTrigger) 5(FTrigger) 6(상인 느낌표) 7(울타리) 8(콩주머니)
             case 10:
                 if(questActionIndex == 1) //엄마에게 심부름 받은 이후
                 {
-                    questObject[0].SetActive(false); //1000 느낌표 꺼짐
-                    questObject[6].SetActive(true); //2000 느낌표 켜짐
+                    questObject[0].SetActive(false); //1000 느낌표 X
+                    questObject[6].SetActive(true); //2000 느낌표 O
                     cow.gameObject.GetComponent<FollowCow>().enabled = true;
                 }
                 if (questActionIndex == 2) //보부상과 대화 이후
                 {
-                    cow.SetActive(false); //소 꺼짐
+                    cow.SetActive(false); //소 X
+                    questObject[8].SetActive(true); //콩주머니 O
                 }
                 break;
 
             case 20:
                 if (questActionIndex == 1) //콩 받은 이후
                 {
-                    questObject[6].SetActive(false); //2000 느낌표 꺼짐
-                    questObject[0].SetActive(true); //1000 느낌표 켜짐
-                    questObject[7].SetActive(true); //콩주머니 켜짐
+                    questObject[6].SetActive(false); //2000 느낌표 X
+                    questObject[0].SetActive(true); //1000 느낌표 O
                 }
                 break;
 
@@ -85,13 +85,13 @@ public class QuestManager : MonoBehaviour
                 {
                     StartCoroutine("ShowBridge");
                     StartCoroutine("ShakeCamera");
-                    questObject[1].SetActive(false); //상인 꺼짐
-                    questObject[0].SetActive(false); //1000 느낌표 꺼짐
-                    questObject[2].SetActive(true); //Crouch rock 켜짐
-                    questObject[7].SetActive(false); //울타리 꺼짐
-                    questObject[3].SetActive(true); //CTrigger 켜짐
-                    questObject[4].SetActive(true); //ZTrigger 켜짐
-                    questObject[0].SetActive(false); //1000 느낌표 꺼짐
+                    questObject[1].SetActive(false); //상인 X
+                    questObject[0].SetActive(false); //1000 느낌표 X
+                    questObject[2].SetActive(true); //Crouch rock O
+                    questObject[7].SetActive(false); //울타리 X
+                    questObject[3].SetActive(true); //CTrigger O
+                    questObject[4].SetActive(true); //ZTrigger O
+                    questObject[0].SetActive(false); //1000 느낌표 X
                 }
                 break;
         }
