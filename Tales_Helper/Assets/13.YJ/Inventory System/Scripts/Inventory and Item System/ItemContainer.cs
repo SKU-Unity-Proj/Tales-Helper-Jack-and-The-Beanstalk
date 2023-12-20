@@ -272,12 +272,14 @@ namespace XEntity.InventoryItemSystem
             if (mainContainerUI.gameObject.activeSelf && isContainerUIOpen)
             {
                 Cursor.visible = false;
+                Cursor.lockState = CursorLockMode.Locked;
                 isContainerUIOpen = false;
                 StartCoroutine(Utils.TweenScaleOut(mainContainerUI.gameObject, 50, false));
             }
             else if(!mainContainerUI.gameObject.activeSelf && !isContainerUIOpen)
             {
                 Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
                 isContainerUIOpen = true;
                 StartCoroutine(Utils.TweenScaleIn(mainContainerUI.gameObject, 50, Vector3.one));
             }
