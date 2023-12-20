@@ -1,0 +1,977 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3675915819575342318
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4055677671960915540}
+  - component: {fileID: 1146010866101625329}
+  - component: {fileID: 2883294999110833467}
+  m_Layer: 0
+  m_Name: Alarm_clock_Dynamic_Pref
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 2147483647
+  m_IsActive: 1
+--- !u!4 &4055677671960915540
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3675915819575342318}
+  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6152483806288897984}
+  - {fileID: 6917888853147903648}
+  - {fileID: 692201062283557653}
+  - {fileID: 2304309998132702646}
+  - {fileID: 8138811751721494273}
+  - {fileID: 6618686000324237242}
+  - {fileID: 6083246364563473414}
+  - {fileID: 3627596923761111786}
+  - {fileID: 3650995205797347103}
+  - {fileID: 1450641045471006040}
+  - {fileID: 697793249503264690}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &1146010866101625329
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3675915819575342318}
+  m_Mesh: {fileID: -6509497663344922664, guid: e176ddbc5510caf4b9243276ba9f9f17, type: 3}
+--- !u!23 &2883294999110833467
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3675915819575342318}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 257
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: c50047cf6d015fb4eba9b103774b22e1, type: 2}
+  - {fileID: 2100000, guid: 4df62185f40c5ea40b62551380c0a060, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1001 &1013741266706521342
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 4055677671960915540}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 5db383e0b3c3a734ea5ffc7d08e33507,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 5db383e0b3c3a734ea5ffc7d08e33507,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.00006
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 5db383e0b3c3a734ea5ffc7d08e33507,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.0876
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 5db383e0b3c3a734ea5ffc7d08e33507,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.03928
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 5db383e0b3c3a734ea5ffc7d08e33507,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 5db383e0b3c3a734ea5ffc7d08e33507,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 5db383e0b3c3a734ea5ffc7d08e33507,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 5db383e0b3c3a734ea5ffc7d08e33507,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 5db383e0b3c3a734ea5ffc7d08e33507,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 5db383e0b3c3a734ea5ffc7d08e33507,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 5db383e0b3c3a734ea5ffc7d08e33507,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 5db383e0b3c3a734ea5ffc7d08e33507,
+        type: 3}
+      propertyPath: m_Name
+      value: Alarm_clock_hour_mesh
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 5db383e0b3c3a734ea5ffc7d08e33507,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5db383e0b3c3a734ea5ffc7d08e33507, type: 3}
+--- !u!4 &692201062283557653 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 5db383e0b3c3a734ea5ffc7d08e33507,
+    type: 3}
+  m_PrefabInstance: {fileID: 1013741266706521342}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1019421268441815129
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 4055677671960915540}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: ef2f41926f1cacf42b94d207a98cd460,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ef2f41926f1cacf42b94d207a98cd460,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.00025
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ef2f41926f1cacf42b94d207a98cd460,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.11904
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ef2f41926f1cacf42b94d207a98cd460,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.03748
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ef2f41926f1cacf42b94d207a98cd460,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.6493303
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ef2f41926f1cacf42b94d207a98cd460,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.6493303
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ef2f41926f1cacf42b94d207a98cd460,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.27994668
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ef2f41926f1cacf42b94d207a98cd460,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.27994668
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ef2f41926f1cacf42b94d207a98cd460,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -43.355
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ef2f41926f1cacf42b94d207a98cd460,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ef2f41926f1cacf42b94d207a98cd460,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ef2f41926f1cacf42b94d207a98cd460,
+        type: 3}
+      propertyPath: m_Name
+      value: Alarm_clock_regler_02_mesh
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ef2f41926f1cacf42b94d207a98cd460,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ef2f41926f1cacf42b94d207a98cd460, type: 3}
+--- !u!4 &697793249503264690 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: ef2f41926f1cacf42b94d207a98cd460,
+    type: 3}
+  m_PrefabInstance: {fileID: 1019421268441815129}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1417243160087358131
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 4055677671960915540}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: b23fb2ba0854e334cad1592ad7a63522,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b23fb2ba0854e334cad1592ad7a63522,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.03316
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b23fb2ba0854e334cad1592ad7a63522,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.09768
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b23fb2ba0854e334cad1592ad7a63522,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.04062
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b23fb2ba0854e334cad1592ad7a63522,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.6986651
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b23fb2ba0854e334cad1592ad7a63522,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.6986651
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b23fb2ba0854e334cad1592ad7a63522,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.108936474
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b23fb2ba0854e334cad1592ad7a63522,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.108936474
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b23fb2ba0854e334cad1592ad7a63522,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -107.724
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b23fb2ba0854e334cad1592ad7a63522,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b23fb2ba0854e334cad1592ad7a63522,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b23fb2ba0854e334cad1592ad7a63522,
+        type: 3}
+      propertyPath: m_Name
+      value: Alarm_clock_key_02_mesh
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b23fb2ba0854e334cad1592ad7a63522,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b23fb2ba0854e334cad1592ad7a63522, type: 3}
+--- !u!4 &1450641045471006040 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: b23fb2ba0854e334cad1592ad7a63522,
+    type: 3}
+  m_PrefabInstance: {fileID: 1417243160087358131}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1760965459809258077
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 4055677671960915540}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: b23fb2ba0854e334cad1592ad7a63522,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b23fb2ba0854e334cad1592ad7a63522,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.03302
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b23fb2ba0854e334cad1592ad7a63522,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.09768
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b23fb2ba0854e334cad1592ad7a63522,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.04062
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b23fb2ba0854e334cad1592ad7a63522,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.70232874
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b23fb2ba0854e334cad1592ad7a63522,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.70232874
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b23fb2ba0854e334cad1592ad7a63522,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.08206315
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b23fb2ba0854e334cad1592ad7a63522,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.08206315
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b23fb2ba0854e334cad1592ad7a63522,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -76.671
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b23fb2ba0854e334cad1592ad7a63522,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b23fb2ba0854e334cad1592ad7a63522,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b23fb2ba0854e334cad1592ad7a63522,
+        type: 3}
+      propertyPath: m_Name
+      value: Alarm_clock_key_mesh
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b23fb2ba0854e334cad1592ad7a63522,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b23fb2ba0854e334cad1592ad7a63522, type: 3}
+--- !u!4 &2304309998132702646 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: b23fb2ba0854e334cad1592ad7a63522,
+    type: 3}
+  m_PrefabInstance: {fileID: 1760965459809258077}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &3828140732528007412
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 4055677671960915540}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 74e6b098c05e9e546b304c2e4983e358,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 74e6b098c05e9e546b304c2e4983e358,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.00028
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 74e6b098c05e9e546b304c2e4983e358,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.08773
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 74e6b098c05e9e546b304c2e4983e358,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.03932
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 74e6b098c05e9e546b304c2e4983e358,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.84474874
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 74e6b098c05e9e546b304c2e4983e358,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 74e6b098c05e9e546b304c2e4983e358,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 74e6b098c05e9e546b304c2e4983e358,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.53516316
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 74e6b098c05e9e546b304c2e4983e358,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 74e6b098c05e9e546b304c2e4983e358,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 74e6b098c05e9e546b304c2e4983e358,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 64.71
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 74e6b098c05e9e546b304c2e4983e358,
+        type: 3}
+      propertyPath: m_Name
+      value: Alarm_clock_second_mesh
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 74e6b098c05e9e546b304c2e4983e358,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 74e6b098c05e9e546b304c2e4983e358, type: 3}
+--- !u!4 &3650995205797347103 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 74e6b098c05e9e546b304c2e4983e358,
+    type: 3}
+  m_PrefabInstance: {fileID: 3828140732528007412}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &3881374262617560321
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 4055677671960915540}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: e932c0de2cb0a78468b796331a40776d,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e932c0de2cb0a78468b796331a40776d,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.00004
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e932c0de2cb0a78468b796331a40776d,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.16215
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e932c0de2cb0a78468b796331a40776d,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.02302
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e932c0de2cb0a78468b796331a40776d,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e932c0de2cb0a78468b796331a40776d,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e932c0de2cb0a78468b796331a40776d,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e932c0de2cb0a78468b796331a40776d,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e932c0de2cb0a78468b796331a40776d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e932c0de2cb0a78468b796331a40776d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e932c0de2cb0a78468b796331a40776d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e932c0de2cb0a78468b796331a40776d,
+        type: 3}
+      propertyPath: m_Name
+      value: Alarm_clock_screws_mesh
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e932c0de2cb0a78468b796331a40776d,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e932c0de2cb0a78468b796331a40776d, type: 3}
+--- !u!4 &3627596923761111786 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e932c0de2cb0a78468b796331a40776d,
+    type: 3}
+  m_PrefabInstance: {fileID: 3881374262617560321}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &5974229491349454891
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 4055677671960915540}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 40c091888a9dcaa498dc66a228d97ecb,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 40c091888a9dcaa498dc66a228d97ecb,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.00009
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 40c091888a9dcaa498dc66a228d97ecb,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.08772
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 40c091888a9dcaa498dc66a228d97ecb,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.03934
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 40c091888a9dcaa498dc66a228d97ecb,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9529708
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 40c091888a9dcaa498dc66a228d97ecb,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 40c091888a9dcaa498dc66a228d97ecb,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 40c091888a9dcaa498dc66a228d97ecb,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.30306235
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 40c091888a9dcaa498dc66a228d97ecb,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 40c091888a9dcaa498dc66a228d97ecb,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 40c091888a9dcaa498dc66a228d97ecb,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 35.283
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 40c091888a9dcaa498dc66a228d97ecb,
+        type: 3}
+      propertyPath: m_Name
+      value: Alarm_clock_big_pointer_mesh
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 40c091888a9dcaa498dc66a228d97ecb,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 40c091888a9dcaa498dc66a228d97ecb, type: 3}
+--- !u!4 &6152483806288897984 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 40c091888a9dcaa498dc66a228d97ecb,
+    type: 3}
+  m_PrefabInstance: {fileID: 5974229491349454891}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &6045714352030573549
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 4055677671960915540}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 9e3330b6cd1ef98469fb294f370b6e8b,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 9e3330b6cd1ef98469fb294f370b6e8b,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 9e3330b6cd1ef98469fb294f370b6e8b,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 9e3330b6cd1ef98469fb294f370b6e8b,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 9e3330b6cd1ef98469fb294f370b6e8b,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 9e3330b6cd1ef98469fb294f370b6e8b,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 9e3330b6cd1ef98469fb294f370b6e8b,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 9e3330b6cd1ef98469fb294f370b6e8b,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 9e3330b6cd1ef98469fb294f370b6e8b,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 9e3330b6cd1ef98469fb294f370b6e8b,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 9e3330b6cd1ef98469fb294f370b6e8b,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 9e3330b6cd1ef98469fb294f370b6e8b,
+        type: 3}
+      propertyPath: m_Name
+      value: Alarm_clock_ring_02_mesh
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 9e3330b6cd1ef98469fb294f370b6e8b,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9e3330b6cd1ef98469fb294f370b6e8b, type: 3}
+--- !u!4 &6083246364563473414 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 9e3330b6cd1ef98469fb294f370b6e8b,
+    type: 3}
+  m_PrefabInstance: {fileID: 6045714352030573549}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &6652083439699767377
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 4055677671960915540}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 4b5d0696e37f7424ea5b4810eefc30c7,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4b5d0696e37f7424ea5b4810eefc30c7,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4b5d0696e37f7424ea5b4810eefc30c7,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4b5d0696e37f7424ea5b4810eefc30c7,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4b5d0696e37f7424ea5b4810eefc30c7,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4b5d0696e37f7424ea5b4810eefc30c7,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4b5d0696e37f7424ea5b4810eefc30c7,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4b5d0696e37f7424ea5b4810eefc30c7,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4b5d0696e37f7424ea5b4810eefc30c7,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4b5d0696e37f7424ea5b4810eefc30c7,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4b5d0696e37f7424ea5b4810eefc30c7,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 4b5d0696e37f7424ea5b4810eefc30c7,
+        type: 3}
+      propertyPath: m_Name
+      value: Alarm_clock_ring_01_mesh
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 4b5d0696e37f7424ea5b4810eefc30c7,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4b5d0696e37f7424ea5b4810eefc30c7, type: 3}
+--- !u!4 &6618686000324237242 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4b5d0696e37f7424ea5b4810eefc30c7,
+    type: 3}
+  m_PrefabInstance: {fileID: 6652083439699767377}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &7461336754629280075
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 4055677671960915540}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 23f491d2e1a632649a47f3fca0563f36,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 23f491d2e1a632649a47f3fca0563f36,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 23f491d2e1a632649a47f3fca0563f36,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.15599
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 23f491d2e1a632649a47f3fca0563f36,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.01322
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 23f491d2e1a632649a47f3fca0563f36,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 23f491d2e1a632649a47f3fca0563f36,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 23f491d2e1a632649a47f3fca0563f36,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 23f491d2e1a632649a47f3fca0563f36,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 23f491d2e1a632649a47f3fca0563f36,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 23f491d2e1a632649a47f3fca0563f36,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 23f491d2e1a632649a47f3fca0563f36,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 23f491d2e1a632649a47f3fca0563f36,
+        type: 3}
+      propertyPath: m_Name
+      value: Alarm_clock_hammer_mesh
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 23f491d2e1a632649a47f3fca0563f36,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 23f491d2e1a632649a47f3fca0563f36, type: 3}
+--- !u!4 &6917888853147903648 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 23f491d2e1a632649a47f3fca0563f36,
+    type: 3}
+  m_PrefabInstance: {fileID: 7461336754629280075}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &8608744314394050794
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 4055677671960915540}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: ef2f41926f1cacf42b94d207a98cd460,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ef2f41926f1cacf42b94d207a98cd460,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.00025
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ef2f41926f1cacf42b94d207a98cd460,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.08724
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ef2f41926f1cacf42b94d207a98cd460,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.04043
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ef2f41926f1cacf42b94d207a98cd460,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.6827716
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ef2f41926f1cacf42b94d207a98cd460,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.6827716
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ef2f41926f1cacf42b94d207a98cd460,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.18391022
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ef2f41926f1cacf42b94d207a98cd460,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.18391022
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ef2f41926f1cacf42b94d207a98cd460,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -59.849
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ef2f41926f1cacf42b94d207a98cd460,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ef2f41926f1cacf42b94d207a98cd460,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ef2f41926f1cacf42b94d207a98cd460,
+        type: 3}
+      propertyPath: m_Name
+      value: Alarm_clock_regler_mesh
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ef2f41926f1cacf42b94d207a98cd460,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ef2f41926f1cacf42b94d207a98cd460, type: 3}
+--- !u!4 &8138811751721494273 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: ef2f41926f1cacf42b94d207a98cd460,
+    type: 3}
+  m_PrefabInstance: {fileID: 8608744314394050794}
+  m_PrefabAsset: {fileID: 0}
