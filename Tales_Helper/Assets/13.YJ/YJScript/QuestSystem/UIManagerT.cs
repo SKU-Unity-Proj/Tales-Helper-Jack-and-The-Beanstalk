@@ -52,6 +52,7 @@ public class UIManagerT : MonoBehaviour
         //End Talk
         if (talkData == null)
         {
+            scanObject = null;
             isAction = false;
             talkIndex = 0;
             Debug.Log(questManager.CheckQuest(id));
@@ -109,13 +110,17 @@ public class UIManagerT : MonoBehaviour
 
             //플레이어 바라볼 방향 구하기
             Vector3 vec = scanObject.gameObject.transform.position - transform.position;
-            Quaternion q = Quaternion.LookRotation(vec);
-            //회전
             float lookSpeed = 2f * Time.deltaTime;
-            transform.rotation = Quaternion.Slerp(transform.rotation, q, lookSpeed);
 
-            //NPC 2000번은 제외
-            if (isAction && Npcid != 2000 && Npcid != 3000)
+            //플레이어 회전 제외
+            if(Npcid != 5000)
+            {
+                Quaternion q = Quaternion.LookRotation(vec);
+                transform.rotation = Quaternion.Slerp(transform.rotation, q, lookSpeed);
+            }
+
+            //NPC 회전 제외
+            if (isAction && Npcid != 2000 && Npcid != 3000 && Npcid != 5000)
             {
                 Quaternion w = Quaternion.LookRotation(-vec);
                 scanObject.gameObject.transform.rotation = Quaternion.Slerp(scanObject.gameObject.transform.rotation, w, lookSpeed);

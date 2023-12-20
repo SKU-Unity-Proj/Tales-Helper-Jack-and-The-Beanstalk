@@ -23,9 +23,11 @@ public class QuestManager : MonoBehaviour
     private float ShakeFrequency = 3.0f;         //카메라 파라미터
     private float ShakeElapsedTime = 0f;
 
+    private AudioSource audioSource;
 
     void Awake()
     {
+        audioSource = GetComponent<AudioSource>();
         questList = new Dictionary<int, QuestData>();
         GenerateData();
 
@@ -57,41 +59,42 @@ public class QuestManager : MonoBehaviour
     {
         switch (questId)
         {
-            //questObject[] = 0(엄마 느낌표) 1(상인) 2(무너진 돌) 3(CTrigger) 4(ZTrigger) 5(FTrigger) 6(상인 느낌표) 7(울타리) 8(콩주머니)
+            //questObject[] = 0(엄마 느낌표) 1(상인) 2(상인 느낌표) 3(무너진 돌) 4(울타리) 5(콩주머니)
             case 10:
                 if(questActionIndex == 1) //엄마에게 심부름 받은 이후
                 {
                     questObject[0].SetActive(false); //1000 느낌표 X
-                    questObject[6].SetActive(true); //2000 느낌표 O
+                    questObject[2].SetActive(true); //2000 느낌표 O
                     cow.gameObject.GetComponent<FollowCow>().enabled = true;
                 }
                 if (questActionIndex == 2) //보부상과 대화 이후
                 {
+                    questObject[1].gameObject.layer = 0; //상인 레이어 X
+                    questObject[2].SetActive(false); //2000 느낌표 X
                     cow.SetActive(false); //소 X
-                    questObject[8].SetActive(true); //콩주머니 O
+                    questObject[5].SetActive(true); //콩주머니 O
                 }
                 break;
 
             case 20:
-                if (questActionIndex == 1) //콩 받은 이후
+                if (questActionIndex == 1) //콩주머니 가져간 후
                 {
-                    questObject[6].SetActive(false); //2000 느낌표 X
+                    audioSource.Play();
+                    questObject[5].SetActive(false); //콩주머니 X
+                    questObject[1].gameObject.layer = 8; //상인 레이어 O
                     questObject[0].SetActive(true); //1000 느낌표 O
                 }
                 break;
 
             case 30:
-                if (questActionIndex == 1) //콩 받은 후 엄마와 대화 이후
+                if (questActionIndex == 1) //엄마와 대화 이후
                 {
                     StartCoroutine("ShowBridge");
                     StartCoroutine("ShakeCamera");
                     questObject[1].SetActive(false); //상인 X
                     questObject[0].SetActive(false); //1000 느낌표 X
-                    questObject[2].SetActive(true); //Crouch rock O
-                    questObject[7].SetActive(false); //울타리 X
-                    questObject[3].SetActive(true); //CTrigger O
-                    questObject[4].SetActive(true); //ZTrigger O
-                    questObject[0].SetActive(false); //1000 느낌표 X
+                    questObject[3].SetActive(true); //Crouch rock O
+                    questObject[4].SetActive(false); //울타리 X
                 }
                 break;
         }
@@ -104,7 +107,7 @@ public class QuestManager : MonoBehaviour
                                         , new int[] { 1000, 2000 }));
 
         questList.Add(20, new QuestData("콩 받기"
-                                        , new int[] { 2000 }));
+                                        , new int[] { 5000 }));
 
         questList.Add(30, new QuestData("엄마랑 대화하기"
                                         , new int[] { 1000 }));
