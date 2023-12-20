@@ -11,6 +11,14 @@ namespace XEntity.InventoryItemSystem
         //클릭 시 수확되는 항목입니다.
         public Item harvestItem;
 
+        [SerializeField]
+        private LayerMask layerMask;
+
+        void FixedUpdate()
+        {
+            PressGetHarvester();
+        }
+
         //The item is instantly added to the inventory of the interactor on interact.
         public void OnClickInteract(Interactor interactor)
         {
@@ -35,6 +43,24 @@ namespace XEntity.InventoryItemSystem
             if (interactor != null)
             {
                 AttemptHarvest(interactor);
+            }
+        }
+
+        void PressGetHarvester()
+        {
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                Collider[] colliders = Physics.OverlapSphere(this.transform.position, 3f, layerMask);
+
+                foreach (Collider col in colliders)
+                {
+                    Interactor interactor = col.GetComponent<Interactor>();
+                    if (interactor != null)
+                    {
+                        AttemptHarvest(interactor);
+                        break;
+                    }
+                }
             }
         }
     }

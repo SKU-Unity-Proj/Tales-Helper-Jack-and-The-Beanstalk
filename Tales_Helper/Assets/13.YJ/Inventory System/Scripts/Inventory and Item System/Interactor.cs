@@ -78,7 +78,11 @@ namespace XEntity.InventoryItemSystem
         {
             if (inventory.AddItem(item))
             {
-                if (instance) Destroy(instance);
+                if (instance && instance.CompareTag("Item"))
+                {
+                    Destroy(instance);
+                }
+                    
                 return true;
             }
             return false;
