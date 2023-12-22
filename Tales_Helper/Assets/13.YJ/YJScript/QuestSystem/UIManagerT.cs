@@ -120,7 +120,7 @@ public class UIManagerT : MonoBehaviour
             }
 
             //NPC 회전 제외
-            if (isAction && Npcid != 2000 && Npcid != 3000 && Npcid != 5000)
+            if (isAction && Npcid != 2000 && Npcid != 5000)
             {
                 Quaternion w = Quaternion.LookRotation(-vec);
                 scanObject.gameObject.transform.rotation = Quaternion.Slerp(scanObject.gameObject.transform.rotation, w, lookSpeed);
@@ -142,16 +142,4 @@ public class UIManagerT : MonoBehaviour
         this.gameObject.GetComponent<CharacterController>().enabled = true;
     }
 
-    void OnTriggerEnter(Collider col)
-    {
-        if (col.CompareTag("NPC"))
-        {
-            scanObject = col.gameObject;
-            npcActivated = true;
-            Action();
-            col.gameObject.SetActive(false);
-            Invoke("Action", 3f);
-            
-        }
-    }
 }
