@@ -11,6 +11,8 @@ public class MainMenu : MonoBehaviour
     public GameObject optionView;
     public GameObject chapterView;
 
+    public GameObject graphicOption;
+
     public AudioSource BGM;
     public AudioSource SoundEffect;
 
@@ -60,6 +62,7 @@ public class MainMenu : MonoBehaviour
         mainView.SetActive(false);
         chapterView.SetActive(false);
         optionView.SetActive(true);
+        graphicOption.SetActive(false);
     }
     
     // 종료 버튼

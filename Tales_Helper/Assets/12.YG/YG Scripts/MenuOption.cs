@@ -11,7 +11,7 @@ public class MenuOption : MonoBehaviour
     public GameObject soundOption;
     public Slider bgmSlider;
     public Slider soundEffectSlider;
-    //public GameObject keyOption;
+    public GameObject graphicOption;
     public AudioSource Bgm;
     public AudioSource SoundEffect;
 
@@ -20,7 +20,7 @@ public class MenuOption : MonoBehaviour
     {
         SoundEffect.Play();
         soundOption.SetActive(true);
-        //keyOption.SetActive(false);
+        graphicOption.SetActive(false);
         bgmSlider.onValueChanged.AddListener(OnBgmSliderValueChanged);
         soundEffectSlider.onValueChanged.AddListener(OnSoundEffectSliderValueChanged);
     }
@@ -30,7 +30,7 @@ public class MenuOption : MonoBehaviour
     {
         SoundEffect.Play();
         soundOption.SetActive(false);
-        //keyOption.SetActive(true);
+        graphicOption.SetActive(true);
     }
 
     // น้ น๖ฦฐ
@@ -38,7 +38,7 @@ public class MenuOption : MonoBehaviour
     {
         SoundEffect.Play();
         soundOption.SetActive(false);
-        //keyOption.SetActive(false);
+        graphicOption.SetActive(false);
         mainView.SetActive(true);
         optionView.SetActive(false);
     }
