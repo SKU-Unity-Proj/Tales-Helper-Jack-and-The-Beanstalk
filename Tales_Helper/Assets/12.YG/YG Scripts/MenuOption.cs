@@ -11,7 +11,7 @@ public class MenuOption : MonoBehaviour
     public GameObject soundOption;
     public Slider bgmSlider;
     public Slider soundEffectSlider;
-    public GameObject keyOption;
+    //public GameObject keyOption;
     public AudioSource Bgm;
     public AudioSource SoundEffect;
 
@@ -20,7 +20,7 @@ public class MenuOption : MonoBehaviour
     {
         SoundEffect.Play();
         soundOption.SetActive(true);
-        keyOption.SetActive(false);
+        //keyOption.SetActive(false);
         bgmSlider.onValueChanged.AddListener(OnBgmSliderValueChanged);
         soundEffectSlider.onValueChanged.AddListener(OnSoundEffectSliderValueChanged);
     }
@@ -30,7 +30,7 @@ public class MenuOption : MonoBehaviour
     {
         SoundEffect.Play();
         soundOption.SetActive(false);
-        keyOption.SetActive(true);
+        //keyOption.SetActive(true);
     }
 
     // 백 버튼
@@ -38,17 +38,17 @@ public class MenuOption : MonoBehaviour
     {
         SoundEffect.Play();
         soundOption.SetActive(false);
-        keyOption.SetActive(false);
+        //keyOption.SetActive(false);
         mainView.SetActive(true);
         optionView.SetActive(false);
     }
 
     // 사운드 조절
-    void OnBgmSliderValueChanged(float volume)
+    public void OnBgmSliderValueChanged(float volume)
     {
         Bgm.volume = volume;
     }
-    void OnSoundEffectSliderValueChanged(float volume)
+    public void OnSoundEffectSliderValueChanged(float volume)
     {
         SoundEffect.volume = volume;
     }
