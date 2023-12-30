@@ -22,6 +22,13 @@ public class BTSetup : MonoBehaviour
     protected AwarenessSystem Sensors;
     protected Animator anim;
 
+    //의자관련
+    [SerializeField] Transform interactionPosition; // 의자와 상호작용할 위치
+    [SerializeField] Transform chairDirection; // 의자가 바라보는 방향
+
+    private int wanderCount = 0; // Wander 행동 카운터
+    private const int MaxWanderCount = 5; // 최대 Wander 횟수
+
     void Awake()
     {
         anim = GetComponent<Animator>();
@@ -88,9 +95,15 @@ public class BTSetup : MonoBehaviour
             () =>
             {
                 Vector3 location = Agent.PickLocationInRange(Wander_Range);
-
                 anim.SetBool("Run", false);
                 Agent.MoveTo(location);
+                // 목적지에 도착했거나, 아직 목적지가 설정되지 않았다면 새로운 위치로 이동
+                if (Agent.AtDestination)
+                { 
+                    wanderCount++;
+                    Debug.Log($"Wander Count: {wanderCount}");
+                }
+    
 
                 return BehaviourTree.ENodeStatus.InProgress;
             },
@@ -99,29 +112,21 @@ public class BTSetup : MonoBehaviour
                 return Agent.AtDestination ? BehaviourTree.ENodeStatus.Succeeded : BehaviourTree.ENodeStatus.InProgress;
             });
 
-        // 앉기 행동 노드
-        var sitDownRoot = BTRoot.Add<BTNode_Sequence>("Sit Down Sequence");
-        sitDownRoot.Add(new BTNode_Condition("Can Sit Down",
-            () => Agent.AtDestination && CheckNearbyChair()));
-        sitDownRoot.Add<BTNode_Action>("Sit Down",
+
+        // SitOnChair 노드
+        var sitOnChairSequence = BTRoot.Add<BTNode_Sequence>("Sit on Chair");
+
+        // SitOnChair 조건 노드
+        sitOnChairSequence.Add(new BTNode_Condition("Can Sit",
+            () => wanderCount >= MaxWanderCount)); // Wander 횟수 확인
+
+        // "Interaction Position"으로 이동하는 액션 노드
+        sitOnChairSequence.Add<BTNode_Action>("Move to Interaction Position",
             () =>
             {
-                Agent.TrySitDown();
+                Agent.MoveToInteractionPositionAndSit(interactionPosition, chairDirection);
+                Debug.Log("Move to chair"); // 디버그 로그 추가
                 return BehaviourTree.ENodeStatus.Succeeded;
             });
     }
-    private bool CheckNearbyChair()
-    {
-        // 의자 감지 로직
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, 1f);
-        foreach (var hitCollider in hitColliders)
-        {
-            if (hitCollider.CompareTag("Chair")) // 'Chair'는 의자 태그
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-
 }

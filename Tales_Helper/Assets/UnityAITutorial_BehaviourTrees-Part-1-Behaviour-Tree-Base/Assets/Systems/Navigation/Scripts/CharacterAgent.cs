@@ -14,9 +14,6 @@ public class CharacterAgent : CharacterBase
 {
     [SerializeField] float NearestPointSearchRange = 5f;
 
-    public Transform leftFootPosition = default;
-    public Transform rightFootPosition = default;
-
     NavMeshAgent Agent;
     Animator anim;
 
@@ -31,6 +28,8 @@ public class CharacterAgent : CharacterBase
     public bool IsMoving => Agent.velocity.magnitude > float.Epsilon;
 
     public bool AtDestination => ReachedDestination;
+
+
 
     // Start is called before the first frame update
     protected void Start()
@@ -47,6 +46,12 @@ public class CharacterAgent : CharacterBase
         {
             DestinationSet = false;
             ReachedDestination = true;
+            OnDestinationReached();
+            Debug.Log(AtDestination);
+        }
+        else if (DestinationSet)
+        {
+            ReachedDestination = false;
         }
 
         // are we on an offmesh link?
@@ -56,6 +61,8 @@ public class CharacterAgent : CharacterBase
             if (OffMeshLinkStatus == EOffmeshLinkStatus.NotStarted)
                 StartCoroutine(FollowOffmeshLink());
         }
+
+
     }
 
 
@@ -128,22 +135,27 @@ public class CharacterAgent : CharacterBase
 
         SetDestination(destination);
     }
-    // 의자 근처에 있는지 확인하고 앉는 메서드
-    public void TrySitDown()
+    public void MoveToInteractionPositionAndSit(Transform interactionPosition, Transform chairDirection)
     {
-        if (AtDestination)
+        StartCoroutine(InteractWithChair(interactionPosition, chairDirection));
+    }
+
+    IEnumerator InteractWithChair(Transform interactionPosition, Transform chairDirection)
+    {
+        // "Interaction Position"으로 이동
+        MoveTo(interactionPosition.position);
+
+        // 대상 지점에 도달할 때까지 기다림
+        while (!AtDestination)
         {
-            Collider[] hitColliders = Physics.OverlapSphere(transform.position, 1f);
-            foreach (var hitCollider in hitColliders)
-            {
-                if (hitCollider.CompareTag("Chair")) // 의자 태그 확인
-                {
-                    Debug.Log("in col");
-                    SitDown();
-                    break;
-                }
-            }
+            yield return null;
         }
+
+        // 의자가 바라보는 방향으로 회전
+        transform.rotation = Quaternion.LookRotation(chairDirection.forward);
+
+        // 앉는 애니메이션 실행
+        SitDown();
     }
 
     // 앉기 메서드
@@ -156,6 +168,13 @@ public class CharacterAgent : CharacterBase
     public void StandUp()
     {
         anim.SetBool("Sitting", false);
+    }
+
+    private void OnDestinationReached()
+    {
+        // 목적지에 도착했을 때 필요한 로직 추가
+        anim.SetBool("Move", false);
+        anim.SetBool("Run", false);
     }
 
     public virtual void SetDestination(Vector3 destination)

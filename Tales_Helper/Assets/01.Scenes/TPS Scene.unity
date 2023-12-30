@@ -11650,12 +11650,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 863033111}
   m_Mesh: {fileID: 4300000, guid: c2a8f903826f1ca4a8165790c46adeda, type: 2}
---- !u!1 &864796187 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 23819501774168226, guid: e6a4cd2797df0c248a0b3977b121a1b9,
-    type: 3}
-  m_PrefabInstance: {fileID: 1697127493}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &867207392
 GameObject:
   m_ObjectHideFlags: 0
@@ -13093,37 +13087,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1 &956544489
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 956544490}
-  m_Layer: 0
-  m_Name: Right Foot IK Handle
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &956544490
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 956544489}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.977, y: 0.185, z: 1.675}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1464937375}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &958557333
 GameObject:
   m_ObjectHideFlags: 0
@@ -16949,35 +16912,12 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 1697127493}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 864796187}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: db8e59c8049db8d4aad6a316dd9b36df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!136 &1190535642
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 864796187}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.38
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.86, z: 0}
 --- !u!1001 &1204697421
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21857,27 +21797,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1884745658}
   m_PrefabAsset: {fileID: 0}
---- !u!65 &1464937378
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1464937374}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 4, y: 4, z: 4}
-  m_Center: {x: -0.26370215, y: 1.9046694, z: 0.47688627}
 --- !u!64 &1464937379
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -25659,6 +25578,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ogre Green Warpainted
       objectReference: {fileID: 0}
+    - target: {fileID: 4782972474901075594, guid: e6a4cd2797df0c248a0b3977b121a1b9,
+        type: 3}
+      propertyPath: chairDirection
+      value: 
+      objectReference: {fileID: 1464937375}
+    - target: {fileID: 4782972474901075594, guid: e6a4cd2797df0c248a0b3977b121a1b9,
+        type: 3}
+      propertyPath: interactionPosition
+      value: 
+      objectReference: {fileID: 964287884}
     - target: {fileID: 5633767978541480476, guid: e6a4cd2797df0c248a0b3977b121a1b9,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -25713,22 +25642,18 @@ PrefabInstance:
         type: 3}
       propertyPath: leftFootPosition
       value: 
-      objectReference: {fileID: 2129634893}
+      objectReference: {fileID: 0}
     - target: {fileID: 8946759250759175301, guid: e6a4cd2797df0c248a0b3977b121a1b9,
         type: 3}
       propertyPath: rightFootPosition
       value: 
-      objectReference: {fileID: 956544490}
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 642677123072841414, guid: e6a4cd2797df0c248a0b3977b121a1b9, type: 3}
     - {fileID: 8350619657899221040, guid: e6a4cd2797df0c248a0b3977b121a1b9, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 23819501774168226, guid: e6a4cd2797df0c248a0b3977b121a1b9,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1190535642}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e6a4cd2797df0c248a0b3977b121a1b9, type: 3}
 --- !u!1001 &1698681239
 PrefabInstance:
@@ -29543,19 +29468,7 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 964287884}
-    - targetCorrespondingSourceObject: {fileID: 400000, guid: 2a12425d4e7304f498851b1ea4807db9,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2129634893}
-    - targetCorrespondingSourceObject: {fileID: 400000, guid: 2a12425d4e7304f498851b1ea4807db9,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 956544490}
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 100000, guid: 2a12425d4e7304f498851b1ea4807db9,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1464937378}
     - targetCorrespondingSourceObject: {fileID: 100000, guid: 2a12425d4e7304f498851b1ea4807db9,
         type: 3}
       insertIndex: -1
@@ -33620,37 +33533,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2128576314}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &2129634892
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2129634893}
-  m_Layer: 0
-  m_Name: Left Foot IK Handle
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2129634893
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2129634892}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.033, y: 0.185, z: 1.675}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1464937375}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &2137409036 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4491158196177669338, guid: fa1b35783beafad49a17127a4f749534,
