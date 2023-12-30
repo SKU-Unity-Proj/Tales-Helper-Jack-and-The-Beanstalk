@@ -13,12 +13,14 @@ public class Chapter : MonoBehaviour
     // 프롤로그 버튼
     public void OnClickPrologueBtn()
     {
-        SceneManager.LoadScene("");
+        SoundEffect.Play();
+        SceneManager.LoadScene("IntroAnimation");
     }
 
     // 튜토리얼 버튼
     public void OnClickTutorialBtn()
     {
+        SoundEffect.Play();
         SceneManager.LoadScene("JackHouse");
     }
 

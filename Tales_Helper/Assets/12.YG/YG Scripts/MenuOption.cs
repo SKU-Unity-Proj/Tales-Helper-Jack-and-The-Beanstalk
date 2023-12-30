@@ -3,17 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.Rendering;
 
 public class MenuOption : MonoBehaviour
 {
     public GameObject mainView;
     public GameObject optionView;
+
     public GameObject soundOption;
     public Slider bgmSlider;
     public Slider soundEffectSlider;
+
     public GameObject graphicOption;
     public AudioSource Bgm;
     public AudioSource SoundEffect;
+
+    [SerializeField]
+    List<RenderPipelineAsset> RenderPipelineAssets;
+    [SerializeField]
+    TMP_Dropdown Dropdown;
 
     // 사운드 버튼
     public void OnClickSoundBtn()
@@ -51,5 +59,12 @@ public class MenuOption : MonoBehaviour
     public void OnSoundEffectSliderValueChanged(float volume)
     {
         SoundEffect.volume = volume;
+    }
+
+    // 그래픽 설정
+    public void SetPipeline(int value)
+    {
+        QualitySettings.SetQualityLevel(value);
+        QualitySettings.renderPipeline = RenderPipelineAssets[value];
     }
 }
