@@ -14,6 +14,9 @@ public class CharacterAgent : CharacterBase
 {
     [SerializeField] float NearestPointSearchRange = 5f;
 
+    public Transform leftFootPosition = default;
+    public Transform rightFootPosition = default;
+
     NavMeshAgent Agent;
     Animator anim;
 
@@ -28,8 +31,6 @@ public class CharacterAgent : CharacterBase
     public bool IsMoving => Agent.velocity.magnitude > float.Epsilon;
 
     public bool AtDestination => ReachedDestination;
-
-
 
     // Start is called before the first frame update
     protected void Start()
@@ -46,12 +47,6 @@ public class CharacterAgent : CharacterBase
         {
             DestinationSet = false;
             ReachedDestination = true;
-            OnDestinationReached();
-            Debug.Log(AtDestination);
-        }
-        else if (DestinationSet)
-        {
-            ReachedDestination = false;
         }
 
         // are we on an offmesh link?
@@ -61,8 +56,6 @@ public class CharacterAgent : CharacterBase
             if (OffMeshLinkStatus == EOffmeshLinkStatus.NotStarted)
                 StartCoroutine(FollowOffmeshLink());
         }
-
-
     }
 
 
@@ -135,47 +128,33 @@ public class CharacterAgent : CharacterBase
 
         SetDestination(destination);
     }
-    public void MoveToInteractionPositionAndSit(Transform interactionPosition, Transform chairDirection)
+
+    #region 의자 앉기
+    public void SitAtPosition(Vector3 interactionPos, Quaternion chairRotation)
     {
-        StartCoroutine(InteractWithChair(interactionPosition, chairDirection));
+        StartCoroutine(SitProcess(interactionPos, chairRotation));
     }
 
-    IEnumerator InteractWithChair(Transform interactionPosition, Transform chairDirection)
+    private IEnumerator SitProcess(Vector3 interactionPos, Quaternion chairRotation)
     {
-        // "Interaction Position"으로 이동
-        MoveTo(interactionPosition.position);
+        // 거인이 interactionPos로 이동
+        MoveTo(interactionPos);
+        yield return new WaitUntil(() => AtDestination);
 
-        // 대상 지점에 도달할 때까지 기다림
-        while (!AtDestination)
-        {
-            yield return null;
-        }
-
-        // 의자가 바라보는 방향으로 회전
-        transform.rotation = Quaternion.LookRotation(chairDirection.forward);
+        // 거인이 의자가 바라보는 방향으로 회전
+        transform.rotation = Quaternion.Lerp(transform.rotation, chairRotation, Time.deltaTime * 5f);
 
         // 앉는 애니메이션 실행
-        SitDown();
-    }
-
-    // 앉기 메서드
-    public void SitDown()
-    {
         anim.SetBool("Sitting", true);
     }
 
-    // 일어나기 메서드
     public void StandUp()
     {
+        // 일어나는 애니메이션 실행
         anim.SetBool("Sitting", false);
     }
+    #endregion
 
-    private void OnDestinationReached()
-    {
-        // 목적지에 도착했을 때 필요한 로직 추가
-        anim.SetBool("Move", false);
-        anim.SetBool("Run", false);
-    }
 
     public virtual void SetDestination(Vector3 destination)
     {
