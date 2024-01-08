@@ -102,6 +102,10 @@ public class EnemyAI : MonoBehaviour
     {
         FeedbackDisplay.text = "Must be nothing";
     }
+    public void OnRest()
+    {
+        FeedbackDisplay.text = "I Want to rest";
+    }
 }
 
 #if UNITY_EDITOR

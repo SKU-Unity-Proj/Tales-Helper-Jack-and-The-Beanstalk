@@ -96,11 +96,18 @@ public class BTSetup : MonoBehaviour
             () =>
             {
                 Vector3 location = Agent.PickLocationInRange(Wander_Range);
-
                 anim.SetBool("Run", false);
                 Agent.MoveTo(location);
 
-                
+                restCondition.UpdateTimer(Time.deltaTime);
+
+                if (restCondition.CheckCondition())
+                {
+                    Debug.Log("Perform Wander: Rest condition met, moving to next node.");
+                    Debug.Log(restCondition.CheckCondition());
+                    Agent.SitAtPosition(chairTransform.position, chairTransform.rotation);
+                    
+                }
 
                 return BehaviourTree.ENodeStatus.InProgress;
             },
@@ -108,25 +115,27 @@ public class BTSetup : MonoBehaviour
             {
                 return Agent.AtDestination ? BehaviourTree.ENodeStatus.Succeeded : BehaviourTree.ENodeStatus.InProgress;
             });
-        // "Rest Condition" 컨디션 노드를 BTRoot에 추가
-        var restRoot = BTRoot.Add(new BTNode_Condition("Rest Condition",
-            () => restCondition.CheckCondition()));
-        
-        // "Rest on Chair" 액션 노드를 BTRoot에 추가
-        restRoot.Add<BTNode_Action>("Rest on Chair",
+        /*
+        var restSequence = BTRoot.Add(new BTNode_Condition("Rest Condition",
             () =>
             {
-            // 조건이 충족되면 앉기 로직 실행
-            Agent.SitAtPosition(chairTransform.position, chairTransform.rotation);
+                bool conditionMet = restCondition.CheckCondition();
+                Debug.Log($"Rest Condition node evaluated: {conditionMet}");
+                return conditionMet;
+            }));
+
+        restSequence.Add<BTNode_Action>("Rest on Chair",
+            () =>
+            {
+                Debug.Log("Rest on Chair action started.");
+                Agent.SitAtPosition(chairTransform.position, chairTransform.rotation);
                 return BehaviourTree.ENodeStatus.InProgress;
             },
             () =>
             {
-            // 앉는 애니메이션이 실행되고 있는지 확인
-            return anim.GetBool("Sitting") ? BehaviourTree.ENodeStatus.Succeeded : BehaviourTree.ENodeStatus.InProgress;
+                return anim.GetBool("Sitting") ? BehaviourTree.ENodeStatus.Succeeded : BehaviourTree.ENodeStatus.InProgress;
             });
-
+        */
     }
-
 
 }
