@@ -35,7 +35,7 @@ namespace DiasGames.Controller
 
         // Components
         private AbilityScheduler _scheduler = null;
-        //private Health _health = null;
+        private Health _health = null;
         private IMover _mover;
         private ICapsule _capsule;
 
@@ -68,7 +68,7 @@ namespace DiasGames.Controller
         private void Awake()
         {
             _scheduler = GetComponent<AbilityScheduler>();
-            //_health = GetComponent<Health>();
+            _health = GetComponent<Health>();
             _mover = GetComponent<IMover>();
             _capsule = GetComponent<ICapsule>();
 
@@ -190,8 +190,8 @@ namespace DiasGames.Controller
 #endif
 
             // subscribe for death event
-            //if (_health != null)
-                //_health.OnDead += Die;
+            if (_health != null)
+                _health.OnDead += Die;
         }
 
         private void OnDisable()
@@ -201,8 +201,8 @@ namespace DiasGames.Controller
             _scheduler.OnUpdatedAbilities -= ResetActions;
 #endif
             // unsubscribe for death event
-            //if (_health != null)
-                //_health.OnDead -= Die;
+            if (_health != null)
+                _health.OnDead -= Die;
         }
 
         private void Update()

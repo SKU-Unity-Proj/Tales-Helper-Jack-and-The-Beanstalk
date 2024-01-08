@@ -11,7 +11,7 @@ namespace DiasGames.Controller
         [SerializeField] private float delayToRestartLevel = 3f;
 
         // player components
-        //private Health _playerHealth;
+        private Health _playerHealth;
 
         // controller vars
         private bool _isRestartingLevel;
@@ -21,16 +21,16 @@ namespace DiasGames.Controller
             if (player == null)
                 player = GameObject.FindGameObjectWithTag("Player");
 
-            //_playerHealth = player.GetComponent<Health>();
+            _playerHealth = player.GetComponent<Health>();
         }
 
         private void OnEnable()
         {
-            //_playerHealth.OnDead += RestartLevel;
+            _playerHealth.OnDead += RestartLevel;
         }
         private void OnDisable()
         {
-           // _playerHealth.OnDead -= RestartLevel;
+           _playerHealth.OnDead -= RestartLevel;
         }
 
         // Restarts the current level
