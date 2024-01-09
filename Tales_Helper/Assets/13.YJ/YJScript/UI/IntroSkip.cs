@@ -30,14 +30,14 @@ public class IntroSkip : MonoBehaviour
         {
             SceneManager.LoadScene("JackHouse");
         }
-
+        skipUI.fillAmount = keyPressTime;
     }
 
     IEnumerator ShowSkipKey()
     {
         skipUI.gameObject.SetActive(true);
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(3f);
 
         skipUI.gameObject.SetActive(false);
     }
