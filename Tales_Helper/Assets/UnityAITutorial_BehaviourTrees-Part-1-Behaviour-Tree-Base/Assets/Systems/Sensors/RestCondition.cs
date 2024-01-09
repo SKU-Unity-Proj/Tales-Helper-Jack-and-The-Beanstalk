@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class RestCondition : MonoBehaviour
 {
     private float TimeToRest = 0.05f; // public으로 설정하여 인스펙터에서 조절 가능하도록 합니다.
@@ -9,10 +10,12 @@ public class RestCondition : MonoBehaviour
     private bool isConditionMet = false;
 
     EnemyAI LinkedAI;
+    Animator anim;
 
     private void Update()
     {
         LinkedAI = GetComponent<EnemyAI>();
+        anim = GetComponent<Animator>();
     }
 
     public bool CheckCondition()
@@ -42,6 +45,11 @@ public class RestCondition : MonoBehaviour
     {
         timer = 0f;
         isConditionMet = false;
+    }
+
+    public bool IsStandingUp()
+    {
+        return anim.GetCurrentAnimatorStateInfo(0).IsName("Stand");
     }
 }
 

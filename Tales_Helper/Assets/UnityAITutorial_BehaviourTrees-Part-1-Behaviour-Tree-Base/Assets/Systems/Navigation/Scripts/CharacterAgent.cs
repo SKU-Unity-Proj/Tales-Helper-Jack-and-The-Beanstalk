@@ -14,14 +14,11 @@ public class CharacterAgent : CharacterBase
 {
     [SerializeField] float NearestPointSearchRange = 5f;
 
-    public Transform leftFootPosition = default;
-    public Transform rightFootPosition = default;
-
     NavMeshAgent Agent;
     Animator anim;
 
     private float walkSpeed = 1.5f;
-    private float runSpeed = 0.5f;
+    private float runSpeed = 3.5f;
 
     bool DestinationSet = false;
     bool ReachedDestination = false;
@@ -141,8 +138,12 @@ public class CharacterAgent : CharacterBase
         MoveTo(interactionPos);
         yield return new WaitUntil(() => AtDestination);
 
-        // 거인이 의자가 바라보는 방향으로 회전
-        transform.rotation = Quaternion.Lerp(transform.rotation, chairRotation, Time.deltaTime * 5f);
+        // 목표 회전에 도달할 때까지 회전을 진행
+        while (Quaternion.Angle(transform.rotation, chairRotation) > 0.1f)
+        {
+            transform.rotation = Quaternion.Lerp(transform.rotation, chairRotation, Time.deltaTime * 5f);
+            yield return null;
+        }
 
         // 앉는 애니메이션 실행
         anim.SetBool("Sitting", true);

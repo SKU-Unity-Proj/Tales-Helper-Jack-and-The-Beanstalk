@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
+using UnityEngine.AI;
 
 [RequireComponent(typeof(BehaviourTree))]
 public class BTSetup : MonoBehaviour
@@ -12,9 +13,6 @@ public class BTSetup : MonoBehaviour
     [SerializeField] private float Wander_Range = 10f;
     [SerializeField] private float TimeToRest = 0.05f; // 탐색 후 휴식까지의 시간
     [SerializeField] private Transform chairTransform; // 의자의 Transform
-
-    private float wanderTimer = 0f; // 탐색 타이머
-    private float debugTimer = 0f; // 디버그 타이머
 
     [Header("Chase Settings")]
     [SerializeField] float Chase_MinAwarenessToChase = 1.5f;
@@ -27,6 +25,7 @@ public class BTSetup : MonoBehaviour
     protected AwarenessSystem Sensors;
     protected RestCondition restCondition;
     protected Animator anim;
+    protected NavMeshAgent giant;
 
     void Awake()
     {
@@ -42,13 +41,15 @@ public class BTSetup : MonoBehaviour
         var chaseRoot = BTRoot.Add(new BTNode_Condition("Can Chase",
             () =>
             {
-                // no targets
+                // 타겟이 없는 경우
+                // 'ActiveTargets' 리스트가 null이거나 비어있으면 추적을 시작하지 않음
                 if (Sensors.ActiveTargets == null || Sensors.ActiveTargets.Count == 0)
                     return false;
 
                 if (Chase_CurrentTarget != null)
                 {
-                    // check if the current is still sensed
+                    // 현재 타겟이 여전히 감지되고 있는지 확인
+                    // 현재 타겟이 감지 목록에 있고, 인지도가 추적을 멈출 수준 이상이면 추적
                     foreach (var candidate in Sensors.ActiveTargets.Values)
                     {
                         if (candidate.Detectable == Chase_CurrentTarget &&
@@ -58,15 +59,15 @@ public class BTSetup : MonoBehaviour
                         }
                     }
 
-                    // clear our current target
+                    // 현재 타겟이 더 이상 감지되지 않으면 null로 설정
                     Chase_CurrentTarget = null;
                 }
 
-                // acquire a new target if possible
+                // 가능한 새로운 타겟을 찾음
+                // 감지된 대상들 중에서 가장 인지도가 높은 대상을 새로운 추적 대상으로 선택
                 float highestAwareness = Chase_MinAwarenessToChase;
                 foreach (var candidate in Sensors.ActiveTargets.Values)
                 {
-                    // found a target to acquire
                     if (candidate.Awareness >= highestAwareness)
                     {
                         Chase_CurrentTarget = candidate.Detectable;
@@ -74,12 +75,25 @@ public class BTSetup : MonoBehaviour
                     }
                 }
 
+                // 새로운 추적 대상이 있는지 여부를 반환
+                // 추적 대상이 있으면 true, 없으면 false를 반환.
                 return Chase_CurrentTarget != null;
             }));
         chaseRoot.Add<BTNode_Action>("Chase Target",
             () =>
             {
+                // 거인이 앉아 있는 경우, 먼저 일으켜 세움
+                if (anim.GetBool("Sitting"))
+                {
+                    anim.SetBool("Sitting", false);
+                    restCondition.ResetCondition();
+                }
+                if (restCondition.IsStandingUp())
+                {
+                    Agent.MoveToRun(Chase_CurrentTarget.transform.position);
+                }
 
+                // 추적 로직
                 Agent.MoveToRun(Chase_CurrentTarget.transform.position);
 
                 return BehaviourTree.ENodeStatus.InProgress;
@@ -89,6 +103,33 @@ public class BTSetup : MonoBehaviour
                 Agent.MoveToRun(Chase_CurrentTarget.transform.position);
 
                 return BehaviourTree.ENodeStatus.InProgress;
+            });
+
+        var restSequence = BTRoot.Add(new BTNode_Condition("Rest Condition",
+           () =>
+           {
+               bool conditionMet = restCondition.CheckCondition();
+               Debug.Log($"Rest Condition node evaluated: {conditionMet}");
+               return conditionMet;
+
+           }));
+        restSequence.Add<BTNode_Action>("Rest on Chair",
+            () =>
+            {
+                Debug.Log("Rest on Chair action started.");
+                Agent.SitAtPosition(chairTransform.position, chairTransform.rotation);
+
+                return BehaviourTree.ENodeStatus.InProgress;
+            },
+            () =>
+            {
+                if (Sensors.ActiveTargets != null || Sensors.ActiveTargets.Count == 0)
+                {
+                    return BehaviourTree.ENodeStatus.Succeeded;
+
+                }
+
+                return anim.GetBool("Sitting") ? BehaviourTree.ENodeStatus.Succeeded : BehaviourTree.ENodeStatus.InProgress;
             });
 
         var wanderRoot = BTRoot.Add<BTNode_Sequence>("Wander");
@@ -101,41 +142,18 @@ public class BTSetup : MonoBehaviour
 
                 restCondition.UpdateTimer(Time.deltaTime);
 
-                if (restCondition.CheckCondition())
-                {
-                    Debug.Log("Perform Wander: Rest condition met, moving to next node.");
-                    Debug.Log(restCondition.CheckCondition());
-                    Agent.SitAtPosition(chairTransform.position, chairTransform.rotation);
-                    
-                }
-
                 return BehaviourTree.ENodeStatus.InProgress;
             },
             () =>
             {
+                if (restCondition.CheckCondition())
+                    return BehaviourTree.ENodeStatus.Succeeded;
+
                 return Agent.AtDestination ? BehaviourTree.ENodeStatus.Succeeded : BehaviourTree.ENodeStatus.InProgress;
             });
-        /*
-        var restSequence = BTRoot.Add(new BTNode_Condition("Rest Condition",
-            () =>
-            {
-                bool conditionMet = restCondition.CheckCondition();
-                Debug.Log($"Rest Condition node evaluated: {conditionMet}");
-                return conditionMet;
-            }));
-
-        restSequence.Add<BTNode_Action>("Rest on Chair",
-            () =>
-            {
-                Debug.Log("Rest on Chair action started.");
-                Agent.SitAtPosition(chairTransform.position, chairTransform.rotation);
-                return BehaviourTree.ENodeStatus.InProgress;
-            },
-            () =>
-            {
-                return anim.GetBool("Sitting") ? BehaviourTree.ENodeStatus.Succeeded : BehaviourTree.ENodeStatus.InProgress;
-            });
-        */
+        
+       
+        
     }
 
 }
