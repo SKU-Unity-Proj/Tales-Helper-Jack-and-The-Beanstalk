@@ -30,7 +30,7 @@ public class liftmove : MonoBehaviour
 
             CloseDoor(); 
 
-            Invoke("Startlift", 3.0f); //3초뒤 Startlift() 실행
+            Invoke("Startlift", 4.0f); //4초뒤 Startlift() 실행
             
 
         }
@@ -51,13 +51,13 @@ public class liftmove : MonoBehaviour
     {
         if (check1F == false) //지상일 때를 판별
         {
-            Invoke("OpenDoor", 4.0f); //4초뒤 OpenDoor()실행
+            Invoke("OpenDoor", 10.0f); //10초뒤 OpenDoor()실행
             anim.SetTrigger("isDown"); 
             check1F = true; //기본값인 true로 돌아옴
         }
         else //지하일 때를 판별
         {
-            Invoke("OpenDoor", 4.0f); //4초뒤 OpenDoor()실행
+            Invoke("OpenDoor", 10.0f); //10초뒤 OpenDoor()실행
             anim.SetTrigger("isUp");
             check1F = false; //기본값인 false로 돌아옴
         }
