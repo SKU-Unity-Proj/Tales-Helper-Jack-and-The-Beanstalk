@@ -20,8 +20,11 @@ public class CharacterAgent : CharacterBase
     private float walkSpeed = 1.5f;
     private float runSpeed = 3.5f;
 
+    private DroppedObject droppedObject;
+
     bool DestinationSet = false;
     bool ReachedDestination = false;
+
     EOffmeshLinkStatus OffMeshLinkStatus = EOffmeshLinkStatus.NotStarted;
 
 
@@ -34,6 +37,13 @@ public class CharacterAgent : CharacterBase
     {
         Agent = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
+
+        droppedObject = GameObject.FindObjectOfType<DroppedObject>();
+        if (droppedObject == null)
+        {
+            Debug.LogError("DroppedObject component not found in the scene.");
+            return;
+        }
     }
 
     // Update is called once per frame
@@ -155,12 +165,18 @@ public class CharacterAgent : CharacterBase
         anim.SetBool("Sitting", false);
     }
     #endregion
-
+  
+    
     #region 떨어진 물체 탐색
 
-    public void SearchingObject(Vector3 location)
+    public void SearchingObject()
     {
-        StartCoroutine(SearchingProcess(location));
+        if(droppedObject.DroppedObjects.Count > 0)
+        {
+            Transform targetObject = droppedObject.DroppedObjects[0];
+            StartCoroutine(SearchingProcess(targetObject.position));
+        }
+        
     }
 
     private IEnumerator SearchingProcess(Vector3 location)
@@ -171,12 +187,21 @@ public class CharacterAgent : CharacterBase
 
         // 물체와 상호작용하는 애니메이션 실행
         anim.SetBool("SearchObj", true);
+
+        droppedObject.DroppedObjects.RemoveAt(0);
     }
     
     public void FindNotingObject()
     {
         anim.SetBool("SearchObj", false);
     }
+    public bool IsSearchingObj()
+    {
+        // 여기에서 'Stand'는 일어나기 애니메이션의 상태 이름
+        // 애니메이션 상태 또는 레이어 인덱스에 따라 필요에 맞게 조정해야됨.
+        return anim.GetCurrentAnimatorStateInfo(0).IsName("Searching");
+    }
+
     #endregion
 
     public virtual void SetDestination(Vector3 destination)

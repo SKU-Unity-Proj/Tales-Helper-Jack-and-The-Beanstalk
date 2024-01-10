@@ -11,7 +11,6 @@ public class BTSetup : MonoBehaviour
 
     [Header("Wander and Rest Settings")]
     [SerializeField] private float Wander_Range = 10f;
-    [SerializeField] private float TimeToRest = 0.05f; // 탐색 후 휴식까지의 시간
     [SerializeField] private Transform chairTransform; // 의자의 Transform
 
     [Header("Chase Settings")]
@@ -20,22 +19,30 @@ public class BTSetup : MonoBehaviour
 
     DetectableTarget Chase_CurrentTarget;
 
+    protected EnemyAI LinkedAI;
     protected BehaviourTree LinkedBT;
     protected CharacterAgent Agent;
     protected AwarenessSystem Sensors;
     protected RestCondition restCondition;
     protected Animator anim;
     protected NavMeshAgent giant;
-    protected DroppedObjectDetector droppedObjectDetector;
+    protected DroppedObject droppedObject;
 
     void Awake()
     {
         anim = GetComponent<Animator>();
         Agent = GetComponent<CharacterAgent>();
         LinkedBT = GetComponent<BehaviourTree>();
+        LinkedAI = GetComponent<EnemyAI>();
         Sensors = GetComponent<AwarenessSystem>();
         restCondition = GetComponent<RestCondition>();
-        droppedObjectDetector = GetComponent<DroppedObjectDetector>();
+
+        droppedObject = GameObject.FindObjectOfType<DroppedObject>();
+        if (droppedObject == null)
+        {
+            Debug.LogError("DroppedObject component not found in the scene.");
+            return;
+        }
 
         var BTRoot = LinkedBT.RootNode.Add<BTNode_Selector>("Base Logic");
 
@@ -137,26 +144,39 @@ public class BTSetup : MonoBehaviour
         var droppedObjectCondition = BTRoot.Add(new BTNode_Condition("Check Dropped Objects",
            () =>
            {
-               return droppedObjectDetector.DroppedObjects.Count > 0;
+               bool conditionMet = droppedObject.CheckCondition();
+               Debug.Log($"Searching Condition node evaluated: {conditionMet}");
+               return conditionMet;
            }));
 
         // 떨어진 물체에 대한 상호작용을 처리하는 액션 노드
         droppedObjectCondition.Add<BTNode_Action>("Interact With Dropped Object",
             () =>
             {
-                if (droppedObjectDetector.DroppedObjects.Count > 0)
+                if (droppedObject.DroppedObjects.Count > 0)
                 {
-                    // 떨어진 물체 중 하나의 위치로 이동하고 상호작용
-                    Agent.SearchingObject(droppedObjectDetector.DroppedObjects[0].transform.position);
+                    LinkedAI.OnSearching();
+                    // 첫 번째 떨어진 물체로 이동하고 상호작용
+                    Agent.SearchingObject();
 
-                    // 상호작용 후 물체 목록에서 제거
-                    droppedObjectDetector.DroppedObjects.RemoveAt(0);
                 }
                 return BehaviourTree.ENodeStatus.InProgress;
             },
             () =>
             {
-                return BehaviourTree.ENodeStatus.Succeeded;
+                if (Sensors.ActiveTargets != null || Sensors.ActiveTargets.Count == 0)
+                {
+                    return BehaviourTree.ENodeStatus.Succeeded;
+
+                }
+
+                if (Agent.IsSearchingObj())
+                {
+                    droppedObject.DroppedObjects.RemoveAt(0);
+                    Agent.FindNotingObject();
+                    return BehaviourTree.ENodeStatus.Succeeded;
+                }
+                return anim.GetBool("SearchObj") ? BehaviourTree.ENodeStatus.Succeeded : BehaviourTree.ENodeStatus.InProgress;
             });
 
         var wanderRoot = BTRoot.Add<BTNode_Sequence>("Wander");

@@ -106,6 +106,10 @@ public class EnemyAI : MonoBehaviour
     {
         FeedbackDisplay.text = "I Want to rest";
     }
+    public void OnSearching()
+    {
+        FeedbackDisplay.text = "Hmm... Who`s there?";
+    }
 }
 
 #if UNITY_EDITOR
