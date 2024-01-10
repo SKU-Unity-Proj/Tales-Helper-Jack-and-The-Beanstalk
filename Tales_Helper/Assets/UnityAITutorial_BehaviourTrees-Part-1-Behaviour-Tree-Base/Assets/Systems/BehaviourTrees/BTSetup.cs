@@ -26,6 +26,7 @@ public class BTSetup : MonoBehaviour
     protected RestCondition restCondition;
     protected Animator anim;
     protected NavMeshAgent giant;
+    protected DroppedObjectDetector droppedObjectDetector;
 
     void Awake()
     {
@@ -34,7 +35,7 @@ public class BTSetup : MonoBehaviour
         LinkedBT = GetComponent<BehaviourTree>();
         Sensors = GetComponent<AwarenessSystem>();
         restCondition = GetComponent<RestCondition>();
-
+        droppedObjectDetector = GetComponent<DroppedObjectDetector>();
 
         var BTRoot = LinkedBT.RootNode.Add<BTNode_Selector>("Base Logic");
 
@@ -85,7 +86,7 @@ public class BTSetup : MonoBehaviour
                 // 거인이 앉아 있는 경우, 먼저 일으켜 세움
                 if (anim.GetBool("Sitting"))
                 {
-                    anim.SetBool("Sitting", false);
+                    Agent.StandUp();
                     restCondition.ResetCondition();
                 }
                 if (restCondition.IsStandingUp())
@@ -130,6 +131,32 @@ public class BTSetup : MonoBehaviour
                 }
 
                 return anim.GetBool("Sitting") ? BehaviourTree.ENodeStatus.Succeeded : BehaviourTree.ENodeStatus.InProgress;
+            });
+
+        // 떨어진 물체 감지 여부를 판별하는 조건 노드
+        var droppedObjectCondition = BTRoot.Add(new BTNode_Condition("Check Dropped Objects",
+           () =>
+           {
+               return droppedObjectDetector.DroppedObjects.Count > 0;
+           }));
+
+        // 떨어진 물체에 대한 상호작용을 처리하는 액션 노드
+        droppedObjectCondition.Add<BTNode_Action>("Interact With Dropped Object",
+            () =>
+            {
+                if (droppedObjectDetector.DroppedObjects.Count > 0)
+                {
+                    // 떨어진 물체 중 하나의 위치로 이동하고 상호작용
+                    Agent.SearchingObject(droppedObjectDetector.DroppedObjects[0].transform.position);
+
+                    // 상호작용 후 물체 목록에서 제거
+                    droppedObjectDetector.DroppedObjects.RemoveAt(0);
+                }
+                return BehaviourTree.ENodeStatus.InProgress;
+            },
+            () =>
+            {
+                return BehaviourTree.ENodeStatus.Succeeded;
             });
 
         var wanderRoot = BTRoot.Add<BTNode_Sequence>("Wander");

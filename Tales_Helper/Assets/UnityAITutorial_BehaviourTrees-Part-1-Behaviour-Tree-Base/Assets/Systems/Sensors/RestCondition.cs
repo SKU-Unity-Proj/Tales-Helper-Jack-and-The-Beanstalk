@@ -36,7 +36,7 @@ public class RestCondition : MonoBehaviour
                 LinkedAI.OnRest();
                 // 조건 충족 시 필요한 이벤트를 발생시킵니다.
                 Debug.Log("RestCondition met."); // 조건이 충족되었음을 로그로 출력
-                // 예: OnRestConditionMet.Invoke();
+
             }
         }
     }
@@ -47,8 +47,11 @@ public class RestCondition : MonoBehaviour
         isConditionMet = false;
     }
 
+    // '일어나기' 애니메이션이 실행 중인지 확인하는 메소드
     public bool IsStandingUp()
     {
+        // 여기에서 'Stand'는 일어나기 애니메이션의 상태 이름
+        // 애니메이션 상태 또는 레이어 인덱스에 따라 필요에 맞게 조정해야됨.
         return anim.GetCurrentAnimatorStateInfo(0).IsName("Stand");
     }
 }

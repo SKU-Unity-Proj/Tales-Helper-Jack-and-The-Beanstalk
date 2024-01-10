@@ -156,6 +156,28 @@ public class CharacterAgent : CharacterBase
     }
     #endregion
 
+    #region 떨어진 물체 탐색
+
+    public void SearchingObject(Vector3 location)
+    {
+        StartCoroutine(SearchingProcess(location));
+    }
+
+    private IEnumerator SearchingProcess(Vector3 location)
+    {
+        // 물체의 위치로 이동
+        MoveTo(location); // MoveTo는 CharacterAgent의 이동을 처리하는 가상 메소드로 가정
+        yield return new WaitUntil(() => AtDestination);
+
+        // 물체와 상호작용하는 애니메이션 실행
+        anim.SetBool("SearchObj", true);
+    }
+    
+    public void FindNotingObject()
+    {
+        anim.SetBool("SearchObj", false);
+    }
+    #endregion
 
     public virtual void SetDestination(Vector3 destination)
     {
