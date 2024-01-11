@@ -173,35 +173,47 @@ public class CharacterAgent : CharacterBase
     {
         if(droppedObject.DroppedObjects.Count > 0)
         {
-            Transform targetObject = droppedObject.DroppedObjects[0];
-            StartCoroutine(SearchingProcess(targetObject.position));
+            StartCoroutine(SearchingProcess());
         }
         
     }
 
-    private IEnumerator SearchingProcess(Vector3 location)
+    /// <summary>
+    /// do-while 문을 사용하는 이유는 떨어진 객체의 배열(DroppedObjects)에 대한 처리를 최소 한 번은 보장하기 위해
+    /// 즉, 함수가 호출될 때 배열에 최소한 하나의 요소가 있음을 가정하고, 
+    /// 이 요소에 대한 처리를 시작합니다. 그 후에 배열에 추가 요소가 남아있다면 계속해서 처리함
+    /// </summary>
+    /// <param name=""></param>
+    /// <returns></returns>
+    private IEnumerator SearchingProcess()
     {
-        // 물체의 위치로 이동
-        MoveTo(location); // MoveTo는 CharacterAgent의 이동을 처리하는 가상 메소드로 가정
-        yield return new WaitUntil(() => AtDestination);
+        for (int i = droppedObject.DroppedObjects.Count - 1; i >= 0; i--)
+        {
+            GameObject currentObj = droppedObject.DroppedObjects[i];
 
-        // 물체와 상호작용하는 애니메이션 실행
-        anim.SetBool("SearchObj", true);
+            // 물체의 위치로 이동
+            MoveTo(currentObj.transform.position);
+            yield return new WaitUntil(() => AtDestination);
 
-        droppedObject.DroppedObjects.RemoveAt(0);
+            // 물체와 상호작용하는 애니메이션 실행
+            anim.SetBool("SearchObj", true);
+
+            // 애니메이션 완료까지 대기
+            yield return new WaitUntil(() => IsSearching());
+
+            // 현재 오브젝트 처리 후 리스트에서 제거
+            droppedObject.DroppedObjects.RemoveAt(i);
+            anim.SetBool("SearchObj", false);
+        }
+        
     }
-    
-    public void FindNotingObject()
+
+
+    public bool IsSearching()
     {
-        anim.SetBool("SearchObj", false);
+        AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
+        return stateInfo.IsName("Searching") && stateInfo.normalizedTime >= 1.0f;
     }
-    public bool IsSearchingObj()
-    {
-        // 여기에서 'Stand'는 일어나기 애니메이션의 상태 이름
-        // 애니메이션 상태 또는 레이어 인덱스에 따라 필요에 맞게 조정해야됨.
-        return anim.GetCurrentAnimatorStateInfo(0).IsName("Searching");
-    }
-
     #endregion
 
     public virtual void SetDestination(Vector3 destination)

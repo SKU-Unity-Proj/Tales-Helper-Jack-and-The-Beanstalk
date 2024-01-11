@@ -117,21 +117,21 @@ public class BTSetup : MonoBehaviour
            () =>
            {
                bool conditionMet = restCondition.CheckCondition();
-               Debug.Log($"Rest Condition node evaluated: {conditionMet}");
+               //Debug.Log($"Rest Condition node evaluated: {conditionMet}");
                return conditionMet;
 
            }));
         restSequence.Add<BTNode_Action>("Rest on Chair",
             () =>
             {
-                Debug.Log("Rest on Chair action started.");
+                //Debug.Log("Rest on Chair action started.");
                 Agent.SitAtPosition(chairTransform.position, chairTransform.rotation);
 
                 return BehaviourTree.ENodeStatus.InProgress;
             },
             () =>
             {
-                if (Sensors.ActiveTargets != null || Sensors.ActiveTargets.Count == 0)
+                if (Sensors.ActiveTargets != null || Sensors.ActiveTargets.Count != 0)
                 {
                     return BehaviourTree.ENodeStatus.Succeeded;
 
@@ -145,7 +145,7 @@ public class BTSetup : MonoBehaviour
            () =>
            {
                bool conditionMet = droppedObject.CheckCondition();
-               Debug.Log($"Searching Condition node evaluated: {conditionMet}");
+               //Debug.Log($"Searching Condition node evaluated: {conditionMet}");
                return conditionMet;
            }));
 
@@ -159,23 +159,23 @@ public class BTSetup : MonoBehaviour
                     // 첫 번째 떨어진 물체로 이동하고 상호작용
                     Agent.SearchingObject();
 
+                    return BehaviourTree.ENodeStatus.InProgress;
                 }
                 return BehaviourTree.ENodeStatus.InProgress;
             },
             () =>
             {
-                if (Sensors.ActiveTargets != null || Sensors.ActiveTargets.Count == 0)
+                if (Sensors.ActiveTargets != null || Sensors.ActiveTargets.Count != 0)
                 {
                     return BehaviourTree.ENodeStatus.Succeeded;
 
                 }
 
-                if (Agent.IsSearchingObj())
+                if (droppedObject.IsSearchCompleted() && Chase_CurrentTarget == null)
                 {
-                    droppedObject.DroppedObjects.RemoveAt(0);
-                    Agent.FindNotingObject();
                     return BehaviourTree.ENodeStatus.Succeeded;
                 }
+
                 return anim.GetBool("SearchObj") ? BehaviourTree.ENodeStatus.Succeeded : BehaviourTree.ENodeStatus.InProgress;
             });
 
