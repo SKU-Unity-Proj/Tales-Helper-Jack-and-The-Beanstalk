@@ -46,6 +46,7 @@ public class BTSetup : MonoBehaviour
 
         var BTRoot = LinkedBT.RootNode.Add<BTNode_Selector>("Base Logic");
 
+        #region 추적노드
         var chaseRoot = BTRoot.Add(new BTNode_Condition("Can Chase",
             () =>
             {
@@ -112,7 +113,9 @@ public class BTSetup : MonoBehaviour
 
                 return BehaviourTree.ENodeStatus.InProgress;
             });
+        #endregion
 
+        #region 앉기노드
         var restSequence = BTRoot.Add(new BTNode_Condition("Rest Condition",
            () =>
            {
@@ -137,9 +140,16 @@ public class BTSetup : MonoBehaviour
 
                 }
 
+                if (restCondition.CheckCondition())
+                {
+                    return BehaviourTree.ENodeStatus.Succeeded;
+                }
+
                 return anim.GetBool("Sitting") ? BehaviourTree.ENodeStatus.Succeeded : BehaviourTree.ENodeStatus.InProgress;
             });
+        #endregion
 
+        #region 탐색노드
         // 떨어진 물체 감지 여부를 판별하는 조건 노드
         var droppedObjectCondition = BTRoot.Add(new BTNode_Condition("Check Dropped Objects",
            () =>
@@ -153,10 +163,26 @@ public class BTSetup : MonoBehaviour
         droppedObjectCondition.Add<BTNode_Action>("Interact With Dropped Object",
             () =>
             {
+                // 거인이 앉아 있는 경우, 먼저 일으켜 세움
+                if (anim.GetBool("Sitting"))
+                {
+                    Agent.StandUp();
+                    restCondition.ResetCondition();
+                }
+
+                if (restCondition.IsStandingUp())
+                {
+                    LinkedAI.OnSearching();
+                    // 첫 번째 떨어진 물체로 이동하고 상호작용
+                    Agent.SearchingObject();
+                    Debug.Log("Search");
+                }
+
                 LinkedAI.OnSearching();
                 // 첫 번째 떨어진 물체로 이동하고 상호작용
                 Agent.SearchingObject();
                 Debug.Log("Search");
+
                 return BehaviourTree.ENodeStatus.InProgress;
             },
             () =>
@@ -174,7 +200,9 @@ public class BTSetup : MonoBehaviour
 
                 return BehaviourTree.ENodeStatus.Succeeded;
             });
+        #endregion
 
+        #region 순찰노드
         var wanderRoot = BTRoot.Add<BTNode_Sequence>("Wander");
         wanderRoot.Add<BTNode_Action>("Perform Wander",
             () =>
@@ -195,9 +223,9 @@ public class BTSetup : MonoBehaviour
 
                 return Agent.AtDestination ? BehaviourTree.ENodeStatus.Succeeded : BehaviourTree.ENodeStatus.InProgress;
             });
-        
-       
-        
+        #endregion
+
+
     }
 
 }

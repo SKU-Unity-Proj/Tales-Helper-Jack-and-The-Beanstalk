@@ -7,21 +7,27 @@ public class RestCondition : MonoBehaviour
 {
     private float TimeToRest = 0.05f; // public으로 설정하여 인스펙터에서 조절 가능하도록 합니다.
     private float timer = 0f;
+
     private bool isConditionMet = false;
 
-    EnemyAI LinkedAI;
-    Animator anim;
+    private EnemyAI LinkedAI;
+    private DroppedObject droppedObject;
+
+    private Animator anim;
 
     private void Update()
     {
         LinkedAI = GetComponent<EnemyAI>();
         anim = GetComponent<Animator>();
+
+        droppedObject = GameObject.FindObjectOfType<DroppedObject>();
+        if (droppedObject == null)
+        {
+            Debug.LogError("DroppedObject component not found in the scene.");
+            return;
+        }
     }
 
-    public bool CheckCondition()
-    {
-        return isConditionMet;
-    }
 
     public void UpdateTimer(float deltaTime)
     {
@@ -39,6 +45,17 @@ public class RestCondition : MonoBehaviour
 
             }
         }
+    }
+
+    public bool CheckCondition()
+    {
+        // 현재 조건을 반환하고, 조건이 충족된 후 리스트가 비어있다면 조건을 해제
+        bool currentCondition = isConditionMet;
+        if (isConditionMet && droppedObject.DroppedObjects.Count > 0)
+        {
+            isConditionMet = false; // 모든 오브젝트 처리 후 조건 해제
+        }
+        return currentCondition;
     }
 
     public void ResetCondition()
