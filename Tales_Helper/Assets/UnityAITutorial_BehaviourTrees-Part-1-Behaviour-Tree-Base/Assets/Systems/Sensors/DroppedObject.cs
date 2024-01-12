@@ -5,7 +5,6 @@ using UnityEngine;
 public class DroppedObject : MonoBehaviour
 {
     public Transform giantTransform; // 거인의 Transform
-    public LineRenderer lineRenderer; // LineRenderer 컴포넌트
     public float raycastDistance = 50f; // 레이캐스트 거리
 
     public List<GameObject> DroppedObjects = new List<GameObject>(); // 떨어진 오브젝트 리스트
