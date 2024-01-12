@@ -153,14 +153,10 @@ public class BTSetup : MonoBehaviour
         droppedObjectCondition.Add<BTNode_Action>("Interact With Dropped Object",
             () =>
             {
-                if (droppedObject.DroppedObjects.Count > 0)
-                {
-                    LinkedAI.OnSearching();
-                    // 첫 번째 떨어진 물체로 이동하고 상호작용
-                    Agent.SearchingObject();
-
-                    return BehaviourTree.ENodeStatus.InProgress;
-                }
+                LinkedAI.OnSearching();
+                // 첫 번째 떨어진 물체로 이동하고 상호작용
+                Agent.SearchingObject();
+                Debug.Log("Search");
                 return BehaviourTree.ENodeStatus.InProgress;
             },
             () =>
@@ -171,12 +167,12 @@ public class BTSetup : MonoBehaviour
 
                 }
 
-                if (droppedObject.IsSearchCompleted() && Chase_CurrentTarget == null)
+                if (droppedObject.IsSearchCompleted() || (droppedObject.DroppedObjects.Count == 0 && Agent.IsSearching()))
                 {
                     return BehaviourTree.ENodeStatus.Succeeded;
                 }
 
-                return anim.GetBool("SearchObj") ? BehaviourTree.ENodeStatus.Succeeded : BehaviourTree.ENodeStatus.InProgress;
+                return BehaviourTree.ENodeStatus.Succeeded;
             });
 
         var wanderRoot = BTRoot.Add<BTNode_Sequence>("Wander");
@@ -189,6 +185,7 @@ public class BTSetup : MonoBehaviour
 
                 restCondition.UpdateTimer(Time.deltaTime);
 
+                Debug.Log("wander");
                 return BehaviourTree.ENodeStatus.InProgress;
             },
             () =>

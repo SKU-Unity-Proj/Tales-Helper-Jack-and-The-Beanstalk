@@ -21,6 +21,7 @@ public class DroppedObject : MonoBehaviour
         if (!DroppedObjects.Contains(obj))
         {
             DroppedObjects.Add(obj);
+            isConditionMet = true;
         }
 
         // 레이케스트 안 써도 됨. 그냥 실험해볼라고 쓴거임
@@ -32,7 +33,6 @@ public class DroppedObject : MonoBehaviour
             {
                 isRaycasting = true;
                 Debug.Log($"Raycast from {obj.name} hit the Giant.");
-                isConditionMet = true;
 
                 if (isRaycasting)
                 {
@@ -53,8 +53,15 @@ public class DroppedObject : MonoBehaviour
 
     public bool CheckCondition()
     {
-        return isConditionMet;
+        // 현재 조건을 반환하고, 조건이 충족된 후 리스트가 비어있다면 조건을 해제
+        bool currentCondition = isConditionMet;
+        if (isConditionMet && DroppedObjects.Count == 0)
+        {
+            isConditionMet = false; // 모든 오브젝트 처리 후 조건 해제
+        }
+        return currentCondition;
     }
+
     public bool IsRaycasting()
     {
         return isRaycasting;

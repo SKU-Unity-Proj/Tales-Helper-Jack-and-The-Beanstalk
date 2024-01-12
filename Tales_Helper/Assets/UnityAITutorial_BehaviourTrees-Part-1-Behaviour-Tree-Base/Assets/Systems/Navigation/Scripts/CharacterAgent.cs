@@ -187,12 +187,13 @@ public class CharacterAgent : CharacterBase
     /// <returns></returns>
     private IEnumerator SearchingProcess()
     {
-        for (int i = droppedObject.DroppedObjects.Count - 1; i >= 0; i--)
-        {
-            GameObject currentObj = droppedObject.DroppedObjects[i];
+        // 처리할 오브젝트의 복사본 리스트 생성
+        var objectsToProcess = new List<GameObject>(droppedObject.DroppedObjects);
 
+        foreach (var obj in objectsToProcess)
+        {
             // 물체의 위치로 이동
-            MoveTo(currentObj.transform.position);
+            MoveTo(obj.transform.position);
             yield return new WaitUntil(() => AtDestination);
 
             // 물체와 상호작용하는 애니메이션 실행
@@ -201,12 +202,15 @@ public class CharacterAgent : CharacterBase
             // 애니메이션 완료까지 대기
             yield return new WaitUntil(() => IsSearching());
 
-            // 현재 오브젝트 처리 후 리스트에서 제거
-            droppedObject.DroppedObjects.RemoveAt(i);
+            // 애니메이션을 종료하고 다음 오브젝트로 넘어감
             anim.SetBool("SearchObj", false);
         }
-        
+
+        // 원본 리스트에서 처리된 모든 오브젝트 제거
+        droppedObject.DroppedObjects.Clear();
     }
+
+
 
 
     public bool IsSearching()
