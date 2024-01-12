@@ -9,35 +9,36 @@ public enum EOffmeshLinkStatus
     InProgress
 }
 
+// 캐릭터(거인)의 이동 및 행동 관리를 위한 스크립트
 [RequireComponent(typeof(NavMeshAgent))]
 public class CharacterAgent : CharacterBase
 {
-    [SerializeField] float NearestPointSearchRange = 5f;
+    [SerializeField] float NearestPointSearchRange = 5f; // 최근접 탐색 범위
 
-    NavMeshAgent Agent;
-    Animator anim;
+    NavMeshAgent Agent; // NavMeshAgent 컴포넌트
+    Animator anim; // 애니메이터 컴포넌트
 
-    private float walkSpeed = 1.5f;
-    private float runSpeed = 3.5f;
+    private float walkSpeed = 1.5f; // 걷기 속도
+    private float runSpeed = 3.5f; // 뛰기 속도
 
-    private DroppedObject droppedObject;
+    private DroppedObject droppedObject; // 떨어진 물체 정보
 
-    bool DestinationSet = false;
-    bool ReachedDestination = false;
+    bool DestinationSet = false; // 목적지 설정 여부
+    bool ReachedDestination = false; // 목적지 도달 여부
 
-    EOffmeshLinkStatus OffMeshLinkStatus = EOffmeshLinkStatus.NotStarted;
+    EOffmeshLinkStatus OffMeshLinkStatus = EOffmeshLinkStatus.NotStarted; // OffmeshLink 상태
 
+    public bool IsMoving => Agent.velocity.magnitude > float.Epsilon; // 이동 중 여부
+    public bool AtDestination => ReachedDestination; // 목적지 도달 여부 반환
 
-    public bool IsMoving => Agent.velocity.magnitude > float.Epsilon;
-
-    public bool AtDestination => ReachedDestination;
 
     // Start is called before the first frame update
     protected void Start()
     {
-        Agent = GetComponent<NavMeshAgent>();
-        anim = GetComponent<Animator>();
+        Agent = GetComponent<NavMeshAgent>(); // NavMeshAgent 컴포넌트 초기화
+        anim = GetComponent<Animator>(); // Animator 컴포넌트 초기화
 
+        // 떨어진 물체 정보를 가져옴
         droppedObject = GameObject.FindObjectOfType<DroppedObject>();
         if (droppedObject == null)
         {
@@ -49,32 +50,30 @@ public class CharacterAgent : CharacterBase
     // Update is called once per frame
     protected void Update()
     {
-        // have a path and near the end point?
+        // 목적지 설정되었고, 경로 계산 완료 및 OffMeshLink가 아니고, 목적지에 근접했는지 확인
         if (!Agent.pathPending && !Agent.isOnOffMeshLink && DestinationSet && (Agent.remainingDistance <= Agent.stoppingDistance))
         {
             DestinationSet = false;
             ReachedDestination = true;
         }
 
-        // are we on an offmesh link?
+        // OffMeshLink 상태 확인 및 처리
         if (Agent.isOnOffMeshLink)
         {
-            // have we started moving along the link
             if (OffMeshLinkStatus == EOffmeshLinkStatus.NotStarted)
                 StartCoroutine(FollowOffmeshLink());
         }
     }
 
 
+    // OffmeshLink를 따라 이동하는 코루틴
     IEnumerator FollowOffmeshLink()
     {
-        // start the offmesh link - disable NavMesh agent control
         OffMeshLinkStatus = EOffmeshLinkStatus.InProgress;
-        Agent.updatePosition = false;
+        Agent.updatePosition = false; // NavMeshAgent의 위치 및 회전 제어 해제
         Agent.updateRotation = false;
         Agent.updateUpAxis = false;
 
-        // move along the path
         Vector3 newPosition = transform.position;
         while (!Mathf.Approximately(Vector3.Distance(newPosition, Agent.currentOffMeshLinkData.endPos), 0f))
         {
@@ -84,16 +83,15 @@ public class CharacterAgent : CharacterBase
             yield return new WaitForEndOfFrame();
         }
 
-        // flag the link as completed
         OffMeshLinkStatus = EOffmeshLinkStatus.NotStarted;
-        Agent.CompleteOffMeshLink();
+        Agent.CompleteOffMeshLink(); // OffMeshLink 완료 처리
 
-        // return control the agent
-        Agent.updatePosition = true;
+        Agent.updatePosition = true; // NavMeshAgent 제어 복원
         Agent.updateRotation = true;
         Agent.updateUpAxis = true;
     }
 
+    // 주어진 범위 내에서 임의의 위치 선택
     public Vector3 PickLocationInRange(float range)
     {
         Vector3 searchLocation = transform.position;
@@ -107,6 +105,7 @@ public class CharacterAgent : CharacterBase
         return transform.position;
     }
 
+    // 현재 명령 취소
     protected virtual void CancelCurrentCommand()
     {
         // clear the current path
@@ -117,6 +116,7 @@ public class CharacterAgent : CharacterBase
         OffMeshLinkStatus = EOffmeshLinkStatus.NotStarted;
     }
 
+    // 지정된 목적지로 이동
     public virtual void MoveTo(Vector3 destination)
     {
         CancelCurrentCommand();
