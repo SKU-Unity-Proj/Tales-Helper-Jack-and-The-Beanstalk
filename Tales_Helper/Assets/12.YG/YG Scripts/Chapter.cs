@@ -31,4 +31,11 @@ public class Chapter : MonoBehaviour
         mainView.SetActive(true);
         chapterView.SetActive(false);
     }
+
+    // ch1 ¹öÆ°
+    public void OnClickCH1Btn()
+    {
+        SoundEffect.Play();
+        SceneManager.LoadScene("GaintMap");
+    }
 }
