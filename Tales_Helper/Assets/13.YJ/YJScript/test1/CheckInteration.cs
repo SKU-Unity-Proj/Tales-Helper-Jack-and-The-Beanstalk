@@ -88,7 +88,7 @@ public class CheckInteration : MonoBehaviour
         playableDirector.Play();
 
         yield return new WaitForSeconds(9f);
-        SceneManager.LoadScene("Intro");
+        SceneManager.LoadScene("GiantHouse");
 
         yield break;
     }
