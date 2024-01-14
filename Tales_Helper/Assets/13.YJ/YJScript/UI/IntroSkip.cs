@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class IntroSkip : MonoBehaviour
 {
     public Image skipUI;
+    public TextMeshProUGUI skipText;
     private float keyPressTime = 0;
 
     void Update()
@@ -35,10 +37,10 @@ public class IntroSkip : MonoBehaviour
 
     IEnumerator ShowSkipKey()
     {
-        skipUI.gameObject.SetActive(true);
+        skipText.gameObject.SetActive(true);
 
         yield return new WaitForSeconds(3f);
 
-        skipUI.gameObject.SetActive(false);
+        skipText.gameObject.SetActive(false);
     }
 }
