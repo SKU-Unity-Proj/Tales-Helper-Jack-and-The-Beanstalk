@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.28867888, g: 0.40170783, b: 0.34831443, a: 1}
+  m_IndirectSpecularColor: {r: 0.28862485, g: 0.40165997, b: 0.348215, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3530,7 +3530,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 6e-44, z: 5.2e-44, w: 2.3517e-41}
+  m_BoundingSphereOverride: {x: 0, y: 6.082e-42, z: 0, w: 0.0000000016287025}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
@@ -4658,8 +4658,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1184629582}
-        m_TargetAssemblyTypeName: Chapter, Assembly-CSharp
+      - m_Target: {fileID: 1184629581}
+        m_TargetAssemblyTypeName: MenuOption, Assembly-CSharp
         m_MethodName: OnClickBackBtn
         m_Mode: 1
         m_Arguments:
@@ -6765,7 +6765,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1251458141}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1184629582}
+        m_TargetAssemblyTypeName: Chapter, Assembly-CSharp
+        m_MethodName: OnClickCH1Btn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1251458141
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7277,7 +7289,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1288938186}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1184629582}
+        m_TargetAssemblyTypeName: Chapter, Assembly-CSharp
+        m_MethodName: OnClickCH2Btn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1288938186
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9295,7 +9319,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1621102964}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1184629582}
+        m_TargetAssemblyTypeName: Chapter, Assembly-CSharp
+        m_MethodName: OnClickCH1Btn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1621102964
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10536,9 +10572,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1184629578}
+      - m_Target: {fileID: 1184629582}
         m_TargetAssemblyTypeName: Chapter, Assembly-CSharp
-        m_MethodName: 
+        m_MethodName: OnClickCH1Btn
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -11212,7 +11248,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2050138378}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1184629582}
+        m_TargetAssemblyTypeName: Chapter, Assembly-CSharp
+        m_MethodName: OnClickCH1Btn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2050138378
 MonoBehaviour:
   m_ObjectHideFlags: 0
