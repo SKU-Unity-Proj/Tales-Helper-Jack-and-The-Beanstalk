@@ -108,8 +108,8 @@ NavMeshSettings:
     agentTypeID: 0
     agentRadius: 0.2
     agentHeight: 2
-    agentSlope: 10.3
-    agentClimb: 0.17
+    agentSlope: 18.1
+    agentClimb: 0.47
     ledgeDropHeight: 0
     maxJumpAcrossDistance: 0
     minRegionArea: 2
@@ -17452,8 +17452,6 @@ Transform:
   - {fileID: 956728354}
   - {fileID: 521266688}
   - {fileID: 1576434438}
-  - {fileID: 1645500876}
-  - {fileID: 1307525056}
   - {fileID: 1111379567}
   - {fileID: 94586716}
   m_Father: {fileID: 0}
@@ -18451,6 +18449,8 @@ Transform:
   - {fileID: 1597078948}
   - {fileID: 1585537314}
   - {fileID: 1275954193}
+  - {fileID: 1645500876}
+  - {fileID: 1307525056}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &734035250 stripped
@@ -19634,7 +19634,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 678342033}
+    m_TransformParent: {fileID: 733040042}
     m_Modifications:
     - target: {fileID: 2402640794510814907, guid: e6f16fe37e437624a8ca32dd762e8cc6,
         type: 3}
@@ -19644,7 +19644,7 @@ PrefabInstance:
     - target: {fileID: 2402640794510814907, guid: e6f16fe37e437624a8ca32dd762e8cc6,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.1097137
+      value: 1.1097136
       objectReference: {fileID: 0}
     - target: {fileID: 2402640794510814907, guid: e6f16fe37e437624a8ca32dd762e8cc6,
         type: 3}
@@ -19654,22 +19654,22 @@ PrefabInstance:
     - target: {fileID: 2402640794510814907, guid: e6f16fe37e437624a8ca32dd762e8cc6,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 3.665951
+      value: 3.6659513
       objectReference: {fileID: 0}
     - target: {fileID: 2402640794510814907, guid: e6f16fe37e437624a8ca32dd762e8cc6,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -6.7790003
+      value: -13.871251
       objectReference: {fileID: 0}
     - target: {fileID: 2402640794510814907, guid: e6f16fe37e437624a8ca32dd762e8cc6,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.21
+      value: -1.88
       objectReference: {fileID: 0}
     - target: {fileID: 2402640794510814907, guid: e6f16fe37e437624a8ca32dd762e8cc6,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.369999
+      value: 15.593204
       objectReference: {fileID: 0}
     - target: {fileID: 2402640794510814907, guid: e6f16fe37e437624a8ca32dd762e8cc6,
         type: 3}
@@ -30470,7 +30470,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 678342033}
+    m_TransformParent: {fileID: 733040042}
     m_Modifications:
     - target: {fileID: 2402640794510814907, guid: e6f16fe37e437624a8ca32dd762e8cc6,
         type: 3}
@@ -30480,7 +30480,7 @@ PrefabInstance:
     - target: {fileID: 2402640794510814907, guid: e6f16fe37e437624a8ca32dd762e8cc6,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.1097137
+      value: 1.1097136
       objectReference: {fileID: 0}
     - target: {fileID: 2402640794510814907, guid: e6f16fe37e437624a8ca32dd762e8cc6,
         type: 3}
@@ -30490,22 +30490,22 @@ PrefabInstance:
     - target: {fileID: 2402640794510814907, guid: e6f16fe37e437624a8ca32dd762e8cc6,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 3.665951
+      value: 3.6659513
       objectReference: {fileID: 0}
     - target: {fileID: 2402640794510814907, guid: e6f16fe37e437624a8ca32dd762e8cc6,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -6.7790003
+      value: -13.871251
       objectReference: {fileID: 0}
     - target: {fileID: 2402640794510814907, guid: e6f16fe37e437624a8ca32dd762e8cc6,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.32999992
+      value: -3.45
       objectReference: {fileID: 0}
     - target: {fileID: 2402640794510814907, guid: e6f16fe37e437624a8ca32dd762e8cc6,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 4.419998
+      value: 17.643204
       objectReference: {fileID: 0}
     - target: {fileID: 2402640794510814907, guid: e6f16fe37e437624a8ca32dd762e8cc6,
         type: 3}
@@ -30710,7 +30710,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   giantTransform: {fileID: 629241397}
-  lineRenderer: {fileID: 0}
   raycastDistance: 50
   DroppedObjects: []
 --- !u!4 &1152134360
