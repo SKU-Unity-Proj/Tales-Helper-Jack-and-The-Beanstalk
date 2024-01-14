@@ -37,6 +37,13 @@ public class Chapter : MonoBehaviour
         SceneManager.LoadScene("GaintMap");
     }
 
+    // ch2 ¹öÆ°
+    public void OnClickCH2Btn()
+    {
+        SoundEffect.Play();
+        SceneManager.LoadScene("GaintMap");
+    }
+
     void BackPauseBtn()
     {
         SoundEffect.Play();

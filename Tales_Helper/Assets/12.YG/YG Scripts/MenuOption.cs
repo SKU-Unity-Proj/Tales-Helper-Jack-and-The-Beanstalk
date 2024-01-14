@@ -33,7 +33,7 @@ public class MenuOption : MonoBehaviour
         soundEffectSlider.onValueChanged.AddListener(OnSoundEffectSliderValueChanged);
     }
 
-    // 키 버튼
+    // 그래픽 버튼
     public void OnClickKeyBtn()
     {
         SoundEffect.Play();
