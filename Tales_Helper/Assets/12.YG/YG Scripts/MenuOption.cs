@@ -44,11 +44,7 @@ public class MenuOption : MonoBehaviour
     // 백 버튼
     public void OnClickBackBtn()
     {
-        SoundEffect.Play();
-        soundOption.SetActive(false);
-        graphicOption.SetActive(false);
-        mainView.SetActive(true);
-        optionView.SetActive(false);
+        Invoke("BackPuaseBtn", 1.4f);
     }
 
     // 사운드 조절
@@ -66,5 +62,14 @@ public class MenuOption : MonoBehaviour
     {
         QualitySettings.SetQualityLevel(value);
         QualitySettings.renderPipeline = RenderPipelineAssets[value];
+    }
+
+    void BackPuaseBtn()
+    {
+        SoundEffect.Play();
+        soundOption.SetActive(false);
+        graphicOption.SetActive(false);
+        mainView.SetActive(true);
+        optionView.SetActive(false);
     }
 }

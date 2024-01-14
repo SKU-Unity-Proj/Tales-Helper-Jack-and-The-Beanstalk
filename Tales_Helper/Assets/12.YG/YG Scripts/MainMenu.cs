@@ -40,7 +40,7 @@ public class MainMenu : MonoBehaviour
     // 챕터 버튼
     public void OnClickChapterBtn()
     {
-        Invoke("ChapterPauseBtn", 0.2f);
+        Invoke("ChapterPauseBtn", 1.4f);
 
     }
     void ChapterPauseBtn()
@@ -54,7 +54,7 @@ public class MainMenu : MonoBehaviour
     // 옵션 버튼
     public void OnClickOptionBtn()
     {
-        Invoke("OptionPauseBtn", 0.2f);
+        Invoke("OptionPauseBtn", 1.4f);
     }
     void OptionPauseBtn()
     {

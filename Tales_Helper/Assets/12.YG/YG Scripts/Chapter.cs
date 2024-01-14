@@ -21,15 +21,13 @@ public class Chapter : MonoBehaviour
     public void OnClickTutorialBtn()
     {
         SoundEffect.Play();
-        SceneManager.LoadScene("JackHouse");
+        SceneManager.LoadScene("IntroAnimation");
     }
 
     // 백 버튼
     public void OnClickBackBtn()
     {
-        SoundEffect.Play();
-        mainView.SetActive(true);
-        chapterView.SetActive(false);
+        Invoke("BackPauseBtn", 1.4f);
     }
 
     // ch1 버튼
@@ -37,5 +35,12 @@ public class Chapter : MonoBehaviour
     {
         SoundEffect.Play();
         SceneManager.LoadScene("GaintMap");
+    }
+
+    void BackPauseBtn()
+    {
+        SoundEffect.Play();
+        mainView.SetActive(true);
+        chapterView.SetActive(false);
     }
 }
