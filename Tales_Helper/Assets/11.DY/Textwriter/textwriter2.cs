@@ -18,21 +18,21 @@ public class textwriter2 : MonoBehaviour
 	[SerializeField] string leadingChar = "";
 	[SerializeField] bool leadingCharBeforeDelay = false;
 	[Space(10)] [SerializeField] private bool startOnEnable = false;
-	
+
 	[Header("Collision-Based")]
 	[SerializeField] private bool clearAtStart = false;
 	[SerializeField] private bool startOnCollision = false;
-	enum options {clear, complete}
+	enum options { clear, complete }
 	[SerializeField] options collisionExitOptions;
 
 	// Use this for initialization
 	void Awake()
 	{
-		if(text != null)
+		if (text != null)
 		{
 			writer = text.text;
 		}
-		
+
 		if (tmpProText != null)
 		{
 			writer = tmpProText.text;
@@ -41,12 +41,12 @@ public class textwriter2 : MonoBehaviour
 
 	void Start()
 	{
-		if (!clearAtStart ) return;
-		if(text != null)
+		if (!clearAtStart) return;
+		if (text != null)
 		{
 			text.text = "";
 		}
-		
+
 		if (tmpProText != null)
 		{
 			tmpProText.text = "";
@@ -56,7 +56,7 @@ public class textwriter2 : MonoBehaviour
 	private void OnEnable()
 	{
 		print("On Enable!");
-		if(startOnEnable) StartTypewriter();
+		if (startOnEnable) StartTypewriter();
 	}
 
 	private void OnCollisionEnter3D(Collision col)
@@ -95,33 +95,45 @@ public class textwriter2 : MonoBehaviour
 				tmpProText.text = "";
 			}
 		}
-		
-		StopAllCoroutines();
+
+		if (coroutine != null)
+		{
+			StopCoroutine(coroutine);
+			coroutine = null;
+		}
 	}
 
 
 	private void StartTypewriter()
 	{
-		StopAllCoroutines();
+		if (coroutine != null)
+		{
+			StopCoroutine(coroutine);
+			coroutine = null;
+		}
 
-		if(text != null)
+		if (text != null)
 		{
 			text.text = "";
 
-			StartCoroutine("TypeWriterText");
+			coroutine = StartCoroutine(TypeWriterText());
 		}
-		
+
 		if (tmpProText != null)
 		{
 			tmpProText.text = "";
 
-			StartCoroutine("TypeWriterTMP");
+			coroutine = StartCoroutine(TypeWriterText());
 		}
 	}
 
 	private void OnDisable()
 	{
-		StopAllCoroutines();
+		if (coroutine != null)
+		{
+			StopCoroutine(coroutine);
+			coroutine = null;
+		}
 	}
 
 	IEnumerator TypeWriterText()
@@ -141,13 +153,19 @@ public class textwriter2 : MonoBehaviour
 			yield return new WaitForSeconds(timeBtwChars);
 		}
 
-		if(leadingChar != "")
-        {
+		if (leadingChar != "")
+		{
 			text.text = text.text.Substring(0, text.text.Length - leadingChar.Length);
 		}
 
 		yield return null;
 	}
+
+	public void onclickskip()
+	{
+		
+	}
+
 
 	IEnumerator TypeWriterTMP()
     {

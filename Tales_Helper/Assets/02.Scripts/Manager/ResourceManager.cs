@@ -8,7 +8,7 @@ using UnityObject = UnityEngine.Object;
 /// 2022.04.22
 /// </summary>
 
-public class ResourceManager
+public class ResourceManager 
 {
    public static UnityObject Load(string path)
     {
