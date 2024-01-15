@@ -1349,7 +1349,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0, y: 0, z: 1}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0, y: 0, z: 0}
+  m_ConnectedAnchor: {x: 0.000015474856, y: 0.2529026, z: -0.000014819201}
   serializedVersion: 2
   m_SwingAxis: {x: 1, y: 0, z: 0}
   m_TwistLimitSpring:
@@ -8353,7 +8353,7 @@ Transform:
   m_GameObject: {fileID: 336862254}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.5, y: 10.76, z: -0.21}
+  m_LocalPosition: {x: 6.5, y: 12.16, z: -0.21}
   m_LocalScale: {x: 1, y: 1, z: 1.873}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10949,7 +10949,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &446748103
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14754,7 +14754,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: -1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0, y: 0, z: 0}
+  m_ConnectedAnchor: {x: 0.13604766, y: 0.27213728, z: -0.041435968}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: 1}
   m_TwistLimitSpring:
@@ -18472,7 +18472,7 @@ GameObject:
   - component: {fileID: 743239744}
   - component: {fileID: 743239746}
   m_Layer: 0
-  m_Name: CameraManager
+  m_Name: LivingroomCameraDriven
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18554,13 +18554,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraZones:
-  - camera: {fileID: 845483814}
-    position: {x: -4.16, y: 1.34, z: 5.58}
-    boxsize: {x: 2.54, y: 2.43, z: 7.29}
+  - camera: {fileID: 703564643}
+    position: {x: -11.9, y: 1.88, z: -75.1}
+    boxsize: {x: 5.22, y: 2.43, z: 10.6}
     zoneObject: {fileID: 0}
-  - camera: {fileID: 2094849344}
-    position: {x: -9.03, y: 1.4, z: 5.58}
-    boxsize: {x: 2.54, y: 2.43, z: 7.29}
+  - camera: {fileID: 845483814}
+    position: {x: -5.2, y: 0.16, z: -75.1}
+    boxsize: {x: 3.6, y: 1.53, z: 7.29}
     zoneObject: {fileID: 0}
   - camera: {fileID: 703564643}
     position: {x: -9.03, y: 1.4, z: 14.04}
@@ -18705,7 +18705,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: -1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0, y: 0, z: 0}
+  m_ConnectedAnchor: {x: 0.08045864, y: -0.014615776, z: -0.005248426}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: 1}
   m_TwistLimitSpring:
@@ -28783,7 +28783,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: -1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0, y: 0, z: 0}
+  m_ConnectedAnchor: {x: -0.00001776032, y: 0.3796868, z: -0.000010602177}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: 1}
   m_TwistLimitSpring:
@@ -30691,7 +30691,7 @@ GameObject:
   - component: {fileID: 1152134360}
   - component: {fileID: 1152134359}
   m_Layer: 0
-  m_Name: DroppedObjManager
+  m_Name: DroppedObjControll
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -36313,7 +36313,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0, y: 0, z: 0}
+  m_ConnectedAnchor: {x: -0.13604707, y: 0.27213898, z: -0.04143445}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: 1}
   m_TwistLimitSpring:
@@ -41556,7 +41556,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: -1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0, y: 0, z: 0}
+  m_ConnectedAnchor: {x: 0.000017681157, y: 0.3796907, z: -0.0000101178875}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: 1}
   m_TwistLimitSpring:
@@ -46462,7 +46462,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: -1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0, y: 0, z: 0}
+  m_ConnectedAnchor: {x: -0.08046055, y: -0.014605822, z: -0.0052474723}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: 1}
   m_TwistLimitSpring:
@@ -47960,7 +47960,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1778422170
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -50770,7 +50770,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0, y: 0, z: 0}
+  m_ConnectedAnchor: {x: 0.0000008596908, y: 0.3772489, z: 0.00018242}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: 1}
   m_TwistLimitSpring:
@@ -51974,7 +51974,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0, y: 0, z: 0}
+  m_ConnectedAnchor: {x: 0.0000052452087, y: 0.10186662, z: 0.023415672}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: 1}
   m_TwistLimitSpring:
@@ -52755,7 +52755,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0, y: 0, z: 1}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0, y: 0, z: 0}
+  m_ConnectedAnchor: {x: -0.000016033653, y: 0.25290436, z: -0.000013861807}
   serializedVersion: 2
   m_SwingAxis: {x: -1, y: 0, z: 0}
   m_TwistLimitSpring:
@@ -54733,18 +54733,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9b8ffd40b1bac6f40bcd2c4fe538820b, type: 3}
---- !u!114 &2094849344 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7117654469588118110, guid: 1df704b0d9db31c47965595373e17808,
-    type: 3}
-  m_PrefabInstance: {fileID: 7869993429803325089}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45e653bab7fb20e499bda25e1b646fea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &2095528720 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 9b8ffd40b1bac6f40bcd2c4fe538820b,
@@ -56082,17 +56070,42 @@ PrefabInstance:
     - target: {fileID: 969897138950745177, guid: 1df704b0d9db31c47965595373e17808,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7.4568057
+      value: 8.173524
       objectReference: {fileID: 0}
     - target: {fileID: 969897138950745177, guid: 1df704b0d9db31c47965595373e17808,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 24.994278
+      value: 21.987728
       objectReference: {fileID: 0}
     - target: {fileID: 969897138950745177, guid: 1df704b0d9db31c47965595373e17808,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 6.2403765
+      value: 6.240384
+      objectReference: {fileID: 0}
+    - target: {fileID: 969897138950745177, guid: 1df704b0d9db31c47965595373e17808,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.6766948
+      objectReference: {fileID: 0}
+    - target: {fileID: 969897138950745177, guid: 1df704b0d9db31c47965595373e17808,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.20514418
+      objectReference: {fileID: 0}
+    - target: {fileID: 969897138950745177, guid: 1df704b0d9db31c47965595373e17808,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.6766948
+      objectReference: {fileID: 0}
+    - target: {fileID: 969897138950745177, guid: 1df704b0d9db31c47965595373e17808,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.20514418
+      objectReference: {fileID: 0}
+    - target: {fileID: 969897138950745177, guid: 1df704b0d9db31c47965595373e17808,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 33.73
       objectReference: {fileID: 0}
     - target: {fileID: 1082878678910038149, guid: 1df704b0d9db31c47965595373e17808,
         type: 3}
@@ -56123,6 +56136,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 2495193268457390303, guid: 1df704b0d9db31c47965595373e17808,
+        type: 3}
+      propertyPath: m_TrackedObjectOffset.y
+      value: 6.23
       objectReference: {fileID: 0}
     - target: {fileID: 3501287103458419337, guid: 1df704b0d9db31c47965595373e17808,
         type: 3}
@@ -56538,7 +56556,6 @@ SceneRoots:
   - {fileID: 1501244827}
   - {fileID: 1830318999}
   - {fileID: 16522041}
-  - {fileID: 743239742}
   - {fileID: 6748152179883831736}
   - {fileID: 678342033}
   - {fileID: 733040042}
@@ -56550,3 +56567,4 @@ SceneRoots:
   - {fileID: 1778422176}
   - {fileID: 396830394}
   - {fileID: 1152134360}
+  - {fileID: 743239742}

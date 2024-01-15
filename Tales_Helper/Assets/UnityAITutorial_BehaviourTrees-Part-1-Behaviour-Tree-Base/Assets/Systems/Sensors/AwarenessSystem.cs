@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DiasGames.Components;
 
 public class TrackedTarget
 {
@@ -114,6 +115,20 @@ public class AwarenessSystem : MonoBehaviour
             Targets.Remove(target);
     }
 
+    private void CheckAndHandlePlayerDetection(GameObject targetGO, TrackedTarget trackedTarget)
+    {
+        if (targetGO.tag == "Player" && trackedTarget.Awareness >= 2f)
+        {
+            // 플레이어의 Health 컴포넌트 찾기
+            Health playerHealth = targetGO.GetComponent<Health>();
+            if (playerHealth != null)
+            {
+                // 플레이어의 체력을 0으로 설정
+                playerHealth.Damage(playerHealth.CurrentHP);
+            }
+        }
+    }
+
     // 인지도 업데이트
     void UpdateAwareness(GameObject targetGO, DetectableTarget target, Vector3 position, float awareness, float minAwareness)
     {
@@ -123,6 +138,8 @@ public class AwarenessSystem : MonoBehaviour
         // 대상 인지도 업데이트
         if (Targets[targetGO].UpdateAwareness(target, position, awareness, minAwareness))
         {
+            //CheckAndHandlePlayerDetection(targetGO, Targets[targetGO]);
+
             // 인지도에 따른 처리
             if (Targets[targetGO].Awareness >= 2f)
                 LinkedAI.OnFullyDetected(targetGO); // 완전히 감지된 경우
