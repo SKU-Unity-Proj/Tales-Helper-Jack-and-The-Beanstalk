@@ -60,8 +60,11 @@ public class MenuOption : MonoBehaviour
     // 그래픽 설정
     public void SetPipeline(int value)
     {
-        QualitySettings.SetQualityLevel(value);
+        Debug.Log("Selected pipeline index: " + value);
+        QualitySettings.SetQualityLevel(value, true);
         QualitySettings.renderPipeline = RenderPipelineAssets[value];
+        Debug.Log("Current Quality Level: " + QualitySettings.GetQualityLevel());
+        Debug.Log("Current Render Pipeline: " + QualitySettings.renderPipeline);
     }
 
     void BackPuaseBtn()
