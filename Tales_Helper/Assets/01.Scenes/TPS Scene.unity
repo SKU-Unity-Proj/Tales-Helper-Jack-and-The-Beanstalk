@@ -28115,6 +28115,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 177f923a2cc935845b0bdff860ee3f57, type: 3}
+--- !u!4 &1750615487 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2333113390080381366, guid: 177f923a2cc935845b0bdff860ee3f57,
+    type: 3}
+  m_PrefabInstance: {fileID: 1750615486}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1751033800 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4643051448312681666, guid: 167537ee4c701714abd2ae021f4c4e4d,
@@ -36033,6 +36039,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4295538944358923800, guid: cc626daeb5beef84d9d78870227bcd3e,
         type: 3}
+      propertyPath: m_VolumeTrigger
+      value: 
+      objectReference: {fileID: 1750615487}
+    - target: {fileID: 4295538944358923800, guid: cc626daeb5beef84d9d78870227bcd3e,
+        type: 3}
       propertyPath: m_RenderPostProcessing
       value: 1
       objectReference: {fileID: 0}
@@ -36045,6 +36056,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 4977903566646589690, guid: cc626daeb5beef84d9d78870227bcd3e,
+        type: 3}
+      propertyPath: m_ClearFlags
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5510200404291483354, guid: cc626daeb5beef84d9d78870227bcd3e,
         type: 3}
