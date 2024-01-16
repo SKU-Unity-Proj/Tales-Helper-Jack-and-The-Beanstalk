@@ -1,26 +1,21 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 
 namespace XEntity.InventoryItemSystem
 {
-    //This script contains the all the different item references and different types of item use events.
-    //This script must exist in the scene for the saving/loading/item-use system to work properly.
-    //NOTE: Only one reference should exist in the scene at once.
-
     public class ItemManager : MonoBehaviour
     {
         public InteractionSettings interactionSettings;
 
-        //Singleton instance of this script.
+
         public static ItemManager Instance { get; private set; }
 
-        //List of all the item scriptable obects.
-        //Either assign the items manually when created or select the item scriptable object > right click > select Add To Item List 
+
         public List<Item> itemList = new List<Item>();
 
         private void Awake()
         {
-            //Singleton logic
             #region Singleton
             if (Instance == null)
             {
@@ -37,7 +32,6 @@ namespace XEntity.InventoryItemSystem
             //Any code in awake should be after the singleton evaluation
         }
 
-        //This function is called when the Use Item button is clicked from one of the inventory items.
         public void UseItem(ItemSlot slot) 
         {
             if (slot.IsEmpty) return;
@@ -60,7 +54,8 @@ namespace XEntity.InventoryItemSystem
         private void ConsumeItem(ItemSlot slot) 
         {
             Debug.Log("You have consumed " + slot.slotItem.itemName);
-            slot.Remove(1);
+            //slot.Remove(1);
+            //playableDirector.Play();
         }
 
         private void EquipItem(ItemSlot slot) 
