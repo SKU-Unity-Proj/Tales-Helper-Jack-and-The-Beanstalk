@@ -6,6 +6,8 @@ namespace XEntity.InventoryItemSystem
 {
     public class ItemManager : MonoBehaviour
     {
+        public GameObject beanStalk;
+
         public InteractionSettings interactionSettings;
 
 
@@ -13,6 +15,7 @@ namespace XEntity.InventoryItemSystem
 
 
         public List<Item> itemList = new List<Item>();
+
 
         private void Awake()
         {
@@ -55,7 +58,7 @@ namespace XEntity.InventoryItemSystem
         {
             Debug.Log("You have consumed " + slot.slotItem.itemName);
             //slot.Remove(1);
-            //playableDirector.Play();
+            beanStalk.SetActive(true);
         }
 
         private void EquipItem(ItemSlot slot) 
