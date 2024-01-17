@@ -10,12 +10,12 @@ namespace XEntity.InventoryItemSystem
 
         public InteractionSettings interactionSettings;
 
-
         public static ItemManager Instance { get; private set; }
 
 
         public List<Item> itemList = new List<Item>();
 
+        public bool canPlant = false;
 
         private void Awake()
         {
@@ -57,8 +57,12 @@ namespace XEntity.InventoryItemSystem
         private void ConsumeItem(ItemSlot slot) 
         {
             Debug.Log("You have consumed " + slot.slotItem.itemName);
-            //slot.Remove(1);
-            beanStalk.SetActive(true);
+            
+            if(canPlant)
+            {
+                beanStalk.SetActive(true);
+                slot.Remove(1);
+            }
         }
 
         private void EquipItem(ItemSlot slot) 

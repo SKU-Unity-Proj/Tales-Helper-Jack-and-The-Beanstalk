@@ -65,8 +65,8 @@ public class GrowBeanstalk : MonoBehaviour  //BeanStalk 하위에 달린 오브젝트에 �
     {
         Debug.Log("CameraShake Play");
 
-        CameraShakeManager.Instance.SetShakeDegree(2f,2f);
-        CameraShakeManager.Instance.SetShakeTime(6.4f);
+        CameraShakeManager.Instance.SetShakeDegree(1.5f,1.5f);
+        CameraShakeManager.Instance.SetShakeTime(6.8f);
     }
 
     void InventoryOff()
