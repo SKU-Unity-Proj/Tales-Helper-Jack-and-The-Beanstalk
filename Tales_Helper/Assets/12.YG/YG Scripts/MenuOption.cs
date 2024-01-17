@@ -23,6 +23,17 @@ public class MenuOption : MonoBehaviour
     [SerializeField]
     TMP_Dropdown Dropdown;
 
+    
+    void Start()
+    {
+        // 드롭다운의 기본 선택값을 설정합니다.
+        Dropdown.value = 0;
+        Dropdown.RefreshShownValue(); // UI를 업데이트합니다.
+
+        // 기본 렌더링 파이프라인을 설정합니다.
+        SetPipeline(Dropdown.value);
+    }
+
     // 사운드 버튼
     public void OnClickSoundBtn()
     {
