@@ -1,6 +1,4 @@
 using Cinemachine;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraShakeManager : MonoBehaviour
@@ -11,10 +9,9 @@ public class CameraShakeManager : MonoBehaviour
 
     private CinemachineBasicMultiChannelPerlin virtualCameraNoise;
 
-    private float ShakeDuration = 1f;          //카메라 흔들림 효과가 지속되는 시간
     private float ShakeAmplitude = 3.0f;         //카메라 파라미터
     private float ShakeFrequency = 3.0f;         //카메라 파라미터
-    private float ShakeElapsedTime = 0f;        //값이 있으면 흔들림
+    private float ShakeElapsedTime = 0f;        //카메라 흔들림 효과가 지속되는 시간
 
     void Awake()
     {
@@ -55,12 +52,14 @@ public class CameraShakeManager : MonoBehaviour
         }
     }
 
+    //카메라 흔드는 시간
     public void SetShakeTime(float ShakeDuration)
     {
         ShakeElapsedTime = ShakeDuration;
         Debug.Log(ShakeDuration);
     }
 
+    //카메라 흔들림 세기
     public void SetShakeDegree(float A, float B)
     {
         ShakeAmplitude = A;
