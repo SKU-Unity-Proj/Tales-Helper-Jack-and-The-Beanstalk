@@ -530,7 +530,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 706ce0af98dd37b46b71e12079263660, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anim: {fileID: 0}
+  anim: {fileID: 1832781636}
 --- !u!114 &23111499
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -543,19 +543,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c9e7c7e669ba82438a4c8ca4b3fc1be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainView: {fileID: 0}
-  optionView: {fileID: 0}
-  soundOption: {fileID: 0}
-  bgmSlider: {fileID: 0}
-  soundEffectSlider: {fileID: 0}
-  graphicOption: {fileID: 0}
+  mainView: {fileID: 740787800}
+  optionView: {fileID: 459850583}
+  soundOption: {fileID: 964607707}
+  bgmSlider: {fileID: 1905369289}
+  soundEffectSlider: {fileID: 749836753}
+  graphicOption: {fileID: 1427911975}
   Bgm: {fileID: 0}
   SoundEffect: {fileID: 0}
   RenderPipelineAssets:
   - {fileID: 11400000, guid: a3595d1e91ba7dd4da3e9249b1d7d67b, type: 2}
   - {fileID: 11400000, guid: c2818380ec2f5c44ba261d70dc28932c, type: 2}
   - {fileID: 11400000, guid: f1c4c913e31f076499ffe51ea030c14c, type: 2}
-  Dropdown: {fileID: 0}
+  Dropdown: {fileID: 2047626716}
 --- !u!114 &23111500
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -568,8 +568,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1461889f51c73524e941c714b3e42bf7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainView: {fileID: 0}
-  chapterView: {fileID: 0}
+  mainView: {fileID: 740787800}
+  chapterView: {fileID: 136221923}
   SoundEffect: {fileID: 0}
 --- !u!114 &23111501
 MonoBehaviour:
@@ -586,7 +586,7 @@ MonoBehaviour:
   mainView: {fileID: 740787800}
   optionView: {fileID: 459850583}
   chapterView: {fileID: 136221923}
-  graphicOption: {fileID: 0}
+  graphicOption: {fileID: 1427911975}
   BGM: {fileID: 0}
   SoundEffect: {fileID: 0}
 --- !u!1 &56579004
@@ -947,7 +947,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &78326948
 Transform:
   m_ObjectHideFlags: 0
@@ -3422,7 +3422,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 23111501}
         m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
         m_MethodName: OnClickQuitBtn
         m_Mode: 1
@@ -4807,7 +4807,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 23111501}
         m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
         m_MethodName: OnClickChapterBtn
         m_Mode: 1
@@ -4819,7 +4819,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 23111498}
         m_TargetAssemblyTypeName: CallCloudCanvas, Assembly-CSharp
         m_MethodName: PlayCloudAnim
         m_Mode: 1
@@ -5229,7 +5229,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &740787801
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7914,7 +7914,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 23111501}
         m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
         m_MethodName: OnClickOptionBtn
         m_Mode: 1
@@ -7926,7 +7926,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 23111498}
         m_TargetAssemblyTypeName: CallCloudCanvas, Assembly-CSharp
         m_MethodName: PlayCloudAnim
         m_Mode: 1
@@ -8262,7 +8262,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 23111501}
         m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
         m_MethodName: OnClickRestartBtn
         m_Mode: 1
@@ -8554,7 +8554,8 @@ PrefabInstance:
         type: 3}
       propertyPath: beanStalk
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2619916544358058447, guid: 4f4e81d9cfa17944f9bd1beb8cd36a7a,
+        type: 3}
     - target: {fileID: 4490459622650576402, guid: 7ec268d119c305d4792a8606d7aad080,
         type: 3}
       propertyPath: interactionSettings
@@ -10221,6 +10222,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: GiatAIManagers
       objectReference: {fileID: 0}
+    - target: {fileID: 2691880565263345226, guid: 89e50f718a72b9d4e8d3be0dbd934314,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4094256151183943332, guid: 89e50f718a72b9d4e8d3be0dbd934314,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -10391,8 +10397,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -960, y: -540}
-  m_SizeDelta: {x: -100, y: -100}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1571003940
 MonoBehaviour:
@@ -10502,17 +10508,17 @@ MonoBehaviour:
   questId: 10
   questActionIndex: 0
   questObject:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 2915805681213382824, guid: 0be8bee627d34cc42b0a7f514e46435c, type: 3}
+  - {fileID: 9148429834607968807, guid: 5559f05bf6c18de4598fb60f2fd2cbf7, type: 3}
+  - {fileID: 1847659247022482592, guid: ca5bd6dd4da9e34479b2f5bde965c806, type: 3}
+  - {fileID: 6517540761266067928, guid: 9995ecdbd9b55ff46b1687385d2d59c1, type: 3}
+  - {fileID: 686021698229024800, guid: f6a5ba66e0fd0ee4e9bc0a73b504dcd3, type: 3}
+  - {fileID: 6009157852242899117, guid: 544cd84082a3b434f9566356e4ec5c59, type: 3}
+  - {fileID: 1605994995489133241, guid: 886cc8c836890c6409e18618a5aec83a, type: 3}
   cow: {fileID: 1287295899898638, guid: 9ec060093457ad84ca2733cb15c2c41e, type: 3}
-  bridgeCam: {fileID: 3162816569057240217, guid: 4f86d698fe635354da78097de42fbca0,
+  bridgeCam: {fileID: 7164766300812244699, guid: 67b2113584e83184daf58ef2ecb57958,
     type: 3}
-  mainCam: {fileID: 0}
+  mainCam: {fileID: 2765812402816285210, guid: bb397b39344a5364dbf47e4fa93a1af5, type: 3}
 --- !u!82 &1587416679
 AudioSource:
   m_ObjectHideFlags: 0
@@ -13047,7 +13053,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6cc5dec4cf01134c8e67c7772d9172c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCam: {fileID: 0}
+  mainCam: {fileID: 2765812402816285210, guid: bb397b39344a5364dbf47e4fa93a1af5, type: 3}
 --- !u!1 &1920764474
 GameObject:
   m_ObjectHideFlags: 0
@@ -14261,7 +14267,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 23111501}
         m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
         m_MethodName: OnClickPlayBtn
         m_Mode: 1
