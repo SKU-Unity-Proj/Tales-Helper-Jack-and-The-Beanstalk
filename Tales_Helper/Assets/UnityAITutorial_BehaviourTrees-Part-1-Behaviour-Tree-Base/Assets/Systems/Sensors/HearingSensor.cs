@@ -13,12 +13,6 @@ public class HearingSensor : MonoBehaviour
         HearingManager.Instance.Register(this); // HearingManager에 이 센서를 등록
     }
 
-
-    void Update()
-    {
-
-    }
-
     // 게임 오브젝트가 파괴될 때 호출되는 OnDestroy 함수
     void OnDestroy()
     {

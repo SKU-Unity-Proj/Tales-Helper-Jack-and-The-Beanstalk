@@ -21,8 +21,6 @@ public class CharacterAgent : CharacterBase
     private float walkSpeed = 1.5f; // 걷기 속도
     private float runSpeed = 3.5f; // 뛰기 속도
 
-    private DroppedObject droppedObject; // 떨어진 물체 정보
-
     bool DestinationSet = false; // 목적지 설정 여부
     bool ReachedDestination = false; // 목적지 도달 여부
 
@@ -38,13 +36,14 @@ public class CharacterAgent : CharacterBase
         Agent = GetComponent<NavMeshAgent>(); // NavMeshAgent 컴포넌트 초기화
         anim = GetComponent<Animator>(); // Animator 컴포넌트 초기화
 
-        // 떨어진 물체 정보를 가져옴
-        droppedObject = GameObject.FindObjectOfType<DroppedObject>();
-        if (droppedObject == null)
-        {
-            Debug.LogError("DroppedObject component not found in the scene.");
-            return;
-        }
+        // 거인 트렌스폼이 필요할 시 이거 쓰면 됨.
+        /* 
+        // 거인의 Transform을 가져옴
+        Transform giantTransform = this.transform;
+        // DroppedObjectManager의 인스턴스를 찾아서 SetGiantTransform 호출
+        DroppedObject.Instance.SetGiantTransform(giantTransform);
+        */
+
     }
 
     // Update is called once per frame
@@ -171,11 +170,11 @@ public class CharacterAgent : CharacterBase
 
     public void SearchingObject()
     {
-        if(droppedObject.DroppedObjects.Count > 0)
+        if(DroppedObject.Instance.GetDroppedObjectsCount() > 0)
         {
             StartCoroutine(SearchingProcess());
         }
-        
+
     }
 
     /// <summary>
@@ -188,7 +187,7 @@ public class CharacterAgent : CharacterBase
     private IEnumerator SearchingProcess()
     {
         // 처리할 오브젝트의 복사본 리스트 생성
-        var objectsToProcess = new List<GameObject>(droppedObject.DroppedObjects);
+        var objectsToProcess = new List<GameObject>(DroppedObject.Instance.DroppedObjects);
 
         foreach (var obj in objectsToProcess)
         {
@@ -205,11 +204,9 @@ public class CharacterAgent : CharacterBase
             // 애니메이션을 종료하고 다음 오브젝트로 넘어감
             anim.SetBool("SearchObj", false);
         }
-
-        // 원본 리스트에서 처리된 모든 오브젝트 제거
-        droppedObject.DroppedObjects.Clear();
+        // 모든 오브젝트에 대한 탐색이 완료된 후 리스트 비우기
+        DroppedObject.Instance.DroppedObjects.Clear();
     }
-
 
 
 

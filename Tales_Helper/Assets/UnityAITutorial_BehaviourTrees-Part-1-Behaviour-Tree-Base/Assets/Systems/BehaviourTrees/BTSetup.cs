@@ -26,7 +26,6 @@ public class BTSetup : MonoBehaviour
     protected RestCondition restCondition;
     protected Animator anim;
     protected NavMeshAgent giant;
-    protected DroppedObject droppedObject;
 
     void Awake()
     {
@@ -36,13 +35,6 @@ public class BTSetup : MonoBehaviour
         LinkedAI = GetComponent<EnemyAI>();
         Sensors = GetComponent<AwarenessSystem>();
         restCondition = GetComponent<RestCondition>();
-
-        droppedObject = GameObject.FindObjectOfType<DroppedObject>();
-        if (droppedObject == null)
-        {
-            Debug.LogError("DroppedObject component not found in the scene.");
-            return;
-        }
 
         var BTRoot = LinkedBT.RootNode.Add<BTNode_Selector>("Base Logic");
 
@@ -154,7 +146,7 @@ public class BTSetup : MonoBehaviour
         var droppedObjectCondition = BTRoot.Add(new BTNode_Condition("Check Dropped Objects",
            () =>
            {
-               bool conditionMet = droppedObject.CheckCondition();
+               bool conditionMet = DroppedObject.Instance.CheckCondition();
                //Debug.Log($"Searching Condition node evaluated: {conditionMet}");
                return conditionMet;
            }));
@@ -193,7 +185,7 @@ public class BTSetup : MonoBehaviour
 
                 }
 
-                if (droppedObject.IsSearchCompleted() || (droppedObject.DroppedObjects.Count == 0 && Agent.IsSearching()))
+                if (DroppedObject.Instance.IsSearchCompleted() || (DroppedObject.Instance.DroppedObjects.Count == 0 && Agent.IsSearching()))
                 {
                     return BehaviourTree.ENodeStatus.Succeeded;
                 }

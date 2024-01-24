@@ -11,7 +11,6 @@ public class RestCondition : MonoBehaviour
     private bool isConditionMet = false;
 
     private EnemyAI LinkedAI;
-    private DroppedObject droppedObject;
 
     private Animator anim;
 
@@ -19,13 +18,6 @@ public class RestCondition : MonoBehaviour
     {
         LinkedAI = GetComponent<EnemyAI>();
         anim = GetComponent<Animator>();
-
-        droppedObject = GameObject.FindObjectOfType<DroppedObject>();
-        if (droppedObject == null)
-        {
-            Debug.LogError("DroppedObject component not found in the scene.");
-            return;
-        }
     }
 
 
@@ -51,7 +43,7 @@ public class RestCondition : MonoBehaviour
     {
         // 현재 조건을 반환하고, 조건이 충족된 후 리스트가 비어있다면 조건을 해제
         bool currentCondition = isConditionMet;
-        if (isConditionMet && droppedObject.DroppedObjects.Count > 0)
+        if (isConditionMet && DroppedObject.Instance.DroppedObjects.Count > 0)
         {
             isConditionMet = false; // 모든 오브젝트 처리 후 조건 해제
         }

@@ -45,18 +45,6 @@ public class EnemyAI : MonoBehaviour
         Awareness = GetComponent<AwarenessSystem>();
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     public void ReportCanSee(DetectableTarget seen)
     {
         Awareness.ReportCanSee(seen);

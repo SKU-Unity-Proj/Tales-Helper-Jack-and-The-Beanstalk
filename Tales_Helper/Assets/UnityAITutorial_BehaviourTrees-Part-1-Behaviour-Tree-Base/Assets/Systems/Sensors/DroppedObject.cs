@@ -4,52 +4,62 @@ using UnityEngine;
 
 public class DroppedObject : MonoBehaviour
 {
-    public Transform giantTransform; // 거인의 Transform
-    public float raycastDistance = 50f; // 레이캐스트 거리
-
+    public static DroppedObject Instance { get; private set; }
     public List<GameObject> DroppedObjects = new List<GameObject>(); // 떨어진 오브젝트 리스트
 
-    private bool isRaycasting = false;
+    private Transform giantTransform; // 이제 private로 선언
+    public float raycastDistance = 50f; // 레이캐스트 거리
+
     private bool isConditionMet = false;
 
-
-    // 레이캐스트 발사 및 처리 로직을 각 오브젝트의 스크립트로 이동
-    public void HandleObjectCollision(GameObject obj)
+    void Awake()
     {
-        // 충돌한 오브젝트를 리스트에 추가
-        if (!DroppedObjects.Contains(obj))
+        if (Instance == null)
         {
-            DroppedObjects.Add(obj);
-            isConditionMet = true;
-        }
-
-        // 레이케스트 안 써도 됨. 그냥 실험해볼라고 쓴거임
-        RaycastHit hit;
-        Vector3 directionToGiant = (giantTransform.position - obj.transform.position).normalized;
-        if (Physics.Raycast(obj.transform.position, directionToGiant, out hit, raycastDistance))
-        {
-            if (hit.transform == giantTransform)
-            {
-                isRaycasting = true;
-                Debug.Log($"Raycast from {obj.name} hit the Giant.");
-
-                if (isRaycasting)
-                {
-                    Debug.Log(DroppedObjects.Count);
-                }
-            }
-            else
-            {
-                Debug.Log("Raycast did not hit the Giant. It hit: " + hit.transform.name);
-            }
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
-            Debug.Log("Raycast did not hit anything.");
+            Destroy(gameObject);
         }
     }
 
 
+    // Giant Transform을 설정하는 퍼블릭 메소드
+    public void SetGiantTransform(Transform newGiantTransform)
+    {
+        giantTransform = newGiantTransform;
+    }
+
+    public int GetDroppedObjectsCount()
+    {
+        return DroppedObjects.Count;
+    }
+
+    #region 떨어진 오브젝트 등록 및 제거 함수
+    public void AddDroppedObject(GameObject obj)
+    {
+        if (!DroppedObjects.Contains(obj))
+        {
+            DroppedObjects.Add(obj);
+            isConditionMet = true;
+            // 추가 로직
+        }
+    }
+
+    public void RemoveDroppedObject(GameObject obj)
+    {
+        if (DroppedObjects.Contains(obj))
+        {
+            DroppedObjects.Remove(obj);
+            // 추가 로직
+        }
+    }
+    #endregion
+
+
+    #region 불형식 체크 함수
     public bool CheckCondition()
     {
         // 현재 조건을 반환하고, 조건이 충족된 후 리스트가 비어있다면 조건을 해제
@@ -61,14 +71,10 @@ public class DroppedObject : MonoBehaviour
         return currentCondition;
     }
 
-    public bool IsRaycasting()
-    {
-        return isRaycasting;
-    }
     public bool IsSearchCompleted()
     {
         // 모든 물체에 대한 탐색이 완료되었는지 확인
         return DroppedObjects.Count == 0;
     }
-
+    #endregion
 }
