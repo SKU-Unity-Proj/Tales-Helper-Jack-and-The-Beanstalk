@@ -147,7 +147,7 @@ public class BTSetup : MonoBehaviour
            () =>
            {
                bool conditionMet = DroppedObject.Instance.CheckCondition();
-               //Debug.Log($"Searching Condition node evaluated: {conditionMet}");
+               Debug.Log($"Searching Condition node evaluated: {conditionMet}");
                return conditionMet;
            }));
 

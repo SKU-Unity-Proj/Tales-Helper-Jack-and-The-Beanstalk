@@ -189,24 +189,38 @@ public class CharacterAgent : CharacterBase
         // 처리할 오브젝트의 복사본 리스트 생성
         var objectsToProcess = new List<GameObject>(DroppedObject.Instance.DroppedObjects);
 
+        Debug.Log("SearchingProcess 시작됨.");
+
         foreach (var obj in objectsToProcess)
         {
+            Debug.Log($"이동 시작: {obj.name} 위치로 이동 중.");
+
             // 물체의 위치로 이동
             MoveTo(obj.transform.position);
             yield return new WaitUntil(() => AtDestination);
 
+            Debug.Log($"이동 완료: {obj.name} 위치에 도착함.");
+
             // 물체와 상호작용하는 애니메이션 실행
             anim.SetBool("SearchObj", true);
+            yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).IsName("Searching")); // 애니메이션 시작 대기
+
+            Debug.Log($"애니메이션 시작: {obj.name}와 상호작용 중.");
 
             // 애니메이션 완료까지 대기
             yield return new WaitUntil(() => IsSearching());
 
+            Debug.Log($"애니메이션 완료: {obj.name}와의 상호작용 완료.");
+
             // 애니메이션을 종료하고 다음 오브젝트로 넘어감
             anim.SetBool("SearchObj", false);
+            yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).IsName("Gaint_Idle")); // 애니메이션 종료 대기
         }
-        // 모든 오브젝트에 대한 탐색이 완료된 후 리스트 비우기
+
+        Debug.Log("모든 오브젝트에 대한 탐색 완료.");
         DroppedObject.Instance.DroppedObjects.Clear();
     }
+
 
 
 

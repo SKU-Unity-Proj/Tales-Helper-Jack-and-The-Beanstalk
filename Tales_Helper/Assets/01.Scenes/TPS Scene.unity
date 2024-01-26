@@ -1978,7 +1978,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 0
+  m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -17463,12 +17463,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e50ea48fa604af4089ffe5660beb386, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &1190535654 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5633767978541480476, guid: e6a4cd2797df0c248a0b3977b121a1b9,
-    type: 3}
-  m_PrefabInstance: {fileID: 1697127493}
-  m_PrefabAsset: {fileID: 0}
 --- !u!136 &1190535664
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -18136,7 +18130,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 0
+  m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -23552,7 +23546,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 0
+  m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -26914,7 +26908,7 @@ PrefabInstance:
     - target: {fileID: 5633767978541480476, guid: e6a4cd2797df0c248a0b3977b121a1b9,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 65.09
+      value: 81.96
       objectReference: {fileID: 0}
     - target: {fileID: 5633767978541480476, guid: e6a4cd2797df0c248a0b3977b121a1b9,
         type: 3}
@@ -28177,9 +28171,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35434d59998c9494ebf7ed7003d82566, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  giantTransform: {fileID: 1190535654}
-  raycastDistance: 50
   DroppedObjects: []
+  raycastDistance: 50
 --- !u!4 &1753382045
 Transform:
   m_ObjectHideFlags: 0

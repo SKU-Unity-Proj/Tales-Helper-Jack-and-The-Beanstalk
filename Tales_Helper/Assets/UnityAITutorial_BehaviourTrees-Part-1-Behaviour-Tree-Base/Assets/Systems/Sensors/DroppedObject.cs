@@ -43,9 +43,9 @@ public class DroppedObject : MonoBehaviour
         if (!DroppedObjects.Contains(obj))
         {
             DroppedObjects.Add(obj);
-            isConditionMet = true;
-            // 추가 로직
+
         }
+        isConditionMet = true;
     }
 
     public void RemoveDroppedObject(GameObject obj)
