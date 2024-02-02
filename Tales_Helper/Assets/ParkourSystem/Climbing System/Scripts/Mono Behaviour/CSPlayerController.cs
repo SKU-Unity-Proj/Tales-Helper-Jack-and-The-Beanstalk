@@ -19,6 +19,8 @@ namespace DiasGames.Controller
         public float minverticalAngle = -60.0f; // 카메라 수직 최소 각도
         public float recoilAngleBounce = 5.0f; // 사격 반동 값
 
+        public float pushPower = 5.0f; // 밀어내는 힘의 크기를 조절하는 변수
+
         public Transform cameraTransform; // 트랜스폼 캐싱.
         private Camera myCamera;
         private Vector3 relCameraPos; // 플레이어로부터 카메라까지의 벡터.
@@ -182,6 +184,37 @@ namespace DiasGames.Controller
         }
         #endregion
 
+        #region 오브젝트 밀쳐내기 관련 함수
+        private void OnCollisionEnter(Collision collision)
+        {
+            Rigidbody rb = collision.collider.attachedRigidbody;
+
+            // Rigidbody가 없거나, Kinematic 상태이면 무시
+            if (rb == null || rb.isKinematic)
+            {
+                return;
+            }
+
+            /*
+             * 어차피 힘 딸리면 못 미니까 그냥 태그 뺐음. 태그 지정해주기 귀찮
+            // 특정 태그를 가진 오브젝트에만 힘을 적용
+            if (collision.gameObject.tag != "Pushable")
+            {
+                return;
+            }
+            */
+
+            // 충돌 지점과 플레이어의 위치 차이를 계산하여, 
+            // 이를 단위 벡터로 정규화함. 이 벡터는 밀어내는 방향을 나타낸다.
+            Vector3 pushDirection = (collision.contacts[0].point - transform.position).normalized;
+            pushDirection.y = 0; // Y축 방향 제외, 수평 방향으로만 힘 적용
+
+            // 힘의 적용 지점을 조정하여 자연스러운 회전 유도
+            Vector3 forcePoint = collision.contacts[0].point + pushDirection * 0.5f; // 약간의 오프셋을 주어 힘 적용 지점 조정
+            rb.AddForceAtPosition(pushDirection * pushPower, forcePoint, ForceMode.Impulse); // 계산된 방향과 지점에 힘을 작용하기 위해 사용함
+        }
+        #endregion
+
         private void OnEnable()
         {
 #if ENABLE_INPUT_SYSTEM
@@ -274,7 +307,7 @@ namespace DiasGames.Controller
             _scheduler.characterActions.drop = Drop;
 
             // weapon
-           // _scheduler.characterActions.zoom = Zoom;
+            _scheduler.characterActions.zoom = Zoom;
         }
 
         #region Input receiver
@@ -289,7 +322,7 @@ namespace DiasGames.Controller
         public bool Crouch = false;
         public bool Interact = false;
         public bool Crawl = false;
-        //public bool Zoom = false;
+        public bool Zoom = false;
         public bool Drop = false;
 
         public void ResetActions()
@@ -320,7 +353,7 @@ namespace DiasGames.Controller
             Roll = Input.GetButtonDown("Roll");
             Crouch = Input.GetButton("Crouch");
             Crawl = Input.GetButtonDown("Crawl");
-            //Zoom = Input.GetButtonDown("Zoom");
+            Zoom = Input.GetButton("Zoom");
             Interact = Input.GetButtonDown("Interact");
 
             // special actions for climbing
@@ -365,7 +398,7 @@ namespace DiasGames.Controller
 
         public void OnZoom(bool value)
         {
-            //Zoom = value;
+            Zoom = value;
         }
         public void OnInteract(bool value)
         {

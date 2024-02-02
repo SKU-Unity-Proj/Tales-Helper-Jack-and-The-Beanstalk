@@ -5,25 +5,26 @@ namespace DiasGames.Abilities
 {
     public class Crawl : AbstractAbility
     {
-        [SerializeField] private float crawlSpeed = 2f;
-        [SerializeField] private float capsuleHeightOnCrawl = 0.5f;
+        [SerializeField] private float crawlSpeed = 2f; // 기어가는 속도
+        [SerializeField] private float capsuleHeightOnCrawl = 0.5f; // 기어갈 때 캡슐의 높이
 
         [Header("Cast Parameters")]
-        [SerializeField] private LayerMask obstaclesMask;
+        [SerializeField] private LayerMask obstaclesMask; // 장애물을 감지하는 데 사용되는 레이어 마스크
         [Tooltip("This is the height that sphere cast can reach to know when should force crawl state")]
-        [SerializeField] private float MaxHeightToStartCrawl = 0.75f;
+        [SerializeField] private float MaxHeightToStartCrawl = 0.75f; // 기어가기 시작해야 하는 최대 높이
 
         [Header("Animation States")]
-        [SerializeField] private string startCrawlAnimationState = "Stand to Crawl";
-        [SerializeField] private string stopCrawlAnimationState = "Crawl to Stand";
+        [SerializeField] private string startCrawlAnimationState = "Stand to Crawl"; // 기어가기 시작하는 애니메이션 상태
+        [SerializeField] private string stopCrawlAnimationState = "Crawl to Stand"; // 기어가기를 멈추는 애니메이션 상태
+        [SerializeField] private string startCrouchAinmationState = "Crouch"; // 기어가기를 멈추는 애니메이션 상태
 
-        private IMover _mover;
-        private ICapsule _capsule;
+        private IMover _mover; // 이동을 제어하는 인터페이스
+        private ICapsule _capsule; // 캡슐 콜라이더를 제어하는 인터페이스
 
-        private bool _startingCrawl = false;
-        private bool _stoppingCrawl = false;
+        private bool _startingCrawl = false; // 기어가기 시작 중인지를 나타내는 플래그
+        private bool _stoppingCrawl = false; // 기어가기를 중단 중인지를 나타내는 플래그
 
-        private float _defaultCapsuleRadius = 0;
+        private float _defaultCapsuleRadius = 0; // 기본 캡슐 반지름
 
         private void Awake()
         {
@@ -35,34 +36,34 @@ namespace DiasGames.Abilities
 
         public override bool ReadyToRun()
         {
+            // 캐릭터가 바닥에 있지 않으면 기어갈 준비가 안 됨
             if (!_mover.IsGrounded()) return false;
 
+            // 'crawl' 액션이 활성화되거나 높이에 의해 기어가기가 강제되면 준비 완료
             if (_action.crawl || ForceCrawlByHeight())
                 return true;
 
             return false;
         }
 
-
         public override void OnStartAbility()
         {
-            // stop any movement
+            // 모든 이동을 멈춤
             _mover.StopMovement();
 
-            // Tells system that it's starting crawl
+            // 시스템에 기어가기 시작 중임을 알림
             _startingCrawl = true;
 
-            // set crawl animation
+            // 기어가기 애니메이션을 설정
             SetAnimationState(startCrawlAnimationState);
 
-            // resize capsule collider
+            // 캡슐 콜라이더의 크기를 조절  
             _capsule.SetCapsuleSize(capsuleHeightOnCrawl, _capsule.GetCapsuleRadius());
         }
 
-
         public override void UpdateAbility()
         {
-            // wait start crawl animation finishes
+            // 기어가기 시작 애니메이션을 기다림
             if (_startingCrawl)
             {
                 if (_animator.IsInTransition(0)) return;
@@ -73,7 +74,7 @@ namespace DiasGames.Abilities
                 return;
             }
 
-            // wait stop crawl finishes to stop this ability
+            // 기어가기를 멈추는 애니메이션을 기다림
             if (_stoppingCrawl)
             {
                 if (_animator.IsInTransition(0)) return;
@@ -84,9 +85,10 @@ namespace DiasGames.Abilities
                 return;
             }
 
+            // 캐릭터를 기어가게 이동시킴
             _mover.Move(_action.move, crawlSpeed);
 
-            // if crawl was true again, it means should stop ability
+            // 'crawl' 액션이 다시 활성화되면 기어가기를 멈춤
             if (_action.crawl && !ForceCrawlByHeight())
             {
                 SetAnimationState(stopCrawlAnimationState);
@@ -97,11 +99,11 @@ namespace DiasGames.Abilities
 
         public override void OnStopAbility()
         {
-            // reset control variables
+            // 제어 변수를 리셋
             _startingCrawl = false;
             _stoppingCrawl = false;
 
-            // reset capsule size
+            // 캡슐 크기를 원래대로 복구
             _capsule.ResetCapsuleSize();
         }
 
@@ -109,9 +111,11 @@ namespace DiasGames.Abilities
         {
             RaycastHit hit;
 
+            // SphereCast를 사용하여 장애물이 있는지 확인
             if (Physics.SphereCast(transform.position, _defaultCapsuleRadius, Vector3.up, out hit,
                 MaxHeightToStartCrawl, obstaclesMask, QueryTriggerInteraction.Ignore))
             {
+                // 충돌 지점이 기어갈 때의 캡슐 높이보다 높으면 true 반환
                 if (hit.point.y - transform.position.y > capsuleHeightOnCrawl)
                     return true;
             }
