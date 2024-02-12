@@ -95,6 +95,20 @@ namespace DiasGames.Abilities
                 _stoppingCrawl = true;
                 _mover.StopMovement();
             }
+
+            if (_action.crouch)
+            {
+                // Crouch 상태로 전환을 위한 메소드 호출
+                StartCrouchFromCrawl();
+                return; // 추가 로직을 방지하기 위해 리턴
+            }
+
+            if (_action.jump)
+            {
+                // Crouch 상태로 전환을 위한 메소드 호출
+                StartCrouchFromCrawl();
+                return; // 추가 로직을 방지하기 위해 리턴
+            }
         }
 
         public override void OnStopAbility()
@@ -121,6 +135,18 @@ namespace DiasGames.Abilities
             }
 
             return false;
+        }
+        private void StartCrouchFromCrawl()
+        {
+            // Crouch 상태로의 전환 로직 구현
+            SetAnimationState(stopCrawlAnimationState); // 기어가기를 멈추는 애니메이션
+            _stoppingCrawl = true; // 기어가기 중단 상태로 설정
+            _mover.StopMovement(); // 캐릭터의 이동 중단
+
+            // 바뀌고 싶은 액션을 시작하는 부분이 들어가면 됨
+            // 예를 들어, Crouch 상태로 직접 전환하거나,
+            // Crouch 상태를 관리하는 별도의 메커니즘을 트리거할 수 있음
+            // Crawl에서 Crouch로 가는 마땅한 애니메이션이 없어서 그냥 일어서게 만듬
         }
     }
 }
