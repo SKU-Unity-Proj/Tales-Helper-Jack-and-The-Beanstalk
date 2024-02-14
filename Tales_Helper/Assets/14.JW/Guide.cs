@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class Guide : MonoBehaviour
 {
     [SerializeField] private GameObject NoticeUI;
-    private bool isUIopen = false;
+    private bool isUIopen = true;
     public LayerMask layerMask;
 
     // Start is called before the first frame update
@@ -28,22 +28,18 @@ public class Guide : MonoBehaviour
             if (NoticeUI.activeSelf)
             {
                 NoticeUI.SetActive(false);
-                
+                isUIopen = false;
             }
+
             Collider[] colliders = Physics.OverlapSphere(this.transform.position, 3f, layerMask);
             foreach (Collider col in colliders)
             {
-                Debug.Log(col);
-                
-                
-                if (!NoticeUI.activeSelf)
+                if (!NoticeUI.activeSelf && isUIopen)
                 {
                     NoticeUI.SetActive(true);
                     break;
                 }
-
-                
-                
+                isUIopen = true;
             }
             
         }
