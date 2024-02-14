@@ -25,8 +25,6 @@ public class UIManagerT : MonoBehaviour
     [SerializeField]
     private LayerMask layerMask;
 
-    
-
     private void Update()
     {
         CheckNPC();
@@ -66,12 +64,18 @@ public class UIManagerT : MonoBehaviour
         {
             talkText.text = talkData.Split(':')[0];
 
+            talkText.gameObject.GetComponent<TextTyping>().enabled = false;
+            talkText.gameObject.GetComponent<TextTyping>().enabled = true;
+
             portraitImg.sprite = talkManager.GetPortrait(id, int.Parse(talkData.Split(':')[1]));
             portraitImg.color = new Color(1, 1, 1, 1);
         }
         else
         {
             talkText.text = talkData;
+
+            talkText.gameObject.GetComponent<TextTyping>().enabled = false;
+            talkText.gameObject.GetComponent<TextTyping>().enabled = true;
 
             portraitImg.color = new Color(1, 1, 1, 0);
         }
