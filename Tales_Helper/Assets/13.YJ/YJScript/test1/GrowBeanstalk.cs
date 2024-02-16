@@ -13,9 +13,12 @@ public class GrowBeanstalk : MonoBehaviour  //BeanStalk ÇÏÀ§¿¡ ´Þ¸° ¿ÀºêÁ§Æ®¿¡ º
     public GameObject inventoryOption; //ÀÎº¥Åä¸®¿¡ slot Options ³Ö±â
 
     public PlayableDirector playableDirector;
+    public GameObject useBeanGuideText;
 
     void Start()
     {
+        useBeanGuideText.SetActive(false);
+
         InventoryOff();
         PlantBean();
         StartCoroutine(GrowBean());
@@ -42,7 +45,7 @@ public class GrowBeanstalk : MonoBehaviour  //BeanStalk ÇÏÀ§¿¡ ´Þ¸° ¿ÀºêÁ§Æ®¿¡ º
 
     IEnumerator GrowBean()
     {
-        yield return new WaitForSeconds(11f);
+        yield return new WaitForSeconds(13f);
 
         dust.SetActive(true);
 
@@ -66,7 +69,7 @@ public class GrowBeanstalk : MonoBehaviour  //BeanStalk ÇÏÀ§¿¡ ´Þ¸° ¿ÀºêÁ§Æ®¿¡ º
         Debug.Log("CameraShake Play");
 
         CameraShakeManager.Instance.SetShakeDegree(1.5f,1.5f);
-        CameraShakeManager.Instance.SetShakeTime(6.8f);
+        CameraShakeManager.Instance.SetShakeTime(8.8f);
     }
 
     void InventoryOff()

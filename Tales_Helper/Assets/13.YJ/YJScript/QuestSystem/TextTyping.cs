@@ -55,7 +55,6 @@ public class TextTyping : MonoBehaviour
             writer = tmpProText.text;
         }
 
-        print("On Enable!");
         if (startOnEnable) StartTypewriter();
     }
 
