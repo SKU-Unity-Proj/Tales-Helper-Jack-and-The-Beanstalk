@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class DoorHandle : MonoBehaviour
-{
+{   
+    public GameObject grabObject;
+    public Animator anim;
+    private bool oneTimeTrigger = true;
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -14,13 +17,32 @@ public class DoorHandle : MonoBehaviour
     {
         
     }
-
-    private void OnTriggerEnter(Collider col)
+    /*
+    private void OnCollisionEnter(Collision col)
     {
-        if (col.CompareTag("Player"))
+        if (col.collider.CompareTag("Player"))
         {
             Debug.Log("PlayerGrab");
-            //gameObject.SetActive(false);
+            
+            Invoke("HandleDelete", 0.3f);
         }
+    }
+    */
+    private void OnTriggerEnter(Collider col)
+    {
+        if (col.CompareTag("Player") && oneTimeTrigger == true)
+        {
+            Debug.Log("PlayerGrab");
+
+            anim.SetTrigger("Grab");
+            Invoke("HandleDelete", 1.1f);
+
+            oneTimeTrigger = false;
+        }
+    }
+
+    void HandleDelete()
+    {
+        grabObject.gameObject.SetActive(false);
     }
 }
