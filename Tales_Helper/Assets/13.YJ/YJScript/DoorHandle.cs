@@ -5,7 +5,8 @@ using UnityEngine;
 public class DoorHandle : MonoBehaviour
 {   
     public GameObject grabObject;
-    public Animator anim;
+    public Animator handleAnim;
+    public Animator doorAnim;
     private bool oneTimeTrigger = true;
     void Start()
     {
@@ -34,7 +35,7 @@ public class DoorHandle : MonoBehaviour
         {
             Debug.Log("PlayerGrab");
 
-            anim.SetTrigger("Grab");
+            handleAnim.SetTrigger("Grab");
             Invoke("HandleDelete", 1.1f);
 
             oneTimeTrigger = false;
@@ -44,5 +45,7 @@ public class DoorHandle : MonoBehaviour
     void HandleDelete()
     {
         grabObject.gameObject.SetActive(false);
+
+        doorAnim.SetTrigger("Grab");
     }
 }

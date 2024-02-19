@@ -697,7 +697,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1605994995489133241, guid: 886cc8c836890c6409e18618a5aec83a,
+        type: 3}
+      insertIndex: 3
+      addedObject: {fileID: 1084238784}
   m_SourcePrefab: {fileID: 100100000, guid: 886cc8c836890c6409e18618a5aec83a, type: 3}
 --- !u!1001 &30499876
 PrefabInstance:
@@ -13275,6 +13279,19 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 29254307}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1084238784
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1084238777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 546455647497974488e0f6d28268e960, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  instantHarvestObject: {fileID: 1084238777}
 --- !u!1 &1101350251
 GameObject:
   m_ObjectHideFlags: 0
@@ -23573,12 +23590,12 @@ PrefabInstance:
     - target: {fileID: 2619916544358058447, guid: 4f4e81d9cfa17944f9bd1beb8cd36a7a,
         type: 3}
       propertyPath: m_Name
-      value: Beanstalk
+      value: OffBeanstalk
       objectReference: {fileID: 0}
     - target: {fileID: 2619916544358058447, guid: 4f4e81d9cfa17944f9bd1beb8cd36a7a,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4943690355804122775, guid: 4f4e81d9cfa17944f9bd1beb8cd36a7a,
         type: 3}
