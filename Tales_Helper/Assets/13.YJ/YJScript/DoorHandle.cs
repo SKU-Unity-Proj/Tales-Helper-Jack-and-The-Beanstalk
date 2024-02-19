@@ -6,7 +6,7 @@ public class DoorHandle : MonoBehaviour
 {   
     public GameObject grabObject;
     public Animator handleAnim;
-    public Animator doorAnim;
+    //public Animator doorAnim;
     private bool oneTimeTrigger = true;
     void Start()
     {
@@ -46,6 +46,6 @@ public class DoorHandle : MonoBehaviour
     {
         grabObject.gameObject.SetActive(false);
 
-        doorAnim.SetTrigger("Grab");
+        //doorAnim.SetTrigger("Grab");
     }
 }

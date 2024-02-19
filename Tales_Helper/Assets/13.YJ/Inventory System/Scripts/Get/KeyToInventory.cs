@@ -22,12 +22,12 @@ namespace XEntity.InventoryItemSystem
 
                 foreach (Collider col in colliders)
                 {
-                    Debug.Log("P");
                     Interactor interactor = col.GetComponent<Interactor>();
+
                     if (interactor != null)
                     {
-                        Debug.Log("I");
                         instantHarvestObject.GetComponent<InstantHarvest>().AttemptHarvest(interactor);
+                        instantHarvestObject.SetActive(false);
                         break;
                     }
                 }
