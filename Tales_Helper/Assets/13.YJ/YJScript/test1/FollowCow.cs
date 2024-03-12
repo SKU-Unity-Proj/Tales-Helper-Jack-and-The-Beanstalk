@@ -1,3 +1,4 @@
+using NPOI.POIFS.Properties;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,24 +8,38 @@ using UnityEngine.AI;
 public class FollowCow : MonoBehaviour
 {
 
-    public Transform target; // 따라갈 타겟의 트랜스 폼
-    private float Dist;
-    private NavMeshAgent agent;
+    public Transform player; // 플레이어의 위치를 추적하기 위한 변수
+    private NavMeshAgent navMeshAgent;
+    private Animator anim;
 
     void Start()
     {
-        agent = GetComponent<NavMeshAgent>();
-        target = GameObject.Find("CS Character Controller").transform;
+        // NavMeshAgent 컴포넌트를 가져옴
+        navMeshAgent = GetComponent<NavMeshAgent>();
+        anim = GetComponent<Animator>();
     }
 
     void FixedUpdate()
     {
-        //transform.LookAt(target.transform);
-        Dist = Vector3.Distance(target.transform.position, this.transform.position);
+        // 플레이어를 추적
+        ChasePlayer();
+    }
 
-        if (Dist > 4f)
+    void ChasePlayer()
+    {
+        if (player != null)
         {
-            agent.destination = target.transform.position;
+            // 플레이어의 위치로 이동
+            navMeshAgent.SetDestination(player.position);
+        }
+
+        if (navMeshAgent.hasPath && navMeshAgent.remainingDistance > navMeshAgent.stoppingDistance)
+        {
+            anim.SetBool("isMove", true);
+        }
+        else
+        {
+            anim.SetBool("isMove", false);
         }
     }
 }
