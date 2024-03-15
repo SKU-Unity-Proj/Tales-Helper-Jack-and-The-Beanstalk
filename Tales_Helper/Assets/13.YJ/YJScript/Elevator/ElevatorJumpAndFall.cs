@@ -2,29 +2,27 @@ using UnityEngine;
 
 public class ElevatorJumpAndFall : MonoBehaviour
 {
-    public Animator elevatorAnim;
-    private int jumpCount = 0;
+    private Animator elevatorAnim;
 
-    private void Update()
+    public OriginCameraShake originCameraShake;
+
+    private void Start()
     {
-        if (jumpCount == 1)
-            elevatorAnim.SetBool("isJump",true);
-        else if (jumpCount == 2)
-            elevatorAnim.SetBool("isJump", false);
-        else if (jumpCount == 3)
+        elevatorAnim = GetComponent<Animator>();
+    }
+
+    public void JumpCountUp()
+    {
+        //jumpCount++;
+        if (!elevatorAnim.GetBool("isJump"))
         {
             elevatorAnim.SetBool("isJump", true);
-            //this.gameObject.SetActive(false);
-        }  
-    }
-
-    void OnTriggerEnter(Collider col)
-    {
-        Invoke("JumpCountUp", 0.38f);
-    }
-
-    void JumpCountUp()
-    {
-        jumpCount++;
+            originCameraShake.OnShakeCamera();
+        }
+        else
+        {
+            elevatorAnim.SetBool("isJump", false);
+            originCameraShake.OnShakeCamera();
+        }
     }
 }

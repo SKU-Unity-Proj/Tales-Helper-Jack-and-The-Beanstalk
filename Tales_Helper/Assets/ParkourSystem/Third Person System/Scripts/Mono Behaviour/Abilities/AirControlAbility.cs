@@ -89,7 +89,7 @@ namespace DiasGames.Abilities
 
                 return;
             }
-
+            
             if (_mover.IsGrounded())
             {
                 if(_highestPosition - transform.position.y >= heightForHardLand)
@@ -164,7 +164,7 @@ namespace DiasGames.Abilities
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * _mover.GetGravity());
 
             _mover.SetVelocity(velocity);
-            _animator.CrossFadeInFixedTime(animJumpState, 0.1f);
+            _animator.CrossFadeInFixedTime(animJumpState, 0.0f);
             _startSpeed = speedOnAir;
 
             if (_startInput.magnitude > 0.1f)
