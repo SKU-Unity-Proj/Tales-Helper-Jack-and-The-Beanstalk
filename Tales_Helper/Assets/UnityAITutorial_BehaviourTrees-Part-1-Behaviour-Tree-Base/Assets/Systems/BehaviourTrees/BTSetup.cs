@@ -42,6 +42,12 @@ public class BTSetup : MonoBehaviour
         var chaseRoot = BTRoot.Add(new BTNode_Condition("Can Chase",
             () =>
             {
+                if (DroppedObject.Instance.CheckSpecialObjectCondition())
+                {
+                    Chase_CurrentTarget = BasicManager.Instance.PlayerTarget;
+                    return true;
+                }
+
                 // 타겟이 없는 경우
                 // 'ActiveTargets' 리스트가 null이거나 비어있으면 추적을 시작하지 않음
                 if (Sensors.ActiveTargets == null || Sensors.ActiveTargets.Count == 0)

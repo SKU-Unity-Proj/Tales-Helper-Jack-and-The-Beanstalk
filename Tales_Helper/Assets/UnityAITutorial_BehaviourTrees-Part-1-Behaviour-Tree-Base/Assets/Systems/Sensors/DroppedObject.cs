@@ -76,5 +76,19 @@ public class DroppedObject : MonoBehaviour
         // 모든 물체에 대한 탐색이 완료되었는지 확인
         return DroppedObjects.Count == 0;
     }
+
+    // 특별한 오브젝트('checkgrab')이 감지되었는지 확인하는 메소드
+    public bool CheckSpecialObjectCondition()
+    {
+        foreach (var droppedObject in DroppedObjects)
+        {
+            if (droppedObject.name == "CheckGrab")
+            {
+                // 거리 제한 없이 무조건 true 반환
+                return true;
+            }
+        }
+        return false;
+    }
     #endregion
 }
