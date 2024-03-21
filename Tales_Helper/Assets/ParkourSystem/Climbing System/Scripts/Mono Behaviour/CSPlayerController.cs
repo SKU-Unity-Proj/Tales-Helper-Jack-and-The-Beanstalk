@@ -74,7 +74,7 @@ namespace DiasGames.Controller
             _mover = GetComponent<IMover>();
             _capsule = GetComponent<ICapsule>();
 
-            
+
             if (hideCursor)
             {
                 Cursor.visible = false;
@@ -85,7 +85,7 @@ namespace DiasGames.Controller
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
             }
-            
+
 
             // set right angle on start for camera
             _cinemachineTargetYaw = CinemachineCameraTarget.transform.eulerAngles.y;
@@ -111,15 +111,6 @@ namespace DiasGames.Controller
             ResetTargetOffsets();
             ResetFOV();
             ResetMaxVerticalAngle();
-        }
-
-        private void Start()
-        {
-            DetectableTarget detectableTarget = GetComponent<DetectableTarget>();
-            if (detectableTarget != null)
-            {
-                BasicManager.Instance.RegisterPlayer(detectableTarget);
-            }
         }
 
         #region CAMERA Setting
@@ -314,6 +305,7 @@ namespace DiasGames.Controller
             _scheduler.characterActions.interact = Interact;
             _scheduler.characterActions.crawl = Crawl;
             _scheduler.characterActions.drop = Drop;
+            _scheduler.characterActions.pickUp = PickUp;
 
             // weapon
             _scheduler.characterActions.zoom = Zoom;
@@ -333,6 +325,7 @@ namespace DiasGames.Controller
         public bool Crawl = false;
         public bool Zoom = false;
         public bool Drop = false;
+        public bool PickUp = false;
 
         public void ResetActions()
         {
@@ -341,6 +334,7 @@ namespace DiasGames.Controller
             Crawl = false;
             Interact = false;
             Drop = false;
+            PickUp = false;
         }
 
         public void LegacyInput()
@@ -367,6 +361,8 @@ namespace DiasGames.Controller
 
             // special actions for climbing
             Drop = Input.GetButtonDown("Drop");
+
+            PickUp = Input.GetButtonDown("PickUp");
 
             /*
             // special actions for shooter
@@ -416,6 +412,10 @@ namespace DiasGames.Controller
         public void OnDrop(bool value)
         {
             Drop = value;
+        }
+        public void OnPickUp(bool value)
+        {
+            PickUp = value;
         }
 
 #if ENABLE_INPUT_SYSTEM
@@ -468,6 +468,10 @@ namespace DiasGames.Controller
         private void OnDrop(InputValue value)
         {
             OnDrop(value.isPressed);
+        }
+        private void OnPickUp(InputValue value)
+        {
+            OnPickUp(value.isPressed);
         }
 
 #endif

@@ -9558,6 +9558,17 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: -0.036457546
       objectReference: {fileID: 0}
+    - target: {fileID: 5523606625301046395, guid: cc626daeb5beef84d9d78870227bcd3e,
+        type: 3}
+      propertyPath: m_WarningMessage
+      value: "\nBinding warning: Some generic clip(s) animate transforms that are
+        already bound by a Humanoid avatar. These transforms can only be changed
+        by Humanoid clips.\n\tTransform 'CC_Base_BoneRoot'\n\tTransform 'CC_Base_R_Foot'\n\tTransform
+        'CC_Base_R_Calf'\n\tTransform 'CC_Base_L_Thumb1'\n\tTransform 'CC_Base_L_Clavicle'\n\tTransform
+        'CC_Base_R_Clavicle'\n\tTransform 'CC_Base_NeckTwist01'\n\tTransform 'CC_Base_R_Index2'\n\tTransform
+        'CC_Base_L_Index2'\n\tTransform 'CC_Base_BoneRoot'\n\tand more ...\n\tFrom
+        animation clip 'mixamo.com'\n\tFrom animation clip 'Armature.001|Armature.001|mixamo.com|Layer0'"
+      objectReference: {fileID: 0}
     - target: {fileID: 5523606625301046396, guid: cc626daeb5beef84d9d78870227bcd3e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -10658,6 +10669,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 2132076678}
+    - targetCorrespondingSourceObject: {fileID: 5523606625301046397, guid: cc626daeb5beef84d9d78870227bcd3e,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2132076679}
     - targetCorrespondingSourceObject: {fileID: 5762772875373695421, guid: cc626daeb5beef84d9d78870227bcd3e,
         type: 3}
       insertIndex: -1
@@ -23590,6 +23605,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 841226007}
   inventory: {fileID: 28840806}
+--- !u!114 &2132076679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 841225998}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95e37d62d274d4f49b272f341a2eb752, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  abilityPriority: 0
+  <IsAbilityRunning>k__BackingField: 0
+  _animator: {fileID: 0}
+  <StartTime>k__BackingField: 0
+  <StopTime>k__BackingField: 0
+  speed: 3
 --- !u!1001 &2143555426
 PrefabInstance:
   m_ObjectHideFlags: 0

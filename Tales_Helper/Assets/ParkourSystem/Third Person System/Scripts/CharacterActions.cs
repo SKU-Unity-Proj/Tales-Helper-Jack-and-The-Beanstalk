@@ -14,6 +14,7 @@ namespace DiasGames.Abilities
         public bool drop = false;
         public bool crawl = false;
         public bool interact = false;
+        public bool pickUp = false;
 
         // weapon actions
         public bool zoom = false;
