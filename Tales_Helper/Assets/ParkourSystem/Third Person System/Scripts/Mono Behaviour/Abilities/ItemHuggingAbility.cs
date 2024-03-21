@@ -22,8 +22,7 @@ namespace DiasGames.Abilities
 
         public override void OnStartAbility()
         {
-            Debug.Log("HugAnim");
-            SetAnimationState("ItemHugging", 0.25f);
+            SetAnimationState("ItemHugging1", 0.25f);
         }
 
 
