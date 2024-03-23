@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using static FC.TagAndLayer;
 
 namespace DiasGames.Abilities
 {
@@ -77,10 +78,21 @@ namespace DiasGames.Abilities
         public virtual void OnStopAbility() { }
 
         // 애니메이션 상태를 설정하는 보조 메소드
-        protected void SetAnimationState(string stateName, float transitionDuration = 0.1f)
+        protected void SetAnimationState(string stateName, float transitionDuration = 0.1f, int StateLayer = 0)
         {
-            if (_animator.HasState(0, Animator.StringToHash(stateName)))
-                _animator.CrossFadeInFixedTime(stateName, transitionDuration, 0);
+            if (_animator.HasState(StateLayer, Animator.StringToHash(stateName)))
+            {
+                _animator.CrossFadeInFixedTime(stateName, transitionDuration, StateLayer);
+
+                if (StateLayer == 1)
+                    SetLayerPriority(1,1);
+            }
+                
+        }
+
+        public void SetLayerPriority(int StateLayer = 1, int Priority = 1) // 애니메이터의 레이어 우선순위 값(무게) 설정
+        {
+            _animator.SetLayerWeight(StateLayer, Priority);
         }
 
         /// <summary>
