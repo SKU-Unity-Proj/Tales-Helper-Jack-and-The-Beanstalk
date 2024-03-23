@@ -5,7 +5,7 @@ using Cinemachine;
 using UnityEngine.Events;
 
 public class CloserGiant : MonoBehaviour
-{
+{/*
     public float ShakeDuration = 0.1f;          //카메라 흔들림 효과가 지속되는 시간
     public float ShakeAmplitude = 3f;         //카메라 파라미터
     public float ShakeFrequency = 2.0f;         //카메라 파라미터
@@ -53,4 +53,5 @@ public class CloserGiant : MonoBehaviour
         yield return new WaitForSecondsRealtime(1f);
         StartCoroutine("FeetVibration");
     }
+    */
 }
