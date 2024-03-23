@@ -112,6 +112,14 @@ namespace DiasGames.Controller
             ResetFOV();
             ResetMaxVerticalAngle();
         }
+        private void Start()
+        {
+            DetectableTarget detectableTarget = GetComponent<DetectableTarget>();
+            if (detectableTarget != null)
+            {
+                BasicManager.Instance.RegisterPlayer(detectableTarget);
+            }
+        }
 
         #region CAMERA Setting
         //초기화 함수
