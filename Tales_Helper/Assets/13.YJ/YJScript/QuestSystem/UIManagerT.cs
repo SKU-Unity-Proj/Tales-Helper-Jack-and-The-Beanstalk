@@ -135,6 +135,7 @@ public class UIManagerT : MonoBehaviour
     private void CantMove()
     {
         this.gameObject.GetComponent<DiasGames.Controller.CSPlayerController>().enabled = false;
+        this.gameObject.GetComponent<DiasGames.Controller.SideCSPlayerController>().enabled = false;
         this.gameObject.GetComponent<DiasGames.AbilityScheduler>().enabled = false;
         this.gameObject.GetComponent<CharacterController>().enabled = false;
     }
@@ -142,6 +143,7 @@ public class UIManagerT : MonoBehaviour
     private void CanMove()
     {
         this.gameObject.GetComponent<DiasGames.Controller.CSPlayerController>().enabled = true;
+        this.gameObject.GetComponent<DiasGames.Controller.SideCSPlayerController>().enabled = false;
         this.gameObject.GetComponent<DiasGames.AbilityScheduler>().enabled = true;
         this.gameObject.GetComponent<CharacterController>().enabled = true;
     }
