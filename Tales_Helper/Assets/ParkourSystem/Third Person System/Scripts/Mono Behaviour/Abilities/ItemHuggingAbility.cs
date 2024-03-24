@@ -15,7 +15,7 @@ namespace DiasGames.Abilities
         [SerializeField] private float radius = 1f;
         public Transform targetPos; // 아이템 안고 있을 위치
         public GameObject pickItem = null; // 주운 아이템 등록
-        private bool haveItem = false; // 아이템 들고 있는지 상태 체크
+        public bool haveItem = false; // 아이템 들고 있는지 상태 체크
 
         private void Awake()
         {
@@ -29,12 +29,15 @@ namespace DiasGames.Abilities
 
         public override void OnStartAbility() // 실행될 때 호출
         {
-            SetAnimationState("ItemLift", 0.2f);
-            //Debug.Log("LiftAnim");
-            
-            Invoke("StartIdle", 2f);
-
             CheckItem();
+
+            if(haveItem) // 아이템이 있을때만 애니메이션 실행
+            {
+                SetAnimationState("ItemLift", 0.2f);
+                //Debug.Log("LiftAnim");
+
+                Invoke("StartIdle", 2f);
+            }
         }
 
 
@@ -44,11 +47,21 @@ namespace DiasGames.Abilities
 
             HuggingItem();
 
-            if (_action.pickUp && haveItem && pickItem != null) // 아이템을 들고 있을때 E키
+            if(_action.pickUp) // E키를 다시 누르면 어빌리티 초기화
+                StopAbility();
+
+            if (!haveItem) // 아이템이 없으면 어빌리티 초기화
+                StopAbility();
+        }
+
+        public override void OnStopAbility() // 멈출때 호출
+        {
+            if (pickItem != null) // 물건 내려놓고 상태 초기화
             {
-                pickItem.transform.localPosition = new Vector3(0f,0f,0.3f);
+                //pickItem.transform.localPosition = new Vector3(0f, 0f, 0.3f);
                 pickItem.transform.SetParent(null);
                 pickItem = null;
+                haveItem = false;
 
                 SetLayerPriority(1, 0); // 상체 애니메이션 우선순위 낮추기 (애니메이션 끄기)
             }
@@ -65,19 +78,22 @@ namespace DiasGames.Abilities
 
         private void CheckItem() // 바닥에 아이템을 주울 수 있는지 판별
         {
-            if (!haveItem)
+            if (!haveItem) // 아이템을 가지고 있지 않을때
             {
                 Collider[] colliders = Physics.OverlapSphere(transform.position + transform.forward, radius, 1 << 9);
 
-                if (colliders.Length > 0)
+                if (colliders != null)
                 {
                     foreach (Collider collider in colliders)
                     {
-                        Debug.Log("Overlap detected with: " + collider.name);
-
                         haveItem = true;
                         pickItem = collider.gameObject;
                     }
+                }
+                else
+                {
+                    pickItem = null;
+                    haveItem = false;
                 }
             }
         }
@@ -93,3 +109,7 @@ namespace DiasGames.Abilities
         }
     }
 }
+
+// 아이템을 내려놓으면 땅 아래로 뚫고 내려감
+// 줍는 애니메이션이 실행중일때 움직여짐
+// 애니메이션 상하체 분리
