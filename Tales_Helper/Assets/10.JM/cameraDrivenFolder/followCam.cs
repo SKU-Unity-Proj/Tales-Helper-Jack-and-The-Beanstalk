@@ -6,10 +6,18 @@ public class followCam : MonoBehaviour
 {
 
     public Transform player; // 플레이어 Transform
+    public float xOffset = 0f; // X축 오프셋
+    public float yOffset = 0f; // Y축 오프셋
+
+    private Vector3 followPosition;
 
     void Update()
     {
-        // 빈 오브젝트는 위치를 변경하지 않고, 오직 플레이어를 바라봅니다.
-        transform.LookAt(player);
+        // 플레이어의 Z 위치를 따라가되, X와 Y 위치는 고정
+        followPosition.x = xOffset; // X축은 고정 오프셋 사용
+        followPosition.y = yOffset; // Y축은 고정 오프셋 사용
+        followPosition.z = player.position.z;
+
+        transform.position = followPosition;
     }
 }
