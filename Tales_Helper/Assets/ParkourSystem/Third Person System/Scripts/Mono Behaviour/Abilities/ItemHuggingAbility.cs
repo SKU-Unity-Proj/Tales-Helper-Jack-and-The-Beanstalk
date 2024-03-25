@@ -1,6 +1,7 @@
 using DiasGames.Abilities;
 using DiasGames.Components;
 using DiasGames.Debugging;
+using TMPro;
 using UnityEngine;
 
 namespace DiasGames.Abilities
@@ -16,6 +17,7 @@ namespace DiasGames.Abilities
         public Transform targetPos; // 아이템 안고 있을 위치
         public GameObject pickItem = null; // 주운 아이템 등록
         public bool haveItem = false; // 아이템 들고 있는지 상태 체크
+        private Rigidbody itemRigid; 
 
         private void Awake()
         {
@@ -58,8 +60,12 @@ namespace DiasGames.Abilities
         {
             if (pickItem != null) // 물건 내려놓고 상태 초기화
             {
-                //pickItem.transform.localPosition = new Vector3(0f, 0f, 0.3f);
-                pickItem.transform.SetParent(null);
+                pickItem.transform.position = targetPos.transform.position + targetPos.transform.forward * 0.5f;
+                itemRigid.velocity = Vector3.zero;
+                itemRigid.angularVelocity = Vector3.zero;
+
+                pickItem.transform.parent = null;
+
                 pickItem = null;
                 haveItem = false;
 
@@ -88,6 +94,7 @@ namespace DiasGames.Abilities
                     {
                         haveItem = true;
                         pickItem = collider.gameObject;
+                        itemRigid = pickItem.GetComponent<Rigidbody>();
                     }
                 }
                 else
