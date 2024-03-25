@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 #if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
 #endif
@@ -260,7 +261,11 @@ namespace DiasGames.Controller
 
         private void LateUpdate()
         {
-            CameraRotation();
+            if (SceneManager.GetActiveScene().name != "GiantMap")
+            {
+                // "GiantMap"이 아닌 씬에서만 실행할 함수
+                CameraRotation();
+            }
         }
 
         private void Die()
