@@ -14,7 +14,7 @@ namespace DiasGames.Abilities
 
 
         // components
-        //private IMover _mover;
+        private IMover _mover;
         private IKScheduler _ikScheduler;
         private Transform _camera;
 
@@ -27,21 +27,14 @@ namespace DiasGames.Abilities
         private bool _isMatchingTarget;
         private float _step;
 
-        // animations ids
-        private int _animHorizontalID;
-        private int _animVerticalID;
-        private int _animMotionSpeedID;
-
         private Vector3 _lastPosition;
 
         private void Awake()
         {
-            //_mover = GetComponent<IMover>();
+            _mover = GetComponent<IMover>();
             _ikScheduler = GetComponent<IKScheduler>();
 
             _camera = Camera.main.transform;
-
-            _animMotionSpeedID = Animator.StringToHash("Motion Speed");
         }
 
         private void OnTriggerEnter(Collider other)
@@ -75,7 +68,7 @@ namespace DiasGames.Abilities
         public override void OnStartAbility()
         {
             _pushable.StartPush();
-            //_mover.StopMovement();
+            _mover.StopMovement();
             SetAnimationState(pushLeverAnimationState);
 
             _step = Vector3.Distance(transform.position, _pushable.GetTarget().position) / positionSmoothnessTime;
@@ -110,22 +103,6 @@ namespace DiasGames.Abilities
             Vector3 relativeMove = _action.move.x * _camera.transform.right + _action.move.y * cameraFwd;
             relativeMove.Normalize();
 
-            // send move input to drag object
-            //_pushable.Move(relativeMove * speed);
-
-            float currentSpeed = (_lastPosition - transform.position).magnitude / Time.deltaTime;
-            bool hasMoved = currentSpeed > 0.1f;
-
-            _animator.SetFloat(_animMotionSpeedID, hasMoved ? currentSpeed / speed : 1, 0.1f, Time.deltaTime);
-
-            float hor = Vector3.Dot(transform.right, relativeMove);
-            float ver = Vector3.Dot(transform.forward, relativeMove);
-
-            // update animator
-            _animator.SetFloat(_animHorizontalID, hor, 0.1f, Time.deltaTime);
-            _animator.SetFloat(_animVerticalID, ver, 0.1f, Time.deltaTime);
-
-            _lastPosition = transform.position;
         }
 
         public override void OnStopAbility()
@@ -174,7 +151,6 @@ namespace DiasGames.Abilities
 
             }
         }
-
         private void UpdateTransform()
         {
             if (!_isMatchingTarget || _pushable == null) return;
