@@ -66,7 +66,7 @@ namespace DiasGames.Abilities
             // 기어가기 시작 애니메이션을 기다림
             if (_startingCrawl)
             {
-                if (_animator.IsInTransition(0)) return;
+                if (_animator.IsInTransition(0)) return; // 애니메이션의 0번 레이어가 상태를 전환중이면 return시킴
 
                 if (!_animator.GetCurrentAnimatorStateInfo(0).IsName(startCrawlAnimationState))
                     _startingCrawl = false;

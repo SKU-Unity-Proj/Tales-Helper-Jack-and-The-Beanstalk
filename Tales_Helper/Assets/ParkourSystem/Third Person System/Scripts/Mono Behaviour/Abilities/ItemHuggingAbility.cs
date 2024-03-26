@@ -4,6 +4,8 @@ using DiasGames.Debugging;
 using TMPro;
 using UnityEngine;
 
+//ItemHugPos Position(0, -0.037, 0.336)
+
 namespace DiasGames.Abilities
 {
     [DisallowMultipleComponent]
@@ -11,13 +13,14 @@ namespace DiasGames.Abilities
     {
         private IMover _mover = null;
 
-        [SerializeField] private float speed = 3f;
+        [SerializeField] private float speed = 3f; // 아이템을 들고 있을때 속도
 
-        [SerializeField] private float radius = 1f;
+        [SerializeField] private float radius = 1f; // 아이템이 있는지 체크하는 원의 크기
         public Transform targetPos; // 아이템 안고 있을 위치
         public GameObject pickItem = null; // 주운 아이템 등록
         public bool haveItem = false; // 아이템 들고 있는지 상태 체크
-        private Rigidbody itemRigid; 
+        public bool liftingWait = false; // 집어드는 모션 기다리는 동안 움직임 제어
+        private Rigidbody itemRigid; // 아이템의 리지디바디
 
         private void Awake()
         {
@@ -35,8 +38,9 @@ namespace DiasGames.Abilities
 
             if(haveItem) // 아이템이 있을때만 애니메이션 실행
             {
+                _mover.StopMovement(); // velocity 0
+
                 SetAnimationState("ItemLift", 0.2f);
-                //Debug.Log("LiftAnim");
 
                 Invoke("StartIdle", 2f);
             }
@@ -45,15 +49,25 @@ namespace DiasGames.Abilities
 
         public override void UpdateAbility() // 실행 중에 계속 호출
         {
-            _mover.Move(_action.move, speed);
+            if(liftingWait)
+            {
+                _mover.Move(_action.move, speed);
 
-            HuggingItem();
+                HuggingItem();
+            }
 
             if(_action.pickUp) // E키를 다시 누르면 어빌리티 초기화
                 StopAbility();
 
             if (!haveItem) // 아이템이 없으면 어빌리티 초기화
                 StopAbility();
+
+
+            //if (_animator.IsInTransition(0)) return;
+
+            if (_animator.GetCurrentAnimatorStateInfo(0).IsName("ItemLift")) // 실행중인 애니메이션이 IsName이면
+                if(_animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.8f)  // 애니메이션의 어느정도 완료 되었을시
+                    liftingWait = true;
         }
 
         public override void OnStopAbility() // 멈출때 호출
@@ -68,11 +82,11 @@ namespace DiasGames.Abilities
 
                 pickItem = null;
                 haveItem = false;
+                liftingWait = false;
 
                 SetLayerPriority(1, 0); // 상체 애니메이션 우선순위 낮추기 (애니메이션 끄기)
             }
         }
-
 
 
 
