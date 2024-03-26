@@ -1,23 +1,45 @@
+using NPOI.POIFS.Properties;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class MouseController : MonoBehaviour
 {
-    private NavMeshAgent _navMeshAgent;
+    private NavMeshAgent agent;
+    private Animator anim;
 
     private void Start()
     {
-        _navMeshAgent = GetComponent<NavMeshAgent>();
+        agent = GetComponent<NavMeshAgent>();
+        anim = GetComponent<Animator>();
     }
 
     public void MoveToTarget(Transform targetPosition)
     {
-        if (_navMeshAgent != null)
+        if (agent != null)
         {
-            _navMeshAgent.SetDestination(targetPosition.position);
+            agent.SetDestination(targetPosition.position);
         }
     }
 
+    private void Update()
+    {
+        if (agent.velocity.magnitude > 0)
+        {
+            anim.SetBool("isMove", true);
+            MoveCharacter(agent.desiredVelocity);
+        }
+        else
+        {
+            anim.SetBool("isMove", false);
+        }
+    }
+
+    void MoveCharacter(Vector3 velocity)
+    {
+        Vector3 localVelocity = transform.InverseTransformDirection(velocity);
+        float speed = localVelocity.z;
+        anim.SetFloat("Speed", speed);
+    }
 
 
 
