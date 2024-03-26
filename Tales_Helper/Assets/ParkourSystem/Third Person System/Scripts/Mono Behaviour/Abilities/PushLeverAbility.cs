@@ -12,11 +12,15 @@ namespace DiasGames.Abilities
         [Header("Animation")]
         [SerializeField] private string pushLeverAnimationState = "Push Lever";
 
+        [SerializeField] private Transform leverHandle;
+        [SerializeField] private Transform rightIK = null;
+        [SerializeField] private Transform leftIK = null;
+        [SerializeField] private Transform rightIKTarget = null; // 애니메이션 대상의 오른쪽 타겟
+        [SerializeField] private Transform leftIKTarget = null;  // 애니메이션 대상의 왼쪽 타겟
 
         // components
         private IMover _mover;
         private IKScheduler _ikScheduler;
-        private Transform _camera;
 
         // interaction components
         private IPushable _pushable;
@@ -25,16 +29,12 @@ namespace DiasGames.Abilities
         // private internal vars
         // to positioning
         private bool _isMatchingTarget;
-        private float _step;
-
-        private Vector3 _lastPosition;
 
         private void Awake()
         {
             _mover = GetComponent<IMover>();
             _ikScheduler = GetComponent<IKScheduler>();
 
-            _camera = Camera.main.transform;
         }
 
         private void OnTriggerEnter(Collider other)
@@ -71,7 +71,6 @@ namespace DiasGames.Abilities
             _mover.StopMovement();
             SetAnimationState(pushLeverAnimationState);
 
-            _step = Vector3.Distance(transform.position, _pushable.GetTarget().position) / positionSmoothnessTime;
             _isMatchingTarget = true;
         }
 
@@ -92,17 +91,19 @@ namespace DiasGames.Abilities
             if (_action.interact)
                 StopAbility();
 
-            Vector3 targetPos = _pushable.GetTarget().position;
-            targetPos.y = transform.position.y;
+            rightIK.position = rightIKTarget.position;
+            leftIK.position = leftIKTarget.position;
 
-            //_mover.SetPosition(targetPos);
-            transform.rotation = _pushable.GetTarget().rotation;
+            leverHandle.position = CalculateMidpointOfHands();
 
-            // calculate input for realtive move
-            Vector3 cameraFwd = Vector3.Scale(_camera.forward, new Vector3(1, 0, 1)).normalized;
-            Vector3 relativeMove = _action.move.x * _camera.transform.right + _action.move.y * cameraFwd;
-            relativeMove.Normalize();
 
+        }
+
+        // 플레이어의 양손 IK 타겟 위치의 중간점 계산
+        private Vector3 CalculateMidpointOfHands()
+        {
+            Vector3 midpoint = (leftIK.position + rightIK.position) / 2;
+            return midpoint;
         }
 
         public override void OnStopAbility()

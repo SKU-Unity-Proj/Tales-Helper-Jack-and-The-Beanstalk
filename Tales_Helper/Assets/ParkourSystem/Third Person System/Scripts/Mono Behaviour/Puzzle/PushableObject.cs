@@ -8,19 +8,19 @@ namespace DiasGames.Puzzle
 
         private void Awake()
         {
-            _rigidbody = GetComponent<Rigidbody>();
+            //_rigidbody = GetComponent<Rigidbody>();
         }
 
 
         public void EnablePhysics()
         {
-            _rigidbody.isKinematic = false;
+            //_rigidbody.isKinematic = false;
             //_rigidbody.velocity = Vector3.zero;
         }
 
         public virtual void DisablePhysics()
         {
-            _rigidbody.isKinematic = true;
+           // _rigidbody.isKinematic = true;
             //_rigidbody.velocity = Vector3.zero;
         }
     }
