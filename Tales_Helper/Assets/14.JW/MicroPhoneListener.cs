@@ -10,6 +10,12 @@ public class MicroPhoneListener : MonoBehaviour
     public float loudness = 0; // 소리 크기
     public float pitch = 0; // 소리 높낮이
     AudioSource _audio; // 오디오 소스
+    public Sprite soundImage1Sprite; // loudness가 4보다 크면 띄울 이미지
+    public Sprite soundImage2Sprite; // loudness가 0.5보다 크고 4보다 작으면 띄울 이미지
+    public Sprite soundImage3Sprite; // 그렇지 않으면 띄울 이미지
+
+    public Image soundImage; // UI 이미지 컴포넌트
+    
 
     public float RmsValue; // Root Mean Square (RMS) 값
     public float DbValue; // 데시벨 값
@@ -94,14 +100,21 @@ public class MicroPhoneListener : MonoBehaviour
         loudness = GetAveragedVolume() * sensitivity; // 평균 볼륨을 얻어옵니다.
         GetPitch(); // 음의 높낮이를 가져옵니다.
 
-        // 아래는 커스텀한 소스
-        // 소리가 특정 크기 이상인 경우 이미지를 채웁니다.
-        //if (loudness > 5f)
-        //    _imageSound.fillAmount = 1f;
-        //else
-        //{
-        //    _imageSound.fillAmount = 0.65f;
-        //}
+        if (loudness > 4f)
+        {
+            // loudness가 4보다 크면 soundImage1Sprite를 할당
+            soundImage.sprite = soundImage1Sprite;
+        }
+        else if (loudness > 0.05f && loudness <= 4f)
+        {
+            // loudness가 0.5보다 크고 4보다 작으면 soundImage2Sprite를 할당
+            soundImage.sprite = soundImage2Sprite;
+        }
+        else
+        {
+            // 그 외의 경우 soundImage3Sprite를 할당
+            soundImage.sprite = soundImage3Sprite;
+        }
 
         // GameManager에서 현재 소리 크기를 가져와서 설정합니다.
         //FindObjectOfType<GameManager>().currentLoud = loudness;
