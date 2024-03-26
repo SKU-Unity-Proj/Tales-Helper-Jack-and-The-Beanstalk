@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DiasGames.Components;
 using DiasGames.IK;
+using System.Collections;
 
 namespace DiasGames.Abilities
 {
@@ -91,12 +92,22 @@ namespace DiasGames.Abilities
             if (_action.interact)
                 StopAbility();
 
+            StartCoroutine(LeverHandleDelay(0.1f)); // 0.1초 지연
+
+        }
+
+        // 지연 후에 레버 핸들을 IK 타겟에 연결하는 Coroutine입니다.
+        private IEnumerator LeverHandleDelay(float delay)
+        {
+            // 지연 시간만큼 대기합니다.
+            yield return new WaitForSeconds(delay);
+
+            // 지연 후에 실행할 코드
             rightIK.position = rightIKTarget.position;
             leftIK.position = leftIKTarget.position;
 
+            // 레버 핸들의 위치를 중간점으로 설정합니다.
             leverHandle.position = CalculateMidpointOfHands();
-
-
         }
 
         // 플레이어의 양손 IK 타겟 위치의 중간점 계산
