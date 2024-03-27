@@ -128,7 +128,7 @@ public class CharacterAgent : CharacterBase
     public virtual void MoveToRun(Vector3 destination)
     {
         CancelCurrentCommand();
-
+        anim.SetBool("Suprise", true);
         this.Agent.speed = runSpeed;
         anim.SetBool("Run", true);
 
