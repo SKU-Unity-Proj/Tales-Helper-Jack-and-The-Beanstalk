@@ -22,6 +22,9 @@ namespace DiasGames.Controller
 
         public float pushPower = 5.0f; // 밀어내는 힘의 크기를 조절하는 변수
 
+        public GameObject ladder1;
+        public GameObject ladder2;
+
         public Transform cameraTransform; // 트랜스폼 캐싱.
         private Camera myCamera;
         private Vector3 relCameraPos; // 플레이어로부터 카메라까지의 벡터.
@@ -305,6 +308,21 @@ namespace DiasGames.Controller
             if (lfAngle < -360f) lfAngle += 360f;
             if (lfAngle > 360f) lfAngle -= 360f;
             return Mathf.Clamp(lfAngle, lfMin, lfMax);
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.gameObject.CompareTag("ladderCol1"))
+            {
+                ladder1.SetActive(false);
+                Debug.Log("1");
+            }
+
+            if (other.gameObject.CompareTag ("ladderCol2"))
+            {
+                ladder2.SetActive(true);
+                Debug.Log("1");
+            }
         }
 
         private void UpdateCharacterActions()

@@ -1696,7 +1696,7 @@ Transform:
   m_GameObject: {fileID: 106325691}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 0.08, z: 0}
+  m_LocalPosition: {x: -0, y: 0.066, z: 0.039}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2085,7 +2085,7 @@ CapsuleCollider:
   m_Center: {x: 0, y: 0.9, z: 0}
 --- !u!114 &137866123
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -2104,6 +2104,7 @@ MonoBehaviour:
   leftIK: {fileID: 291855838}
   rightIKTarget: {fileID: 106325692}
   leftIKTarget: {fileID: 544362492}
+  headTransform: {fileID: 278317871}
 --- !u!4 &137866151 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5523606625301046396, guid: cc626daeb5beef84d9d78870227bcd3e,
@@ -4001,6 +4002,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6360076805468844020, guid: 2ade83eae240d1a4f885c366ca3e292a,
     type: 3}
   m_PrefabInstance: {fileID: 7354453773600258888}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &278317871 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1807186194955356787, guid: 2bce623f5b2a21c4dbd8870bce78cc1a,
+    type: 3}
+  m_PrefabInstance: {fileID: 607475199}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &280485664
 GameObject:
@@ -6842,7 +6849,7 @@ Transform:
   m_GameObject: {fileID: 544362491}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.005, y: 0.07, z: 0}
+  m_LocalPosition: {x: -0.005, y: 0.07, z: 0.028}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -35773,6 +35780,16 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2943208212217798032, guid: e3dc024a1447ed342ab55f2a2ba1e86d,
         type: 3}
+      propertyPath: leftIK
+      value: 
+      objectReference: {fileID: 745980064}
+    - target: {fileID: 2943208212217798032, guid: e3dc024a1447ed342ab55f2a2ba1e86d,
+        type: 3}
+      propertyPath: rightIK
+      value: 
+      objectReference: {fileID: 291855838}
+    - target: {fileID: 2943208212217798032, guid: e3dc024a1447ed342ab55f2a2ba1e86d,
+        type: 3}
       propertyPath: playerTarget
       value: 
       objectReference: {fileID: 137866151}
@@ -35831,7 +35848,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: new lever (1)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8113802298511433162, guid: e3dc024a1447ed342ab55f2a2ba1e86d, type: 3}
+    - {fileID: 83872665559151190, guid: e3dc024a1447ed342ab55f2a2ba1e86d, type: 3}
+    - {fileID: 1507660613150324635, guid: e3dc024a1447ed342ab55f2a2ba1e86d, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
