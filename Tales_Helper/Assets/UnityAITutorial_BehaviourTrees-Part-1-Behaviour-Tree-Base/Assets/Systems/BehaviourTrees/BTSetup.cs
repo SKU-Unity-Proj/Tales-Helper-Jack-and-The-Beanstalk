@@ -44,8 +44,9 @@ public class BTSetup : MonoBehaviour
             {
                 if (DroppedObject.Instance.CheckSpecialObjectCondition())
                 {
-                    Chase_CurrentTarget = BasicManager.Instance.PlayerTarget;
-                    return true;
+                    StartCoroutine(StartChaseAfterDelay(2f));
+
+                    return true; // Coroutine이 완료될 때까지 기다림
                 }
 
                 // 타겟이 없는 경우
@@ -224,6 +225,14 @@ public class BTSetup : MonoBehaviour
         #endregion
 
 
+    }
+
+    // 2초 딜레이 후 추적을 시작하는 Coroutine
+    IEnumerator StartChaseAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay); // 2초 대기
+        Chase_CurrentTarget = BasicManager.Instance.PlayerTarget;
+        // 여기서 추적을 시작하는 로직을 실행하거나, 추적 시작 조건을 true로 설정
     }
 
 }
