@@ -98,16 +98,19 @@ public class BTSetup : MonoBehaviour
                 }
                 if (restCondition.IsStandingUp())
                 {
+                    Agent.MoveToSuprise();
                     Agent.MoveToRun(Chase_CurrentTarget.transform.position);
                 }
 
                 // 추적 로직
+                Agent.MoveToSuprise();
                 Agent.MoveToRun(Chase_CurrentTarget.transform.position);
 
                 return BehaviourTree.ENodeStatus.InProgress;
             },
             () =>
             {
+                Agent.MoveToSuprise();
                 Agent.MoveToRun(Chase_CurrentTarget.transform.position);
 
                 return BehaviourTree.ENodeStatus.InProgress;
@@ -124,27 +127,23 @@ public class BTSetup : MonoBehaviour
 
            }));
         restSequence.Add<BTNode_Action>("Rest on Chair",
-            () =>
-            {
-                //Debug.Log("Rest on Chair action started.");
-                Agent.SitAtPosition(chairTransform.position, chairTransform.rotation);
+           () =>
+           {
+               // 앉는 액션이 시작되면
+               if (!anim.GetBool("Sitting"))
+                {
+                   Agent.SitAtPosition(chairTransform.position, chairTransform.rotation);
+                   return BehaviourTree.ENodeStatus.InProgress; // 액션 진행 중
+                }
 
+               if (Sensors.ActiveTargets.Count == 0 && restCondition.CheckCondition())
+                {
+                   // 조건을 체크하여 충분히 쉬었다면 Succeeded 반환
+                   return BehaviourTree.ENodeStatus.Succeeded;
+                }
+
+                // 조건 미충족 시 InProgress 유지
                 return BehaviourTree.ENodeStatus.InProgress;
-            },
-            () =>
-            {
-                if (Sensors.ActiveTargets != null || Sensors.ActiveTargets.Count != 0)
-                {
-                    return BehaviourTree.ENodeStatus.Succeeded;
-
-                }
-
-                if (restCondition.CheckCondition())
-                {
-                    return BehaviourTree.ENodeStatus.Succeeded;
-                }
-
-                return anim.GetBool("Sitting") ? BehaviourTree.ENodeStatus.Succeeded : BehaviourTree.ENodeStatus.InProgress;
             });
         #endregion
 
@@ -165,43 +164,31 @@ public class BTSetup : MonoBehaviour
                 // 거인이 앉아 있는 경우, 먼저 일으켜 세움
                 if (anim.GetBool("Sitting"))
                 {
-                    Agent.StandUp();
-                    restCondition.ResetCondition();
+                    Agent.StandUp(); // Agent가 서있는 상태로 변경
+                    restCondition.ResetCondition(); // 휴식 상태 초기화
                 }
 
-                if (restCondition.IsStandingUp())
+                // 현재 탐색 중인 떨어진 물체가 있는지 확인하고, 없으면 새로운 물체를 탐색 시작
+                if (!Agent.IsSearching() && DroppedObject.Instance.GetDroppedObjectsCount() > 0)
                 {
-                    LinkedAI.OnSearching();
-                    // 첫 번째 떨어진 물체로 이동하고 상호작용
-                    Agent.SearchingObject();
-                    Debug.Log("Search");
+                    LinkedAI.OnSearching(); // 탐색 상태로 변경
+                    Agent.SearchingObject(); // 떨어진 물체와 상호작용 시작
+                    return BehaviourTree.ENodeStatus.InProgress; // 상호작용이 진행 중임을 나타냄
                 }
 
-                LinkedAI.OnSearching();
-                // 첫 번째 떨어진 물체로 이동하고 상호작용
-                Agent.SearchingObject();
-                Debug.Log("Search");
+                // 탐색이 완료되었는지 확인
+                if (Agent.IsSearching())
+                {
+                    // 모든 떨어진 물체와의 상호작용이 완료되면 성공 상태 반환
+                    return BehaviourTree.ENodeStatus.Succeeded;
+                }
 
+                // 아직 탐색 중이라면 InProgress 상태 유지
                 return BehaviourTree.ENodeStatus.InProgress;
-            },
-            () =>
-            {
-                if (Sensors.ActiveTargets != null || Sensors.ActiveTargets.Count != 0)
-                {
-                    return BehaviourTree.ENodeStatus.Succeeded;
-
-                }
-
-                if (DroppedObject.Instance.IsSearchCompleted() || (DroppedObject.Instance.DroppedObjects.Count == 0 && Agent.IsSearching()))
-                {
-                    return BehaviourTree.ENodeStatus.Succeeded;
-                }
-
-                return BehaviourTree.ENodeStatus.Succeeded;
             });
         #endregion
 
-        #region 순찰노드
+            #region 순찰노드
         var wanderRoot = BTRoot.Add<BTNode_Sequence>("Wander");
         wanderRoot.Add<BTNode_Action>("Perform Wander",
             () =>

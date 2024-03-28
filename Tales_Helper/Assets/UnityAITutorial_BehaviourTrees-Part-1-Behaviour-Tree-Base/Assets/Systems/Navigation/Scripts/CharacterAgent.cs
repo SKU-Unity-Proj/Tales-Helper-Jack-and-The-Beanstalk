@@ -15,8 +15,8 @@ public class CharacterAgent : CharacterBase
 {
     [SerializeField] float NearestPointSearchRange = 5f; // 최근접 탐색 범위
 
-    NavMeshAgent Agent; // NavMeshAgent 컴포넌트
-    Animator anim; // 애니메이터 컴포넌트
+    private NavMeshAgent Agent; // NavMeshAgent 컴포넌트
+    private Animator anim; // 애니메이터 컴포넌트
 
     private float walkSpeed = 1.5f; // 걷기 속도
     private float runSpeed = 3.5f; // 뛰기 속도
@@ -125,10 +125,15 @@ public class CharacterAgent : CharacterBase
 
         SetDestination(destination);
     }
+    public virtual void MoveToSuprise()
+    {
+        this.Agent.speed = 0f;
+        anim.SetBool("Suprise", true);
+    }
     public virtual void MoveToRun(Vector3 destination)
     {
         CancelCurrentCommand();
-        anim.SetBool("Suprise", true);
+
         this.Agent.speed = runSpeed;
         anim.SetBool("Run", true);
 
@@ -160,7 +165,7 @@ public class CharacterAgent : CharacterBase
 
     public void StandUp()
     {
-        // 일어나는 애니메이션 실행
+        SetAnimationState("Stand");
         anim.SetBool("Sitting", false);
     }
     #endregion
@@ -221,7 +226,23 @@ public class CharacterAgent : CharacterBase
         DroppedObject.Instance.DroppedObjects.Clear();
     }
 
+    // 애니메이션 상태를 설정하는 보조 메소드
+    private void SetAnimationState(string stateName, float transitionDuration = 0.1f, int StateLayer = 0)
+    {
+        if (anim.HasState(StateLayer, Animator.StringToHash(stateName)))
+        {
+            anim.CrossFadeInFixedTime(stateName, transitionDuration, StateLayer);
 
+            if (StateLayer == 1)
+                SetLayerPriority(1, 1);
+        }
+
+    }
+
+    private void SetLayerPriority(int StateLayer = 1, int Priority = 1) // 애니메이터의 레이어 우선순위 값(무게) 설정
+    {
+        anim.SetLayerWeight(StateLayer, Priority);
+    }
 
 
     public bool IsSearching()
