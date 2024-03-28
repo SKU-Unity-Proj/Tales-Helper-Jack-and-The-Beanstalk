@@ -77,6 +77,7 @@ public class AwarenessSystem : MonoBehaviour
 
     Dictionary<GameObject, TrackedTarget> Targets = new Dictionary<GameObject, TrackedTarget>(); // 감지 대상 목록
     EnemyAI LinkedAI; // 연결된 적 AI
+    CharacterAgent Agent;
 
     public Dictionary<GameObject, TrackedTarget> ActiveTargets => Targets; // 활성화된 대상들에 대한 접근
 
@@ -84,6 +85,7 @@ public class AwarenessSystem : MonoBehaviour
     void Start()
     {
         LinkedAI = GetComponent<EnemyAI>(); // EnemyAI 컴포넌트 참조
+        Agent = GetComponent<CharacterAgent>();
     }
 
     // 매 프레임 업데이트
@@ -142,12 +144,28 @@ public class AwarenessSystem : MonoBehaviour
 
             // 인지도에 따른 처리
             if (Targets[targetGO].Awareness >= 2f)
+            {
                 LinkedAI.OnFullyDetected(targetGO); // 완전히 감지된 경우
+                Agent.AttackToPlayer(targetGO);
+            }
             else if (Targets[targetGO].Awareness >= 1f)
                 LinkedAI.OnDetected(targetGO); // 감지된 경우
             else if (Targets[targetGO].Awareness >= 0f)
                 LinkedAI.OnSuspicious(); // 의심되는 경우
         }
+    }
+
+    // 플레이어가 완전히 감지되었는지 확인
+    public bool IsPlayerFullyDetected()
+    {
+        foreach (var trackedTarget in Targets.Values)
+        {
+            if (trackedTarget.Detectable.gameObject.CompareTag("Player") && trackedTarget.Awareness >= 2f)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     // 시각적 감지 보고

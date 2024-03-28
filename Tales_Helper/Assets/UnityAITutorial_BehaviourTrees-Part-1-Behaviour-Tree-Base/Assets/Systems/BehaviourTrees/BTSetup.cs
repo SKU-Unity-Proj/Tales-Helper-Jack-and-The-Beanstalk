@@ -91,26 +91,35 @@ public class BTSetup : MonoBehaviour
             () =>
             {
                 // 거인이 앉아 있는 경우, 먼저 일으켜 세움
-                if (anim.GetBool("Sitting"))
+                if (anim.GetBool("SittingToWalk"))
                 {
-                    Agent.StandUp();
+                    Agent.StandUpChase();
                     restCondition.ResetCondition();
                 }
                 if (restCondition.IsStandingUp())
                 {
-                    Agent.MoveToSuprise();
                     Agent.MoveToRun(Chase_CurrentTarget.transform.position);
                 }
 
+                if (Sensors.IsPlayerFullyDetected() == true) // IsPlayerFullyDetected는 예시 메소드로, 실제 구현 필요
+                {
+                    Agent.AttackToPlayer(Chase_CurrentTarget.gameObject); // 플레이어 공격 실행
+                    return BehaviourTree.ENodeStatus.Succeeded; // 공격 후 상태를 성공으로 변경하여 다음 행동으로 넘어갈 수 있도록 함
+                }
+
                 // 추적 로직
-                Agent.MoveToSuprise();
                 Agent.MoveToRun(Chase_CurrentTarget.transform.position);
 
                 return BehaviourTree.ENodeStatus.InProgress;
             },
             () =>
             {
-                Agent.MoveToSuprise();
+                if (Sensors.IsPlayerFullyDetected() == true) // IsPlayerFullyDetected는 예시 메소드로, 실제 구현 필요
+                {
+                    Agent.AttackToPlayer(Chase_CurrentTarget.gameObject); // 플레이어 공격 실행
+                    return BehaviourTree.ENodeStatus.Succeeded; // 공격 후 상태를 성공으로 변경하여 다음 행동으로 넘어갈 수 있도록 함
+                }
+
                 Agent.MoveToRun(Chase_CurrentTarget.transform.position);
 
                 return BehaviourTree.ENodeStatus.InProgress;
@@ -130,7 +139,7 @@ public class BTSetup : MonoBehaviour
            () =>
            {
                // 앉는 액션이 시작되면
-               if (!anim.GetBool("Sitting"))
+               if (!anim.GetBool("SittingToWalk"))
                 {
                    Agent.SitAtPosition(chairTransform.position, chairTransform.rotation);
                    return BehaviourTree.ENodeStatus.InProgress; // 액션 진행 중
@@ -162,9 +171,9 @@ public class BTSetup : MonoBehaviour
             () =>
             {
                 // 거인이 앉아 있는 경우, 먼저 일으켜 세움
-                if (anim.GetBool("Sitting"))
+                if (anim.GetBool("SittingToWalk"))
                 {
-                    Agent.StandUp(); // Agent가 서있는 상태로 변경
+                    Agent.StandUpSearch(); // Agent가 서있는 상태로 변경
                     restCondition.ResetCondition(); // 휴식 상태 초기화
                 }
 

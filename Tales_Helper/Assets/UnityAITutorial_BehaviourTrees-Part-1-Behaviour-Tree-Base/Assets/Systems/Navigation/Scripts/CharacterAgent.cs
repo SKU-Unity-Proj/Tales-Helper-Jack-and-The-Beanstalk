@@ -125,17 +125,20 @@ public class CharacterAgent : CharacterBase
 
         SetDestination(destination);
     }
-    public virtual void MoveToSuprise()
-    {
-        this.Agent.speed = 0f;
-        anim.SetBool("Suprise", true);
-    }
+
     public virtual void MoveToRun(Vector3 destination)
     {
         CancelCurrentCommand();
 
+        this.Agent.isStopped = true;
+        this.Agent.velocity = Vector3.zero;
+
         this.Agent.speed = runSpeed;
+
+        anim.SetBool("Suprise", true);
         anim.SetBool("Run", true);
+
+        this.Agent.isStopped = false;
 
         SetDestination(destination);
     }
@@ -160,17 +163,34 @@ public class CharacterAgent : CharacterBase
         }
 
         // 앉는 애니메이션 실행
-        anim.SetBool("Sitting", true);
+        anim.SetBool("SittingToWalk", true);
     }
 
-    public void StandUp()
+    public void StandUpChase()
     {
+        this.Agent.isStopped = true;
+        this.Agent.velocity = Vector3.zero;
+
         SetAnimationState("Stand");
-        anim.SetBool("Sitting", false);
+
+        anim.SetBool("Suprise", true);
+        anim.SetBool("Run", true);
+
+        this.Agent.isStopped = false;
+    }
+
+    public void StandUpSearch()
+    {
+        this.Agent.isStopped = true;
+        this.Agent.velocity = Vector3.zero;
+
+        SetAnimationState("Stand");
+        anim.SetBool("SittingToWalk", false);
+
+        this.Agent.isStopped = false;
     }
     #endregion
-  
-    
+
     #region 떨어진 물체 탐색
 
     public void SearchingObject()
@@ -252,6 +272,33 @@ public class CharacterAgent : CharacterBase
     }
     #endregion
 
+
+    #region 플레이어 공격
+    public virtual void AttackToPlayer(GameObject player)
+    {
+        this.Agent.isStopped = true;
+        this.Agent.velocity = Vector3.zero;
+
+        //--------- 플레이어 방향으로 회전 로직
+
+        Vector3 directionToTarget = player.transform.position - transform.position;
+        directionToTarget.y = 0; // 수직 방향 회전은 제외 (Y축 고정)
+
+        if (directionToTarget == Vector3.zero) return; // 이미 목표 방향을 바라보고 있으면 반환
+
+        Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
+
+        // 현재 회전에서 목표 회전으로 부드럽게 전환
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f); // 5는 회전 속도, 상황에 따라 조정 가능
+
+        //----------
+
+        anim.SetBool("Attack", true);
+
+        this.Agent.isStopped = false;
+    }
+
+    #endregion
     public virtual void SetDestination(Vector3 destination)
     {
         // find nearest spot on navmesh and move there
