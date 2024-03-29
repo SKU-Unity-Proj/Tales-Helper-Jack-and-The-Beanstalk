@@ -15,9 +15,17 @@ public class De : MonoBehaviour
     float currentDeltaTime; // 현재 FixedUpdate에서의 deltaTime
     float lastDeltaTime; // 이전 FixedUpdate에서의 deltaTime
 
+    private Rigidbody boxRigid;
+
+    public float maxHeight = 5f;
+    private float midHeight;
+    public float minHeight = 0f;
+
     private void Awake()
     {
         forceToMass = 1f / Physics.gravity.magnitude; // 중력의 역수를 사용하여 질량에 대한 계수 계산
+        boxRigid = GetComponent<Rigidbody>();
+        midHeight = (maxHeight + minHeight) / 2f;
     }
 
     void UpdateWeight()
