@@ -323,6 +323,16 @@ namespace DiasGames.Controller
                 ladder2.SetActive(true);
                 Debug.Log("1");
             }
+
+            if (other.gameObject.CompareTag("clubCol"))
+            {
+                Health playerHealth = this.transform.GetComponent<Health>();
+                if (playerHealth != null)
+                {
+                    // 플레이어의 체력을 0으로 설정
+                    playerHealth.Damage(playerHealth.CurrentHP);
+                }
+            }
         }
 
         private void UpdateCharacterActions()

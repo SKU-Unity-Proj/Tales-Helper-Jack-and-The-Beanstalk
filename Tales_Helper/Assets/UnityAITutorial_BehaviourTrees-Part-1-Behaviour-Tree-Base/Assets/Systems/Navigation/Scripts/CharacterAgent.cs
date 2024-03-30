@@ -14,6 +14,7 @@ public enum EOffmeshLinkStatus
 public class CharacterAgent : CharacterBase
 {
     [SerializeField] float NearestPointSearchRange = 5f; // 최근접 탐색 범위
+    [SerializeField] Transform attackCol;
 
     private NavMeshAgent Agent; // NavMeshAgent 컴포넌트
     private Animator anim; // 애니메이터 컴포넌트
@@ -297,6 +298,8 @@ public class CharacterAgent : CharacterBase
         // 현재 회전에서 목표 회전으로 부드럽게 전환
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 15f); // 5는 회전 속도, 상황에 따라 조정 가능
 
+        // 타격 트리거 on
+        attackCol.GetComponent<SphereCollider>().enabled = true;
         //----------
 
         SetAnimationState("Giant_Attack");
@@ -307,6 +310,8 @@ public class CharacterAgent : CharacterBase
     public virtual void MissingPlayer(Vector3 destination)
     {
         CancelCurrentCommand();
+
+        //attackCol.GetComponent<SphereCollider>().enabled = false;
 
         this.Agent.speed = runSpeed;
 
