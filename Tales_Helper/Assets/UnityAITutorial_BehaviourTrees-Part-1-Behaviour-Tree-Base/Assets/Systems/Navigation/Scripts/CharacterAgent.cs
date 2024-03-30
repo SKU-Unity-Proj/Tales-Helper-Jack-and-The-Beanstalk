@@ -18,8 +18,8 @@ public class CharacterAgent : CharacterBase
     private NavMeshAgent Agent; // NavMeshAgent 컴포넌트
     private Animator anim; // 애니메이터 컴포넌트
 
-    private float walkSpeed = 1.5f; // 걷기 속도
-    private float runSpeed = 3.5f; // 뛰기 속도
+    private float walkSpeed = 2.5f; // 걷기 속도
+    private float runSpeed = 6.5f; // 뛰기 속도
 
     bool DestinationSet = false; // 목적지 설정 여부
     bool ReachedDestination = false; // 목적지 도달 여부
@@ -153,7 +153,10 @@ public class CharacterAgent : CharacterBase
     {
         // 거인이 interactionPos로 이동
         MoveTo(interactionPos);
-        yield return new WaitUntil(() => AtDestination);
+        yield return new WaitUntil(() => ReachedDestination);
+
+        Debug.Log(ReachedDestination);
+        Debug.Log(interactionPos);
 
         // 목표 회전에 도달할 때까지 회전을 진행
         while (Quaternion.Angle(transform.rotation, chairRotation) > 0.1f)
@@ -162,8 +165,10 @@ public class CharacterAgent : CharacterBase
             yield return null;
         }
 
+
         // 앉는 애니메이션 실행
-        anim.SetBool("SittingToWalk", true);
+        anim.SetBool("Sitting", true);
+
     }
 
     public void StandUpChase()
@@ -185,7 +190,7 @@ public class CharacterAgent : CharacterBase
         this.Agent.velocity = Vector3.zero;
 
         SetAnimationState("Stand");
-        anim.SetBool("SittingToWalk", false);
+        anim.SetBool("Sitting", false);
 
         this.Agent.isStopped = false;
     }
@@ -274,6 +279,7 @@ public class CharacterAgent : CharacterBase
 
 
     #region 플레이어 공격
+
     public virtual void AttackToPlayer(GameObject player)
     {
         this.Agent.isStopped = true;
@@ -289,16 +295,38 @@ public class CharacterAgent : CharacterBase
         Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
 
         // 현재 회전에서 목표 회전으로 부드럽게 전환
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f); // 5는 회전 속도, 상황에 따라 조정 가능
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 15f); // 5는 회전 속도, 상황에 따라 조정 가능
 
         //----------
 
-        anim.SetBool("Attack", true);
+        SetAnimationState("Giant_Attack");
 
         this.Agent.isStopped = false;
     }
 
+    public virtual void MissingPlayer(Vector3 destination)
+    {
+        CancelCurrentCommand();
+
+        this.Agent.speed = runSpeed;
+
+        anim.SetBool("Attack", false);
+
+        SetDestination(destination);
+    }
+
+    public virtual void CatchPlayer()
+    {
+        CancelCurrentCommand();
+
+        this.Agent.isStopped = true;
+        this.Agent.velocity = Vector3.zero;
+
+        SetAnimationState("Giant_Roaring");
+    }
+
     #endregion
+
     public virtual void SetDestination(Vector3 destination)
     {
         // find nearest spot on navmesh and move there

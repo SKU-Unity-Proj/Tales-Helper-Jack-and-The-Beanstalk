@@ -148,10 +148,15 @@ public class AwarenessSystem : MonoBehaviour
                 LinkedAI.OnFullyDetected(targetGO); // 완전히 감지된 경우
                 Agent.AttackToPlayer(targetGO);
             }
-            else if (Targets[targetGO].Awareness >= 1f)
+            else if (Targets[targetGO].Awareness >= 1f && Targets[targetGO].Awareness < 2f)
+            {
                 LinkedAI.OnDetected(targetGO); // 감지된 경우
+            }
             else if (Targets[targetGO].Awareness >= 0f)
+            {
                 LinkedAI.OnSuspicious(); // 의심되는 경우
+                Agent.MissingPlayer(targetGO.transform.position);
+            }
         }
     }
 
@@ -161,6 +166,18 @@ public class AwarenessSystem : MonoBehaviour
         foreach (var trackedTarget in Targets.Values)
         {
             if (trackedTarget.Detectable.gameObject.CompareTag("Player") && trackedTarget.Awareness >= 2f)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public bool IsPlayerMissingDetected()
+    {
+        foreach (var trackedTarget in Targets.Values)
+        {
+            if (trackedTarget.Detectable.gameObject.CompareTag("Player") && trackedTarget.Awareness >= 0f && trackedTarget.Awareness < 2f)
             {
                 return true;
             }
