@@ -6,6 +6,7 @@ public class DoorHandle : MonoBehaviour
 {   
     public Animator doorAnim;
     private DroppedObject manager;
+    [SerializeField] Transform doorPos;
 
     private void Start()
     {
@@ -27,6 +28,7 @@ public class DoorHandle : MonoBehaviour
             doorAnim.SetTrigger("Grab");
 
             this.GetComponent<BoxCollider>().enabled = false;
+            doorPos.GetComponent<BoxCollider>().enabled = true;
 
             // 매니저 인스턴스가 존재하는 경우에만 배열에 넣음
             if (manager != null)

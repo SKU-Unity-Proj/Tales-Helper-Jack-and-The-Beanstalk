@@ -11,7 +11,8 @@ public class BTSetup : MonoBehaviour
 
     [Header("Wander and Rest Settings")]
     [SerializeField] private float Wander_Range = 10f;
-    [SerializeField] private Transform chairTransform; // 의자의 Transform
+    [SerializeField] private Transform chairTransform; // 의자 Transform
+    [SerializeField] private Transform doorPos;
 
     [Header("Chase Settings")]
     [SerializeField] float Chase_MinAwarenessToChase = 1.5f;
@@ -115,7 +116,7 @@ public class BTSetup : MonoBehaviour
 
                     return BehaviourTree.ENodeStatus.InProgress; 
                 }
-                
+             
 
                 // 추적 로직
                 Agent.MoveToRun(Chase_CurrentTarget.transform.position);
@@ -124,7 +125,15 @@ public class BTSetup : MonoBehaviour
             },
             () =>
             {
- 
+
+                if (Agent.IsKnockingDoor)
+                {
+                    Debug.Log("2");
+                    Agent.StartKnockingDoor(doorPos.position, doorPos.rotation);
+
+                    return BehaviourTree.ENodeStatus.InProgress;
+                }
+
                 Agent.MoveToRun(Chase_CurrentTarget.transform.position);
 
                 return BehaviourTree.ENodeStatus.InProgress;
@@ -157,6 +166,11 @@ public class BTSetup : MonoBehaviour
                 }
 
                 if (restCondition.CheckCondition())
+                {
+                    return BehaviourTree.ENodeStatus.Succeeded;
+                }
+
+                if (Agent.IsKnockingDoor)
                 {
                     return BehaviourTree.ENodeStatus.Succeeded;
                 }

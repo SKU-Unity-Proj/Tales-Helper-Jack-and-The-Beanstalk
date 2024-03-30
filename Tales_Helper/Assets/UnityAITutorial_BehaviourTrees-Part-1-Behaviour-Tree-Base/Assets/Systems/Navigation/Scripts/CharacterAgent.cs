@@ -30,6 +30,7 @@ public class CharacterAgent : CharacterBase
     public bool IsMoving => Agent.velocity.magnitude > float.Epsilon; // 이동 중 여부
     public bool AtDestination => ReachedDestination; // 목적지 도달 여부 반환
 
+    public bool IsKnockingDoor { get; private set; } = false;
 
     // Start is called before the first frame update
     protected void Start()
@@ -65,6 +66,14 @@ public class CharacterAgent : CharacterBase
         }
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("doorCol"))
+        {
+            IsKnockingDoor = true;
+            Debug.Log("1");
+        }
+    }
 
     // OffmeshLink를 따라 이동하는 코루틴
     IEnumerator FollowOffmeshLink()
@@ -180,7 +189,9 @@ public class CharacterAgent : CharacterBase
         SetAnimationState("Stand");
 
         anim.SetBool("Suprise", true);
+
         anim.SetBool("Run", true);
+        anim.SetBool("Sitting", false);
 
         this.Agent.isStopped = false;
     }
@@ -278,7 +289,6 @@ public class CharacterAgent : CharacterBase
     }
     #endregion
 
-
     #region 플레이어 공격
 
     public virtual void AttackToPlayer(GameObject player)
@@ -332,6 +342,29 @@ public class CharacterAgent : CharacterBase
 
     #endregion
 
+    #region 문 두드리기
+
+    public void StartKnockingDoor(Vector3 intractionPos, Quaternion doorRotation)
+    {
+        StartCoroutine(KnockingProcess(intractionPos, doorRotation));
+    }
+
+    private IEnumerator KnockingProcess(Vector3 intractionPos, Quaternion doorRotation)
+    {
+
+        anim.SetBool("Run", false);
+
+        MoveTo(intractionPos);
+
+        while (Quaternion.Angle(transform.rotation, doorRotation) > 0.1f)
+        {
+            transform.rotation = Quaternion.Lerp(transform.rotation, doorRotation, Time.deltaTime * 5f);
+            yield return null;
+        }
+ 
+        anim.SetBool("Knocking", true);
+    }
+    #endregion
     public virtual void SetDestination(Vector3 destination)
     {
         // find nearest spot on navmesh and move there
