@@ -4,42 +4,44 @@ using UnityEngine.AI;
 
 public class MouseController : MonoBehaviour
 {
-    private NavMeshAgent agent;
-    private Animator anim;
+    private NavMeshAgent agent; // NavMeshAgent 컴포넌트에 대한 참조
+    private Animator anim; // Animator 컴포넌트에 대한 참조
 
     private void Start()
     {
-        agent = GetComponent<NavMeshAgent>();
-        anim = GetComponent<Animator>();
+        agent = GetComponent<NavMeshAgent>(); // NavMeshAgent 컴포넌트 가져오기
+        anim = GetComponent<Animator>(); // Animator 컴포넌트 가져오기
     }
 
+    // 대상 위치로 이동하는 메서드
     public void MoveToTarget(Transform targetPosition)
     {
         if (agent != null)
         {
-            agent.SetDestination(targetPosition.position);
+            agent.SetDestination(targetPosition.position); // NavMeshAgent를 사용하여 대상 위치로 이동 명령 전달
         }
     }
 
     private void Update()
     {
-        if (agent.velocity.magnitude > 0)
+        if (agent.velocity.magnitude > 0) // NavMeshAgent의 속도가 0보다 큰지 확인
         {
-            anim.SetBool("isMove", true);
-            MoveCharacter(agent.desiredVelocity);
+            anim.SetBool("isMove", true); // 애니메이션 상태를 이동 중으로 설정
+            MoveCharacter(agent.desiredVelocity); // 캐릭터 이동 방향 설정
         }
         else
         {
-            anim.SetBool("isMove", false);
+            anim.SetBool("isMove", false); // 애니메이션 상태를 정지 상태로 설정
         }
     }
 
+    // 캐릭터 이동을 처리하는 메서드
     void MoveCharacter(Vector3 velocity)
     {
-        Vector3 localVelocity = transform.InverseTransformDirection(velocity);
-        float speed = localVelocity.z;
-        anim.SetFloat("Speed", speed);
+        Vector3 localVelocity = transform.InverseTransformDirection(velocity); // 월드 공간에서의 속도를 로컬 공간으로 변환
     }
+}
+
 
 
 
@@ -60,4 +62,3 @@ NavMeshAgent.velocity.sqrMagnitude
 두 점 간의 거리를 구할 때 사용한다.
 
 복잡한 수식을 사용하는 Vector3.Distance 보다 성능이 좋다.*/
-}

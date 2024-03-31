@@ -24,10 +24,11 @@ public class MouseTrap : MonoBehaviour
 
             mouse.GetComponent<MouseController>().MoveToTarget(targetPos);
         }
-        Debug.Log(other);
+
         if (other.gameObject == mouse)
         {
             anim.SetTrigger("isCatch");
+            mouse.GetComponent<Animator>().SetTrigger("isDie");
             cheese.SetActive(false);
         }
     }
