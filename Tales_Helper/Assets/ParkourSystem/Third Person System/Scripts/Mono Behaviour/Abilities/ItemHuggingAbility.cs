@@ -39,18 +39,21 @@ namespace DiasGames.Abilities
 
         public override bool ReadyToRun() // 실행 조건
         {
-            CheckItem();
-
             return _action.pickUp && haveItem;
         }
 
         public override void OnStartAbility() // 실행될 때 호출
         {
-            _mover.StopMovement(); // velocity 0
+            CheckItem();
 
-            SetAnimationState("ItemLift", 0.2f);
+            if(haveItem)
+            {
+                _mover.StopMovement(); // velocity 0
 
-            Invoke("StartIdle", 2f);
+                SetAnimationState("ItemLift", 0.2f);
+
+                Invoke("StartIdle", 2f);
+            }
         }
 
 
