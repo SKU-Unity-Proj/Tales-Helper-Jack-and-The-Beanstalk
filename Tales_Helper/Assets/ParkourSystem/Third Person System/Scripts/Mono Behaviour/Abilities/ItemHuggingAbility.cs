@@ -22,6 +22,16 @@ namespace DiasGames.Abilities
         public bool liftingWait = false; // 집어드는 모션 기다리는 동안 움직임 제어
         private Rigidbody itemRigid; // 아이템의 리지디바디
 
+        // 점프 매개변수
+        [Header("Jump parameters")]
+        [SerializeField] private float jumpHeight = 1.2f; // 점프 높이
+        [SerializeField] private float speedOnAir = 6f; // 공중에서의 속도
+        [SerializeField] private float airControl = 0.5f; // 공중 제어
+
+        private bool isJump = false;
+        private float _startSpeed;
+        private Vector2 _startInput;
+
         private void Awake()
         {
             _mover = GetComponent<IMover>();
@@ -29,21 +39,18 @@ namespace DiasGames.Abilities
 
         public override bool ReadyToRun() // 실행 조건
         {
-            return _action.pickUp;
+            CheckItem();
+
+            return _action.pickUp && haveItem;
         }
 
         public override void OnStartAbility() // 실행될 때 호출
         {
-            CheckItem();
+            _mover.StopMovement(); // velocity 0
 
-            if(haveItem) // 아이템이 있을때만 애니메이션 실행
-            {
-                _mover.StopMovement(); // velocity 0
+            SetAnimationState("ItemLift", 0.2f);
 
-                SetAnimationState("ItemLift", 0.2f);
-
-                Invoke("StartIdle", 2f);
-            }
+            Invoke("StartIdle", 2f);
         }
 
 
@@ -56,18 +63,27 @@ namespace DiasGames.Abilities
                 HuggingItem();
             }
 
-            if(_action.pickUp) // E키를 다시 누르면 어빌리티 초기화
+            if(_action.pickUp) // E키를 다시 누르면 어빌리티 중지
                 StopAbility();
 
-            if (!haveItem) // 아이템이 없으면 어빌리티 초기화
+            if (!haveItem) // 아이템이 없으면 어빌리티 중지
                 StopAbility();
-
-
-            //if (_animator.IsInTransition(0)) return;
 
             if (_animator.GetCurrentAnimatorStateInfo(0).IsName("ItemLift")) // 실행중인 애니메이션이 IsName이면
                 if(_animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.8f)  // 애니메이션의 어느정도 완료 되었을시
                     liftingWait = true;
+            
+            if (_mover.IsGrounded())
+            {
+                if (isJump && _mover.GetVelocity().y < -3f) // 점프 후 착지
+                {
+                    SetAnimationState("Grounded", 0.25f);
+                    isJump = false;
+                }
+                    
+                if (_action.jump)
+                    PerformJump(); // 점프 수행
+            } 
         }
 
         public override void OnStopAbility() // 멈출때 호출
@@ -90,8 +106,11 @@ namespace DiasGames.Abilities
 
 
 
+        /// <summary>
+        /// 어빌리티 끝. 일반 함수들
+        /// </summary>
 
-        private void StartIdle() // Hugging_Idle 애니메이션 실행
+        private void StartIdle()
         {
             SetAnimationState("ItemHugging_Idle", 0.25f, 1);
         }
@@ -127,6 +146,21 @@ namespace DiasGames.Abilities
                 pickItem.transform.localPosition = Vector3.zero;
                 pickItem.transform.localRotation = Quaternion.Euler(new Vector3(16f, -95f, 0f));
             }
+        }
+
+        private void PerformJump()
+        {
+            Vector3 velocity = _mover.GetVelocity(); // 현재 속도 가져오기
+            velocity.y = Mathf.Sqrt(jumpHeight * -2f * _mover.GetGravity()); // 점프에 필요한 속도 계산
+
+            _mover.SetVelocity(velocity); // 속도 설정
+            _animator.CrossFadeInFixedTime("Air.Jump", 0.0f); // 점프 애니메이션 재생
+            _startSpeed = speedOnAir; // 시작 속도 설정
+
+            if (_startInput.magnitude > 0.1f)
+                _startInput.Normalize(); // 입력 정규화
+
+            isJump = true; //점프 했음을 알림
         }
     }
 }
