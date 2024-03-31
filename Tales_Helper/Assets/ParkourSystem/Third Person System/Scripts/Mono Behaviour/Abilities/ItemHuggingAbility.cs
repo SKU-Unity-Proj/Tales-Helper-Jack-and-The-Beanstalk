@@ -39,7 +39,7 @@ namespace DiasGames.Abilities
 
         public override bool ReadyToRun() // 실행 조건
         {
-            return _action.pickUp && haveItem;
+            return _action.pickUp;
         }
 
         public override void OnStartAbility() // 실행될 때 호출
