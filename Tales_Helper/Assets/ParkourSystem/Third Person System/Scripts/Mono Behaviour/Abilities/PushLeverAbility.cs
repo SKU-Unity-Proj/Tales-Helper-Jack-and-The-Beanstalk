@@ -3,6 +3,7 @@ using UnityEngine;
 using DiasGames.Components;
 using DiasGames.IK;
 using System.Collections;
+using UnityEngine.Playables;
 
 namespace DiasGames.Abilities
 {
@@ -19,6 +20,8 @@ namespace DiasGames.Abilities
         [SerializeField] private Transform rightIKTarget = null; // 애니메이션 대상의 오른쪽 타겟
         [SerializeField] private Transform leftIKTarget = null;  // 애니메이션 대상의 왼쪽 타겟
         [SerializeField] private Transform headTransform = null;  // 헤드 트렌스폼
+
+        [SerializeField] private PlayableDirector playableDirector;
 
         // components
         private IMover _mover;
@@ -73,11 +76,12 @@ namespace DiasGames.Abilities
         {
             _pushable.StartPush();
             _mover.StopMovement();
+
             SetAnimationState(pushLeverAnimationState);
 
             _isMatchingTarget = true;
 
-            StartCoroutine(CheckAnimationProgress(pushLeverAnimationState, 1f));
+            StartCoroutine(WaitForAnimation()); 
         }
 
         public override bool ReadyToRun()
@@ -101,35 +105,13 @@ namespace DiasGames.Abilities
 
         }
 
-        private IEnumerator CheckAnimationProgress(string stateName, float progressThreshold)
+        private IEnumerator WaitForAnimation()
         {
-            // 애니메이터의 현재 상태가 목표 상태와 일치하는지 확인합니다.
-            while (!animator.GetCurrentAnimatorStateInfo(0).IsName(stateName))
-            {
-                yield return null; // 다음 프레임까지 기다립니다.
-            }
+            float animationLength = animator.GetCurrentAnimatorStateInfo(0).length;
+            yield return new WaitForSeconds(animationLength);
 
-            // 현재 상태의 진행도를 체크합니다.
-            AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-            while (stateInfo.normalizedTime < progressThreshold)
-            {
-                yield return null; // 다음 프레임까지 기다립니다.
-                                   // 상태가 변경될 수 있으므로, 매 루프마다 상태 정보를 업데이트합니다.
-                stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-            }
+            playableDirector.Play();
 
-            // 애니메이션이 5/7 정도 실행된 시점에서 실행할 로직을 여기에 추가합니다.
-            _pushable.StopPush();
-
-            // reset vars
-            _isMatchingTarget = false;
-
-            // stop IK
-            if (_ikScheduler != null)
-            {
-                _ikScheduler.StopIK(AvatarIKGoal.LeftHand);
-                _ikScheduler.StopIK(AvatarIKGoal.RightHand);
-            }
         }
 
         // 지연 후에 레버 핸들을 IK 타겟에 연결하는 Coroutine입니다.
