@@ -46,12 +46,12 @@ ModelImporter:
       hasAdditiveReferencePose: 0
       loopTime: 1
       loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
+      keepOriginalOrientation: 1
       keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
+      keepOriginalPositionXZ: 1
       heightFromFeet: 0
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
@@ -530,7 +530,8 @@ ModelImporter:
     - name: Spine
       parentName: Hips
       position: {x: -0, y: 0.13753143, z: 0}
-      rotation: {x: 0.00000001164153, y: -0.0000000029103835, z: -0.0000000072759576, w: 1}
+      rotation: {x: 0.00000001164153, y: -0.0000000029103835, z: -0.0000000072759576,
+        w: 1}
       scale: {x: 1, y: 0.9999999, z: 1.0000001}
     - name: Spine1
       parentName: Spine
@@ -545,7 +546,8 @@ ModelImporter:
     - name: RightShoulder
       parentName: Spine2
       position: {x: 0.18835309, y: 0.07529831, z: -0.061136443}
-      rotation: {x: 0.00000009313226, y: -0.0000000014551902, z: -0.000000016007107, w: 1}
+      rotation: {x: 0.00000009313226, y: -0.0000000014551902, z: -0.000000016007107,
+        w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: RightArm
       parentName: RightShoulder
@@ -665,7 +667,8 @@ ModelImporter:
     - name: Neck
       parentName: Spine2
       position: {x: -0.0003593654, y: 0.1049469, z: 0.062031902}
-      rotation: {x: 0.00000009313226, y: 0.000000004365576, z: -0.000000020372681, w: 1}
+      rotation: {x: 0.00000009313226, y: 0.000000004365576, z: -0.000000020372681,
+        w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Head
       parentName: Neck
@@ -675,7 +678,8 @@ ModelImporter:
     - name: LeftShoulder
       parentName: Spine2
       position: {x: -0.18835309, y: 0.07529831, z: -0.061136443}
-      rotation: {x: 0.00000006984919, y: 0.0000000072759576, z: -0.0000000036379801, w: 1}
+      rotation: {x: 0.00000006984919, y: 0.0000000072759576, z: -0.0000000036379801,
+        w: 1}
       scale: {x: 1.0000001, y: 1, z: 1.0000001}
     - name: LeftArm
       parentName: LeftShoulder
@@ -795,12 +799,14 @@ ModelImporter:
     - name: RightUpLeg
       parentName: Hips
       position: {x: 0.09736679, y: -0.06270004, z: 0}
-      rotation: {x: -0.00000084983174, y: -0.000000011641523, z: -0.000000008731159, w: 1}
+      rotation: {x: -0.00000084983174, y: -0.000000011641523, z: -0.000000008731159,
+        w: 1}
       scale: {x: 1, y: 0.99999994, z: 1}
     - name: RightLeg
       parentName: RightUpLeg
       position: {x: 0.109759025, y: -0.44878653, z: -0.0000007823736}
-      rotation: {x: 0.00000084983174, y: 0.000000023283063, z: 0.0000000029104033, w: 1}
+      rotation: {x: 0.00000084983174, y: 0.000000023283063, z: 0.0000000029104033,
+        w: 1}
       scale: {x: 1, y: 1.0000001, z: 1}
     - name: RightFoot
       parentName: RightLeg
@@ -810,12 +816,14 @@ ModelImporter:
     - name: LeftUpLeg
       parentName: Hips
       position: {x: -0.09736679, y: -0.06270004, z: 0}
-      rotation: {x: -0.00000077998266, y: -0.000000002910382, z: -0.0000000014551937, w: 1}
+      rotation: {x: -0.00000077998266, y: -0.000000002910382, z: -0.0000000014551937,
+        w: 1}
       scale: {x: 1.0000001, y: 1, z: 1.0000002}
     - name: LeftLeg
       parentName: LeftUpLeg
       position: {x: -0.109759025, y: -0.44878653, z: -0.0000006939076}
-      rotation: {x: 0.0000007334165, y: -0.0000000014551975, z: 0.0000000072759554, w: 1}
+      rotation: {x: 0.0000007334165, y: -0.0000000014551975, z: 0.0000000072759554,
+        w: 1}
       scale: {x: 1, y: 1.0000002, z: 0.9999999}
     - name: LeftFoot
       parentName: LeftLeg
