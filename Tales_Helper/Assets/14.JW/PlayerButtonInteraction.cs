@@ -14,15 +14,25 @@ public class PlayerInteraction : MonoBehaviour
     public float interactionDistance = 1f; // 상호작용 가능한 최대 거리
     public KeyCode interactionKey = KeyCode.F; // 상호작용 키
 
+    //private IMover _mover = null;
+
+    private void Awake()
+    {
+        //_mover = GetComponent<IMover>();
+
+        //플레이어 움직임 멈추기
+        //_mover.StopMovement();
+    }
+
     private void Update()
     {
-        //애니메이션 실행시 움직임 제어 비활성화
-        playerAnimator.applyRootMotion = false;
         // 상호작용 키를 눌렀는지 확인
         if (Input.GetKeyDown(interactionKey))
         {
             CheckInteraction();
         }
+
+        //현재 실행되고 있는 애니메이션 이름이 Press button 일때 위의 함수 쓰기
     }
 
     private void CheckInteraction()
