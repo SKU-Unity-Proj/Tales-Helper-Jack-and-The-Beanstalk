@@ -2,18 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerButtonInteraction : MonoBehaviour
+public class PlayerInteraction : MonoBehaviour
 {
     public Animator playerAnimator; // 플레이어 애니메이터
     public Animator buttonAnimator; // 버튼 애니메이터
     public Transform targetPos; // 버튼을 눌렀을 때 위치
     public Light pointLight; // Point Light의 참조
     public Color[] lightColorsOnInteraction; // 상호작용 시 변경될 빛의 색상 배열
-    public Material[] outlineMaterials; // 머터리얼의 아웃라인 색상을 변경할 머터리얼 배열
     private int currentColorIndex = 0; // 현재 색상 인덱스
     public float interactionDistance = 1f; // 상호작용 가능한 최대 거리
     public KeyCode interactionKey = KeyCode.F; // 상호작용 키
-    public Material newMaterial;
+    public Material[] outlineMaterials; // 아웃라인 효과가 적용된 머티리얼 배열
+    private int currentIndex = 0; // 현재 아웃라인을 켤 오브젝트의 인덱스
     //private IMover _mover = null;
 
     private void Awake()
@@ -30,6 +30,7 @@ public class PlayerButtonInteraction : MonoBehaviour
         if (Input.GetKeyDown(interactionKey))
         {
             CheckInteraction();
+
         }
 
         //현재 실행되고 있는 애니메이션 이름이 Press button 일때 위의 함수 쓰기
@@ -52,19 +53,54 @@ public class PlayerButtonInteraction : MonoBehaviour
                 playerAnimator.SetTrigger("Press Button");
                 buttonAnimator.SetTrigger("Press");
                 Invoke("ChangeLightColor", 1.2f);
-                Invoke("ChangeObjectMaterial", 1.2f);
+                Invoke("ToggleNextOutline", 1.2f);
+
             }
         }
     }
-
-    public void ChangeObjectMaterial()
+    // 다음 오브젝트의 아웃라인을 토글하는 함수
+    private void ToggleNextOutline()
     {
-        Renderer renderer = GetComponent<Renderer>(); // 오브젝트의 렌더러 컴포넌트를 가져옵니다.
-        if (renderer != null && newMaterial != null) // 렌더러와 새로운 머티리얼이 유효한 경우에만 변경합니다.
+        // 현재 인덱스의 오브젝트 아웃라인을 끕니다.
+        if (currentIndex < outlineMaterials.Length)
         {
-            renderer.material = newMaterial; // 머티리얼을 새로운 머티리얼로 변경합니다.
+            DisableOutline(currentIndex);
+        }
+
+        // 인덱스를 증가시킵니다.
+        currentIndex++;
+
+        // 모든 오브젝트의 아웃라인을 켰다면 인덱스를 초기화합니다.
+        if (currentIndex >= outlineMaterials.Length)
+        {
+            currentIndex = 0;
+        }
+
+        // 다음 오브젝트의 아웃라인을 켭니다.
+        EnableOutline(currentIndex);
+    }
+
+    // 특정 인덱스의 오브젝트 아웃라인을 켜는 함수
+    private void EnableOutline(int index)
+    {
+        if (index >= 0 && index < outlineMaterials.Length)
+        {
+            Material outlineMaterial = outlineMaterials[index];
+            outlineMaterial.SetFloat("_OutlineWidth", 0.02f); // 아웃라인 두께 설정
         }
     }
+
+    // 특정 인덱스의 오브젝트 아웃라인을 끄는 함수
+    private void DisableOutline(int index)
+    {
+        if (index >= 0 && index < outlineMaterials.Length)
+        {
+            Material outlineMaterial = outlineMaterials[index];
+            outlineMaterial.SetFloat("_OutlineWidth", 0f); // 아웃라인 두께를 0으로 설정하여 비활성화
+        }
+    }
+
+
 
     private void ChangeLightColor()
     {
