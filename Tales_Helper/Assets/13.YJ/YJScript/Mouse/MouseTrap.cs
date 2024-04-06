@@ -1,8 +1,8 @@
-using TMPro;
 using UnityEngine;
 
 public class MouseTrap : MonoBehaviour
 {
+    public GameObject giant;
     public GameObject mouse;
     public GameObject cheese;
     public Transform targetPos;
@@ -28,8 +28,9 @@ public class MouseTrap : MonoBehaviour
         if (other.gameObject == mouse)
         {
             anim.SetTrigger("isCatch");
-            mouse.GetComponent<Animator>().SetTrigger("isDie");
+            mouse.GetComponent<MouseController>().Die();
             cheese.SetActive(false);
+            giant.GetComponent<OrcFSM>().TrapOn();
         }
     }
 }

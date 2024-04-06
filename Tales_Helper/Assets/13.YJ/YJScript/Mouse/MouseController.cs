@@ -6,11 +6,13 @@ public class MouseController : MonoBehaviour
 {
     private NavMeshAgent agent; // NavMeshAgent 컴포넌트에 대한 참조
     private Animator anim; // Animator 컴포넌트에 대한 참조
+    private Rigidbody rigid;
 
     private void Start()
     {
-        agent = GetComponent<NavMeshAgent>(); // NavMeshAgent 컴포넌트 가져오기
-        anim = GetComponent<Animator>(); // Animator 컴포넌트 가져오기
+        agent = GetComponent<NavMeshAgent>();
+        anim = GetComponent<Animator>();
+        rigid = GetComponent<Rigidbody>();
     }
 
     // 대상 위치로 이동하는 메서드
@@ -39,6 +41,12 @@ public class MouseController : MonoBehaviour
     void MoveCharacter(Vector3 velocity)
     {
         Vector3 localVelocity = transform.InverseTransformDirection(velocity); // 월드 공간에서의 속도를 로컬 공간으로 변환
+    }
+
+    public void Die()
+    {
+        anim.SetTrigger("isDie");
+        rigid.constraints = RigidbodyConstraints.FreezeAll;
     }
 }
 
