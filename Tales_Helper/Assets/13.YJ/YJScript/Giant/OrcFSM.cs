@@ -13,6 +13,8 @@ public class OrcFSM : MonoBehaviour
     private Vector3 originalPosition; // 설거지하는 위치
     private Quaternion originalRotation;
 
+    private bool isPathResetting = false;
+
     void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -127,7 +129,7 @@ public class OrcFSM : MonoBehaviour
     private void IDLEEnter()
     {
         agent.ResetPath();
-        SetAnimationState("WashingDish");
+        SetAnimationState("WashingDish", 0.8f);
     }
     private void IDLE()
     {
@@ -179,23 +181,21 @@ public class OrcFSM : MonoBehaviour
     private void MOVE()
     {
         MoveCheck();
+
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Catch"))
+            if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
+            {
+                ChangeState(State.RETURN);
+                catchMouse.SetActive(false);
+            }
     }
     private void MOVETrigger(Collider other)
     {
         if (other.CompareTag("Mouse"))
         {
-            Debug.Log("M");
             agent.ResetPath();
             SetAnimationState("Catch");
-            mouse.SetActive(false);
-            catchMouse.SetActive(true);
-
-            if (anim.GetCurrentAnimatorStateInfo(0).IsName("Catch"))
-                if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
-                {
-                    ChangeState(State.RETURN);
-                    catchMouse.SetActive(false);
-                }
+            Invoke("OffMouse", 2f);
         }
     }
     private void MOVEExit()
@@ -208,11 +208,23 @@ public class OrcFSM : MonoBehaviour
     #region RETURN
     private void RETURNEnter()
     {
-
+        agent.SetDestination(originalPosition);
     }
     private void RETURN()
     {
+        MoveCheck();
 
+        float distanceToSavedPosition = Vector3.Distance(transform.position, originalPosition);
+
+        // 저장된 위치와의 거리가 임계값 이하인 경우
+        if (distanceToSavedPosition <= 2f && !isPathResetting)
+        {
+            StartCoroutine(ResetPathAndWait());
+
+            transform.position = originalPosition;
+            transform.rotation = originalRotation;
+            ChangeState(State.IDLE);
+        }
     }
     private void RETURNTrigger(Collider other)
     {
@@ -246,11 +258,30 @@ public class OrcFSM : MonoBehaviour
         SetAnimationState("Look Over");
     }
 
+    void OffMouse()
+    {
+        mouse.SetActive(false);
+    }
+
     void SetAnimationState(string stateName, float transitionDuration = 0.2f)
     {
         if (anim.HasState(0, Animator.StringToHash(stateName)))
         {
             anim.CrossFadeInFixedTime(stateName, transitionDuration);
         }
+    }
+
+    IEnumerator ResetPathAndWait()
+    {
+        // 경로 초기화
+        agent.ResetPath();
+        isPathResetting = true;
+
+        // 경로가 완전히 초기화될 때까지 대기
+        yield return new WaitUntil(() => agent.path == null);
+        yield return null;
+
+        // 경로 초기화 완료
+        isPathResetting = false;
     }
 }
