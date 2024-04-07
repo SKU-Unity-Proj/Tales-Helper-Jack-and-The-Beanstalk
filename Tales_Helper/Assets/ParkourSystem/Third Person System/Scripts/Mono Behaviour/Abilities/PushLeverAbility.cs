@@ -4,6 +4,7 @@ using DiasGames.Components;
 using DiasGames.IK;
 using System.Collections;
 using UnityEngine.Playables;
+using Cinemachine;
 
 namespace DiasGames.Abilities
 {
@@ -21,7 +22,12 @@ namespace DiasGames.Abilities
         [SerializeField] private Transform leftIKTarget = null;  // ¾Ö´Ï¸ÞÀÌ¼Ç ´ë»óÀÇ ¿ÞÂÊ Å¸°Ù
         [SerializeField] private Transform headTransform = null;  // Çìµå Æ®·»½ºÆû
 
+        [SerializeField] private GameObject originGiant = null;  // Çìµå Æ®·»½ºÆû
+        [SerializeField] private GameObject setGiant = null;  // Çìµå Æ®·»½ºÆû
+
         [SerializeField] private PlayableDirector playableDirector;
+
+        [SerializeField]  private CinemachineVirtualCamera timelineCam;
 
         // components
         private IMover _mover;
@@ -43,6 +49,7 @@ namespace DiasGames.Abilities
             animator = GetComponent<Animator>();
 
         }
+
 
         private void OnTriggerEnter(Collider other)
         {
@@ -107,10 +114,15 @@ namespace DiasGames.Abilities
 
         private IEnumerator WaitForAnimation()
         {
-            float animationLength = animator.GetCurrentAnimatorStateInfo(0).length;
-            yield return new WaitForSeconds(animationLength);
+            yield return new WaitForSeconds(2.5f);
+
+            timelineCam.Priority = 12;
 
             playableDirector.Play();
+            
+            originGiant.SetActive(false);
+            setGiant.SetActive(true);
+
 
         }
 
@@ -134,6 +146,7 @@ namespace DiasGames.Abilities
             Vector3 midpoint = (leftIK.position + rightIK.position) / 2;
             return midpoint;
         }
+
         public override void OnStopAbility()
         {
             _pushable.StopPush();
