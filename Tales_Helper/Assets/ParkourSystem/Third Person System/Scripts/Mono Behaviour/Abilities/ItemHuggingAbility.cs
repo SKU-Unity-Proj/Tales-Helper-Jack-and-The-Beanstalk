@@ -104,6 +104,9 @@ namespace DiasGames.Abilities
                 liftingWait = false;
 
                 SetLayerPriority(1, 0); // 상체 애니메이션 우선순위 낮추기 (애니메이션 끄기)
+
+                //SetAnimationState("ThrowItem", 0.5f, 0);
+                SetAnimationState("Grounded", 0.3f, 1);
             }
         }
 
@@ -115,7 +118,8 @@ namespace DiasGames.Abilities
 
         private void StartIdle()
         {
-            SetAnimationState("ItemHugging_Idle", 0.25f, 1);
+            SetAnimationState("ItemHugging_Idle", 0.3f, 1);
+            SetLayerPriority(1, 1); // 상체 애니메이션 우선순위 높이기 (애니메이션 켜기)
         }
 
         private void CheckItem() // 바닥에 아이템을 주울 수 있는지 판별

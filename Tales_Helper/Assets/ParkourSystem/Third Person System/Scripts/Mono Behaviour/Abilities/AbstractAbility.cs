@@ -83,9 +83,6 @@ namespace DiasGames.Abilities
             if (_animator.HasState(StateLayer, Animator.StringToHash(stateName)))
             {
                 _animator.CrossFadeInFixedTime(stateName, transitionDuration, StateLayer);
-
-                if (StateLayer == 1)
-                    SetLayerPriority(1,1);
             }
                 
         }
