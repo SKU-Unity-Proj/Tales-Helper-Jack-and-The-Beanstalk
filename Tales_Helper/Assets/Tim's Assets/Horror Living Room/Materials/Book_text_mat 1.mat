@@ -40,7 +40,6 @@ Material:
   - TransparentDepthPostpass
   - TransparentBackface
   - RayTracingPrepass
-  - OutLine
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
@@ -325,8 +324,8 @@ Material:
     - _ObjectSpaceUVMappingEmissive: 0
     - _OcclusionStrength: 1
     - _OpaqueCullMode: 2
-    - _OutLine: 0
-    - _OutLineWidth: 0.004
+    - _OutLine: 1
+    - _OutLineWidth: 0.01
     - _PPDLodThreshold: 5
     - _PPDMaxSamples: 15
     - _PPDMinSamples: 5
