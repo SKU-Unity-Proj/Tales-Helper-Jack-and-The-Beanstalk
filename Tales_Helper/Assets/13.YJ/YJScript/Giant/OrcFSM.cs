@@ -30,15 +30,10 @@ public class OrcFSM : MonoBehaviour
         SavePositionAndRotation();
     }
 
-    void Update()
-    {
-        
-    }
-
     #region FSM
     public enum State
     {
-        WANDER,
+        DIE,
         IDLE,
         MOVE,
         RETURN
@@ -52,8 +47,8 @@ public class OrcFSM : MonoBehaviour
 
         switch (state)
         {
-            case State.WANDER:
-                WANDER();
+            case State.DIE:
+                DIE();
                 break;
             case State.IDLE:
                 IDLE();
@@ -72,8 +67,8 @@ public class OrcFSM : MonoBehaviour
     {
         switch (state)
         {
-            case State.WANDER:
-                WANDERTrigger(other);
+            case State.DIE:
+                DIETrigger(other);
                 break;
             case State.IDLE:
                 IDLETrigger(other);
@@ -87,12 +82,22 @@ public class OrcFSM : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter(Collision other)
+    {
+        switch (state)
+        {
+            case State.IDLE:
+                IDLECollision(other);
+                break;
+        }
+    }
+
     public void ChangeState(State state)
     {
         switch (this.state)
         {
-            case State.WANDER:
-                WANDERExit();
+            case State.DIE:
+                DIEExit();
                 break;
             case State.IDLE:
                 IDLEExit();
@@ -109,8 +114,8 @@ public class OrcFSM : MonoBehaviour
 
         switch (state)
         {
-            case State.WANDER:
-                WANDEREnter();
+            case State.DIE:
+                DIEEnter();
                 break;
             case State.IDLE:
                 IDLEEnter();
@@ -139,7 +144,14 @@ public class OrcFSM : MonoBehaviour
     }
     private void IDLETrigger(Collider other)
     {
-
+        
+    }
+    private void IDLECollision(Collision other)
+    {
+        if (other.collider.CompareTag("Item"))
+        {
+            ChangeState(State.DIE);
+        }
     }
     private void IDLEExit()
     {
@@ -148,24 +160,22 @@ public class OrcFSM : MonoBehaviour
     #endregion
 
 
-    #region WANDER
-    private void WANDEREnter()
+    #region DIE
+    private void DIEEnter()
+    {
+        SetAnimationState("Die", 0.2f);
+        agent.isStopped = true;
+        agent.updateRotation = false;
+    }
+    private void DIE()
     {
 
     }
-    private void WANDER()
+    private void DIETrigger(Collider other)
     {
 
     }
-    private void WANDERTrigger(Collider other)
-    {
-
-    }
-    private void WANDERTriggerStay(Collider other)
-    {
-
-    }
-    private void WANDERExit()
+    private void DIEExit()
     {
 
     }
@@ -193,9 +203,12 @@ public class OrcFSM : MonoBehaviour
     {
         if (other.CompareTag("Mouse"))
         {
+            Debug.Log("a");
             agent.ResetPath();
-            SetAnimationState("Catch");
-            Invoke("OffMouse", 2f);
+            SetAnimationState("Angry", 0.4f);
+            Invoke("OffMouse", 6.4f);
+            BoxCollider boxCol = GetComponent<BoxCollider>();
+            boxCol.enabled = false;
         }
     }
     private void MOVEExit()
