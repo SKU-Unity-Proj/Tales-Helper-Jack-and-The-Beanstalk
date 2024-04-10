@@ -28,6 +28,8 @@ namespace DiasGames.Abilities
         [SerializeField] private float speedOnAir = 6f; // 공중에서의 속도
         [SerializeField] private float airControl = 0.5f; // 공중 제어
 
+        [SerializeField] private Transform originBottle;
+
         private bool isJump = false;
         private float _startSpeed;
         private Vector2 _startInput;
@@ -64,6 +66,8 @@ namespace DiasGames.Abilities
                 _mover.Move(_action.move, speed);
 
                 HuggingItem();
+                originBottle.gameObject.GetComponent<MeshRenderer>().enabled = true;
+                originBottle.gameObject.GetComponent<MeshCollider>().enabled = true;
             }
 
             if(_action.pickUp) // E키를 다시 누르면 어빌리티 중지
