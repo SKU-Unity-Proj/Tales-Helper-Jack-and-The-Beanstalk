@@ -203,7 +203,6 @@ public class OrcFSM : MonoBehaviour
     {
         if (other.CompareTag("Mouse"))
         {
-            Debug.Log("a");
             agent.ResetPath();
             SetAnimationState("Angry", 0.4f);
             Invoke("OffMouse", 6.4f);
