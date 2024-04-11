@@ -4,133 +4,140 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /*
- *  This class controls your player. It deals with user inputs such as mouse and keyboard.
- *  It also controls the game state.
- *  
+ * 이 클래스는 플레이어를 제어합니다. 마우스와 키보드와 같은 사용자 입력을 다룹니다.
+ * 또한 게임 상태를 제어합니다.
  */
 public class Game : MonoBehaviour
 {
-    public GameObject player;
-    public Room[] rooms;
-    public AudioClip[] numbers;
-    public Texture2D[] digits;
-    public Camera playerCamera;
-    public Texture2D circleCursor;
+    public GameObject player; // 플레이어 게임 오브젝트
+    public Room[] rooms; // 방 배열
+    public AudioClip[] numbers; // 숫자 오디오 클립 배열
+    public Texture2D[] digits; // 숫자 텍스처 배열
+    public Camera playerCamera; // 플레이어 카메라
+    public Texture2D circleCursor; // 원형 커서 텍스처
 
-    public enum MODE { WALK, CONTROL};
-    public MODE mode = MODE.WALK;
+    public enum MODE { WALK, CONTROL }; // 게임 모드 열거형
+    public MODE mode = MODE.WALK; // 초기 게임 모드는 걷기
 
-    Room currentRoom;
-    CharacterController controller;
-    float speed = 4; //walking speed
-    float gravity = 0; //current falling speed due to gravity
+    Room currentRoom; // 현재 방
+    CharacterController controller; // 캐릭터 컨트롤러
+    float speed = 4; // 걷기 속도
+    float gravity = 0; // 중력으로 인한 현재 낙하 속도
 
-    public static Game instance;
+    public static Game instance; // 게임 인스턴스
+
+    public bool isSample = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        instance = this;
-        controller = player.GetComponent<CharacterController>();
-        Cursor.lockState = CursorLockMode.Locked;
+        instance = this; // 인스턴스 설정
+        controller = player.GetComponent<CharacterController>(); // 캐릭터 컨트롤러 설정
+        Cursor.lockState = CursorLockMode.Locked; // 커서를 잠금 모드로 설정
+
+        // 각 방에 대해 코드를 재설정하고 패널 콜백을 설정합니다.
         for (int i = 0; i < rooms.Length; i++)
         {
-            rooms[i].ResetCode();
-            var panel = rooms[i].GetComponent<Panel>();
-            if ( panel != null) panel.callback = GotNumber;
+            rooms[i].ResetCode(); // 코드 초기화
+            var panel = rooms[i].GetComponent<Panel>(); // 방의 패널 가져오기
+            if (panel != null) panel.callback = GotNumber; // 패널 콜백 설정
         }
-        currentRoom = rooms[0];
+        currentRoom = rooms[0]; // 현재 방을 첫 번째 방으로 설정
     }
 
 
-    //This is called from the panel once a digit has been entered. It gives the predicted number and the probability:
+    // 패널로부터 숫자가 입력되면 호출됩니다. 예측된 숫자와 확률을 전달합니다.
     void GotNumber(Room room, int n, float probability)
     {
-        GetComponent<AudioSource>().PlayOneShot(numbers[n]);
+        GetComponent<AudioSource>().PlayOneShot(numbers[n]); // 숫자에 해당하는 오디오 클립 재생
         Debug.Log("Predicted number " + n + "\nProbability " + (probability * 100) + "%");
 
-        //now we need to check if this code is correct:
+        // 코드가 올바른지 확인합니다.
         (bool correct, bool completed) = room.CheckCode(n);
         if (!correct)
         {
-            //The guess is not correct so sound the alarm:
-            currentRoom = room;
-            Invoke("SoundAlarm", 0.5f);
+            currentRoom = room; // 현재 방 설정
+            Invoke("SoundAlarm", 0.5f); // 경보음 재생
         }
         if (completed)
         {
             if (room.doorState == Room.DOOR_STATE.CLOSED)
             {
-                currentRoom = room;
-                Invoke("PlayMessage", 1f); 
+                currentRoom = room; // 현재 방 설정
+                Invoke("PlayMessage", 1f); // 메시지 재생
             }
-            room.OpenDoor();
+            room.OpenDoor(); // 문 열기
         }
     }
 
-    //Sound the alarm and reset the code to something else:
+    // 경보음 재생 및 코드 재설정
     void SoundAlarm()
     {
-        currentRoom.GetComponent<Panel>().SoundAlarm();
-        currentRoom.ResetCode();
+        currentRoom.GetComponent<Panel>().SoundAlarm(); // 경보음 재생
+        currentRoom.ResetCode(); // 코드 재설정
     }
 
+    // 메시지 재생
     void PlayMessage()
     {
         if (currentRoom.message != null)
         {
-            GetComponent<AudioSource>().PlayOneShot(currentRoom.message);
+            GetComponent<AudioSource>().PlayOneShot(currentRoom.message); // 메시지 재생
         }
     }
 
     void Update()
     {
-        // Player movement:
-        float mouseSensitivity = 1f;
-        float vert = Input.GetAxis("Vertical");
-        float horiz = Input.GetAxis("Horizontal");
-        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
-
-        if (Input.GetKeyDown(KeyCode.C) && Input.GetKey(KeyCode.LeftControl)) // cheat mode open all doors! Control+C
+        if(isSample) 
         {
-            for (int i = 0; i < rooms.Length; i++)
-                rooms[i].OpenDoor();
-        }
+            // 플레이어 이동:
+            float mouseSensitivity = 1f;
+            float vert = Input.GetAxis("Vertical"); // 수직 입력
+            float horiz = Input.GetAxis("Horizontal"); // 수평 입력
+            float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity; // 마우스 X 축 입력
 
-        float factor = 1;
-        if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) factor = 2;
-
-        gravity -= 9.81f * Time.deltaTime;
-        controller.Move((player.transform.forward * vert + player.transform.right * horiz) * Time.deltaTime * speed * factor + player.transform.up * (gravity) * Time.deltaTime);
-        if (controller.isGrounded) gravity = 0;
-   
-        if (mode == MODE.WALK)
-        {
-            controller.transform.Rotate(Vector3.up, mouseX);
-        }
-
-        // This toggles between using the mouse to look and using the mouse to draw on the screen
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            switch (mode)
+            // 치트 모드: 모든 문 열기! Control+C
+            if (Input.GetKeyDown(KeyCode.C) && Input.GetKey(KeyCode.LeftControl))
             {
-                case MODE.WALK:
-                    mode = MODE.CONTROL;
-                    Cursor.lockState = CursorLockMode.None;
-                    Cursor.SetCursor(circleCursor, new Vector2(16, 16), CursorMode.Auto);
-                    break;
-                case MODE.CONTROL:
-                    mode = MODE.WALK;
-                    Cursor.lockState = CursorLockMode.Locked;
-                    break;
+                for (int i = 0; i < rooms.Length; i++)
+                    rooms[i].OpenDoor();
             }
-        }
 
-        // Press escape to exit the game:
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Cursor.lockState = CursorLockMode.None;
-            Application.Quit();
+            float factor = 1; // 이동 속도 계수
+            if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) factor = 2; // Shift 키를 누르면 이동 속도가 두 배가 됩니다.
+
+            gravity -= 9.81f * Time.deltaTime; // 중력 적용
+            controller.Move((player.transform.forward * vert + player.transform.right * horiz) * Time.deltaTime * speed * factor + player.transform.up * (gravity) * Time.deltaTime); // 이동
+            if (controller.isGrounded) gravity = 0; // 땅에 닿으면 중력 초기화
+
+            if (mode == MODE.WALK)
+            {
+                controller.transform.Rotate(Vector3.up, mouseX); // 걷기 모드에서는 마우스 X 축으로 회전합니다.
+            }
+
+            // 마우스를 사용하여 보기 및 화면에 그리기 사이를 전환합니다.
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                switch (mode)
+                {
+                    case MODE.WALK:
+                        mode = MODE.CONTROL;
+                        Cursor.lockState = CursorLockMode.None;
+                        Cursor.SetCursor(circleCursor, new Vector2(16, 16), CursorMode.Auto); // 커서를 원형으로 설정
+                        break;
+                    case MODE.CONTROL:
+                        mode = MODE.WALK;
+                        Cursor.lockState = CursorLockMode.Locked;
+                        break;
+                }
+            }
+
+            // 게임 종료:
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                Cursor.lockState = CursorLockMode.None;
+                Application.Quit(); // 어플리케이션 종료
+            }
         }
     }
 }
