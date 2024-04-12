@@ -59,15 +59,6 @@ public class Game : MonoBehaviour
             currentRoom = room; // 현재 방 설정
             Invoke("SoundAlarm", 0.5f); // 경보음 재생
         }
-        if (completed)
-        {
-            if (room.doorState == Room.DOOR_STATE.CLOSED)
-            {
-                currentRoom = room; // 현재 방 설정
-                Invoke("PlayMessage", 1f); // 메시지 재생
-            }
-            room.OpenDoor(); // 문 열기
-        }
     }
 
     // 경보음 재생 및 코드 재설정
@@ -95,13 +86,6 @@ public class Game : MonoBehaviour
             float vert = Input.GetAxis("Vertical"); // 수직 입력
             float horiz = Input.GetAxis("Horizontal"); // 수평 입력
             float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity; // 마우스 X 축 입력
-
-            // 치트 모드: 모든 문 열기! Control+C
-            if (Input.GetKeyDown(KeyCode.C) && Input.GetKey(KeyCode.LeftControl))
-            {
-                for (int i = 0; i < rooms.Length; i++)
-                    rooms[i].OpenDoor();
-            }
 
             float factor = 1; // 이동 속도 계수
             if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) factor = 2; // Shift 키를 누르면 이동 속도가 두 배가 됩니다.

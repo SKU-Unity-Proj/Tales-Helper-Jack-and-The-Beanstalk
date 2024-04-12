@@ -28,14 +28,18 @@ public class ShowSentisScreen : MonoBehaviour
     {
         if (playerIn)
         {
-            if(Input.GetKeyUp(KeyCode.F) && !isShow)
+            if(!isShow)
             {
-                screenCam.Priority = 11;
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
+                if (Input.GetKeyDown(KeyCode.F))
+                {
+                    screenCam.Priority = 11;
+                    Cursor.lockState = CursorLockMode.None;
+                    Cursor.visible = true;
 
-                Cursor.SetCursor(circleCursor, new Vector2(16, 16), CursorMode.Auto);
-                isShow = true;
+                    Cursor.SetCursor(circleCursor, new Vector2(16, 16), CursorMode.Auto);
+                    isShow = true;
+                }
+                return;
             }
 
             if (Input.GetKeyDown(KeyCode.F) && isShow)
