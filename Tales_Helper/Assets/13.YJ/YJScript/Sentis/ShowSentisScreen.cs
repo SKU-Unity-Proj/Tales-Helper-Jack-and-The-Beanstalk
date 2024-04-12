@@ -6,8 +6,14 @@ using Cinemachine;
 public class ShowSentisScreen : MonoBehaviour
 {
     private bool playerIn = false;
-    public CinemachineVirtualCamera screenCam;
+    private CinemachineVirtualCamera screenCam;
     public Texture2D circleCursor;
+    private bool isShow = false;
+
+    private void Start()
+    {
+        screenCam = GetComponent<CinemachineVirtualCamera>();
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -22,19 +28,23 @@ public class ShowSentisScreen : MonoBehaviour
     {
         if (playerIn)
         {
-            if(Input.GetKeyDown(KeyCode.F)&& playerIn)
+            if(Input.GetKeyUp(KeyCode.F) && !isShow)
             {
                 screenCam.Priority = 11;
                 Cursor.lockState = CursorLockMode.None;
-                Cursor.SetCursor(circleCursor, new Vector2(16, 16), CursorMode.Auto);
                 Cursor.visible = true;
+
+                Cursor.SetCursor(circleCursor, new Vector2(16, 16), CursorMode.Auto);
+                isShow = true;
             }
 
-            if (Input.GetKeyDown(KeyCode.Escape))
+            if (Input.GetKeyDown(KeyCode.F) && isShow)
             {
                 screenCam.Priority = 2;
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
+
+                isShow = false;
             }
         }
     }

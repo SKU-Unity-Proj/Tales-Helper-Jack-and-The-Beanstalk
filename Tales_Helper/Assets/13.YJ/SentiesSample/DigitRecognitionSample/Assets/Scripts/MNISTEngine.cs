@@ -9,10 +9,9 @@ using System.Linq;
  *   - Shifts the image to the center for better inference. 
  *   (The model was trained on images centered in the texture this will give better results)
  *  - recentering of the image is also done using special operations on the GPU
- *   
  */
 
-// current bounds of the drawn image. It will help if we need to recenter the image later
+// 현재 그려진 이미지의 경계 상태입니다. 이미지를 나중에 다시 중앙으로 재설정해야 할 경우 도움이 됩니다.
 public struct Bounds
 {
     public int left;
@@ -23,59 +22,58 @@ public struct Bounds
 
 public class MNISTEngine : MonoBehaviour
 {
-    public ModelAsset mnistONNX;
+    public ModelAsset mnistONNX; // MNIST 모델에 대한 에셋
 
-    // engine type
+    // 엔진 타입
     IWorker engine;
 
-    // This small model works just as fast on the CPU as well as the GPU:
-    static Unity.Sentis.BackendType backendType = Unity.Sentis.BackendType.GPUCompute;
+    // 이 작은 모델은 CPU 및 GPU 모두에서 빠르게 작동합니다.
+    static Unity.Sentis.BackendType backendType = Unity.Sentis.BackendType.GPUCompute; // 백엔드 타입은 GPU Compute로 설정
 
-    // width and height of the image:
-    const int imageWidth = 28;
+    // 이미지의 너비와 높이:
+    const int imageWidth = 28; // 이미지의 너비와 높이를 28로 설정
 
-    // input tensor
+    // 입력 텐서
     TensorFloat inputTensor = null;
 
-    // op to manipulate Tensors 
+    // Tensor를 조작하는 연산
     Ops ops;
 
-    Camera lookCamera;
-
+    Camera lookCamera; // 이미지에서 광선을 계산하는 데 사용할 카메라
 
     void Start()
     {
-        // load the neural network model from the asset:
+        // 에셋에서 신경망 모델을 로드합니다.
         Model model = ModelLoader.Load(mnistONNX);
-        // create the neural network engine:
+        // 신경망 엔진을 생성합니다.
         engine = WorkerFactory.CreateWorker(backendType, model);
 
-        // CreateOps allows direct operations on tensors.
+        // Ops를 사용하여 텐서에 직접 연산을 수행할 수 있습니다.
         ops = WorkerFactory.CreateOps(backendType, null);
 
-        //The camera which we'll be using to calculate the rays on the image:
+        // 이미지에서 광선을 계산할 카메라를 가져옵니다.
         lookCamera = Camera.main;
     }
 
-    // Sends the image to the neural network model and returns the probability that the image is each particular digit.
+    // 이미지를 신경망 모델로 보내고 각 숫자일 확률을 반환합니다.
     public (float, int) GetMostLikelyDigitProbability(Texture2D drawableTexture)
     {
         inputTensor?.Dispose();
 
-        // Convert the texture into a tensor, it has width=W, height=W, and channels=1:    
+        // 텍스처를 텐서로 변환합니다. 너비=W, 높이=W, 채널=1입니다.
         inputTensor = TextureConverter.ToTensor(drawableTexture, imageWidth, imageWidth, 1);
-        
-        // run the neural network:
+
+        // 신경망을 실행합니다.
         engine.Execute(inputTensor);
-        
-        // We get a reference to the output of the neural network while keeping it on the GPU
+
+        // GPU에 결과를 유지한 채 신경망의 출력을 얻습니다.
         TensorFloat result = engine.PeekOutput() as TensorFloat;
-        
-        // convert the result to probabilities between 0..1 using the softmax function:
+
+        // 소프트맥스 함수를 사용하여 결과를 0에서 1 사이의 확률로 변환합니다.
         var probabilities = ops.Softmax(result);
         var indexOfMaxProba = ops.ArgMax(probabilities, -1, false);
-        
-        // We need to make the result from the GPU readable on the CPU
+
+        // GPU에서 결과를 CPU에서 읽을 수 있도록 만듭니다.
         probabilities.MakeReadable();
         indexOfMaxProba.MakeReadable();
 
@@ -97,7 +95,7 @@ public class MNISTEngine : MonoBehaviour
         }
     }
 
-    // Detect the mouse click and send the info to the panel class
+    // 마우스 클릭을 감지하고 정보를 패널 클래스로 전송합니다.
     void MouseClicked()
     {
         Ray ray = lookCamera.ScreenPointToRay(Input.mousePosition);
@@ -109,7 +107,7 @@ public class MNISTEngine : MonoBehaviour
         }
     }
 
-    // Detect if the mouse is down and sent the info to the panel class
+    // 마우스가 눌려 있는지 감지하고 정보를 패널 클래스로 전송합니다.
     void MouseIsDown()
     {
         Ray ray = lookCamera.ScreenPointToRay(Input.mousePosition);
@@ -120,8 +118,8 @@ public class MNISTEngine : MonoBehaviour
             panel.ScreenGetMouse(hit);
         }
     }
-   
-    // Clean up all our resources at the end of the session so we don't leave anything on the GPU or in memory:
+
+    // 세션 종료시 모든 리소스를 정리하여 GPU 또는 메모리에 남아있지 않도록 합니다.
     private void OnDestroy()
     {
         inputTensor?.Dispose();

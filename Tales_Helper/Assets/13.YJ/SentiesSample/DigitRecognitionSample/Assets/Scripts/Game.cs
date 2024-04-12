@@ -17,7 +17,7 @@ public class Game : MonoBehaviour
     public Texture2D circleCursor; // 원형 커서 텍스처
 
     public enum MODE { WALK, CONTROL }; // 게임 모드 열거형
-    public MODE mode = MODE.WALK; // 초기 게임 모드는 걷기
+    public MODE mode = MODE.CONTROL; // 초기 게임 모드는 걷기
 
     Room currentRoom; // 현재 방
     CharacterController controller; // 캐릭터 컨트롤러
@@ -116,7 +116,7 @@ public class Game : MonoBehaviour
             }
 
             // 마우스를 사용하여 보기 및 화면에 그리기 사이를 전환합니다.
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.F))
             {
                 switch (mode)
                 {

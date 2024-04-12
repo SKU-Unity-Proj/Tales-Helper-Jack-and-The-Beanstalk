@@ -17,7 +17,6 @@ public class Panel : MonoBehaviour
     public Text predictionText, probabilityText;
     public MNISTEngine mnist;
     public GameObject alarm;
-    public Light mainLight;
     public System.Action<Room, int, float> callback;
 
 
@@ -62,7 +61,6 @@ public class Panel : MonoBehaviour
         screen.GetComponent<Renderer>().material.SetTexture("_EmissionMap", drawableTexture);
 
         room = GetComponent<Room>();
-        originalLightColor = mainLight.color;
 
         predictionText.text = "?";
     }
@@ -189,14 +187,12 @@ public class Panel : MonoBehaviour
         {
             room.lights[i].GetComponent<Renderer>().material.SetColor("_EmissionColor", lightColor);
         }
-        mainLight.color = lightColor;
     }
 
     void StopAlarm()
     {
         alarm.GetComponent<AudioSource>().Stop();
         state = STATE.NORMAL;
-        mainLight.color = originalLightColor;
         for (int i = 0; i < room.lights.Length; i++)
         {
             room.lights[i].GetComponent<Renderer>().material.SetColor("_EmissionColor", Color.black);
