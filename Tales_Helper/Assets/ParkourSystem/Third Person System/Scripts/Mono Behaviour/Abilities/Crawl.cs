@@ -16,7 +16,6 @@ namespace DiasGames.Abilities
         [Header("Animation States")]
         [SerializeField] private string startCrawlAnimationState = "Stand to Crawl"; // 기어가기 시작하는 애니메이션 상태
         [SerializeField] private string stopCrawlAnimationState = "Crawl to Stand"; // 기어가기를 멈추는 애니메이션 상태
-        [SerializeField] private string startCrouchAinmationState = "Crouch"; // 기어가기를 멈추는 애니메이션 상태
 
         private IMover _mover; // 이동을 제어하는 인터페이스
         private ICapsule _capsule; // 캡슐 콜라이더를 제어하는 인터페이스

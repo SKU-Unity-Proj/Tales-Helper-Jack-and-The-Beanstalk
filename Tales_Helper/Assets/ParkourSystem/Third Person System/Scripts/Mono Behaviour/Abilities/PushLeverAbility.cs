@@ -10,7 +10,6 @@ namespace DiasGames.Abilities
 {
     public class PushLeverAbility : AbstractAbility
     {
-        [SerializeField] private float speed = 2f;
         [SerializeField] private float positionSmoothnessTime = 0.12f;
         [Header("Animation")]
         [SerializeField] private string pushLeverAnimationState = "Push Lever";
@@ -20,7 +19,6 @@ namespace DiasGames.Abilities
         [SerializeField] private Transform leftIK = null;
         [SerializeField] private Transform rightIKTarget = null; // 애니메이션 대상의 오른쪽 타겟
         [SerializeField] private Transform leftIKTarget = null;  // 애니메이션 대상의 왼쪽 타겟
-        [SerializeField] private Transform headTransform = null;  // 헤드 트렌스폼
 
         [SerializeField] private GameObject originGiant = null;  // 헤드 트렌스폼
         [SerializeField] private GameObject setGiant = null;  // 헤드 트렌스폼
