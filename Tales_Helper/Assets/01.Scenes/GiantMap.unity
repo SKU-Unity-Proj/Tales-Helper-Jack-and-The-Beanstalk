@@ -8648,7 +8648,7 @@ Transform:
   m_GameObject: {fileID: 185908272}
   serializedVersion: 2
   m_LocalRotation: {x: 0.11056532, y: 0.58296216, z: -0.0804779, w: 0.8009081}
-  m_LocalPosition: {x: 29.230188, y: 20.472996, z: -78.36728}
+  m_LocalPosition: {x: 18.556616, y: 12.917323, z: -81.68734}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -22911,37 +22911,37 @@ PrefabInstance:
     - target: {fileID: 49569823685729750, guid: 932bcd2da7eb1aa488b728e6f26b2f9b,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -9.78
+      value: -2.0635774
       objectReference: {fileID: 0}
     - target: {fileID: 49569823685729750, guid: 932bcd2da7eb1aa488b728e6f26b2f9b,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 8.48
+      value: 1.405
       objectReference: {fileID: 0}
     - target: {fileID: 49569823685729750, guid: 932bcd2da7eb1aa488b728e6f26b2f9b,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 80.25
+      value: 75.843735
       objectReference: {fileID: 0}
     - target: {fileID: 49569823685729750, guid: 932bcd2da7eb1aa488b728e6f26b2f9b,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7084273
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 49569823685729750, guid: 932bcd2da7eb1aa488b728e6f26b2f9b,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.031377807
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 49569823685729750, guid: 932bcd2da7eb1aa488b728e6f26b2f9b,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.70436805
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 49569823685729750, guid: 932bcd2da7eb1aa488b728e6f26b2f9b,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.031811237
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 49569823685729750, guid: 932bcd2da7eb1aa488b728e6f26b2f9b,
         type: 3}
@@ -23626,17 +23626,17 @@ PrefabInstance:
     - target: {fileID: 5109872310280235658, guid: 932bcd2da7eb1aa488b728e6f26b2f9b,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 24.01046
+      value: 16.471016
       objectReference: {fileID: 0}
     - target: {fileID: 5109872310280235658, guid: 932bcd2da7eb1aa488b728e6f26b2f9b,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 22.34622
+      value: 15.273905
       objectReference: {fileID: 0}
     - target: {fileID: 5109872310280235658, guid: 932bcd2da7eb1aa488b728e6f26b2f9b,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -77.464355
+      value: -73.173294
       objectReference: {fileID: 0}
     - target: {fileID: 5109872310280235658, guid: 932bcd2da7eb1aa488b728e6f26b2f9b,
         type: 3}
@@ -34652,6 +34652,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Door(interact)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4924834213612195213, guid: 7efb5bf95753da34fa05062f7147b95c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -69699,6 +69704,35 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 3483bae94350ccf439794fe014c19697,
+        type: 3}
+    - target: {fileID: 1955936628246041429, guid: ae08526420d75d345a3cd5097421d2e7,
+        type: 3}
+      propertyPath: mapPictureType.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1955936628246041429, guid: ae08526420d75d345a3cd5097421d2e7,
+        type: 3}
+      propertyPath: mapPictureType.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300000, guid: 065de52cad6ea66499158d6b14b39857,
+        type: 3}
+    - target: {fileID: 1955936628246041429, guid: ae08526420d75d345a3cd5097421d2e7,
+        type: 3}
+      propertyPath: mapPictureType.Array.data[1]
+      value: 
+      objectReference: {fileID: 21300000, guid: 9cbb0c2bbbb262a4588eaba2df57599d,
+        type: 3}
+    - target: {fileID: 1955936628246041429, guid: ae08526420d75d345a3cd5097421d2e7,
+        type: 3}
+      propertyPath: mapPictureType.Array.data[2]
+      value: 
+      objectReference: {fileID: 21300000, guid: d409662f488ed84458a57d40cb191f34,
+        type: 3}
+    - target: {fileID: 1955936628246041429, guid: ae08526420d75d345a3cd5097421d2e7,
+        type: 3}
+      propertyPath: mapPictureType.Array.data[3]
+      value: 
+      objectReference: {fileID: 21300000, guid: ff3b26a7a79bf844fa392d6fc2d69bad,
         type: 3}
     - target: {fileID: 1977670590837167623, guid: ae08526420d75d345a3cd5097421d2e7,
         type: 3}

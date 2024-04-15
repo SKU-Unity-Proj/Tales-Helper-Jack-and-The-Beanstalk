@@ -48,12 +48,14 @@ public class MapController : MonoBehaviour
 
     public void CurrentRoom(int RoomNum) // 현재 위치한 방
     {
+        miniMap[RoomNumber].color = Color.white;
+
         miniMap[RoomNum].sprite = miniMapType[1]; // 미니맵 언락
 
         mapPicture.sprite = mapPictureType[RoomNum]; // 맵 이미지 변경
 
         miniMap[RoomNum].color = Color.green; // 위치한 방 미니맵 색상 변경
-        miniMap[RoomNumber].color = Color.white;
+        
 
         RoomNumber = RoomNum; // 방 번호 다시 저장
 
