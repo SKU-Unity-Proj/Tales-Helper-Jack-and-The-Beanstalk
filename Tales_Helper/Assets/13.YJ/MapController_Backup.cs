@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class MapController : MonoBehaviour
+public class MapController_Backup : MonoBehaviour
 {
     public GameObject mapUI; // 껏다 킬 맵 UI
 
@@ -20,7 +20,7 @@ public class MapController : MonoBehaviour
     private int SaveRoomNumber = 0; // 맵을 껏다 킬 때 현재 룸넘버를 저장해놨다가 초기화 시키는 용도
 
     #region 싱글톤 패턴
-    private static MapController instance = null;
+    private static MapController_Backup instance = null;
     void Awake()
     {
         if (null == instance)
@@ -31,7 +31,7 @@ public class MapController : MonoBehaviour
         else
             Destroy(this.gameObject);
     }
-    public static MapController Instance
+    public static MapController_Backup Instance
     {
         get
         {
@@ -47,23 +47,13 @@ public class MapController : MonoBehaviour
     void Update()
     {
         OpenCloseMap();
+        LinkRoomNumber();
     }
 
     public void CurrentRoom(int RoomNum) // 현재 위치한 방
     {
-        // 모든 미니맵 초기화
-        for (int i = 0; i < miniMap.Length; i++)
-        {
-            miniMap[i].color = Color.white;
-        }
-
-        // 현재 위치한 방만 특정 색상으로 설정
         miniMap[RoomNum].sprite = miniMapType[1]; // 미니맵 언락
-        miniMap[RoomNum].color = Color.green; // 위치한 방 미니맵 색상 변경
 
-        mapPicture.sprite = mapPictureType[RoomNum]; // 맵 이미지 변경
-        mapText.text = mapTextType[RoomNum]; // 맵 이름 변경
-        
         RoomNumber = RoomNum; // 방 번호 다시 저장
 
         if (RoomNum > UnlockRoomNum) // 새로운 방이면
@@ -72,18 +62,32 @@ public class MapController : MonoBehaviour
         }
     }
 
+    private void LinkRoomNumber()
+    {
+        mapPicture.sprite = mapPictureType[RoomNumber]; // 맵 이미지 변경
+        mapText.text = mapTextType[RoomNumber]; // 맵 이름 변경
+        miniMap[RoomNumber].color = Color.green; // 위치한 방 미니맵 색상 변경
+    }
+
+    public void ColorChange(int RoomNum)
+    {
+        miniMap[RoomNum].color = Color.white;
+    }
+
     public void NextRoomButton()
     {
         if (RoomNumber < UnlockRoomNum)
         {
-            CurrentRoom(RoomNumber + 1);
+            RoomNumber++;
+            ColorChange(RoomNumber - 1);
         }
     }
     public void BeforeRoomButton()
     {
         if (RoomNumber > 0)
         {
-            CurrentRoom(RoomNumber - 1);
+            RoomNumber--;
+            ColorChange(RoomNumber + 1);
         }
     }
 
@@ -105,8 +109,7 @@ public class MapController : MonoBehaviour
                 Cursor.visible = false;
                 Cursor.lockState = CursorLockMode.Locked;
 
-                RoomNumber = SaveRoomNumber;
-                CurrentRoom(SaveRoomNumber); // 현재 방으로 다시 초기화
+                RoomNumber = SaveRoomNumber; // 현재 방으로 다시 초기화
             }
         }
     }
