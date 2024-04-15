@@ -4,23 +4,28 @@ using UnityEngine;
 
 public class entranceChandelier : MonoBehaviour
 {
+
+    public Transform originChandelier;
     public List<Transform> transformList = new List<Transform>();
 
-    void Start()
+    public void OnSignalReceiveChandelier()
     {
-        // 모든 트랜스폼의 메쉬 콜라이더를 활성화
-        ActivateMeshColliders();
+
+        originChandelier.gameObject.GetComponent<Rigidbody>().useGravity = true;
     }
 
-    // 메쉬 콜라이더를 활성화하는 메소드
-    void ActivateMeshColliders()
+    void OnTriggerEnter(Collider other)
     {
-        foreach (Transform trans in transformList)
+        if (other.CompareTag("Enemy"))
         {
-            MeshCollider meshCollider = trans.GetComponent<MeshCollider>();
-            if (meshCollider != null)
+            Debug.Log("123");
+            originChandelier.gameObject.GetComponent<MeshRenderer>().enabled = false;
+
+            foreach (Transform trans in transformList)
             {
-                meshCollider.enabled = true;
+
+                trans.gameObject.SetActive(true);
+
             }
         }
     }
