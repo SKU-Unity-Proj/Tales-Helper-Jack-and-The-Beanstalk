@@ -66,8 +66,8 @@ namespace DiasGames.Abilities
                 _mover.Move(_action.move, speed);
 
                 HuggingItem();
-                originBottle.gameObject.GetComponent<MeshRenderer>().enabled = true;
-                originBottle.gameObject.GetComponent<MeshCollider>().enabled = true;
+                //originBottle.gameObject.GetComponent<MeshRenderer>().enabled = true;
+                //originBottle.gameObject.GetComponent<MeshCollider>().enabled = true;
             }
 
             if(_action.pickUp) // E키를 다시 누르면 어빌리티 중지
