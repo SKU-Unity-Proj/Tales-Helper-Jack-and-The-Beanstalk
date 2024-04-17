@@ -54,7 +54,7 @@ namespace DiasGames.Abilities
 
             if (_stoppingRaise && _raiseObjs.Count == 1)
             {
-                _mover.StopMovement(); // velocity 0
+                //_mover.StopMovement(); // velocity 0
                 _startingRaise = true;
                 _stoppingRaise = true;
 
