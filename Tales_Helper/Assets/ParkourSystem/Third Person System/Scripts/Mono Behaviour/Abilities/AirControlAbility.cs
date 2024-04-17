@@ -14,7 +14,7 @@ namespace DiasGames.Abilities
 
         // 점프 매개변수
         [Header("Jump parameters")]
-        [SerializeField] private float jumpHeight = 1.2f; // 점프 높이
+        public float jumpHeight = 1.2f; // 점프 높이
         [SerializeField] private float speedOnAir = 6f; // 공중에서의 속도
         [SerializeField] private float airControl = 0.5f; // 공중 제어
 
