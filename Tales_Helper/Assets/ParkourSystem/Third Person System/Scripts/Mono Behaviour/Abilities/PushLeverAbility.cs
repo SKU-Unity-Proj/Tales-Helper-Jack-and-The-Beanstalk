@@ -30,7 +30,6 @@ namespace DiasGames.Abilities
         // components
         private IMover _mover;
         private IKScheduler _ikScheduler;
-        private Animator animator;
 
         // interaction components
         private IPushable _pushable;
@@ -44,7 +43,6 @@ namespace DiasGames.Abilities
         {
             _mover = GetComponent<IMover>();
             _ikScheduler = GetComponent<IKScheduler>();
-            animator = GetComponent<Animator>();
 
         }
 
