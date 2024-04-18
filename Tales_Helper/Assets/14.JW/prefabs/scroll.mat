@@ -37,6 +37,7 @@ Material:
     RenderType: Opaque
   disabledShaderPasses:
   - DepthOnly
+  - OutLine
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
@@ -164,7 +165,7 @@ Material:
     - _Metallic: 0
     - _Mode: 3
     - _OcclusionStrength: 1
-    - _OutLine: 1
+    - _OutLine: 0
     - _OutLineWidth: 0.08
     - _Parallax: 0.02
     - _QueueOffset: 0

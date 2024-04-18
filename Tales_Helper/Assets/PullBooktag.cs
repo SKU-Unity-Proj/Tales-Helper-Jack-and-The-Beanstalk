@@ -9,9 +9,7 @@ public class PullBooktag : MonoBehaviour
     public Transform targetPos; // F을 눌렀을 때 위치
     public float interactionDistance = 1f; // 상호작용 가능한 최대 거리
     public KeyCode interactionKey = KeyCode.F; // 상호작용 키
-
-
-   
+    public GameObject paperObject;
 
     // Update is called once per frame
     void Update()
@@ -38,10 +36,24 @@ public class PullBooktag : MonoBehaviour
                 // 플레이어와 버튼의 애니메이션 재생
                 playerAnimator.SetTrigger("PullBook");
                 bookAnimator.SetTrigger("PullBook");
-                
+                Invoke("ActivatePaper", 4.4f);
             }
         }
     }
+
+    public void ActivatePaper()
+    {
+        // Paper 오브젝트가 존재하면 활성화
+        if (paperObject != null)
+        {
+            paperObject.SetActive(true);
+        }
+        else
+        {
+            Debug.LogError("Paper 오브젝트가 할당되지 않았습니다.");
+        }
+    }
+
     public void SetPositionAndRotation()
     {
         if (targetPos != null)
@@ -54,6 +66,7 @@ public class PullBooktag : MonoBehaviour
             Debug.LogError("Target position is not assigned!");
         }
     }
+
     GameObject FindNearestWithTag(string tag)
     {
         GameObject[] taggedObjects = GameObject.FindGameObjectsWithTag(tag);
