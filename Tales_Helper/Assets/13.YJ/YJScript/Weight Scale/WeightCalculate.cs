@@ -10,6 +10,9 @@ public class WeightCalculate : MonoBehaviour
 
     public TextMeshProUGUI weightText; //무게를 표시할 Text
 
+    public Animator puppetAnim;
+    public Transform key; 
+
     private void Update()
     {
         if (totalWeight < targetWeight)
@@ -34,7 +37,7 @@ public class WeightCalculate : MonoBehaviour
     {
         if(totalWeight == answerWeight)
         {
-            Debug.Log("suc");
+            puppetAnim.SetTrigger("Fall");
         }
     }
 
@@ -46,5 +49,11 @@ public class WeightCalculate : MonoBehaviour
     public void RemoveWeight(float objWeight)
     {
         targetWeight -= objWeight;
+    }
+
+    public void ErrorWeight()
+    {
+        weightText.text = "Error!";
+        key.transform.localScale = Vector3.one;
     }
 }

@@ -4,6 +4,7 @@ public class ObjectWeight : MonoBehaviour
 {
     public float objWeight = 0;
     public WeightCalculate weightCalculate;
+    public bool isPuppet = false;
 
     private void Start()
     {
@@ -23,6 +24,11 @@ public class ObjectWeight : MonoBehaviour
         if (collision.gameObject.CompareTag("RemoveWeight"))
         {
             weightCalculate.RemoveWeight(objWeight);
+
+            if (isPuppet)
+            {
+                weightCalculate.ErrorWeight();
+            }
         }
     }
 
