@@ -2,6 +2,7 @@ using DiasGames.Abilities;
 using System.Collections.Generic;
 using DiasGames.Components;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace DiasGames.Abilities
 {
@@ -15,6 +16,7 @@ namespace DiasGames.Abilities
         private IMover _mover = null;
 
         public Transform raisePos;
+        public UnityEvent onRaiseStart;
 
         private bool _startingRaise = false;
         private bool _stoppingRaise = false;
@@ -59,6 +61,8 @@ namespace DiasGames.Abilities
                 _startingRaise = true;
                 _stoppingRaise = false;
                 SetAnimationState(RaiseAnimationState);
+
+                onRaiseStart.Invoke(); // 이벤트 발생
             }
         }
 
