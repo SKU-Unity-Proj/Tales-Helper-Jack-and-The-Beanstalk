@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using DiasGames.Components;
 using UnityEngine;
 
-//ItemHugPos Position(0, -0.037, 0.336)
-
 namespace DiasGames.Abilities
 {
     public class RaiseAbility : AbstractAbility
@@ -18,8 +16,8 @@ namespace DiasGames.Abilities
 
         public Transform raisePos;
 
-        private bool _startingRaise = false; // 기어가기 시작 중인지를 나타내는 플래그
-        private bool _stoppingRaise = false; // 기어가기를 중단 중인지를 나타내는 플래그
+        private bool _startingRaise = false;
+        private bool _stoppingRaise = false;
 
 
         private void Awake()
@@ -33,65 +31,60 @@ namespace DiasGames.Abilities
             {
                 _raiseObjs.Add(other);
                 Debug.Log(other.name);
+                Debug.Log(_raiseObjs.Count);
             }
-
         }
 
         private void OnTriggerExit(Collider other)
         {
             if (_raiseObjs.Contains(other))
-                _raiseObjs.Remove(other);
-
-        }
-
-        public override bool ReadyToRun() // 실행 조건
-        {
-            return _action.interact && _mover.IsGrounded();
-        }
-
-        public override void OnStartAbility() // 실행될 때 호출
-        {
-
-            if (_stoppingRaise && _raiseObjs.Count == 1)
             {
-                //_mover.StopMovement(); // velocity 0
-                _startingRaise = true;
-                _stoppingRaise = true;
+                _raiseObjs.Remove(other);
+                Debug.Log(_raiseObjs.Count);
+            }
+        }
 
+        public override bool ReadyToRun()
+        {
+            return _action.interact && _mover.IsGrounded() && _raiseObjs.Count > 0;
+        }
+
+        public override void OnStartAbility()
+        {
+            if (_raiseObjs.Count > 0)
+            {
+                // 모든 이동을 멈춤
+                _mover.StopMovement();
+
+                _startingRaise = true;
+                _stoppingRaise = false;
                 SetAnimationState(RaiseAnimationState);
             }
-            
         }
 
-
-        public override void UpdateAbility() // 실행 중에 계속 호출
+        public override void UpdateAbility()
         {
-            // 기어가기 시작 애니메이션을 기다림
-            if (_startingRaise)
+            if (_animator.GetCurrentAnimatorStateInfo(0).IsName(RaiseAnimationState))
             {
-                if (_animator.IsInTransition(0)) return; // 애니메이션의 0번 레이어가 상태를 전환중이면 return시킴
-
-                if (!_animator.GetCurrentAnimatorStateInfo(0).IsName(RaiseAnimationState))
+                if (_startingRaise && _animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.95f && !_animator.IsInTransition(0))
+                {
+                    _stoppingRaise = true;
                     _startingRaise = false;
 
-                return;
+                    StopAbility();
+                    SetAnimationState("Grounded");
+                }
             }
-
-            if (_animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.95f && !_animator.IsInTransition(0))
-            {
-                StopAbility();
-                _stoppingRaise = false;
-            }
-
+             
         }
 
         public override void OnStopAbility()
         {
-            if (_stoppingRaise == true)
+            if (_stoppingRaise)
             {
-                _raiseObjs.RemoveAt(0);
+                //_raiseObjs.RemoveAt(0);
+                _stoppingRaise = false;
             }
         }
-
     }
 }
