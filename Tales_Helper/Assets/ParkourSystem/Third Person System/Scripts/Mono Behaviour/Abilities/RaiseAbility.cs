@@ -10,17 +10,18 @@ namespace DiasGames.Abilities
     {
         [Header("Animation")]
         [SerializeField] private string RaiseAnimationState = "Raise";
+        [SerializeField] private string RaiseUpAnimationState = "Raise Up";
 
         private List<Collider> _raiseObjs = new List<Collider>();
 
         private IMover _mover = null;
+        private int _raiseCount = 0;
 
         public Transform raisePos;
         public UnityEvent onRaiseStart;
 
         private bool _startingRaise = false;
         private bool _stoppingRaise = false;
-
 
         private void Awake()
         {
@@ -55,38 +56,44 @@ namespace DiasGames.Abilities
         {
             if (_raiseObjs.Count > 0)
             {
-                // 모든 이동을 멈춤
-                _mover.StopMovement();
+                _mover.StopMovement();  // 이동 중지
 
                 _startingRaise = true;
                 _stoppingRaise = false;
-                SetAnimationState(RaiseAnimationState);
 
-                onRaiseStart.Invoke(); // 이벤트 발생
+                _raiseCount++;
+                if (_raiseCount <= 2)
+                {
+                    SetAnimationState(RaiseAnimationState);
+                }
+                else
+                {
+                    SetAnimationState(RaiseUpAnimationState);
+                    _raiseCount = 0;  // 카운트 리셋
+                }
+
+                onRaiseStart.Invoke();
             }
         }
 
         public override void UpdateAbility()
         {
-            if (_animator.GetCurrentAnimatorStateInfo(0).IsName(RaiseAnimationState))
+            if ((_animator.GetCurrentAnimatorStateInfo(0).IsName(RaiseAnimationState) ||
+                 _animator.GetCurrentAnimatorStateInfo(0).IsName(RaiseUpAnimationState)) &&
+                _animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.95f &&
+                !_animator.IsInTransition(0))
             {
-                if (_startingRaise && _animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.95f && !_animator.IsInTransition(0))
-                {
-                    _stoppingRaise = true;
-                    _startingRaise = false;
+                _stoppingRaise = true;
+                _startingRaise = false;
 
-                    StopAbility();
-                    SetAnimationState("Grounded");
-                }
+                StopAbility();  // 어빌리티 종료
             }
-             
         }
 
         public override void OnStopAbility()
         {
             if (_stoppingRaise)
             {
-                //_raiseObjs.RemoveAt(0);
                 _stoppingRaise = false;
             }
         }
