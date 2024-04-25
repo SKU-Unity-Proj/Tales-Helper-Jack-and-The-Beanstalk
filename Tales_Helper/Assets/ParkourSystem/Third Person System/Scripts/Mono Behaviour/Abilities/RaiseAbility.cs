@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using DiasGames.Components;
 using UnityEngine;
 using UnityEngine.Events;
+using System.Collections;
 
 namespace DiasGames.Abilities
 {
@@ -16,9 +17,12 @@ namespace DiasGames.Abilities
 
         private IMover _mover = null;
         private int _raiseCount = 0;
+        private bool _canRaise = true; // Raise를 실행할 수 있는지 여부를 나타내는 변수
 
         public Transform raisePos;
-        public UnityEvent onRaiseStart;
+
+        public UnityEvent onRaiseStartSecondTime; // 2번 이하 실행시
+        public UnityEvent onRaiseStartThirdTime;  // 그 이상 실행시
 
         private bool _startingRaise = false;
         private bool _stoppingRaise = false;
@@ -49,15 +53,20 @@ namespace DiasGames.Abilities
 
         public override bool ReadyToRun()
         {
-            return _action.interact && _mover.IsGrounded() && _raiseObjs.Count > 0;
+            return _action.interact && _mover.IsGrounded() && _raiseObjs.Count > 0 && _canRaise;
         }
 
         public override void OnStartAbility()
         {
+
+
             if (_raiseObjs.Count > 0)
             {
                 _mover.StopMovement();  // 이동 중지
 
+                this.transform.rotation = Quaternion.LookRotation(Vector3.forward);
+
+                _canRaise = false; // 추가 실행 방지
                 _startingRaise = true;
                 _stoppingRaise = false;
 
@@ -65,14 +74,16 @@ namespace DiasGames.Abilities
                 if (_raiseCount <= 2)
                 {
                     SetAnimationState(RaiseAnimationState);
+                    onRaiseStartSecondTime.Invoke();  // 2번 이하 실행 이벤트
                 }
                 else
                 {
                     SetAnimationState(RaiseUpAnimationState);
+                    onRaiseStartThirdTime.Invoke();    // 그 이상 실행 이벤트
                     _raiseCount = 0;  // 카운트 리셋
                 }
 
-                onRaiseStart.Invoke();
+                StartCoroutine(WaitBeforeNextRaise(6.8f)); // 0.5초 동안 대기
             }
         }
 
@@ -87,6 +98,7 @@ namespace DiasGames.Abilities
                 _startingRaise = false;
 
                 StopAbility();  // 어빌리티 종료
+
             }
         }
 
@@ -96,6 +108,12 @@ namespace DiasGames.Abilities
             {
                 _stoppingRaise = false;
             }
+        }
+
+        private IEnumerator WaitBeforeNextRaise(float delay)
+        {
+            yield return new WaitForSeconds(delay);
+            _canRaise = true; // 다시 실행 가능
         }
     }
 }

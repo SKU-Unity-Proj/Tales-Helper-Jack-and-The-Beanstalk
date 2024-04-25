@@ -16,6 +16,7 @@ public class CameraTriggerManager : MonoBehaviour
     {
         public CinemachineVirtualCamera camera; // 카메라 존에 사용될 Cinemachine 가상 카메라
         public Vector3 position; // 카메라 존의 위치
+        public Vector3 rotation; // 카메라 존의 회전 (오일러 각도)
         public Vector3 boxsize; // 카메라 존의 크기
         public GameObject zoneObject; // 카메라 존을 나타내는 게임 오브젝트
     }
@@ -39,6 +40,7 @@ public class CameraTriggerManager : MonoBehaviour
             string zoneObjectName = zone.camera.name + "_Zone_" + zoneIndex;
             GameObject zoneObj = new GameObject(zoneObjectName);
             zoneObj.transform.position = zone.position;
+            zoneObj.transform.rotation = Quaternion.Euler(zone.rotation); // 회전 설정
             zoneObj.transform.parent = this.transform;
 
             // BoxCollider 컴포넌트를 추가하고 크기 및 트리거 설정함
@@ -137,12 +139,27 @@ public class CameraTriggerManager : MonoBehaviour
     }
 
     // 유니티 에디터의 Gizmo를 사용하여 카메라 존의 위치와 크기를 시각화
+    /// <summary>
+    /// Matrix4x4.TRS 행렬을 사용해서 로테이션을 조절해야함.
+    /// 3D 오브젝트의 공간 변환을 효과적으로 관리할 수 있는 매우 중요한 도구이다.
+    /// 이 메서드를 통해 복잡한 3D 변환을 간단한 API 호출로 쉽게 처리할 수 있음.
+    /// </summary>
     private void OnDrawGizmos()
     {
         foreach (var zone in cameraZones)
         {
-            Gizmos.color = Color.green; // Gizmo의 색상을 녹색으로 설정
-            Gizmos.DrawWireCube(zone.position, zone.boxsize); // 각 카메라 존의 와이어 프레임 큐브를 그림
+            // Gizmo의 색상을 녹색으로 설정
+            Gizmos.color = Color.green;
+
+            // 위치, 회전, 크기를 반영한 매트릭스 설정
+            Matrix4x4 oldGizmosMatrix = Gizmos.matrix; // 현재 Gizmos 매트릭스를 저장
+            Gizmos.matrix = Matrix4x4.TRS(zone.position, Quaternion.Euler(zone.rotation), Vector3.one);
+
+            // 회전을 반영한 와이어 프레임 큐브를 그림
+            Gizmos.DrawWireCube(Vector3.zero, zone.boxsize);
+
+            // 원래의 Gizmos 매트릭스로 복원
+            Gizmos.matrix = oldGizmosMatrix;
         }
     }
 }
