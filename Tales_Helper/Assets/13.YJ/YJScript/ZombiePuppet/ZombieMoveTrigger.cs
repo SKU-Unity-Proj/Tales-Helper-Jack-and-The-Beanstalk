@@ -6,7 +6,8 @@ public class ZombieMoveTrigger : MonoBehaviour
 
     private void Start()
     {
-        puppetController = FindObjectOfType<PuppetController>();
+        if(puppetController == null)
+            puppetController = FindObjectOfType<PuppetController>();
     }
 
     private void OnTriggerEnter(Collider other)
