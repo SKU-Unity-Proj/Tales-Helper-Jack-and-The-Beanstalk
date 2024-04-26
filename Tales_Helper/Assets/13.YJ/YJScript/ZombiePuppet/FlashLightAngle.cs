@@ -14,6 +14,12 @@ public class FlashLightAngle : MonoBehaviour
         StartCoroutine(View());
     }
 
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, viewDistance  );
+    }
+
     #region 시야각
     private Vector3 BoundaryAngle(float _angle)
     {
@@ -22,7 +28,7 @@ public class FlashLightAngle : MonoBehaviour
         // 주어진 각도에 대한 방향 벡터를 반환합니다.
         return new Vector3(Mathf.Sin(_angle * Mathf.Deg2Rad), 0f, Mathf.Cos(_angle * Mathf.Deg2Rad));
     }
-
+    
     IEnumerator View()
     {
         // 시야 각도의 벡터를 계산합니다.
@@ -32,32 +38,28 @@ public class FlashLightAngle : MonoBehaviour
         Debug.DrawRay(transform.position, _leftBoundary*10f, Color.red);
         Debug.DrawRay(transform.position, _rightBoundary*10f, Color.red);
 
-        Collider[] _target = Physics.OverlapSphere(transform.position, viewDistance, layerMask);
+        Collider[] _target = Physics.OverlapSphere(transform.position, viewDistance * 0.7f, layerMask);
 
         for (int i = 0; i < _target.Length; i++)
         {
             Transform _targetTf = _target[i].transform;
 
             // 타겟까지의 방향 벡터를 계산합니다.
-            //Vector3 _direction = (_targetTf.position - transform.position).normalized;
-            Vector3 _direction = _targetTf.position - transform.position;
+            Vector3 _direction = (_targetTf.position - transform.position).normalized;
 
             // 시야 각도 내에 있는지 확인합니다.
             float _angle = Vector3.Angle(_direction, transform.forward);
 
-            if (_angle < viewAngle)
+            if (_angle < viewAngle * 0.5f)
             {
                 RaycastHit _hit;
                 // 레이캐스트로 장애물이 있는지 확인합니다.
-                if (Physics.Raycast(transform.position, _direction, out _hit, viewDistance, layerMask))
+                if (Physics.Raycast(transform.position + transform.up, _direction, out _hit, viewDistance, layerMask))
                 {
-                    if (_hit.collider != null)
-                    {
-                        Debug.Log("Hit object: " + _hit.transform.name);
+                    //Debug.Log("Hit object: " + _hit.transform.name);
 
-                        _hit.collider.GetComponent<PuppetController>().isTrace = false;
-                        _hit.transform.GetComponent<NavMeshAgent>().ResetPath();
-                    }
+                    _hit.collider.GetComponent<PuppetController>().isTrace = false;
+                    _hit.transform.GetComponent<NavMeshAgent>().ResetPath();
                 }
             }
             else
