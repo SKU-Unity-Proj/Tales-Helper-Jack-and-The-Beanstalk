@@ -95,6 +95,7 @@ namespace DiasGames.Abilities
 
         public override void UpdateAbility()
         {
+            //HandleIK();
             UpdateTransform();
 
             if (_isMatchingTarget) return;
@@ -143,6 +144,38 @@ namespace DiasGames.Abilities
             {
                 _ikScheduler.StopIK(AvatarIKGoal.LeftHand);
                 _ikScheduler.StopIK(AvatarIKGoal.RightHand);
+            }
+        }
+
+
+        private void HandleIK()
+        {
+            if (_draggable != null && _ikScheduler != null)
+            {
+                // left hand
+                Transform lhEffector = _draggable.GetLeftHandTarget();
+                if (lhEffector != null)
+                {
+                    IKPass leftHandPass = new IKPass(lhEffector.position,
+                        lhEffector.rotation,
+                        AvatarIKGoal.LeftHand,
+                        1, 1);
+
+                    _ikScheduler.ApplyIK(leftHandPass);
+                }
+
+                // right hand
+                Transform rhEffector = _draggable.GetRightHandTarget();
+                if (rhEffector != null)
+                {
+                    IKPass rightHandPass = new IKPass(rhEffector.position,
+                        rhEffector.rotation,
+                        AvatarIKGoal.RightHand,
+                        1, 1);
+
+                    _ikScheduler.ApplyIK(rightHandPass);
+                }
+
             }
         }
 
