@@ -6,21 +6,34 @@ public class PlayerInteraction : MonoBehaviour
 {
     public Animator playerAnimator; // 플레이어 애니메이터
     public Animator buttonAnimator; // 버튼 애니메이터
+    private bool isAnimating = false; // 애니메이션이 작동 중인지 여부를 추적하는 변수
+
     public Transform targetPos; // 버튼을 눌렀을 때 위치
+
     public Light pointLight; // Point Light의 참조
     public Color[] lightColorsOnInteraction; // 상호작용 시 변경될 빛의 색상 배열
     private int currentColorIndex = 0; // 현재 색상 인덱스
+
     public float interactionDistance = 1f; // 상호작용 가능한 최대 거리
     public KeyCode interactionKey = KeyCode.F; // 상호작용 키
+
     public GameObject[] books; // 활성화할 책 오브젝트 배열
     private int currentBookIndex = 0; // 현재 활성화된 책의 인덱스
 
     private void Update()
     {
-        // 상호작용 키를 눌렀는지 확인
-        if (Input.GetKeyDown(interactionKey))
+        if (!isAnimating)
         {
-            CheckInteraction();
+            // 상호작용 키를 눌렀는지 확인
+            if (Input.GetKeyDown(interactionKey))
+            {
+                CheckInteraction();
+            }
+        }
+        else
+        {
+            // 애니메이션이 작동 중일 때에도 SetPositionAndRotation() 함수 호출
+            SetPositionAndRotation();
         }
     }
 
@@ -36,11 +49,18 @@ public class PlayerInteraction : MonoBehaviour
             // 거리가 interactionDistance 이내인지 확인
             if (distance <= interactionDistance)
             {
-                SetPositionAndRotation();
+                // 애니메이션 작동 중임을 표시
+                isAnimating = true;
+
                 // 플레이어와 버튼의 애니메이션 재생
                 playerAnimator.SetTrigger("Press Button");
                 buttonAnimator.SetTrigger("Press");
-                Invoke("ChangeLightColor", 1.2f);
+
+                // 일정 시간이 지난 후에 애니메이션 작동이 종료되었음을 표시
+                Invoke("EndAnimation", 3.5f);
+
+                // 조명 색상 변경과 책 활성화 처리
+                ChangeLightColor();
             }
         }
     }
@@ -59,6 +79,12 @@ public class PlayerInteraction : MonoBehaviour
             currentBookIndex = (currentBookIndex + 1) % books.Length;
             books[currentBookIndex].SetActive(true);
         }
+    }
+
+    // 애니메이션 작동이 종료되었음을 표시하는 함수
+    private void EndAnimation()
+    {
+        isAnimating = false;
     }
 
     public void SetPositionAndRotation()

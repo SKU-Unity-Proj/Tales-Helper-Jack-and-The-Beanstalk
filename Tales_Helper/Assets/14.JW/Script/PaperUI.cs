@@ -5,6 +5,7 @@ public class PaperUI : MonoBehaviour
     [SerializeField] private GameObject[] paperObjects; // 서로 다른 종이 오브젝트들을 저장하는 배열
     [SerializeField] private GameObject[] paperUIs; // 서로 다른 종이 UI들을 저장하는 배열
     public LayerMask layerMask; // OverlapSphere로 플레이어와 상호작용하는 콜라이더를 제한하기 위한 레이어 마스크
+    
 
     void Update()
     {
