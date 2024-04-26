@@ -27,6 +27,10 @@ namespace DiasGames.Abilities
         private bool _startingRaise = false;
         private bool _stoppingRaise = false;
 
+        private float _tapCountdown = 1f;  // 연타 감지 시간
+        private bool _shouldContinue = false;  // 연타 감지를 위한 변수
+        private int _interactCount = 0;  // interact 입력 카운터
+
         private void Awake()
         {
             _mover = GetComponent<IMover>();
@@ -58,8 +62,6 @@ namespace DiasGames.Abilities
 
         public override void OnStartAbility()
         {
-
-
             if (_raiseObjs.Count > 0)
             {
                 _mover.StopMovement();  // 이동 중지
@@ -74,16 +76,13 @@ namespace DiasGames.Abilities
                 if (_raiseCount <= 2)
                 {
                     SetAnimationState(RaiseAnimationState);
-                    onRaiseStartSecondTime.Invoke();  // 2번 이하 실행 이벤트
                 }
                 else
                 {
                     SetAnimationState(RaiseUpAnimationState);
-                    onRaiseStartThirdTime.Invoke();    // 그 이상 실행 이벤트
-                    _raiseCount = 0;  // 카운트 리셋
                 }
 
-                StartCoroutine(WaitBeforeNextRaise(6.8f)); // 0.5초 동안 대기
+                StartCoroutine(WaitBeforeStoppingRaise(_tapCountdown));
             }
         }
 
@@ -100,6 +99,48 @@ namespace DiasGames.Abilities
                 StopAbility();  // 어빌리티 종료
 
             }
+
+            if (_shouldContinue && _action.interact)
+            {
+                _shouldContinue = false;  // 다음 연타 대기
+                StartCoroutine(WaitBeforeNextRaise(6.8f));
+            }
+            else if (!_action.interact)
+            {
+                _shouldContinue = true;  // 연타 대기 리셋
+            }
+
+            if (_animator.speed == 0 && _action.interact)
+            {
+                if (_interactCount < 4)  // 첫 번째에서 네 번째 클릭까지는 카운트만 증가
+                {
+                    _interactCount++;
+
+                    float frameIncrement = 0.01f; // 에니메이션의 normalizedTime을 증가시킬 값 (2~3프레임 정도 진행)
+                    float newTime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime + frameIncrement;
+                    _animator.Play(_animator.GetCurrentAnimatorStateInfo(0).fullPathHash, -1, newTime);
+
+                }
+                else if (_interactCount == 4 && _raiseCount <= 2)  // 다섯 번째 입력에서
+                {
+                    _animator.speed = 1;  // 에니메이션 재개
+                    onRaiseStartSecondTime.Invoke();  // 2번 이하 실행 이벤트
+
+                    _interactCount = 0;   // 카운트 초기화
+
+                   
+                }
+                else 
+                {
+                    _animator.speed = 1;  // 에니메이션 재개
+                    onRaiseStartThirdTime.Invoke();    // 그 이상 실행 이벤트
+
+                    _raiseCount = 0;  // 카운트 리셋
+                    _interactCount = 0;   // 카운트 초기화
+
+                }
+            }
+
         }
 
         public override void OnStopAbility()
@@ -110,10 +151,18 @@ namespace DiasGames.Abilities
             }
         }
 
+        private IEnumerator WaitBeforeStoppingRaise(float delay)
+        {
+            yield return new WaitForSeconds(delay);
+            _animator.speed = 0;  // 에니메이터 속도를 0으로 설정하여 에니메이션 일시 정지
+            _interactCount = 0;   // 입력 카운트를 초기화
+        }
+
+
         private IEnumerator WaitBeforeNextRaise(float delay)
         {
             yield return new WaitForSeconds(delay);
-            _canRaise = true; // 다시 실행 가능
+            _canRaise = true;  // 다시 실행 가능
         }
     }
 }
