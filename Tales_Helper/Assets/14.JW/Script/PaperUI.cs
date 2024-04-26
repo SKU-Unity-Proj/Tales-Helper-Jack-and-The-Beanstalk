@@ -8,26 +8,25 @@ public class PaperUI : MonoBehaviour
 
     void Update()
     {
-        CheckUI();
+        CheckUI(); // UI 상태를 확인하는 함수 호출
     }
 
+    // UI 상태를 확인하는 함수
     void CheckUI()
     {
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.F)) // F 키 입력이 감지되면
         {
-            
-            // 해당 레이어를 가진 콜라이더 판별
+            // 주변에 반경 3f 내에 있는 콜라이더를 검사
             Collider[] colliders = Physics.OverlapSphere(transform.position, 3f, layerMask);
-            foreach (Collider col in colliders)
+            foreach (Collider col in colliders) // 감지된 각 콜라이더에 대해 반복
             {
-                for (int i = 0; i < paperObjects.Length; i++)
+                for (int i = 0; i < paperObjects.Length; i++) // 종이 오브젝트 배열의 길이만큼 반복
                 {
-
-                    // 각 종이에 알맞은 ui를 지정해주기 위해 서로 연결
+                    // 종이 오브젝트와 종이 UI를 연결
                     GameObject paperObject = paperObjects[i];
                     GameObject paperUI = paperUIs[i];
 
-                    if (col.gameObject == paperObject) //콜라이더와 종이 오브젝트가 일치하는지 확인 조건
+                    if (col.gameObject == paperObject) // 콜라이더와 현재 종이 오브젝트가 일치하는지 확인
                     {
                         // 이미 활성화된 UI인지 확인하고 비활성화
                         if (paperUI.activeSelf)
@@ -42,10 +41,10 @@ public class PaperUI : MonoBehaviour
                                 ui.SetActive(false);
                             }
 
-                            // 올바른 종이 UI 활성화
+                            // 현재 종이에 해당하는 UI를 활성화
                             paperUI.SetActive(true);
                         }
-                        break;
+                        break; // 종이 오브젝트를 찾았으므로 반복문 종료
                     }
                 }
             }
