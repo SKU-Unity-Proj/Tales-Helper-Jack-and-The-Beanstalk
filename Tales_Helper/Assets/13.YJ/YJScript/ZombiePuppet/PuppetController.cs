@@ -9,7 +9,6 @@ public class PuppetController : MonoBehaviour
     private NavMeshAgent agent;
 
     public bool isTrace = false;
-    public GameObject dyingLight;
     public Transform playerPos;
 
     public DyingZombieAbility dyingZombieAbility; // DyingZombieAbility 스크립트의 인스턴스를 저장할 변수
@@ -23,8 +22,6 @@ public class PuppetController : MonoBehaviour
             playerPos = GameObject.FindWithTag("Player").transform;
         if(dyingZombieAbility == null )
             dyingZombieAbility = FindObjectOfType<DyingZombieAbility>();
-
-        dyingLight.SetActive(false);
     }
 
     void Update()
@@ -65,8 +62,6 @@ public class PuppetController : MonoBehaviour
             anim.CrossFadeInFixedTime("Biting", 0f);
 
             dyingZombieAbility.isDie = true;
-
-            dyingLight.SetActive(true);
         }
     }
 }
