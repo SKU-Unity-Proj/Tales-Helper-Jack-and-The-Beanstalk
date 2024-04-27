@@ -847,7 +847,15 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: acc778f31c4128c44b793d046026617e,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1676873015}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: acc778f31c4128c44b793d046026617e,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1676873018}
   m_SourcePrefab: {fileID: 100100000, guid: acc778f31c4128c44b793d046026617e, type: 3}
 --- !u!1 &18373472
 GameObject:
@@ -48238,6 +48246,54 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1675906273}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1676873014 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: acc778f31c4128c44b793d046026617e,
+    type: 3}
+  m_PrefabInstance: {fileID: 12546472}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1676873015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1676873014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81054b1d3a6ff7b45964120677d8668e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  traceRange: 10
+  attackRange: 2
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 32768
+  onPlayerEnterTrigger:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!195 &1676873018
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1676873014}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 1.54
+  m_Speed: 1.5
+  m_Acceleration: 4.4
+  avoidancePriority: 50
+  m_AngularSpeed: 360
+  m_StoppingDistance: 1.02
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 4.47
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1001 &1681268883
 PrefabInstance:
   m_ObjectHideFlags: 0
