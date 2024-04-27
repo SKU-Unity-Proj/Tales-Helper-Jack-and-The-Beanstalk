@@ -33,9 +33,10 @@ Material:
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 1
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 2000
   stringTagMap:
     MotionVector: User
+    RenderType: Opaque
   disabledShaderPasses:
   - TransparentDepthPrepass
   - TransparentDepthPostpass
@@ -318,7 +319,7 @@ Material:
     - _NormalScale: 1
     - _OcclusionStrength: 1
     - _OpaqueCullMode: 2
-    - _OutLine: 1
+    - _OutLine: 0
     - _OutLineWidth: 0.004
     - _PPDLodThreshold: 5
     - _PPDMaxSamples: 15
@@ -359,7 +360,7 @@ Material:
     - _SpecularStep: 0
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
-    - _StencilComp: 8
+    - _StencilComp: 0
     - _StencilMode: 0
     - _StencilNo: 1
     - _StencilOpFail: 0
