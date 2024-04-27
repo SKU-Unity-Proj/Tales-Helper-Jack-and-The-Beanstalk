@@ -155,12 +155,7 @@ namespace DiasGames.Abilities
             {
                 pickItem.transform.SetParent(targetPos);
 
-                PickItemRotation properties = pickItem.GetComponent<PickItemRotation>();
-                if (properties != null)
-                {
-                    pickItem.transform.localPosition = properties.position;
-                    pickItem.transform.localRotation = Quaternion.Euler(properties.rotation);
-                }
+                
             }
         }
 

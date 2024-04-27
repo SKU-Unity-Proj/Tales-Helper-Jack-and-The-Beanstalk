@@ -85,12 +85,14 @@ public class PickLight : MonoBehaviour
             zombieStopLight.SetActive(true);
 
             //위치 맞추기
+            /*
             PickItemRotation properties = pickItem.GetComponent<PickItemRotation>();
             if (properties != null)
             {
                 pickItem.transform.localPosition = properties.position;
                 pickItem.transform.localRotation = Quaternion.Euler(properties.rotation);
             }
+            */
 
             if(anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.53f)
                 isPicking = false;
