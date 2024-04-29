@@ -27,31 +27,25 @@ public class TalkManager : MonoBehaviour
         //Quest Talk ((대화+퀘스트) 순서 + 누군지)
         talkData.Add(10 + 1000, new string[] 
             {"잭, 어디에 있다가 이제 오는거니.:0",
-            "당장 내일 먹을 음식이 없으니 마을에 가서 이 소를 팔고 오렴.:1",
-            "마을은 나가서 오른쪽 길로 쭉 따라가면 돼.:1",
+            "당장 내일 먹을 음식이 없으니 마을에 가서 이 소를 팔고 오렴.:0",
+            "마을은 나가서 오른쪽 길로 쭉 따라가면 돼.:0",
             "늦지 않게 와야 해.:0"});
         
         talkData.Add(11 + 2000, new string[]
-            {"이보게. 소년:1",
-            "지금은 길이 물에 잠겨 마을에 갈 수 없단다.:2",
-            "소를 팔러 가는 모양인데 나한테 팔지 않겠나?:2",
+            {"이보게. 소년:0",
+            "지금은 길이 물에 잠겨 마을에 갈 수 없단다.:0",
+            "소를 팔러 가는 모양인데 나한테 팔지 않겠나?:0",
             "나에게 소를 주면 이 마법의 콩을 주마:0"});
 
         talkData.Add(30 + 1000, new string[]
-            {"잭! 비싼 소를 이깟 콩이랑 바꿔오면 어떡하니!:3",
-            "저기 다리 건너에 버리고 와:3"});
+            {"잭! 비싼 소를 이깟 콩이랑 바꿔오면 어떡하니!:0",
+            "저기 다리 건너에 버리고 와:0"});
 
 
 
         //표정 이미지
-        portraitData.Add(1000 + 0, portraitArr[4]);
-        portraitData.Add(1000 + 1, portraitArr[5]);
-        portraitData.Add(1000 + 2, portraitArr[6]);
-        portraitData.Add(1000 + 3, portraitArr[7]);
-        portraitData.Add(2000 + 0, portraitArr[4]);
-        portraitData.Add(2000 + 1, portraitArr[5]);
-        portraitData.Add(2000 + 2, portraitArr[6]);
-        portraitData.Add(2000 + 3, portraitArr[7]);
+        portraitData.Add(1000 + 0, portraitArr[0]);
+        portraitData.Add(2000 + 0, portraitArr[1]);
     }
 
     public string GetTalk(int id,int talkIndex)

@@ -25,12 +25,19 @@ public class QuestManager : MonoBehaviour
         GenerateData();
     }
 
+    //꺼져있어야 할 오브젝트
+    private void Start()
+    {
+        questObject[5].SetActive(false);
+        questObject[6].SetActive(false);
+        questObject[7].SetActive(false);
+    }
     //퀘스트에 따른 오브젝트 생성
     void ControlObject()
     {
         switch (questId)
         {
-            //questObject[] = 0(엄마 느낌표) 1(상인) 2(상인 느낌표) 3(무너진 돌) 4(울타리) 5(콩주머니) 6(인벤에 넣을 콩주머니)
+            //questObject[] = 0(엄마 느낌표) 1(상인) 2(상인 느낌표) 3(무너진 돌) 4(울타리) 5(콩주머니) 6(인벤에 넣을 콩주머니) 7(보부상 옆 소)
             case 10:
                 if(questActionIndex == 1) //엄마에게 심부름 받은 이후
                 {
@@ -43,6 +50,7 @@ public class QuestManager : MonoBehaviour
                     questObject[1].gameObject.layer = 0; //상인 레이어 X
                     questObject[2].SetActive(false); //2000 느낌표 X
                     cow.SetActive(false); //소 X
+                    questObject[7].SetActive(true); // 보부상 소 O 
                     questObject[5].SetActive(true); //콩주머니 O
                 }
                 break;
