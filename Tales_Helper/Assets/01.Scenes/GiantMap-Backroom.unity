@@ -16666,7 +16666,7 @@ Animator:
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &699809041
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -16705,12 +16705,11 @@ MonoBehaviour:
   pointLight: {fileID: 486497951}
   lightColorsOnInteraction:
   - {r: 1, g: 0.73911494, b: 0.4669811, a: 0}
-  - {r: 0.33567363, g: 0.19335175, b: 0.745283, a: 0}
+  - {r: 0.5373478, g: 0, b: 1, a: 0}
   - {r: 0.032395888, g: 0.9811321, b: 0.26623654, a: 0}
-  - {r: 0.4765931, g: 0.67637265, b: 0.9622642, a: 0}
+  - {r: 0, g: 0.94946814, b: 1, a: 0}
   - {r: 1, g: 0.92436117, b: 0.3176471, a: 0}
   - {r: 0.9528302, g: 0.004494493, b: 0.5062593, a: 0}
-  - {r: 0.8584906, g: 0.8584906, b: 0.8584906, a: 0}
   interactionDistance: 1
   interactionKey: 102
   books:
@@ -23258,8 +23257,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: -0.61, y: -0.36, z: -0.12}
   rotation: {x: 4, y: -0.7, z: -61}
-  originBottle: {fileID: 970496430}
-  setBottle: {fileID: 1127051135}
+  currentParent: {fileID: 0}
 --- !u!4 &970496430 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: c4b51d9ffc9eefb44900c7d54cda4613,
@@ -43052,8 +43050,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: -0.61, y: -0.36, z: -0.12}
   rotation: {x: 4, y: -0.7, z: -61}
-  originBottle: {fileID: 0}
-  setBottle: {fileID: 0}
+  currentParent: {fileID: 0}
 --- !u!1001 &1841115180
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -46418,8 +46415,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: -0.61, y: -0.36, z: -0.12}
   rotation: {x: 4, y: -0.7, z: -61}
-  originBottle: {fileID: 0}
-  setBottle: {fileID: 0}
+  currentParent: {fileID: 0}
 --- !u!1001 &2000117044
 PrefabInstance:
   m_ObjectHideFlags: 0
