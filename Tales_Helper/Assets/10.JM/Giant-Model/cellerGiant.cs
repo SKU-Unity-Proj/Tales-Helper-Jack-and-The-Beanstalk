@@ -4,6 +4,7 @@ using UnityEngine.Events;
 
 public class cellerGiant : MonoBehaviour
 {
+    [SerializeField] private Transform interactPos;  // 목표 위치
     [SerializeField] private float traceRange = 10f;
     [SerializeField] private float attackRange = 2f;
     private Transform playerTransform;
@@ -19,9 +20,6 @@ public class cellerGiant : MonoBehaviour
     // State flags
     private bool isTrace = false;
     private bool isAttack = false;
-
-    private float idleTime = 5.0f; // Time after which we transition to Sequence01
-    private float timer = 0.0f; // Timer to track idle time
 
     private void Start()
     {
@@ -82,18 +80,63 @@ public class cellerGiant : MonoBehaviour
 
     private void UpdateAnimationState()
     {
-        if (!_animator.GetBool("isTrace") && !_animator.GetBool("isAttack"))
+        // Check if Sequence01 is finished
+        if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Sequence01") &&
+            _animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f && !_animator.IsInTransition(0))
         {
-            timer += Time.deltaTime;
+            SetAnimationState("Lookaround");
+            // Set the agent's destination to the current position to stay in place
+      
+        }
 
-            if (timer >= idleTime)
+        // Check if Lookaround is finished
+        if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Lookaround") &&
+            _animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f && !_animator.IsInTransition(0))
+        {
+            SetAnimationState("Walk");
+            // Set the destination to the interact position when transitioning to Walk
+            agent.SetDestination(interactPos.position);
+            Debug.Log(agent.destination);
+            agent.isStopped = false;
+        }
+
+        // Check if the agent has reached the interaction position during Walk state
+        if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Walk"))
+        {
+            if (Vector3.Distance(transform.position, interactPos.position) <= agent.stoppingDistance)
             {
-                _animator.SetTrigger("Sequence01");
-                agent.isStopped = false;
-                agent.SetDestination(this.transform.position); // Set the destination to the current position initially
-                timer = 0.0f; // Reset timer
+                SetAnimationState("Scratch");
+                agent.isStopped = true;  // Stop the agent once the destination is reached
             }
         }
+
+        // Optionally, handle looping or ending the Scratch animation based on some condition
+        if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Scratch") &&
+            _animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f && !_animator.IsInTransition(0))
+        {
+            // Assuming Scratch is a looping animation, you might not need to do anything here.
+            // If it's not looping, you can reset to another state or repeat the Scratch.
+            // Ensure the agent remains stopped.
+
+        }
+    }
+
+
+
+    private void SetAnimationState(string stateName, float transitionDuration = 0.1f, int StateLayer = 0)
+    {
+        if (_animator.HasState(StateLayer, Animator.StringToHash(stateName)))
+        {
+            _animator.CrossFadeInFixedTime(stateName, transitionDuration, StateLayer);
+
+            if (StateLayer == 1)
+                SetLayerPriority(1, 1);
+        }
+    }
+
+    private void SetLayerPriority(int StateLayer = 1, int Priority = 1) // 애니메이터의 레이어 우선순위 값(무게) 설정
+    {
+        _animator.SetLayerWeight(StateLayer, Priority);
     }
 
     void PrepareAttack()
