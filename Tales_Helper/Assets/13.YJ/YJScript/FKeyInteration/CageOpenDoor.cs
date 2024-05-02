@@ -1,5 +1,4 @@
 using UnityEngine;
-using XEntity.InventoryItemSystem;
 using static IFKeyInteractable;
 
 public class CageOpenDoor : MonoBehaviour, IFInteractable

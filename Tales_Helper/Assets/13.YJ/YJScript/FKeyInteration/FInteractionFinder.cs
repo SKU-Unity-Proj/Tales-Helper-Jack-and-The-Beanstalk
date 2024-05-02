@@ -29,6 +29,7 @@ public class FInteractionFinder : MonoBehaviour
         foreach (GameObject interactable in interactables)
         {
             float distance = Vector3.Distance(transform.position, interactable.transform.position);
+
             if (distance < minDistance && distance <= interactionRange)
             {
                 minDistance = distance;
@@ -40,10 +41,11 @@ public class FInteractionFinder : MonoBehaviour
     void InteractWithCurrent()
     {
         IFInteractable interactable = currentInteractable.GetComponent<IFInteractable>();
+
         if (interactable != null)
         {
             interactable.Interact();
-            Debug.Log(interactable);
+            //Debug.Log(interactable);
         }
     }
 }
