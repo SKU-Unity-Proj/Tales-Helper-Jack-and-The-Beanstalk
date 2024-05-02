@@ -43,7 +43,7 @@ public class PickLight : MonoBehaviour
 
     void CheckItem()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position + transform.forward, radius, 1 << 9);
+        Collider[] colliders = Physics.OverlapSphere(transform.position + transform.forward, radius, 1 << 12);
 
         if (colliders != null)
         {
