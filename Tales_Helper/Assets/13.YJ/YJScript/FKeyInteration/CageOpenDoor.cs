@@ -6,6 +6,8 @@ public class CageOpenDoor : MonoBehaviour, IFInteractable
     private Animator anim;
     public Animator lockAnim;
 
+    public GameObject flashLight;
+
     private bool isPlay = false;
     private bool isLocked = false;
 
@@ -33,6 +35,8 @@ public class CageOpenDoor : MonoBehaviour, IFInteractable
             anim.CrossFadeInFixedTime("CageOpen", 0f);
             isPlay = true;
             isLocked = false;
+
+            flashLight.SetActive(false);
         }
     }
 }

@@ -58,7 +58,7 @@ public class PickLight : MonoBehaviour
                 pickItem_light = collider.transform.GetChild(1).gameObject;
 
                 //애니메이션 실행
-                anim.CrossFadeInFixedTime("PickItem", 0.2f);
+                anim.SetBool("PickItem", true);
 
                 //아이템으로 회전
                 Vector3 vec = pickItem.gameObject.transform.position - transform.position;
@@ -84,17 +84,9 @@ public class PickLight : MonoBehaviour
             // 라이트 켜기
             zombieStopLight.SetActive(true);
 
-            //위치 맞추기
-            /*
-            PickItemRotation properties = pickItem.GetComponent<PickItemRotation>();
-            if (properties != null)
-            {
-                pickItem.transform.localPosition = properties.position;
-                pickItem.transform.localRotation = Quaternion.Euler(properties.rotation);
-            }
-            */
+            anim.SetBool("PickItem", false);
 
-            if(anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.53f)
+            if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.53f)
                 isPicking = false;
         }
     }

@@ -64,4 +64,10 @@ public class PuppetController : MonoBehaviour
             dyingZombieAbility.isDie = true;
         }
     }
+
+    public void StopTarce()
+    {
+        isTrace = false;
+        agent.ResetPath();
+    }
 }

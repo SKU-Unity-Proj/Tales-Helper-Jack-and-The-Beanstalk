@@ -18,7 +18,7 @@ public class BedroomToggleLight : MonoBehaviour, IFInteractable
 
     public void Interact()
     {
-        if (!directionalLight)
+        if (!directionalLight.activeSelf)
         {
             directionalLight.SetActive(true);
             zombieStopLight.SetActive(false);
@@ -30,7 +30,7 @@ public class BedroomToggleLight : MonoBehaviour, IFInteractable
                     PuppetController puppetController = p.GetComponent<PuppetController>();
                     if (puppetController != null)
                     {
-                        puppetController.isTrace = false;
+                        puppetController.StopTarce();
                     }
                 }
             }
