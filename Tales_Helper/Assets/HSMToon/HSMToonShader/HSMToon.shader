@@ -7,6 +7,13 @@ Shader "HSM/Toon"
         _BaseSaturation("BaseSaturation", Range(0, 5)) = 1
         _BaseBright("BaseBright", Range(-1, 1)) = 0
 
+         // 프로퍼티 추가
+        _MetallicMap("Metallic", 2D) = "white" {} // 메탈릭 맵
+        _MetallicIntensity("Metallic Intensity", Range(0.0, 1.0)) = 0
+
+        _OcclusionMap("Occlusion", 2D) = "white" {} // 오클루전 맵
+        _OcclusionStrength("Occlusion Strength", Range(0.0, 1.0)) = 1.0 // 오클루전 강도
+
         _BumpScale("Scale", Range(0, 3)) = 1
         _BumpMap("Normal Map", 2D) = "bump" {}
 

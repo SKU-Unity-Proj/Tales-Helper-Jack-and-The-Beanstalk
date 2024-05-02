@@ -29,6 +29,11 @@ public class HSMToonGUIEditor : ShaderGUI
     private MaterialProperty basebumpMapProp;
     private MaterialProperty basebumpScaleProp;
 
+    private MaterialProperty metallicMapProp;
+    private MaterialProperty metallicIntensityProp;
+    private MaterialProperty occlusionMapProp;
+    private MaterialProperty occlusionStrengthProp;
+
     private MaterialProperty aoMapProp;
     private MaterialProperty shadowMapProp;
     private MaterialProperty shadowColorProp;
@@ -149,6 +154,16 @@ public class HSMToonGUIEditor : ShaderGUI
             materialEditor.ShaderProperty(baseSaturationProp, new GUIContent("Saturation"));
             materialEditor.ShaderProperty(baseBrightProp, new GUIContent("Bright"));
             EditorGUILayout.Space();
+
+            GUILayout.Label("Metallic", EditorStyles.boldLabel);
+            materialEditor.TexturePropertySingleLine(new GUIContent("Metallic Map"), metallicMapProp);
+            materialEditor.ShaderProperty(metallicIntensityProp, new GUIContent("Metallic Intensity"));
+            EditorGUILayout.Space();
+
+            GUILayout.Label("Occlusion", EditorStyles.boldLabel);
+            materialEditor.TexturePropertySingleLine(new GUIContent("Occlusion Map"), occlusionMapProp);
+            materialEditor.ShaderProperty(occlusionStrengthProp, new GUIContent("Occlusion Strength"));
+
             GUILayout.Label("Base Normal", EditorStyles.boldLabel);
             materialEditor.TexturePropertySingleLine(new GUIContent("NormalMap"), basebumpMapProp, basebumpScaleProp);
             EditorGUI.indentLevel--;
@@ -360,6 +375,12 @@ public class HSMToonGUIEditor : ShaderGUI
         baseBrightProp = FindProperty("_BaseBright", properties);
         basebumpMapProp = FindProperty("_BumpMap", properties);
         basebumpScaleProp = FindProperty("_BumpScale", properties);
+
+        // OnEnable 메소드 또는 유사한 초기화 메소드 내에서 찾아 초기화
+        metallicMapProp = FindProperty("_MetallicMap", properties);
+        metallicIntensityProp = FindProperty("_MetallicIntensity", properties);
+        occlusionMapProp = FindProperty("_OcclusionMap", properties);
+        occlusionStrengthProp = FindProperty("_OcclusionStrength", properties);
 
         aoMapProp = FindProperty("_AOMap", properties);
         shadowMapProp = FindProperty("_ShadowMap", properties);

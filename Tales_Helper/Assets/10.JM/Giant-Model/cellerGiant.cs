@@ -11,7 +11,7 @@ public class cellerGiant : MonoBehaviour
     private Collider[] playerCheck;
 
     private NavMeshAgent agent;
-    private Animator _anmator;
+    private Animator _animator;
 
     [Header("Unity Events")]
     public UnityEvent onPlayerEnterTrigger;
@@ -20,19 +20,20 @@ public class cellerGiant : MonoBehaviour
     private bool isTrace = false;
     private bool isAttack = false;
 
-    private bool hasFixedDirection = false;  // To store if the direction has been fixed for attack
-    private Quaternion fixedAttackRotation;  // To store the fixed rotation during attack
+    private float idleTime = 5.0f; // Time after which we transition to Sequence01
+    private float timer = 0.0f; // Timer to track idle time
 
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        _anmator = GetComponent<Animator>();
+        _animator = GetComponent<Animator>();
 
-        if (agent == null || _anmator == null)
+        if (agent == null || _animator == null)
         {
             Debug.LogError("Component missing: NavMeshAgent or Animator is not attached to this GameObject.");
         }
     }
+
     private void Update()
     {
         CheckForPlayer();
@@ -52,14 +53,17 @@ public class cellerGiant : MonoBehaviour
         {
             Idle();
         }
+
+        UpdateAnimationState();
     }
+
     private void CheckForPlayer()
     {
         playerCheck = Physics.OverlapSphere(transform.position, traceRange, playerLayer);
         bool playerFound = playerCheck.Length > 0 && playerCheck[0].gameObject.CompareTag("Player");
 
-        _anmator.SetBool("isTrace", playerFound && !isAttack);
-        _anmator.SetBool("isAttack", false);
+        _animator.SetBool("isTrace", playerFound && !isAttack);
+        _animator.SetBool("isAttack", false);
 
         if (playerFound)
         {
@@ -75,19 +79,29 @@ public class cellerGiant : MonoBehaviour
             playerTransform = null;
         }
     }
+
+    private void UpdateAnimationState()
+    {
+        if (!_animator.GetBool("isTrace") && !_animator.GetBool("isAttack"))
+        {
+            timer += Time.deltaTime;
+
+            if (timer >= idleTime)
+            {
+                _animator.SetTrigger("Sequence01");
+                agent.isStopped = false;
+                agent.SetDestination(this.transform.position); // Set the destination to the current position initially
+                timer = 0.0f; // Reset timer
+            }
+        }
+    }
+
     void PrepareAttack()
     {
         isAttack = true;
-        _anmator.SetBool("isAttack", true);
-        _anmator.SetBool("isTrace", false);
+        _animator.SetBool("isAttack", true);
+        _animator.SetBool("isTrace", false);
         agent.isStopped = true;
-
-        // Fix direction only once at the start of the attack
-        if (!hasFixedDirection)
-        {
-            fixedAttackRotation = Quaternion.LookRotation(playerTransform.position - transform.position);
-            hasFixedDirection = true;
-        }
     }
 
     private void Trace()
@@ -101,26 +115,23 @@ public class cellerGiant : MonoBehaviour
 
     private void Attack()
     {
-        // Maintain fixed direction during the attack
-        if (hasFixedDirection)
+        if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Sequence01"))
         {
-            transform.rotation = fixedAttackRotation;
+            agent.SetDestination(playerTransform.position); // Ensure the giant moves towards the player during the animation
         }
 
-        // Check if the player moves out of attack range
         if (Vector3.Distance(transform.position, playerTransform.position) > attackRange)
         {
             isAttack = false;
-            _anmator.SetBool("isAttack", false);
-            _anmator.SetBool("isTrace", true);
-            hasFixedDirection = false; // Reset the direction fix
+            _animator.SetBool("isAttack", false);
+            _animator.SetBool("isTrace", true);
         }
     }
 
     private void Idle()
     {
-        _anmator.SetBool("isTrace", false);
-        _anmator.SetBool("isAttack", false);
+        _animator.SetBool("isTrace", false);
+        _animator.SetBool("isAttack", false);
         agent.isStopped = true;
     }
 
@@ -132,5 +143,4 @@ public class cellerGiant : MonoBehaviour
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, traceRange);
     }
-
 }

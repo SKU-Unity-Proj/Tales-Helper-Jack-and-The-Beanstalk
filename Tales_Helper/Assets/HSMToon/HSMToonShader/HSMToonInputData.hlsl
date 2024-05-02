@@ -16,6 +16,9 @@ half4 _BaseColor;
 half _BaseSaturation;
 half _BaseBright;
 
+half _MetallicIntensity;        // 메탈릭 강도
+half _OcclusionStrength;        // 오클루전 강도
+
 half4 _BumpMap_ST;
 half _BumpScale;
 
@@ -74,6 +77,11 @@ TEXTURE2D(_DissolveMap);		SAMPLER(sampler_DissolveMap);
 TEXTURE2D(_MatCapTextureMap);	SAMPLER(sampler_MatCapTextureMap);
 TEXTURE2D(_SpecularMap);	    SAMPLER(sampler_SpecularMap);
 TEXTURE2D(_AOMap);	            SAMPLER(sampler_AOMap);
+
+// 텍스쳐랑 샘플러 추가한거
+TEXTURE2D(_MetallicMap);        SAMPLER(sampler_MetallicMap);   // 메탈릭 맵 텍스처 메탈릭 맵 샘플러
+TEXTURE2D(_OcclusionMap);       SAMPLER(sampler_OcclusionMap); // 오클루전 맵 텍스처 오클루전 맵 샘플러
+
 
 void DitherFade_float(float2 vpos, float fade, out float ditherClip)
 {

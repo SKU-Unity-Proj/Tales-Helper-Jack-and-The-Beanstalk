@@ -75,7 +75,19 @@ half4 frag(Varyings input) : SV_Target
     half4 baseMap = SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, input.uv);
     baseMap.rgb = Saturation(baseMap.rgb, _BaseSaturation);
     baseMap.rgb = Bright(baseMap.rgb, _BaseBright);
-    half3 outColor = baseMap.rgb * _BaseColor.rgb;
+
+    // 새로운 텍스처 샘플링
+    half metallicValue = SAMPLE_TEXTURE2D(_MetallicMap, sampler_MetallicMap, input.uv).r;
+    half occlusionValue = SAMPLE_TEXTURE2D(_OcclusionMap, sampler_OcclusionMap, input.uv).r;
+
+    // 색상 및 라이팅 계산에 반영
+    half3 outColor = baseMap.rgb * _BaseColor.rgb * occlusionValue * _OcclusionStrength;  // 오클루전 적용
+
+    half3 environmentColor = half3(1, 1, 1);  // Assuming a simple environment color
+    half3 metallicReflection = lerp(half3(0, 0, 0), environmentColor, metallicValue);
+    outColor = lerp(outColor, metallicReflection, _MetallicIntensity);
+
+
 #ifdef _MATCAP_ON
     outColor.rgb = MatCap(input.mirrorFlag, input.normalWS, outColor.rgb, input.uv);
 #endif
