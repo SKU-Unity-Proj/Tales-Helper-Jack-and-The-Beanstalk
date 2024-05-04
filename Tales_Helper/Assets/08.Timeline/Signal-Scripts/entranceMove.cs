@@ -10,11 +10,12 @@ public class entranceMove : MonoBehaviour
     public Transform setObject;
 
     private NavMeshAgent agent;
+    private Animator _anim;
 
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-
+        _anim = GetComponent<Animator>();
     }
 
     public void OnSignalReceivedMove()
@@ -28,5 +29,9 @@ public class entranceMove : MonoBehaviour
         setObject.gameObject.SetActive(true);
     }
 
+    public void OnSignalReceivedDying()
+    {
+        _anim.SetBool("isDying", true);
+    }
 
 }

@@ -15,6 +15,9 @@ namespace DiasGames.Abilities
         [SerializeField] private string RaiseAnimationState = "Raise";
         [SerializeField] private string RaiseUpAnimationState = "Raise Up";
 
+        [SerializeField] private GameObject originGiant = null;  // 헤드 트렌스폼
+        [SerializeField] private GameObject setGiant = null;  // 헤드 트렌스폼
+
         private List<Collider> _raiseObjs = new List<Collider>();
 
         private IMover _mover = null;
@@ -141,6 +144,10 @@ namespace DiasGames.Abilities
                     _animator.speed = 1;  // 에니메이션 재개
                     onRaiseStartThirdTime.Invoke();    // 그 이상 실행 이벤트
 
+                    originGiant.SetActive(false);
+                    setGiant.SetActive(true);
+
+                    timelineCam.Priority = 12;
                     playableDirector.Play();
 
                     _raiseCount = 0;  // 카운트 리셋

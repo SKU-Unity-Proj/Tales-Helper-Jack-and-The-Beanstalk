@@ -1,11 +1,14 @@
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Events;
+using System.Collections;
+using System.Collections.Generic;
 
 public class cellerGiant : MonoBehaviour
 {
     [SerializeField] private Transform interactPos;  // 목표 위치
     [SerializeField] private Transform stopPos;
+    [SerializeField] private Transform attackCol;
+
     [SerializeField] private float traceRange = 3f;
     [SerializeField] private float attackRange = 3f;
 
@@ -172,9 +175,21 @@ public class cellerGiant : MonoBehaviour
     {
         isAttack = true;
 
-        if(_animator.GetCurrentAnimatorStateInfo(0).IsName("Trace") &&
+        if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Trace") &&
             _animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f && !_animator.IsInTransition(0))
+        {
+            StartCoroutine(attackDelay());
             SetAnimationState("Attack");
+        }
+
+    }
+
+    private IEnumerator attackDelay()
+    {
+        yield return new WaitForSeconds(0.5f);
+        Debug.Log("1");
+        // 타격 트리거 on
+        attackCol.GetComponent<SphereCollider>().enabled = true;
     }
 
     private void Idle()
