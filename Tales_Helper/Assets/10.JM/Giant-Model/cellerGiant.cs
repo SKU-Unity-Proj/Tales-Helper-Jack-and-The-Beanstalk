@@ -5,6 +5,7 @@ using UnityEngine.Events;
 public class cellerGiant : MonoBehaviour
 {
     [SerializeField] private Transform interactPos;  // 목표 위치
+    [SerializeField] private Transform stopPos;
     [SerializeField] private float traceRange = 3f;
     [SerializeField] private float attackRange = 3f;
 
@@ -54,6 +55,17 @@ public class cellerGiant : MonoBehaviour
         }
 
         UpdateAnimationState();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("StopCol"))
+        {
+            this.transform.position = stopPos.position;
+
+            agent.isStopped = true;
+            SetAnimationState("Stop");
+        }
     }
 
     private void CheckForPlayer()

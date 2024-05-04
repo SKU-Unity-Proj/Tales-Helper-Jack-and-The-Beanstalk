@@ -4,6 +4,8 @@ using DiasGames.Components;
 using UnityEngine;
 using UnityEngine.Events;
 using System.Collections;
+using UnityEngine.Playables;
+using Cinemachine;
 
 namespace DiasGames.Abilities
 {
@@ -30,6 +32,10 @@ namespace DiasGames.Abilities
         private float _tapCountdown = 1f;  // 연타 감지 시간
         private bool _shouldContinue = false;  // 연타 감지를 위한 변수
         private int _interactCount = 0;  // interact 입력 카운터
+
+        //타임라인
+        [SerializeField] private PlayableDirector playableDirector;
+        [SerializeField] private CinemachineVirtualCamera timelineCam;
 
         private void Awake()
         {
@@ -134,6 +140,8 @@ namespace DiasGames.Abilities
                 {
                     _animator.speed = 1;  // 에니메이션 재개
                     onRaiseStartThirdTime.Invoke();    // 그 이상 실행 이벤트
+
+                    playableDirector.Play();
 
                     _raiseCount = 0;  // 카운트 리셋
                     _interactCount = 0;   // 카운트 초기화
