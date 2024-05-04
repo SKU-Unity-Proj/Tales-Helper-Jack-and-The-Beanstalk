@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using DiasGames.Components;
 using DiasGames.IK;
+using UnityEngine.Events;
+
 
 namespace DiasGames.Abilities
 {
@@ -14,26 +16,26 @@ namespace DiasGames.Abilities
         [SerializeField] private string horizontalFloatParam = "Horizontal";
         [SerializeField] private string verticalFloatParam = "Vertical";
 
-        // components
         private IMover _mover;
         private IKScheduler _ikScheduler;
         private Transform _camera;
 
-        // interaction components
+
         private IHDraggable _draggable;
         private List<Collider> _triggeredObjs = new List<Collider>();
 
-        // private internal vars
-        // to positioning
+ 
         private bool _isMatchingTarget;
         private float _step;
 
-        // animations ids
         private int _animHorizontalID;
         private int _animVerticalID;
         private int _animMotionSpeedID;
 
         private Vector3 _lastPosition;
+
+        public UnityEvent onPushStart;
+
 
         private void Awake()
         {
@@ -84,6 +86,8 @@ namespace DiasGames.Abilities
 
             _step = Vector3.Distance(transform.position, _draggable.GetTarget().position) / positionSmoothnessTime;
             _isMatchingTarget = true;
+
+            onPushStart.Invoke();
         }
 
         public override bool ReadyToRun()

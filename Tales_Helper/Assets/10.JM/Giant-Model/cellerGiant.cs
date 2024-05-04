@@ -5,8 +5,9 @@ using UnityEngine.Events;
 public class cellerGiant : MonoBehaviour
 {
     [SerializeField] private Transform interactPos;  // 목표 위치
-    [SerializeField] private float traceRange = 10f;
-    [SerializeField] private float attackRange = 2f;
+    [SerializeField] private float traceRange = 3f;
+    [SerializeField] private float attackRange = 3f;
+
     private Transform playerTransform;
     public LayerMask playerLayer;
     private Collider[] playerCheck;
@@ -14,12 +15,11 @@ public class cellerGiant : MonoBehaviour
     private NavMeshAgent agent;
     private Animator _animator;
 
-    [Header("Unity Events")]
-    public UnityEvent onPlayerEnterTrigger;
 
-    // State flags
     private bool isTrace = false;
     private bool isAttack = false;
+
+    private float delay = 2.0f;
 
     private void Start()
     {
@@ -30,6 +30,7 @@ public class cellerGiant : MonoBehaviour
         {
             Debug.LogError("Component missing: NavMeshAgent or Animator is not attached to this GameObject.");
         }
+
     }
 
     private void Update()
@@ -80,48 +81,95 @@ public class cellerGiant : MonoBehaviour
 
     private void UpdateAnimationState()
     {
-        // Check if Sequence01 is finished
         if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Sequence01") &&
             _animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f && !_animator.IsInTransition(0))
         {
-            SetAnimationState("Lookaround");
-            // Set the agent's destination to the current position to stay in place
-      
+            SetAnimationState("Lookaround");  
         }
 
-        // Check if Lookaround is finished
+
         if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Lookaround") &&
             _animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f && !_animator.IsInTransition(0))
         {
             SetAnimationState("Walk");
-            // Set the destination to the interact position when transitioning to Walk
+
             agent.SetDestination(interactPos.position);
             Debug.Log(agent.destination);
-            agent.isStopped = false;
         }
 
-        // Check if the agent has reached the interaction position during Walk state
+
         if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Walk"))
         {
-            if (Vector3.Distance(transform.position, interactPos.position) <= agent.stoppingDistance)
+            if (_animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f && !_animator.IsInTransition(0)
+                && Vector3.Distance(transform.position, interactPos.position) <= agent.stoppingDistance)
             {
                 SetAnimationState("Scratch");
-                agent.isStopped = true;  // Stop the agent once the destination is reached
             }
         }
+    }
 
-        // Optionally, handle looping or ending the Scratch animation based on some condition
-        if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Scratch") &&
-            _animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f && !_animator.IsInTransition(0))
+    private void ForceTracePlayer()
+    {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
         {
-            // Assuming Scratch is a looping animation, you might not need to do anything here.
-            // If it's not looping, you can reset to another state or repeat the Scratch.
-            // Ensure the agent remains stopped.
+            playerTransform = player.transform;
+            traceRange = 20.0f;  // 추적 범위를 15.0f로 확장
+            agent.SetDestination(playerTransform.position);
+            isTrace = true;
+            isAttack = false;
+
+            SetAnimationState("Trace");
 
         }
     }
 
+    // 외부에서 호출할 메소드, 지연을 포함
+    public void DelayFunc()
+    {
+        Invoke("ForceTracePlayer", delay); // 'TriggerAnimation'을 'delay' 시간 후에 호출
+    }
 
+    private void Trace()
+    {
+  
+        if (playerTransform != null)
+        {
+
+            agent.SetDestination(playerTransform.position);
+            if (Vector3.Distance(transform.position, playerTransform.position) <= attackRange)
+            {
+                PrepareAttack();
+            }
+        }
+
+    }
+
+    private void Attack()
+    {
+        if (Vector3.Distance(transform.position, playerTransform.position) > attackRange)
+        {
+
+            isAttack = false;
+            agent.SetDestination(playerTransform.position);
+            SetAnimationState("Trace");
+        }
+    }
+
+    void PrepareAttack()
+    {
+        isAttack = true;
+
+        if(_animator.GetCurrentAnimatorStateInfo(0).IsName("Trace") &&
+            _animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f && !_animator.IsInTransition(0))
+            SetAnimationState("Attack");
+    }
+
+    private void Idle()
+    {
+        _animator.SetBool("isTrace", false);
+        _animator.SetBool("isAttack", false);
+    }
 
     private void SetAnimationState(string stateName, float transitionDuration = 0.1f, int StateLayer = 0)
     {
@@ -139,48 +187,9 @@ public class cellerGiant : MonoBehaviour
         _animator.SetLayerWeight(StateLayer, Priority);
     }
 
-    void PrepareAttack()
-    {
-        isAttack = true;
-        _animator.SetBool("isAttack", true);
-        _animator.SetBool("isTrace", false);
-        agent.isStopped = true;
-    }
-
-    private void Trace()
-    {
-        if (!isAttack)
-        {
-            agent.isStopped = false;
-            agent.SetDestination(playerTransform.position);
-        }
-    }
-
-    private void Attack()
-    {
-        if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Sequence01"))
-        {
-            agent.SetDestination(playerTransform.position); // Ensure the giant moves towards the player during the animation
-        }
-
-        if (Vector3.Distance(transform.position, playerTransform.position) > attackRange)
-        {
-            isAttack = false;
-            _animator.SetBool("isAttack", false);
-            _animator.SetBool("isTrace", true);
-        }
-    }
-
-    private void Idle()
-    {
-        _animator.SetBool("isTrace", false);
-        _animator.SetBool("isAttack", false);
-        agent.isStopped = true;
-    }
 
     private void OnDrawGizmosSelected()
     {
-        // Visualize the attack and trace range
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRange);
         Gizmos.color = Color.yellow;
