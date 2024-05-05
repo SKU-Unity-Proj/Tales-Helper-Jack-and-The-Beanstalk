@@ -184,7 +184,7 @@ namespace AEG.DLSS
         }
 
         protected virtual void Update() {
-            Debug.Log(m_previousDLSSQuality);
+            //Debug.Log(m_previousDLSSQuality);
             if(m_previousDLSSQuality != DLSSQuality) {
                 OnSetQuality(DLSSQuality);
             }
