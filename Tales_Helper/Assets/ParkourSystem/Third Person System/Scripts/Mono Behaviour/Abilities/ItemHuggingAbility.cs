@@ -77,11 +77,17 @@ namespace DiasGames.Abilities
             }
 
             if (_action.pickUp) // E키를 다시 누르면 어빌리티 중지
+            {
                 StopAbility();
-
+                return;
+            }
+                
             if (!pickItem.activeSelf) // 아이템이 꺼지면 어빌리티 중지
+            {
                 StopAbility();
-
+                return ;
+            }
+                
             if (_animator.GetCurrentAnimatorStateInfo(0).IsName("ItemLift")) // 실행중인 애니메이션이 IsName이면
                 if(_animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.8f)  // 애니메이션의 어느정도 완료 되었을시
                     liftingWait = true;
