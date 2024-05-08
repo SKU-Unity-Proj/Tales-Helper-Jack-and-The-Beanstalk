@@ -7,6 +7,7 @@ public class CageOpenDoor : MonoBehaviour, IFInteractable
     public Animator lockAnim;
 
     public GameObject flashLight;
+    public GameObject duck;
 
     private bool isPlay = false;
     private bool isLocked = false;
@@ -37,6 +38,7 @@ public class CageOpenDoor : MonoBehaviour, IFInteractable
             isLocked = false;
 
             flashLight.SetActive(false);
+            duck.layer = 9;
         }
     }
 }

@@ -28,9 +28,11 @@ public class BedroomToggleLight : MonoBehaviour, IFInteractable
                 if (p != null)
                 {
                     PuppetController puppetController = p.GetComponent<PuppetController>();
+                    CapsuleCollider capsuleCollider = p.GetComponent<CapsuleCollider>();
                     if (puppetController != null)
                     {
                         puppetController.StopTarce();
+                        capsuleCollider.enabled = false;
                     }
                 }
             }
@@ -45,9 +47,11 @@ public class BedroomToggleLight : MonoBehaviour, IFInteractable
                 if (p != null)
                 {
                     PuppetController puppetController = p.GetComponent<PuppetController>();
+                    CapsuleCollider capsuleCollider = p.GetComponent<CapsuleCollider>();
                     if (puppetController != null)
                     {
                         puppetController.isTrace = true;
+                        capsuleCollider.enabled = true;
                     }
                 }
             }
