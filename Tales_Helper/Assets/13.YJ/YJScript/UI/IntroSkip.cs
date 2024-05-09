@@ -1,8 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using TMPro;
 
 public class IntroSkip : MonoBehaviour
@@ -10,6 +8,7 @@ public class IntroSkip : MonoBehaviour
     public Image skipUI;
     public TextMeshProUGUI skipText;
     private float keyPressTime = 0;
+    private bool isAction = false;
 
     void Update()
     {
@@ -30,7 +29,12 @@ public class IntroSkip : MonoBehaviour
 
         if (keyPressTime > 1f)
         {
-            SceneManager.LoadScene("JackHouse");
+            if (isAction)
+                return;
+
+            LoadingSceneController.Instance.LoadScene("JackHouse");
+
+            isAction = true;
         }
         skipUI.fillAmount = keyPressTime;
     }

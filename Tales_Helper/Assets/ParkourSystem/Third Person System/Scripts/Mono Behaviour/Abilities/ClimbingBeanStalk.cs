@@ -15,6 +15,11 @@ public class ClimbingBeanStalk : AbstractAbility
 
     public float climbSpeed = 1.2f; // 사다리를 타는 속도
 
+    private float timeSinceLeftWall = 0f;
+    private const float timeToDisableAbility = 0.9f;
+
+    private bool canRaycast = true;
+
     private void Awake()
     {
         _mover = GetComponent<IMover>();
@@ -54,11 +59,11 @@ public class ClimbingBeanStalk : AbstractAbility
         transform.position = newPosition;
 
         // 아래로 이동 중이고 땅에 도달한 경우 능력 종료
-        if (vertical < 0f && _mover.IsGrounded())
+        if (_mover.IsGrounded())
             StopAbility();
 
         // 사다리에서 떨어지기
-        if (_action.drop)
+        if (_action.jump)
         {
             StopAbility();
         }
@@ -67,26 +72,50 @@ public class ClimbingBeanStalk : AbstractAbility
 
     public override void OnStopAbility()
     {
+        isClimb = false;
         _mover.EnableGravity(); // 중력 활성화
         _mover.StopRootMotion(); // 루트 모션 중지
+
+        canRaycast = false;
+        Invoke("EnableRaycast", 1f);
+    }
+
+    private void EnableRaycast()
+    {
+        canRaycast = true;
     }
 
     private void Update()
     {
-        Ray ray = new Ray(transform.position + transform.up, transform.forward);
+        if (!canRaycast)
+            return;
+
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, raycastDistance, layerMask))
+        // 레이캐스트를 수행하여 벽에 닿은지 확인
+        if (Physics.Raycast(transform.position, transform.forward, out hit, raycastDistance, layerMask))
         {
+            // 벽에 닿은 경우
             isClimb = true;
 
             // 캐릭터의 전방 벡터를 레이가 검출한 콜라이더의 방향으로 설정
             transform.forward = -hit.normal;
+
+            // 벽에 닿은 경우 시간 초기화
+            timeSinceLeftWall = 0f;
         }
-        
-        if(hit.collider == null)
+        else
         {
+            // 벽에 닿지 않은 경우
             isClimb = false;
+
+            // 벽에서 벗어난 후 시간 증가
+            timeSinceLeftWall += Time.deltaTime;
+
+            // 일정 시간 동안 벽에 닿지 않으면 어빌리티 종료
+            if (timeSinceLeftWall >= timeToDisableAbility)
+                StopAbility();
         }
     }
+
 }

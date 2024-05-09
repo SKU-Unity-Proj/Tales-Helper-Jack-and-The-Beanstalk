@@ -11,6 +11,6 @@ public class IntroAnimationScene : MonoBehaviour
 
     void NextScene()
     {
-        SceneManager.LoadScene("JackHouse");
+        LoadingSceneController.Instance.LoadScene("JackHouse");
     }
 }

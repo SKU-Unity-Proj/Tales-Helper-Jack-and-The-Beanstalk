@@ -1,9 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
@@ -24,7 +19,7 @@ public class MainMenu : MonoBehaviour
     void PlayPauseBtn()
     {
         SoundEffect.Play();
-        SceneManager.LoadScene("IntroAnimation");
+        LoadingSceneController.Instance.LoadScene("IntroAnimation");
     }
     // 처음부터 시작 버튼
     public void OnClickRestartBtn()
@@ -33,8 +28,7 @@ public class MainMenu : MonoBehaviour
     }
     void RestartPauseBtn()
     {
-        SoundEffect.Play();
-        Debug.Log("click btn");
+        LoadingSceneController.Instance.LoadScene("IntroAnimation");
     }
     
     // 챕터 버튼
