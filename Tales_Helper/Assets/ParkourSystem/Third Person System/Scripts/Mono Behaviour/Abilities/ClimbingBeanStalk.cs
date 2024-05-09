@@ -11,7 +11,6 @@ public class ClimbingBeanStalk : AbstractAbility
 
     public LayerMask layerMask;
     public float raycastDistance = 0.5f;
-    public float offsetDistance = 0.1f;
 
     public float climbSpeed = 1.2f; // 사다리를 타는 속도
 
@@ -59,7 +58,7 @@ public class ClimbingBeanStalk : AbstractAbility
         transform.position = newPosition;
 
         // 아래로 이동 중이고 땅에 도달한 경우 능력 종료
-        if (_mover.IsGrounded())
+        if (_action.move.y < 0f && _mover.IsGrounded())
             StopAbility();
 
         // 사다리에서 떨어지기
