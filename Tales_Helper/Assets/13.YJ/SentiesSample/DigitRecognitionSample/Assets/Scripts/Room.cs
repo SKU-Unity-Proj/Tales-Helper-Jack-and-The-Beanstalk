@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
+using Cinemachine;
 
 /*
  * 방에 대한 게임 로직을 처리합니다.
@@ -20,6 +20,8 @@ public class Room : MonoBehaviour
     public bool fruitCodes = false; // 과일 레벨의 특정 코드
     public int[] code; // 비밀 코드
     public int codePosition = 0; // 입력 중인 위치 (첫 번째, 두 번째 또는 세 번째 숫자인지)
+
+    public CinemachineVirtualCamera screenCam;
 
     // 비밀 코드를 무작위로 재설정하고 방에 단서 이미지를 설정합니다.
     public void ResetCode()
@@ -65,6 +67,13 @@ public class Room : MonoBehaviour
             if (everyDigitCorrect)
             {
                 codePosition = 0; // 위치 초기화
+
+                Debug.Log("Elevator On");
+
+                screenCam.Priority = 2;
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+
                 return (correct: true, completed: true); // 올바르고 완료됨
             }
             else
