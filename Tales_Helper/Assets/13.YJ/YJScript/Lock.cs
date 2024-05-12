@@ -1,9 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Lock : MonoBehaviour
 {
+    public Animator PadLockAnim;
     private Animator anim;
     private Rigidbody rigid;
 
@@ -17,7 +16,10 @@ public class Lock : MonoBehaviour
     {
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("Lock_Unlock"))
             if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
+            {
                 rigid.useGravity = true;
+                PadLockAnim.SetTrigger("Unlock");
+            }
     }
 
     private void OnCollisionEnter(Collision collision)
