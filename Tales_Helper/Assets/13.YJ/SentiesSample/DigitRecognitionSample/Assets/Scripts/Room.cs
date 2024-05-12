@@ -24,7 +24,7 @@ public class Room : MonoBehaviour
     // 비밀 코드를 무작위로 재설정하고 방에 단서 이미지를 설정합니다.
     public void ResetCode()
     {
-        code = new int[] { 2, 4, 7 }; // 코드를 초기화합니다.
+        code = new int[] { 7, 5, 4 }; // 정답 코드 초기화.
 
         // 무작위 배열에서 첫 번째 세 개의 숫자를 코드에 할당하고 단서 소재를 설정합니다.
         for (int i = 0; i < code.Length; i++)
