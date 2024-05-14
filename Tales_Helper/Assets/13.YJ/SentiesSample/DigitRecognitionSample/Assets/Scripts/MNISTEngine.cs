@@ -12,7 +12,7 @@ using System.Linq;
  */
 
 // 현재 그려진 이미지의 경계 상태입니다. 이미지를 나중에 다시 중앙으로 재설정해야 할 경우 도움이 됩니다.
-public struct Bounds
+public struct BoundsST
 {
     public int left;
     public int right;
