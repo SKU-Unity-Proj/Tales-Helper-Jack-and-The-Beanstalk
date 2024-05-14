@@ -361,8 +361,12 @@ public class CharacterAgent : CharacterBase
             transform.rotation = Quaternion.Lerp(transform.rotation, doorRotation, Time.deltaTime * 5f);
             yield return null;
         }
- 
+
+        // 타격 트리거 on
+        attackCol.GetComponent<SphereCollider>().enabled = true;
+
         anim.SetBool("Knocking", true);
+
     }
     #endregion
     public virtual void SetDestination(Vector3 destination)
