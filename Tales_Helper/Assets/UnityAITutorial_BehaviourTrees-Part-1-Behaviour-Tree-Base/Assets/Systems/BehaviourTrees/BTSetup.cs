@@ -152,7 +152,7 @@ public class BTSetup : MonoBehaviour
         restSequence.Add<BTNode_Action>("Rest on Chair",
             () =>
             {
-                Debug.Log("Rest on Chair action started.");
+                //Debug.Log("Rest on Chair action started.");
                 Agent.SitAtPosition(chairTransform.position, chairTransform.rotation);
 
                 return BehaviourTree.ENodeStatus.InProgress;

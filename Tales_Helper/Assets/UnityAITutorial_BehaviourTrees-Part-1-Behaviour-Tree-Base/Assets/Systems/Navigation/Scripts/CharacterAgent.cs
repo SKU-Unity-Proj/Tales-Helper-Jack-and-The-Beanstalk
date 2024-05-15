@@ -165,8 +165,8 @@ public class CharacterAgent : CharacterBase
         MoveTo(interactionPos);
         yield return new WaitUntil(() => ReachedDestination);
 
-        Debug.Log(ReachedDestination);
-        Debug.Log(interactionPos);
+        //Debug.Log(ReachedDestination);
+        //Debug.Log(interactionPos);
 
         // 목표 회전에 도달할 때까지 회전을 진행
         while (Quaternion.Angle(transform.rotation, chairRotation) > 0.1f)

@@ -5,7 +5,6 @@ using UnityEngine;
 public class ClimbingBeanStalk : AbstractAbility
 {
     private IMover _mover = null;
-    private StopRaycast stopRaycast;
 
     public bool isClimb;
 
@@ -22,7 +21,6 @@ public class ClimbingBeanStalk : AbstractAbility
     private void Awake()
     {
         _mover = GetComponent<IMover>();
-        stopRaycast = GetComponent<StopRaycast>();
     }
 
     public override bool ReadyToRun()
