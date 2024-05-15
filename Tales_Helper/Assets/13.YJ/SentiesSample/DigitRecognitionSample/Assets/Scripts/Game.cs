@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 /*
  * 이 클래스는 플레이어를 제어합니다. 마우스와 키보드와 같은 사용자 입력을 다룹니다.

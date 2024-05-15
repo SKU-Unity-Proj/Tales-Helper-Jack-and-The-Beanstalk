@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class liftmove : MonoBehaviour
+public class Liftmove : MonoBehaviour
 {
     public GameObject leftdoor; 
     public GameObject rightdoor;

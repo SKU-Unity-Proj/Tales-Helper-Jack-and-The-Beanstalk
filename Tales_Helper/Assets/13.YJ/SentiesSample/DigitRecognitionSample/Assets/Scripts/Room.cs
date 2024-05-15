@@ -22,6 +22,7 @@ public class Room : MonoBehaviour
     public int codePosition = 0; // 입력 중인 위치 (첫 번째, 두 번째 또는 세 번째 숫자인지)
 
     public CinemachineVirtualCamera screenCam;
+    public Liftmove liftmove;
 
     // 비밀 코드를 무작위로 재설정하고 방에 단서 이미지를 설정합니다.
     public void ResetCode()
@@ -68,11 +69,15 @@ public class Room : MonoBehaviour
             {
                 codePosition = 0; // 위치 초기화
 
-                Debug.Log("Elevator On");
 
+                //정답 맞출시 동작
                 screenCam.Priority = 2;
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
+
+                Debug.Log("Elevator On");
+                liftmove.enabled = true;
+
 
                 return (correct: true, completed: true); // 올바르고 완료됨
             }
