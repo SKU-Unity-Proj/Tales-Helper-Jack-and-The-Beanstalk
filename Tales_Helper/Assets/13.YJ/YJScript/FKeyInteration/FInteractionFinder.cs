@@ -45,7 +45,7 @@ public class FInteractionFinder : MonoBehaviour
         if (interactable != null)
         {
             interactable.Interact();
-            //Debug.Log(interactable);
+            Debug.Log(interactable);
         }
     }
 }
