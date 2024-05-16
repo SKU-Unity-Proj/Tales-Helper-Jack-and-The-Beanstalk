@@ -4,6 +4,6 @@ public class IFKeyInteractable : MonoBehaviour
 {
     public interface IFInteractable
     {
-        void Interact();
+        void Interact(float distance);
     }
 }

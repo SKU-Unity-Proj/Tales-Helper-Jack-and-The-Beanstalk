@@ -3,6 +3,8 @@ using static IFKeyInteractable;
 
 public class BedroomToggleLight : MonoBehaviour, IFInteractable
 {
+    public float canDistance = 3f; //상호 작용 가능한 거리
+
     public GameObject directionalLight;
     public GameObject zombieStopLight;
     public GameObject[] zombiePuppet;
@@ -16,42 +18,45 @@ public class BedroomToggleLight : MonoBehaviour, IFInteractable
             zombieStopLight = GameObject.Find("ZombieStopLight");
     }
 
-    public void Interact()
+    public void Interact(float distance)
     {
-        if (!directionalLight.activeSelf)
+        if(distance < canDistance)
         {
-            directionalLight.SetActive(true);
-            zombieStopLight.SetActive(false);
-
-            foreach (var p in zombiePuppet)
+            if (!directionalLight.activeSelf)
             {
-                if (p != null)
+                directionalLight.SetActive(true);
+                zombieStopLight.SetActive(false);
+
+                foreach (var p in zombiePuppet)
                 {
-                    PuppetController puppetController = p.GetComponent<PuppetController>();
-                    CapsuleCollider capsuleCollider = p.GetComponent<CapsuleCollider>();
-                    if (puppetController != null)
+                    if (p != null)
                     {
-                        puppetController.StopTarce();
-                        capsuleCollider.enabled = false;
+                        PuppetController puppetController = p.GetComponent<PuppetController>();
+                        CapsuleCollider capsuleCollider = p.GetComponent<CapsuleCollider>();
+                        if (puppetController != null)
+                        {
+                            puppetController.StopTarce();
+                            capsuleCollider.enabled = false;
+                        }
                     }
                 }
             }
-        }
-        else
-        {
-            directionalLight.SetActive(false);
-            zombieStopLight.SetActive(true);
-
-            foreach (var p in zombiePuppet)
+            else
             {
-                if (p != null)
+                directionalLight.SetActive(false);
+                zombieStopLight.SetActive(true);
+
+                foreach (var p in zombiePuppet)
                 {
-                    PuppetController puppetController = p.GetComponent<PuppetController>();
-                    CapsuleCollider capsuleCollider = p.GetComponent<CapsuleCollider>();
-                    if (puppetController != null)
+                    if (p != null)
                     {
-                        puppetController.isTrace = true;
-                        capsuleCollider.enabled = true;
+                        PuppetController puppetController = p.GetComponent<PuppetController>();
+                        CapsuleCollider capsuleCollider = p.GetComponent<CapsuleCollider>();
+                        if (puppetController != null)
+                        {
+                            puppetController.isTrace = true;
+                            capsuleCollider.enabled = true;
+                        }
                     }
                 }
             }

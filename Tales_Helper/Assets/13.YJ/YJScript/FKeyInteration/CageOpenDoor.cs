@@ -3,6 +3,8 @@ using static IFKeyInteractable;
 
 public class CageOpenDoor : MonoBehaviour, IFInteractable
 {
+    public float canDistance = 3f; // 상호작용 가능한 거리
+
     private Animator anim;
     public Animator lockAnim;
 
@@ -28,17 +30,19 @@ public class CageOpenDoor : MonoBehaviour, IFInteractable
             } 
     }
 
-    public void Interact()
+    public void Interact(float distance)
     {
-        Debug.Log("Open");
-        if (isLocked)
+        if(distance < canDistance)
         {
-            anim.CrossFadeInFixedTime("CageOpen", 0f);
-            isPlay = true;
-            isLocked = false;
+            if (isLocked)
+            {
+                anim.CrossFadeInFixedTime("CageOpen", 0f);
+                isPlay = true;
+                isLocked = false;
 
-            flashLight.SetActive(false);
-            duck.layer = 9;
+                flashLight.SetActive(false);
+                duck.layer = 9;
+            }
         }
     }
 }
