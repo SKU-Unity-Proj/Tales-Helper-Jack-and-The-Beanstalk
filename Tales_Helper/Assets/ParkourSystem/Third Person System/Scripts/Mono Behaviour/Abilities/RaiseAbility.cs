@@ -21,10 +21,9 @@ namespace DiasGames.Abilities
         private List<Collider> _raiseObjs = new List<Collider>();
 
         private IMover _mover = null;
+
         private int _raiseCount = 0;
         private bool _canRaise = true; // Raise를 실행할 수 있는지 여부를 나타내는 변수
-
-        public Transform raisePos;
 
         public UnityEvent onRaiseStartSecondTime; // 2번 이하 실행시
         public UnityEvent onRaiseStartThirdTime;  // 그 이상 실행시
