@@ -4,7 +4,6 @@ using static IFKeyInteractable;
 public class FInteractionFinder : MonoBehaviour
 {
     public KeyCode interactionKey = KeyCode.F; // 상호작용 키
-    public float interactionRange = 3f; // 상호작용 범위
 
     public GameObject[] interactables;
     public GameObject currentInteractable; // 현재 상호작용 가능한 오브젝트를 저장할 변수
@@ -37,7 +36,7 @@ public class FInteractionFinder : MonoBehaviour
         {
             float distance = Vector3.Distance(transform.position, interactable.transform.position); // 현재 오브젝트와의 거리를 계산
 
-            if (distance < minDistance && distance <= interactionRange) // 만약 이 거리가 최소 거리보다 작고 상호작용 범위 내에 있다면
+            if (distance < minDistance) // 만약 이 거리가 최소 거리보다 작고 상호작용 범위 내에 있다면
             {
                 minDistance = distance; // 최소 거리를 업데이트
                 currentInteractable = interactable; // 현재 상호작용 가능한 오브젝트를 업데이트
