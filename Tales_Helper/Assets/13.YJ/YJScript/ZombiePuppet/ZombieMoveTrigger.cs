@@ -2,20 +2,21 @@ using UnityEngine;
 
 public class ZombieMoveTrigger : MonoBehaviour
 {
-    public PuppetController puppetController;
-
-    private void Start()
-    {
-        if(puppetController == null)
-            puppetController = FindObjectOfType<PuppetController>();
-    }
+    public GameObject[] zombiePuppet;
 
     private void OnTriggerEnter(Collider other)
     {
-        if (puppetController != null&&other.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
-            puppetController.TracePlayer();
+            foreach (GameObject puppets in zombiePuppet)
+            {
+                PuppetController puppetController = puppets.GetComponent<PuppetController>();
 
+                if (puppetController != null)
+                {
+                    puppetController.TracePlayer();
+                }
+            }
             this.gameObject.SetActive(false);
             Debug.Log("Trace");
         }

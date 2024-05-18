@@ -18,7 +18,12 @@ public class Lock : MonoBehaviour
             if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
             {
                 rigid.useGravity = true;
-                PadLockAnim.SetTrigger("Unlock");
+                if (PadLockAnim != null)
+                {
+                    PadLockAnim.SetTrigger("Unlock");
+                }
+                else
+                    return;
             }
     }
 
