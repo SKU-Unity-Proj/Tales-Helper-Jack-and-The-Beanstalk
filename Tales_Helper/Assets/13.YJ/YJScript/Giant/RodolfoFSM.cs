@@ -1,3 +1,4 @@
+using NPOI.SS.Formula.Functions;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
@@ -10,14 +11,15 @@ public class RodolfoFSM : MonoBehaviour
     public Transform targetTr;
     private NavMeshAgent agent;
     private Animator anim;
-    private GameObject mouse;
+    public GameObject mouse;
     private bool isPathResetting = false;
+
+    public string IdleAnimName;
 
     void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
-        mouse = GameObject.FindWithTag("Mouse");
     }
 
     void Start()
@@ -180,18 +182,36 @@ public class RodolfoFSM : MonoBehaviour
     #region IDLE
     private void IDLEEnter()
     {
+        // 평소 행동 시작
+        SetAnimationState(IdleAnimName);
     }
     private void IDLE()
     {
+        // 뒤를 돌아보면 추격 상태로 전환
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Turning Right"))
+            if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.9f)
+                ChangeState(State.TRACE);
 
+        // 뒤를 돌아보면 추격 상태로 전환
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Looking Around"))
+            if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
+                ChangeState(State.TRACE);
     }
     private void IDLETrigger(Collider other)
     {
-
+        if (other.CompareTag("Player") && !anim.GetCurrentAnimatorStateInfo(0).IsName("Looking Around"))
+        {
+            SetAnimationState("Looking Around");
+        }
     }
     private void IDLECollision(Collision other)
     {
-
+        Debug.Log("b");
+        if (other.collider.CompareTag("Player"))
+        {
+            Debug.Log("a");
+            SetAnimationState("Turning Right");
+        }
     }
     private void IDLEExit()
     {
@@ -223,15 +243,21 @@ public class RodolfoFSM : MonoBehaviour
     #region MOVE
     private void MOVEEnter()
     {
-
+        transform.LookAt(mouse.transform.position);
+        SetAnimationState("Scream");
     }
     private void MOVE()
     {
         MoveCheck();
+
+        // 쥐한테 이동
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Running"))
+            agent.SetDestination(mouse.transform.position);
     }
     private void MOVETrigger(Collider other)
     {
-
+        if(other.gameObject == mouse)
+            mouse.SetActive(false);
     }
     private void MOVEExit()
     {
@@ -240,15 +266,21 @@ public class RodolfoFSM : MonoBehaviour
     #endregion
 
 
-    #region RETURN
+    #region TRACE
     private void TRACEEnter()
     {
-        SetAnimationState("Run");
+        transform.LookAt(targetTr);
+        SetAnimationState("Scream");
     }
     private void TRACE()
     {
+        // 속도에 따른 애니메이션 속도 변화
         MoveCheck();
-        agent.SetDestination(targetTr.position);
+
+        //추격
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Running"))
+            agent.SetDestination(targetTr.position);
+
     }
     private void TRACETrigger(Collider other)
     {

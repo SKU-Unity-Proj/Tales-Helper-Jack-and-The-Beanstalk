@@ -30,7 +30,7 @@ public class MouseTrap : MonoBehaviour
             anim.SetTrigger("isCatch");
             mouse.GetComponent<MouseController>().Die();
             cheese.SetActive(false);
-            giant.GetComponent<OrcFSM>().TrapOn();
+            giant.GetComponent<RodolfoFSM>().ChangeState(RodolfoFSM.State.MOVE);
         }
     }
 }
