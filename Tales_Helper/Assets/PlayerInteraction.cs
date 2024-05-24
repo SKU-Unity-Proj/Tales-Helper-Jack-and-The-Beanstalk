@@ -60,7 +60,7 @@ public class PlayerInteraction : MonoBehaviour
                 Invoke("EndAnimation", 3.5f);
 
                 // 조명 색상 변경과 책 활성화 처리
-                ChangeLightColor();
+                Invoke("ChangeLightColor", 1.4f);
             }
         }
     }
