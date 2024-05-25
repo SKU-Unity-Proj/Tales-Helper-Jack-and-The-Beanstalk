@@ -1,4 +1,3 @@
-using NPOI.SS.Formula.Functions;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
@@ -15,6 +14,15 @@ public class RodolfoFSM : MonoBehaviour
     private bool isPathResetting = false;
 
     public string IdleAnimName;
+
+    public float checkDistance;
+    public LayerMask groundLayer;
+
+    private bool Grounded = true;
+    private float GroundedOffset = -0.14f;
+    private float GroundedRadius = 0.28f;
+
+    public bool isMouseCatch = false;
 
     void Awake()
     {
@@ -80,9 +88,11 @@ public class RodolfoFSM : MonoBehaviour
     #endregion
 
     #region FSM
+
+    #region STATE
     public enum State
     {
-        DIE,
+        FALL,
         IDLE,
         MOVE,
         TRACE
@@ -96,8 +106,8 @@ public class RodolfoFSM : MonoBehaviour
 
         switch (state)
         {
-            case State.DIE:
-                DIE();
+            case State.FALL:
+                FALL();
                 break;
             case State.IDLE:
                 IDLE();
@@ -116,8 +126,8 @@ public class RodolfoFSM : MonoBehaviour
     {
         switch (state)
         {
-            case State.DIE:
-                DIETrigger(other);
+            case State.FALL:
+                FALLTrigger(other);
                 break;
             case State.IDLE:
                 IDLETrigger(other);
@@ -145,8 +155,8 @@ public class RodolfoFSM : MonoBehaviour
     {
         switch (this.state)
         {
-            case State.DIE:
-                DIEExit();
+            case State.FALL:
+                FALLExit();
                 break;
             case State.IDLE:
                 IDLEExit();
@@ -163,8 +173,8 @@ public class RodolfoFSM : MonoBehaviour
 
         switch (state)
         {
-            case State.DIE:
-                DIEEnter();
+            case State.FALL:
+                FALLEnter();
                 break;
             case State.IDLE:
                 IDLEEnter();
@@ -177,7 +187,7 @@ public class RodolfoFSM : MonoBehaviour
                 break;
         }
     }
-
+    #endregion
 
     #region IDLE
     private void IDLEEnter()
@@ -220,20 +230,41 @@ public class RodolfoFSM : MonoBehaviour
     #endregion
 
 
-    #region DIE
-    private void DIEEnter()
+    #region FALL
+    private void FALLEnter()
+    {
+        agent.isStopped = true;
+        SetAnimationState("Fall");
+    }
+    private void FALL()
+    {
+        Vector3 spherePosition = new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z);
+
+        // 떨어지는 도중 땅 체크 후 애니메이션 전환
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Falling"))
+        {
+            Grounded = Physics.CheckSphere(spherePosition, GroundedRadius, groundLayer, QueryTriggerInteraction.Ignore);
+            if (Grounded)
+            {
+                anim.CrossFadeInFixedTime("HardLanding", 0f);
+            }
+        }
+
+        // 착지 후 상태 전환
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("HardLanding"))
+            if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
+            {
+                if (isMouseCatch)
+                    ChangeState(State.MOVE);
+                else
+                    ChangeState(State.TRACE);
+            }
+    }
+    private void FALLTrigger(Collider other)
     {
 
     }
-    private void DIE()
-    {
-
-    }
-    private void DIETrigger(Collider other)
-    {
-
-    }
-    private void DIEExit()
+    private void FALLExit()
     {
 
     }
@@ -281,6 +312,12 @@ public class RodolfoFSM : MonoBehaviour
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("Running"))
             agent.SetDestination(targetTr.position);
 
+        Vector3 checkPosition = transform.position + transform.forward * checkDistance;
+        if (!IsGrounded(checkPosition))
+        {
+            ChangeState(State.FALL);
+        }
+
     }
     private void TRACETrigger(Collider other)
     {
@@ -323,5 +360,10 @@ public class RodolfoFSM : MonoBehaviour
 
         // 경로 초기화 완료
         isPathResetting = false;
+    }
+
+    bool IsGrounded(Vector3 position)
+    {
+        return Physics.CheckSphere(position, 0.2f, groundLayer);
     }
 }

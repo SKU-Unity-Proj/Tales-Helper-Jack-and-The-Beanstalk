@@ -974,7 +974,7 @@ PrefabInstance:
     - target: {fileID: 4493770336727629716, guid: 6b3b248f9a2badd4e880d48abb465b71,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -7.15
+      value: -8.13
       objectReference: {fileID: 0}
     - target: {fileID: 4493770336727629716, guid: 6b3b248f9a2badd4e880d48abb465b71,
         type: 3}
@@ -984,7 +984,7 @@ PrefabInstance:
     - target: {fileID: 4493770336727629716, guid: 6b3b248f9a2badd4e880d48abb465b71,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -66.11
+      value: -48.59
       objectReference: {fileID: 0}
     - target: {fileID: 4493770336727629716, guid: 6b3b248f9a2badd4e880d48abb465b71,
         type: 3}
@@ -2642,7 +2642,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 249231667}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.11798731, y: -0.37949648, z: -0.048863865, w: -0.9163372}
+  m_LocalRotation: {x: 0.1179873, y: -0.3794965, z: -0.048863865, w: -0.91633713}
   m_LocalPosition: {x: 30.94, y: 12.15, z: -35.37}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -12162,7 +12162,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &1389620076
 MonoBehaviour:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -12208,7 +12208,7 @@ MonoBehaviour:
   currentInteractable: {fileID: 0}
 --- !u!114 &1389620078
 MonoBehaviour:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -12257,7 +12257,7 @@ MonoBehaviour:
   timelineCam: {fileID: 0}
 --- !u!114 &1389620079
 MonoBehaviour:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -12341,7 +12341,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
 --- !u!114 &1389620083
 MonoBehaviour:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -12365,7 +12365,7 @@ MonoBehaviour:
   timelineCam: {fileID: 0}
 --- !u!114 &1389620084
 MonoBehaviour:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -15049,6 +15049,11 @@ MonoBehaviour:
   targetTr: {fileID: 1389620075}
   mouse: {fileID: 1009837674}
   IdleAnimName: 0_T-Pose
+  checkDistance: 0
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  isMouseCatch: 0
   state: 1
 --- !u!136 &2043081058
 CapsuleCollider:
@@ -15081,13 +15086,13 @@ NavMeshAgent:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2043081055}
   m_Enabled: 1
-  m_AgentTypeID: 0
+  m_AgentTypeID: -1372625422
   m_Radius: 0.3
   m_Speed: 2
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_StoppingDistance: 1
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
