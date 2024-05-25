@@ -25,8 +25,8 @@ namespace DiasGames.Abilities
 
         // 사운드 효과
         [Header("Sound FX")]
-        [SerializeField] private AudioClip jumpEffort; // 점프 효과음
-        [SerializeField] private AudioClip hardLandClip; // 강하게 착지하는 효과음
+        [SerializeField] private Transform voicePos; 
+        [SerializeField] SoundList jumpFootSound, jumpVoiceSound, landSound;
 
         // 이벤트
         [Header("Event")]
@@ -34,7 +34,6 @@ namespace DiasGames.Abilities
 
         private IMover _mover = null;
         private IDamage _damage;
-        private CharacterAudioPlayer _audioPlayer;
 
         private float _startSpeed;
         private Vector2 _startInput;
@@ -53,7 +52,6 @@ namespace DiasGames.Abilities
         {
             _mover = GetComponent<IMover>(); // 이동자 컴포넌트 가져오기
             _damage = GetComponent<IDamage>(); // 데미지 컴포넌트 가져오기
-            _audioPlayer = GetComponent<CharacterAudioPlayer>(); // 캐릭터 오디오 플레이어 가져오기
             _camera = Camera.main.transform; // 메인 카메라의 트랜스폼 가져오기
         }
 
@@ -110,8 +108,7 @@ namespace DiasGames.Abilities
                     OnLanded.Invoke();
 
                     // 사운드 재생
-                    if (_audioPlayer)
-                        _audioPlayer.PlayVoice(hardLandClip);
+                    SoundManager.Instance.PlayOneShotEffect((int)landSound, transform.position, 0.2f);
 
                     // 데미지 발생
                     if (_damage != null)
@@ -181,8 +178,12 @@ namespace DiasGames.Abilities
             if (_startInput.magnitude > 0.1f)
                 _startInput.Normalize(); // 입력 정규화
 
-            if (_audioPlayer)
-                _audioPlayer.PlayVoice(jumpEffort); // 점프 효과음 재생
+            Debug.Log("Playing foot sound");
+            SoundManager.Instance.PlayOneShotEffect((int)jumpFootSound, transform.position, 0.2f);
+
+            Debug.Log("Playing voice sound");
+            SoundManager.Instance.PlayOneShotEffect((int)jumpVoiceSound, voicePos.position, 1f);
+
         }
 
         private void HardLand()

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DiasGames.Components;
 
 /// <summary>
 /// 발자국 소리를 출력.
@@ -11,62 +12,64 @@ public class PlayerFootStep : MonoBehaviour
     public SoundList[] stepSounds;
     private Animator myAnimator;
     private int index;
-    private Transform leftFoot, rightFoot;
     private float dist;
-    private int groundedBool, coverBool, aimBool, crouchFloat;
+
+    [SerializeField] private Transform leftFoot;
+    [SerializeField] private Transform rightFoot;
+
+    private IMover _mover = null;
     private bool grounded;
 
-    public enum Foot 
+    public enum Foot
     {
         LEFT,
         RIGHT,
     }
     private Foot step = Foot.LEFT;
     private float oldDist, maxDist = 0; // 이동거리 체크.
-    //땅이랑 내 발의 위치를 채크하면서 두 발이 땅에 다으면 다음 발을 재생할 수 있도록 로직을 만듬.
+    private float lastStepTime = 0f; // 마지막 발자국 소리 시간
+    private float stepInterval = 0.1f; // 최소 발자국 소리 간격
 
     private void Awake()
     {
         myAnimator = GetComponent<Animator>();
-        leftFoot = myAnimator.GetBoneTransform(HumanBodyBones.LeftFoot);
-        rightFoot = myAnimator.GetBoneTransform(HumanBodyBones.RightFoot);
-        groundedBool = Animator.StringToHash(AnimatorKey.Grounded);
-        coverBool = Animator.StringToHash(AnimatorKey.Cover);
-        aimBool = Animator.StringToHash(AnimatorKey.Aim);
-        crouchFloat = Animator.StringToHash(AnimatorKey.Crouch);
+        _mover = GetComponent<IMover>(); // 이동자 컴포넌트 가져오기
     }
+
     private void PlayFootStep()
     {
-        if(oldDist < maxDist)
+        if (oldDist < maxDist || Time.time - lastStepTime < stepInterval)
         {
             return;
         }
         oldDist = maxDist = 0;
+        lastStepTime = Time.time; // 마지막 발자국 소리 시간 업데이트
         int oldIndex = index;
-        while(oldIndex == index)
+        while (oldIndex == index)
         {
-            index = Random.Range(0, stepSounds.Length - 1);
+            index = Random.Range(0, stepSounds.Length);
         }
         SoundManager.Instance.PlayOneShotEffect((int)stepSounds[index], transform.position, 0.2f);
     }
+
     private void Update()
     {
-        if(!grounded && myAnimator.GetBool(groundedBool))
+        if (!grounded && _mover.IsGrounded())
         {
             PlayFootStep();
         }
-        grounded = myAnimator.GetBool(groundedBool);
+        grounded = _mover.IsGrounded();
         float factor = 0.15f;
 
-        if(grounded && myAnimator.velocity.magnitude > 1.6f)
+        if (grounded && myAnimator.velocity.magnitude > 1.6f)
         {
             oldDist = maxDist;
-            switch (step) 
+            switch (step)
             {
                 case Foot.LEFT:
                     dist = leftFoot.position.y - transform.position.y;
                     maxDist = dist > maxDist ? dist : maxDist;
-                    if(dist <= factor)
+                    if (dist <= factor)
                     {
                         PlayFootStep();
                         step = Foot.RIGHT;
@@ -75,14 +78,13 @@ public class PlayerFootStep : MonoBehaviour
                 case Foot.RIGHT:
                     dist = rightFoot.position.y - transform.position.y;
                     maxDist = dist > maxDist ? dist : maxDist;
-                    if(dist <= factor)
+                    if (dist <= factor)
                     {
                         PlayFootStep();
                         step = Foot.LEFT;
                     }
                     break;
             }
-
         }
     }
 }
