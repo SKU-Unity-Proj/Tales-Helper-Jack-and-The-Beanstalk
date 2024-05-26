@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -23,6 +24,9 @@ public class RodolfoFSM : MonoBehaviour
     private float GroundedRadius = 0.28f;
 
     public bool isMouseCatch = false;
+
+    private Vector3 landingPosition;
+    public float fallSpeed;
 
     void Awake()
     {
@@ -204,22 +208,22 @@ public class RodolfoFSM : MonoBehaviour
 
         // 뒤를 돌아보면 추격 상태로 전환
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("Looking Around"))
-            if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
+            if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.9f)
                 ChangeState(State.TRACE);
     }
     private void IDLETrigger(Collider other)
     {
         if (other.CompareTag("Player") && !anim.GetCurrentAnimatorStateInfo(0).IsName("Looking Around"))
         {
-            SetAnimationState("Looking Around");
+            SetAnimationState("Looking Around", 0.5f);
         }
     }
     private void IDLECollision(Collision other)
     {
-        Debug.Log("b");
+        Debug.Log("A");
         if (other.collider.CompareTag("Player"))
         {
-            Debug.Log("a");
+            Debug.Log("B");
             SetAnimationState("Turning Right");
         }
     }
@@ -233,25 +237,39 @@ public class RodolfoFSM : MonoBehaviour
     #region FALL
     private void FALLEnter()
     {
-        agent.isStopped = true;
-        SetAnimationState("Fall");
+        agent.isStopped=true;
+        SetAnimationState("Fall.Jumping Up");
+        /*
+        agent.enabled = false;
+
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position + transform.forward*2f, Vector3.down, out hit, 10f, groundLayer))
+        {
+            Debug.Log(hit.point);
+            landingPosition = hit.point;
+        }
+
+        transform.position = Vector3.Slerp(transform.position, landingPosition, fallSpeed * Time.deltaTime);
+
+        agent.enabled = true;
+        */
     }
     private void FALL()
     {
         Vector3 spherePosition = new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z);
 
         // 떨어지는 도중 땅 체크 후 애니메이션 전환
-        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Falling"))
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Fall.Falling"))
         {
             Grounded = Physics.CheckSphere(spherePosition, GroundedRadius, groundLayer, QueryTriggerInteraction.Ignore);
             if (Grounded)
             {
-                anim.CrossFadeInFixedTime("HardLanding", 0f);
+                anim.CrossFadeInFixedTime("Fall.HardLanding", 0f);
             }
         }
 
         // 착지 후 상태 전환
-        if (anim.GetCurrentAnimatorStateInfo(0).IsName("HardLanding"))
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Fall.HardLanding"))
             if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
             {
                 if (isMouseCatch)
@@ -311,13 +329,18 @@ public class RodolfoFSM : MonoBehaviour
         //추격
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("Running"))
             agent.SetDestination(targetTr.position);
-
+        /*
         Vector3 checkPosition = transform.position + transform.forward * checkDistance;
         if (!IsGrounded(checkPosition))
         {
+            agent.ResetPath();
+            ChangeState(State.FALL);
+        }*/
+        
+        if (agent.isOnOffMeshLink)
+        {
             ChangeState(State.FALL);
         }
-
     }
     private void TRACETrigger(Collider other)
     {
@@ -365,5 +388,14 @@ public class RodolfoFSM : MonoBehaviour
     bool IsGrounded(Vector3 position)
     {
         return Physics.CheckSphere(position, 0.2f, groundLayer);
+    }
+
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Vector3 checkPosition = transform.position + transform.forward * checkDistance;
+        Gizmos.DrawWireSphere(checkPosition, 0.2f);
+
+        Gizmos.DrawLine(transform.position + transform.forward *2f, transform.position + transform.forward *2f + Vector3.down * 10f);
     }
 }
