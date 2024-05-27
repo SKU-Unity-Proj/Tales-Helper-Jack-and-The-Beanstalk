@@ -12,4 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 0}
   m_Name: RoomDataList
   m_EditorClassIdentifier: Assembly-CSharp::RoomDataList
-  rooms: []
+  rooms:
+  - roomName: celler
+    playerStartPosition: {x: -2, y: 0.3, z: 63}
+    completionCondition: 
+  - roomName: livingroom
+    playerStartPosition: {x: -12, y: 8, z: 71}
+    completionCondition: pushLever
