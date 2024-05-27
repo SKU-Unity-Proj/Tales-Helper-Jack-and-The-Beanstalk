@@ -38,6 +38,8 @@ namespace DiasGames.Controller
         private float targetMaxVerticleAngle; // 카메라 수직 최대 각도. -> 사격시 반동
         private float recoilAngle = 0f; // 사격 반동 각도
 
+        private Vector3 startPosition;
+
 
         // Components
         private AbilityScheduler _scheduler = null;
