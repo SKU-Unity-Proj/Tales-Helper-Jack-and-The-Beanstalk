@@ -182,7 +182,7 @@ namespace DiasGames.Abilities
             SoundManager.Instance.PlayOneShotEffect((int)jumpFootSound, transform.position, 0.2f);
 
             Debug.Log("Playing voice sound");
-            SoundManager.Instance.PlayOneShotEffect((int)jumpVoiceSound, voicePos.position, 1f);
+            SoundManager.Instance.PlayOneShotEffect((int)jumpVoiceSound, voicePos.position, 2f);
 
         }
 

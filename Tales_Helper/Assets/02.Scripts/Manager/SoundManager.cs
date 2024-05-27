@@ -399,6 +399,12 @@ public class SoundManager : SingletonMonobehaviour<SoundManager>
             }
         }
     }
+
+    public void PlayBGM(SoundList bgm)
+    {
+        PlayBGM((int)bgm);
+    }
+
     public void PlayBGM(int index)
     {
         SoundClip clip = DataManager.SoundData().GetCopy(index);
