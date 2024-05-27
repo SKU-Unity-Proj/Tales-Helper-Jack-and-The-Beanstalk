@@ -18,5 +18,6 @@ public enum SoundList
     JumpVoice= 10,
     JackHouse= 11,
     Celler= 12,
+    GiantHouse= 13,
 
 }

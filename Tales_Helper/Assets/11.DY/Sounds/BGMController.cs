@@ -1,9 +1,10 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class BGMController : MonoBehaviour
 {
-    private static BGMController instance;
+    public static BGMController instance;
 
     private void Awake()
     {
@@ -16,6 +17,7 @@ public class BGMController : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
     }
 
     private void OnEnable()
@@ -30,16 +32,19 @@ public class BGMController : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name != "SettingsBootstrap")  // "SettingsBootstrap" 씬을 제외
-        {
-            PlayBGMForScene(scene.name);
-        }
+        // 씬이 로드될 때 BGM 재생
+        PlayBGMForScene(scene.name);
+
     }
 
     private void PlayBGMForScene(string sceneName)
     {
+        Debug.Log("PlayBGMForScene called for scene: " + sceneName); // 메서드 호출 디버그 출력
         switch (sceneName)
         {
+            case "GiantHouse":
+                SoundManager.Instance.PlayBGM(SoundList.GiantHouse);
+                break;
             case "JackHouse":
                 SoundManager.Instance.PlayBGM(SoundList.JackHouse);
                 break;

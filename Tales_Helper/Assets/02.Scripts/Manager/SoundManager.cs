@@ -386,10 +386,12 @@ public class SoundManager : SingletonMonobehaviour<SoundManager>
     }
     public void PlayBGM(SoundClip clip)
     {
+        Debug.Log("Playing SoundClip: " + clip);
+
         if (this.IsDifferentSound(clip))
         {
-            this.fadeB_audio.Stop();
-            this.lastSound = this.currentSound;
+            //this.fadeB_audio.Stop();
+            //this.lastSound = this.currentSound;
             this.currentSound = clip;
             PlayAudioSource(fadeA_audio, clip, clip.maxVolume);
             if (currentSound.HasLoop())
@@ -402,13 +404,21 @@ public class SoundManager : SingletonMonobehaviour<SoundManager>
 
     public void PlayBGM(SoundList bgm)
     {
-        if (bgm == SoundList.None) return; // None일 경우 재생하지 않음
+        Debug.Log("Playing BGM: " + bgm);
         PlayBGM((int)bgm);
     }
 
     public void PlayBGM(int index)
     {
+        Debug.Log("Getting SoundClip for index: " + index);
         SoundClip clip = DataManager.SoundData().GetCopy(index);
+
+        if (clip == null)
+        {
+            Debug.LogError("SoundClip is null for index: " + index);
+            return;
+        }
+        Debug.Log("Playing SoundClip: " + clip);
         PlayBGM(clip);
     }
     public void PlayUISound(SoundClip clip)
