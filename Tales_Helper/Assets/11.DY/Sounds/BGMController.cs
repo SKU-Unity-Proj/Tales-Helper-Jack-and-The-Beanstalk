@@ -30,8 +30,10 @@ public class BGMController : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // 씬이 로드될 때 BGM 재생
-        PlayBGMForScene(scene.name);
+        if (scene.name != "SettingsBootstrap")  // "SettingsBootstrap" 씬을 제외
+        {
+            PlayBGMForScene(scene.name);
+        }
     }
 
     private void PlayBGMForScene(string sceneName)

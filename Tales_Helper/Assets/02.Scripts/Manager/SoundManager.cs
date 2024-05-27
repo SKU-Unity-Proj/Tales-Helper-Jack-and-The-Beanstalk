@@ -402,6 +402,7 @@ public class SoundManager : SingletonMonobehaviour<SoundManager>
 
     public void PlayBGM(SoundList bgm)
     {
+        if (bgm == SoundList.None) return; // None일 경우 재생하지 않음
         PlayBGM((int)bgm);
     }
 
