@@ -42,6 +42,9 @@ public class Lock : MonoBehaviour
 
     void PlayOpenDoorAnimation()
     {
-        Door2Anim.SetTrigger("Open");
+        if (Door2Anim != null)
+            Door2Anim.SetTrigger("Open");
+        else
+            Debug.LogWarning("문열림 애니메이션 없음");
     }
 }

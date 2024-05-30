@@ -11,7 +11,7 @@ public class WeightCalculate : MonoBehaviour
     public TextMeshProUGUI weightText; //무게를 표시할 Text
 
     public Animator puppetAnim;
-    public Transform key; 
+    public BoxCollider bedroomLock;
 
     private void Update()
     {
@@ -38,6 +38,9 @@ public class WeightCalculate : MonoBehaviour
         if(totalWeight == answerWeight)
         {
             puppetAnim.SetTrigger("Fall");
+
+            // 침실로 가는 자물쇠 활성화
+            bedroomLock.enabled = true;
         }
     }
 
@@ -49,11 +52,5 @@ public class WeightCalculate : MonoBehaviour
     public void RemoveWeight(float objWeight)
     {
         targetWeight -= objWeight;
-    }
-
-    public void ErrorWeight()
-    {
-        weightText.text = "Error!";
-        key.transform.localScale = Vector3.one;
     }
 }
