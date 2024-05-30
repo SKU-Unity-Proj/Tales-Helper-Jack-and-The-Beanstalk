@@ -19,8 +19,8 @@ public class TalkManager : MonoBehaviour
     void GenerateData()
     {
         //NPC1 = 1000, NPC2 = 2000
-        talkData.Add(1000, new string[] { "잭 엄마:1" });
-        talkData.Add(2000, new string[] { "괜찮은 물건이 있으면 내가 또 바꿔주마.:1" });
+        talkData.Add(1000, new string[] { "잭 엄마:0" });
+        talkData.Add(2000, new string[] { "괜찮은 물건이 있으면 내가 또 바꿔주마.:0" });
         talkData.Add(3000, new string[] { "이 곳에 콩을 심으면 되겠다." });
         talkData.Add(5000, new string[] { "콩을 얻었다!" });
 

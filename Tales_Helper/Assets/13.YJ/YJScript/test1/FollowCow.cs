@@ -18,10 +18,11 @@ public class FollowCow : MonoBehaviour
         anim = GetComponent<Animator>();
     }
 
-    void FixedUpdate()
+    void Update()
     {
         // 플레이어를 추적
         ChasePlayer();
+        MoveCheck();
     }
 
     void ChasePlayer()
@@ -31,14 +32,11 @@ public class FollowCow : MonoBehaviour
             // 플레이어의 위치로 이동
             navMeshAgent.SetDestination(player.position);
         }
+        anim.CrossFade("Cow_Walk", 0f);
+    }
 
-        if (navMeshAgent.hasPath && navMeshAgent.remainingDistance > navMeshAgent.stoppingDistance)
-        {
-            anim.SetBool("isMove", true);
-        }
-        else
-        {
-            anim.SetBool("isMove", false);
-        }
+    void MoveCheck()
+    {
+        anim.SetFloat("Speed", navMeshAgent.velocity.magnitude);
     }
 }

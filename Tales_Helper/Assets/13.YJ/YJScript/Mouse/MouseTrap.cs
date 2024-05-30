@@ -6,6 +6,7 @@ public class MouseTrap : MonoBehaviour
     public GameObject mouse;
     public GameObject cheese;
     public Transform targetPos;
+    public GameObject blockCollider;
     private Animator anim;
 
     void Start()
@@ -30,6 +31,7 @@ public class MouseTrap : MonoBehaviour
             anim.SetTrigger("isCatch");
             mouse.GetComponent<MouseController>().Die();
             cheese.SetActive(false);
+            blockCollider.SetActive(false);
 
             RodolfoFSM FSM = giant.GetComponent<RodolfoFSM>();
             FSM.ChangeState(RodolfoFSM.State.MOVE);
