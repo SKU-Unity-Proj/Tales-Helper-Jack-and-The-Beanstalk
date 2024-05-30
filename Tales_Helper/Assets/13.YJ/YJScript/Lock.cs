@@ -3,6 +3,7 @@ using UnityEngine;
 public class Lock : MonoBehaviour
 {
     public Animator PadLockAnim;
+    public Animator Door2Anim;
     private Animator anim;
     private Rigidbody rigid;
 
@@ -21,6 +22,8 @@ public class Lock : MonoBehaviour
                 if (PadLockAnim != null)
                 {
                     PadLockAnim.SetTrigger("Unlock");
+
+                    Invoke("PlayOpenDoorAnimation", 2f);
                 }
                 else
                     return;
@@ -35,5 +38,10 @@ public class Lock : MonoBehaviour
             
             collision.gameObject.SetActive(false);
         }
+    }
+
+    void PlayOpenDoorAnimation()
+    {
+        Door2Anim.SetTrigger("Open");
     }
 }
