@@ -13,16 +13,40 @@ public class Liftmove : MonoBehaviour
     //애니메이션을 실행하기위함
 
     private bool check1F = false; //엘레베이터 위치를 판별하기 위함
-    // Start is called before the first frame update
+
+    public MeshRenderer lightMeshRenderer; // 엘베 표시등
+
     void Start()
     {
         anim = GetComponent<Animator>();
         leftanim = leftdoor.GetComponent<Animator>(); //leftdoor오브젝트에 애니메이터 컴포넌트추가
         rightanim = rightdoor.GetComponent<Animator>(); //rightdoor오브젝트에 애니메이터 컴포넌트추가
-
     }
 
-    // Update is called once per frame
+    private void OnEnable()
+    {
+        // 엘베 표시등 켜기
+        if (lightMeshRenderer != null)
+        {
+            Material[] materials = lightMeshRenderer.materials;
+
+            if (materials.Length > 1)
+            {
+                materials[2] = null;
+
+                lightMeshRenderer.materials = materials;
+            }
+            else
+            {
+                Debug.LogWarning("엘베 라이트 오류2");
+            }
+        }
+        else
+        {
+            Debug.LogWarning("엘베 라이트 오류1");
+        }
+    }
+
     void OnTriggerEnter(Collider col) 
     {
         if (col.CompareTag("Player")) //플레이어가 엘베에 탑승했을 때
