@@ -4,22 +4,23 @@ using UnityEngine;
 public class DropFrame_Livingroom : MonoBehaviour
 {
     private Rigidbody rigid;
+    public GameObject player;
+    private PushHavyObjectAbility pushAbility;
+    public GameObject swapCamArea;
 
     public bool isDrop = true;
     public float GroundedOffset;
     private float GroundedRadius = 0.1f;
-
-    public GameObject player;
-    private PushHavyObjectAbility pushAbility;
-
     public LayerMask groundLayer;
 
     private bool oneAction = false;
 
-    void Start()
+    void Awake()
     {
         pushAbility = player.GetComponent<PushHavyObjectAbility>();
         rigid = GetComponent<Rigidbody>();
+
+        swapCamArea.SetActive(false);
     }
 
     void Update()
@@ -42,7 +43,13 @@ public class DropFrame_Livingroom : MonoBehaviour
 
     private void ThisObjDestroy()
     {
-        Destroy(this.transform.parent.gameObject);
+        // 막아놓은 벽 없애기
+        transform.parent.GetComponent<BoxCollider>().enabled = false;
+
+        // 카메라 전환
+        swapCamArea.SetActive(true);
+
+        Destroy(this.transform.gameObject,1f);
     }
 
     /*
