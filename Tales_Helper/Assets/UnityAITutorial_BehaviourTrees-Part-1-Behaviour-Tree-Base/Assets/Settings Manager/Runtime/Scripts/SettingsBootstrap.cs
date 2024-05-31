@@ -39,6 +39,10 @@ static public class SettingsBootstrap
         {
             new GameObject("BGMController", typeof(BGMController));
         }
+        if (GameObject.FindObjectOfType<SettingsManager>() == null)
+        {
+            new GameObject("SettingsManager", typeof(SettingsManager));
+        }
     }
 
     private static void LoadSceneSpecificManagers(string sceneName)

@@ -12,7 +12,6 @@ namespace DiasGames.Controller
 
         // player components
         private Health _playerHealth;
-        private RoomManager _roomManager;
 
         // controller vars
         private bool _isRestartingLevel;
@@ -23,7 +22,6 @@ namespace DiasGames.Controller
                 player = GameObject.FindGameObjectWithTag("Player");
 
             _playerHealth = player.GetComponent<Health>();
-            _roomManager = FindObjectOfType<RoomManager>();
         }
 
         private void OnEnable()
@@ -40,6 +38,7 @@ namespace DiasGames.Controller
         private void RestartLevel()
         {
             if (!_isRestartingLevel)
+                Debug.Log("Restart!");
                 StartCoroutine(OnRestart());
         }
 
@@ -54,10 +53,7 @@ namespace DiasGames.Controller
 
             yield return new WaitForSeconds(delayToRestartLevel);
 
-            if (_roomManager != null)
-            {
-                //_roomManager.ResetPlayerPosition(); // 플레이어 위치 초기화
-            }
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 
             _isRestartingLevel = false;
         }
