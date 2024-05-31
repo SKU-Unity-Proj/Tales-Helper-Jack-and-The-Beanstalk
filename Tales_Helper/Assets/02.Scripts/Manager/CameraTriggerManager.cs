@@ -43,6 +43,9 @@ public class CameraTriggerManager : MonoBehaviour
             zoneObj.transform.rotation = Quaternion.Euler(zone.rotation); // 회전 설정
             zoneObj.transform.parent = this.transform;
 
+            //카메라존 오브젝트에 태그 추가
+            zoneObj.tag = "CameraZone";
+
             // BoxCollider 컴포넌트를 추가하고 크기 및 트리거 설정함
             BoxCollider collider = zoneObj.AddComponent<BoxCollider>();
             collider.size = zone.boxsize;
