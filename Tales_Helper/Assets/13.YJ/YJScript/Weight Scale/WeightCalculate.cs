@@ -40,6 +40,7 @@ public class WeightCalculate : MonoBehaviour
             puppetAnim.SetTrigger("Fall");
 
             // 침실로 가는 자물쇠 활성화
+
             bedroomLock.enabled = true;
         }
     }

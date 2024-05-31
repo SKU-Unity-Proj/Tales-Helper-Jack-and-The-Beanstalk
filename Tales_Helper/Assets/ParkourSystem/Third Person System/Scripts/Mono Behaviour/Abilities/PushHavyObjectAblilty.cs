@@ -200,5 +200,10 @@ namespace DiasGames.Abilities
                 transform.rotation = _draggable.GetTarget().rotation;
             }
         }
+
+        public void StopAbilityFunction()
+        {
+            StopAbility();
+        }
     }
 }
