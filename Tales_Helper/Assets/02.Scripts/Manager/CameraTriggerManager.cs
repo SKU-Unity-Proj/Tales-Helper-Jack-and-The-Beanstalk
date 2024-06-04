@@ -28,7 +28,8 @@ public class CameraTriggerManager : MonoBehaviour
     private void Awake()
     {
         // 게임 시작 시, CinemachineStateDrivenCamera 컴포넌트를 찾아서 할당
-        stateDrivenCamera = FindObjectOfType<CinemachineStateDrivenCamera>();
+        if(stateDrivenCamera == null)
+            stateDrivenCamera = FindObjectOfType<CinemachineStateDrivenCamera>();
     }
 
     private void Start()
