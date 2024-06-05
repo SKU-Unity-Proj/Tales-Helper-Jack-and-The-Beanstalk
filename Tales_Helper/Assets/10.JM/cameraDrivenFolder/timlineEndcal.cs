@@ -1,26 +1,50 @@
 using UnityEngine;
 using UnityEngine.Playables;
 using Cinemachine;
+using System.Collections.Generic;
+using DiasGames.Controller;
 
 public class timelineEndcal : MonoBehaviour
 {
-    [SerializeField] private PlayableDirector director;
+    [SerializeField] private List<PlayableDirector> directors;
     [SerializeField] private CinemachineVirtualCamera timelineCam;
+    [SerializeField] private GameObject player;
+
+    private CSPlayerController playerMovement;
 
     void Start()
     {
-        if (director != null)
+        if (player != null)
         {
-            director.stopped += OnTimelineStopped;
+            playerMovement = player.GetComponent<CSPlayerController>();
+        }
+
+        foreach (var director in directors)
+        {
+            if (director != null)
+            {
+                director.stopped += OnTimelineStopped;
+                director.played += OnTimelinePlayed;
+            }
+        }
+    }
+
+    private void OnTimelinePlayed(PlayableDirector aDirector)
+    {
+        if (directors.Contains(aDirector))
+        {
+            Debug.Log("타임라인 재생이 시작되었습니다.");
+            DisablePlayerMovement();
         }
     }
 
     private void OnTimelineStopped(PlayableDirector aDirector)
     {
-        if (director == aDirector)
+        if (directors.Contains(aDirector))
         {
             Debug.Log("타임라인 재생이 끝났습니다.");
             TimeLineCamPriority();
+            EnablePlayerMovement();
         }
     }
 
@@ -29,11 +53,31 @@ public class timelineEndcal : MonoBehaviour
         timelineCam.Priority = 0;
     }
 
+    void DisablePlayerMovement()
+    {
+        if (playerMovement != null)
+        {
+            playerMovement.enabled = false;
+        }
+    }
+
+    void EnablePlayerMovement()
+    {
+        if (playerMovement != null)
+        {
+            playerMovement.enabled = true;
+        }
+    }
+
     private void OnDestroy()
     {
-        if (director != null)
+        foreach (var director in directors)
         {
-            director.stopped -= OnTimelineStopped;
+            if (director != null)
+            {
+                director.stopped -= OnTimelineStopped;
+                director.played -= OnTimelinePlayed;
+            }
         }
-    } 
+    }
 }
