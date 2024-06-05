@@ -17,35 +17,37 @@ public class CSCameraDriven : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         //카메라존 태그가 없으면 실행X
-        if (!other.CompareTag("CameraZone"))
-            return;
-
-        // 현재 충돌한 콜라이더에 해당하는 카메라 존을 가져옴
-        var cameraZone = cameraTriggerManager.GetCameraZoneFromCollider(other);
-
-        // 만약 카메라 존이 존재한다면, 해당 카메라의 우선 순위를 높임
-        // 이는 해당 카메라 존에 진입했을 때, 그 카메라를 활성화하는 데 사용
-        if (cameraZone != null)
+        if (other.CompareTag("CameraZone"))
         {
-            cameraZone.camera.Priority = 11;
+            // 현재 충돌한 콜라이더에 해당하는 카메라 존을 가져옴
+            var cameraZone = cameraTriggerManager.GetCameraZoneFromCollider(other);
+
+            // 이는 해당 카메라 존에 진입했을 때, 그 카메라를 활성화하는 데 사용
+            if (cameraZone != null)
+            {
+                cameraZone.camera.Priority = 11;
+            }
         }
+        else
+            return;
     }
 
     // 오브젝트가 트리거 콜라이더에서 벗어날 때 자동으로 호출
     private void OnTriggerExit(Collider other)
     {
         //카메라존 태그가 없으면 실행X
-        if (!other.CompareTag("CameraZone"))
-            return;
-
-        // 현재 충돌한 콜라이더에 해당하는 카메라 존을 가져옴
-        var cameraZone = cameraTriggerManager.GetCameraZoneFromCollider(other);
-
-        // 만약 카메라 존이 존재한다면, 해당 카메라의 우선 순위를 낮춤
-        // 이는 해당 카메라 존에서 나왔을 때, 그 카메라를 비활성화하는 데 사용됨
-        if (cameraZone != null)
+        if (other.CompareTag("CameraZone"))
         {
-            cameraZone.camera.Priority = 0;
+            // 현재 충돌한 콜라이더에 해당하는 카메라 존을 가져옴
+            var cameraZone = cameraTriggerManager.GetCameraZoneFromCollider(other);
+
+            // 이는 해당 카메라 존에 진입했을 때, 그 카메라를 활성화하는 데 사용
+            if (cameraZone != null)
+            {
+                cameraZone.camera.Priority = 0;
+            }
         }
+        else
+            return;
     }
 }
