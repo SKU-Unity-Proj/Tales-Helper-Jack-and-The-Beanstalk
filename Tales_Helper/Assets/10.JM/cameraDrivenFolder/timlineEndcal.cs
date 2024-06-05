@@ -1,12 +1,10 @@
 using UnityEngine;
 using UnityEngine.Playables;
 using Cinemachine;
-using System.Collections.Generic;
 using DiasGames.Controller;
-
 public class timelineEndcal : MonoBehaviour
 {
-    [SerializeField] private List<PlayableDirector> directors;
+    [SerializeField] private PlayableDirector director;
     [SerializeField] private CinemachineVirtualCamera timelineCam;
     [SerializeField] private GameObject player;
 
@@ -14,33 +12,32 @@ public class timelineEndcal : MonoBehaviour
 
     void Start()
     {
+        if (director != null)
+        {
+            director.stopped += OnTimelineStopped;
+            director.played += OnTimelinePlayed; // 타임라인 시작 이벤트 추가
+        }
+
         if (player != null)
         {
             playerMovement = player.GetComponent<CSPlayerController>();
         }
 
-        foreach (var director in directors)
-        {
-            if (director != null)
-            {
-                director.stopped += OnTimelineStopped;
-                director.played += OnTimelinePlayed;
-            }
-        }
+        DisablePlayerMovement();
     }
 
     private void OnTimelinePlayed(PlayableDirector aDirector)
     {
-        if (directors.Contains(aDirector))
+        if (director == aDirector)
         {
             Debug.Log("타임라인 재생이 시작되었습니다.");
-            DisablePlayerMovement();
+            
         }
     }
 
     private void OnTimelineStopped(PlayableDirector aDirector)
     {
-        if (directors.Contains(aDirector))
+        if (director == aDirector)
         {
             Debug.Log("타임라인 재생이 끝났습니다.");
             TimeLineCamPriority();
@@ -71,13 +68,10 @@ public class timelineEndcal : MonoBehaviour
 
     private void OnDestroy()
     {
-        foreach (var director in directors)
+        if (director != null)
         {
-            if (director != null)
-            {
-                director.stopped -= OnTimelineStopped;
-                director.played -= OnTimelinePlayed;
-            }
+            director.stopped -= OnTimelineStopped;
+            director.played -= OnTimelinePlayed; // 타임라인 시작 이벤트 제거
         }
     }
 }

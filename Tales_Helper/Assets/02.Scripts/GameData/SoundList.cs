@@ -19,5 +19,8 @@ public enum SoundList
     JackHouse= 11,
     Celler= 12,
     GiantHouse= 13,
+    boxDrag1= 14,
+    boxDrag2= 15,
+    boxDrag3= 16,
 
 }

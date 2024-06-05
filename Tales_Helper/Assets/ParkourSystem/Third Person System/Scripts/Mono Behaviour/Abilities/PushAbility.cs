@@ -13,6 +13,9 @@ namespace DiasGames.Abilities
         [SerializeField] private string pushAnimationBlendState = "Push Blend";
         [SerializeField] private string horizontalFloatParam = "Horizontal";
         [SerializeField] private string verticalFloatParam = "Vertical";
+        //sound
+        public SoundList[] boxdragSounds;
+        [SerializeField] private Transform boxsoundPos;
 
         // components
         private IMover _mover;
@@ -34,6 +37,16 @@ namespace DiasGames.Abilities
         private int _animMotionSpeedID;
 
         private Vector3 _lastPosition;
+
+   
+        private bool _isDragging;
+        private float _soundCooldown = 0.1f; // 소리 재생 간격을 조절할 수 있는 변수
+        private float _lastSoundTime;
+
+        private float oldDist, maxDist = 0; // 이동거리 체크.
+        private float lastStepTime = 0f; // 마지막 발자국 소리 시간
+        private float stepInterval = 0.1f; // 최소 발자국 소리 간격
+        private int index;
 
         private void Awake()
         {
@@ -84,6 +97,7 @@ namespace DiasGames.Abilities
 
             _step = Vector3.Distance(transform.position, _draggable.GetTarget().position) / positionSmoothnessTime;
             _isMatchingTarget = true;
+            _isDragging = true; 
         }
 
         public override bool ReadyToRun()
@@ -129,6 +143,12 @@ namespace DiasGames.Abilities
             _animator.SetFloat(_animHorizontalID, hor, 0.1f, Time.deltaTime);
             _animator.SetFloat(_animVerticalID, ver, 0.1f, Time.deltaTime);
 
+            // Play sound if player has moved
+            if (hasMoved && Time.time - _lastSoundTime > _soundCooldown)
+            {
+                PlayFootStep();
+            }
+
             _lastPosition = transform.position;
         }
 
@@ -138,6 +158,7 @@ namespace DiasGames.Abilities
 
             // reset vars
             _isMatchingTarget = false;
+            _isDragging = false;
 
             // stop IK
             if (_ikScheduler != null)
@@ -195,6 +216,22 @@ namespace DiasGames.Abilities
                 _mover.SetPosition(targetPos);
                 transform.rotation = _draggable.GetTarget().rotation;
             }
+        }
+
+        private void PlayFootStep()
+        {
+            if (oldDist < maxDist || Time.time - lastStepTime < stepInterval)
+            {
+                return;
+            }
+            oldDist = maxDist = 0;
+            lastStepTime = Time.time; // 마지막 발자국 소리 시간 업데이트
+            int oldIndex = index;
+            while (oldIndex == index)
+            {
+                index = Random.Range(0, boxdragSounds.Length);
+            }
+            SoundManager.Instance.PlayOneShotEffect((int)boxdragSounds[index], transform.position, 0.2f);
         }
     }
 }
