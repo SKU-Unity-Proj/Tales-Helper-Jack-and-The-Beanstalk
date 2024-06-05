@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using static IFKeyInteractable;
 
@@ -5,13 +6,13 @@ public class FInteractionFinder : MonoBehaviour
 {
     public KeyCode interactionKey = KeyCode.F; // 상호작용 키
 
-    public GameObject[] interactables;
+    //public GameObject[] interactables;
     public GameObject currentInteractable; // 현재 상호작용 가능한 오브젝트를 저장할 변수
     private float currentInteractableDistance; // 상호작용 오브젝트와의 거리
 
     private void Awake()
     {
-        interactables = GameObject.FindGameObjectsWithTag("Interactable");
+        //interactables = GameObject.FindGameObjectsWithTag("Interactable");
     }
 
     void Update()
@@ -28,7 +29,7 @@ public class FInteractionFinder : MonoBehaviour
 
     void FindNearestInteractable()
     {
-        //GameObject[] interactables = GameObject.FindGameObjectsWithTag("Interactable");
+        GameObject[] interactables = GameObject.FindGameObjectsWithTag("Interactable");
         float minDistance = Mathf.Infinity; // 최소 거리를 무한대로 초기화
         currentInteractable = null;
 
