@@ -41,5 +41,11 @@ namespace DiasGames.Components
             if (pressed)
                 OnPause(!_isPaused);
         }
+
+        public void OnClickSceneMoveBtn(string sceneName)
+        {
+            LoadingSceneController.Instance.LoadScene(sceneName);
+            Debug.Log(sceneName);
+        }
     }
 }
