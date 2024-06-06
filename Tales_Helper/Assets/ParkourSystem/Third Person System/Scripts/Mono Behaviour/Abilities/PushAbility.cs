@@ -13,8 +13,9 @@ namespace DiasGames.Abilities
         [SerializeField] private string pushAnimationBlendState = "Push Blend";
         [SerializeField] private string horizontalFloatParam = "Horizontal";
         [SerializeField] private string verticalFloatParam = "Vertical";
+
         //sound
-        public SoundList[] boxdragSounds;
+        [SerializeField] private List<int> _boxDragSound = new List<int>();
         [SerializeField] private Transform boxsoundPos;
 
         // components
@@ -40,12 +41,12 @@ namespace DiasGames.Abilities
 
    
         private bool _isDragging;
-        private float _soundCooldown = 0.1f; // 소리 재생 간격을 조절할 수 있는 변수
+        private float _soundCooldown = 0.5f; // 소리 재생 간격을 조절할 수 있는 변수
         private float _lastSoundTime;
 
         private float oldDist, maxDist = 0; // 이동거리 체크.
         private float lastStepTime = 0f; // 마지막 발자국 소리 시간
-        private float stepInterval = 0.1f; // 최소 발자국 소리 간격
+        private float stepInterval = 0.5f; // 최소 발자국 소리 간격
         private int index;
 
         private void Awake()
@@ -143,6 +144,8 @@ namespace DiasGames.Abilities
             _animator.SetFloat(_animHorizontalID, hor, 0.1f, Time.deltaTime);
             _animator.SetFloat(_animVerticalID, ver, 0.1f, Time.deltaTime);
 
+            
+
             // Play sound if player has moved
             if (hasMoved && Time.time - _lastSoundTime > _soundCooldown)
             {
@@ -218,8 +221,27 @@ namespace DiasGames.Abilities
             }
         }
 
+        private void InitializeSoundList()
+        {
+            _boxDragSound.Add((int)SoundList.boxDrag1);
+            _boxDragSound.Add((int)SoundList.boxDrag2);
+            _boxDragSound.Add((int)SoundList.boxDrag3);
+        }
+
         private void PlayFootStep()
         {
+
+            if (_boxDragSound.Count <= 3)
+            {
+                InitializeSoundList();
+            }
+
+            if (_boxDragSound.Count > 3)
+            {
+                _boxDragSound.RemoveAt(0); // 첫 번째 요소 삭제
+            }
+
+
             if (oldDist < maxDist || Time.time - lastStepTime < stepInterval)
             {
                 return;
@@ -229,9 +251,9 @@ namespace DiasGames.Abilities
             int oldIndex = index;
             while (oldIndex == index)
             {
-                index = Random.Range(0, boxdragSounds.Length);
+                index = Random.Range(0, _boxDragSound.Count);
             }
-            SoundManager.Instance.PlayOneShotEffect((int)boxdragSounds[index], transform.position, 0.2f);
+            SoundManager.Instance.PlayOneShotEffect((int)_boxDragSound[index], boxsoundPos.position, 0.2f);
         }
     }
 }

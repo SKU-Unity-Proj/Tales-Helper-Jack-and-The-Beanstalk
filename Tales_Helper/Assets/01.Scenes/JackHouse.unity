@@ -8456,7 +8456,7 @@ PrefabInstance:
     - target: {fileID: 2897436195485944652, guid: cc626daeb5beef84d9d78870227bcd3e,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2913468348027374826, guid: cc626daeb5beef84d9d78870227bcd3e,
         type: 3}
@@ -9232,6 +9232,11 @@ PrefabInstance:
       propertyPath: jumpVoiceSound
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 5523606625301046339, guid: cc626daeb5beef84d9d78870227bcd3e,
+        type: 3}
+      propertyPath: boxdragSounds.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5523606625301046393, guid: cc626daeb5beef84d9d78870227bcd3e,
         type: 3}
       propertyPath: walkSpeed
@@ -9537,6 +9542,16 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6621511315465148954, guid: cc626daeb5beef84d9d78870227bcd3e,
+        type: 3}
+      propertyPath: boxdragSounds.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6621511315465148954, guid: cc626daeb5beef84d9d78870227bcd3e,
+        type: 3}
+      propertyPath: boxdragSounds.Array.data[0]
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6719263856024638522, guid: cc626daeb5beef84d9d78870227bcd3e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -9646,6 +9661,11 @@ PrefabInstance:
         type: 3}
       propertyPath: boxdragSound
       value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 6878325998755514942, guid: cc626daeb5beef84d9d78870227bcd3e,
+        type: 3}
+      propertyPath: actionSounds.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6878325998755514942, guid: cc626daeb5beef84d9d78870227bcd3e,
         type: 3}
@@ -18105,6 +18125,13 @@ MonoBehaviour:
   director: {fileID: 1668179851}
   timelineCam: {fileID: 1801726233}
   player: {fileID: 841225998}
+  holdDuration: 3
+  timelineCams:
+  - {fileID: 2022617658}
+  - {fileID: 1345549310}
+  - {fileID: 1928642339}
+  - {fileID: 1076765015}
+  - {fileID: 1801726233}
 --- !u!1 &1683612870
 GameObject:
   m_ObjectHideFlags: 0
