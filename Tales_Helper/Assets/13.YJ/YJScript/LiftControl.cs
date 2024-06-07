@@ -35,14 +35,23 @@ public class LiftControl : MonoBehaviour
         touchingObjects++;
         if (touchingObjects > 2)
             touchingObjects = 2;
+        /*
+        //낙하 속도 초기화
+        Rigidbody rb = other.GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.velocity = Vector3.zero;
+        }
 
-        Debug.Log("ItemIn");
+        other.transform.SetParent(gameObject.transform);
+        */
+        //Debug.Log("ItemIn");
     }
 
     private void OnTriggerExit(Collider other)
     {
         touchingObjects--;
 
-        Debug.Log("ItemOut");
+        //Debug.Log("ItemOut");
     }
 }
