@@ -7,13 +7,14 @@ public class BedroomSceneChanger : MonoBehaviour
     //침실에서 거실로 씬 이동, 거위가 있을시 엔딩 씬 이동
 
     public Transform targetPos;
-    public string sceneName;
+    public string sceneName = "GiantMap";
+    public string endingSceneName = "EndingAnimation";
 
     private void OnCollisionEnter(Collision collision)
     {
         if(targetPos.childCount != 0)
         {
-            LoadingSceneController.Instance.LoadScene("endingScene");
+            LoadingSceneController.Instance.LoadScene(endingSceneName);
         }
         else
         {
