@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 using System.Collections;
+using Unity.AI.Navigation;
 
 public class kitchenGiant : MonoBehaviour
 {
@@ -24,6 +25,7 @@ public class kitchenGiant : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<Animator>();
+        agent.autoTraverseOffMeshLink = false;
 
         currentState = State.Cleaning;
     }
@@ -46,7 +48,44 @@ public class kitchenGiant : MonoBehaviour
                 break;
         }
 
+        if (agent.isOnOffMeshLink)
+        {
+            StartCoroutine(TraverseLinkWithBezierCurve());
+        }
+
         CheckPlayerVisibility();
+    }
+
+    IEnumerator TraverseLinkWithBezierCurve()
+    {
+        OffMeshLinkData linkData = agent.currentOffMeshLinkData;
+        Vector3 startPos = agent.transform.position;
+        Vector3 endPos = linkData.endPos + Vector3.up * agent.baseOffset;
+
+        // 중간 제어점 계산
+        Vector3 controlPoint1 = startPos + (Vector3.up * 2.0f); // 위로 솟구치게 하는 제어점
+        Vector3 controlPoint2 = endPos + (Vector3.up * 2.0f);
+
+        SetAnimationState("Jump up");  // 점프 애니메이션 시작
+
+        float duration = Vector3.Distance(startPos, endPos) / agent.speed;
+        float normalizedTime = 0.0f;
+        while (normalizedTime < 1.0f)
+        {
+            float t = normalizedTime;
+            // 비저 곡선 공식
+            Vector3 position = (1 - t) * (1 - t) * (1 - t) * startPos +
+                               3 * (1 - t) * (1 - t) * t * controlPoint1 +
+                               3 * (1 - t) * t * t * controlPoint2 +
+                               t * t * t * endPos;
+            agent.transform.position = position;
+
+            normalizedTime += Time.deltaTime / duration;
+            yield return null;
+        }
+
+        SetAnimationState("Jump down");  // 착지 애니메이션 시작
+        agent.CompleteOffMeshLink();
     }
 
     void Clean()
