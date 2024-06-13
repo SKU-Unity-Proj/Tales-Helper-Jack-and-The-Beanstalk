@@ -95,12 +95,21 @@ namespace DiasGames.Components
         }
 
         /// <summary>
-        /// 캐릭터의 체력을 완전히 회복하는 메소드 - 추후에 필요하면 쓰려고 만들어 놈
+        /// 캐릭터의 체력을 완전히 회복하는 메소드 & 한 번에 죽게하는 메소드 - 추후에 필요하면 쓰려고 만들어 놈
         /// </summary>
         public void RestoreFullHealth()
         {
             // 체력을 최대치로 회복
             _currentHP = MaxHealthPoints;
+
+            // 체력 변경 이벤트 호출
+            OnHealthChanged?.Invoke();
+        }
+
+        public void InflictFullDamage()
+        {
+            // 체력을 최대치로 회복
+            _currentHP = 0;
 
             // 체력 변경 이벤트 호출
             OnHealthChanged?.Invoke();
