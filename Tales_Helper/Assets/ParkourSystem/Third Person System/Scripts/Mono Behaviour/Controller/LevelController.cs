@@ -28,17 +28,15 @@ namespace DiasGames.Controller
         {
             _playerHealth.OnDead += RestartLevel;
         }
-
         private void OnDisable()
         {
             _playerHealth.OnDead -= RestartLevel;
         }
 
-        // Resets the player's position to the current room's start position
+        // Restarts the current level
         private void RestartLevel()
         {
             if (!_isRestartingLevel)
-                Debug.Log("Restart!");
                 StartCoroutine(OnRestart());
         }
 

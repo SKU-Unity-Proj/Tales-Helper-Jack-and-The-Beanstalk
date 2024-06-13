@@ -1,130 +1,257 @@
 using UnityEngine;
 using UnityEngine.AI;
+using System.Collections;
 
 public class kitchenGiant : MonoBehaviour
 {
-    [SerializeField] private Transform player; // 플레이어 위치
-    [SerializeField] private float detectionRange = 10.0f; // 플레이어 감지 범위
-    [SerializeField] private float actionCooldown = 5.0f; // 액션 쿨다운 시간
-    [SerializeField] private GameObject deskNavMeshLink; // 책상 NavMeshLink
+    public enum State { Cleaning, Chasing, Attacking, Searching }
+    public State currentState;
 
     private NavMeshAgent agent;
-    private Animator animator;
-    private bool isClimbing = false;
-    private bool isChasingPlayer = false;
-    private float lastActionTime;
-    private bool isOnDesk = true;
+    private Animator _animator;
+    public Transform player;
 
-    private void Start()
+    public float sightRadius = 10f;
+    public float soundRadius = 5f;
+    public float sightAngle = 120f; // 시야각
+    public float loseSightRadius = 15f; // 플레이어를 잃어버리고 청소 위치로 돌아가는 범위
+
+    private Transform cleaningPosition;
+    private bool isWaiting = false;
+    private Coroutine currentCoroutine;
+
+    void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        animator = GetComponent<Animator>();
-        //agent.enabled = false; // 처음에는 NavMeshAgent 비활성화
-        StartClimbDown(); // 책상에서 내려오기 시작
+        _animator = GetComponent<Animator>();
+
+        currentState = State.Cleaning;
     }
 
-    private void Update()
+    void Update()
     {
-        if (isClimbing)
-            return;
+        switch (currentState)
+        {
+            case State.Cleaning:
+                Clean();
+                break;
+            case State.Chasing:
+                Chase();
+                break;
+            case State.Attacking:
+                Attack();
+                break;
+            case State.Searching:
+                Search();
+                break;
+        }
 
-        if (isChasingPlayer)
-        {
-            ChasePlayer();
-        }
-        else if (isOnDesk && Time.time - lastActionTime > actionCooldown)
-        {
-            StartClimbDown();
-        }
-        else if (!isOnDesk && Time.time - lastActionTime > actionCooldown)
-        {
-            StartClimbing();
-        }
-
-        DetectPlayer();
+        CheckPlayerVisibility();
     }
 
-    private void StartClimbing()
+    void Clean()
     {
-        isClimbing = true;
-        //agent.isStopped = true;
-        //animator.SetTrigger("Climb"); // Climb 애니메이션 트리거
-    }
-
-    private void StartClimbDown()
-    {
-        isClimbing = true;
-        //animator.SetTrigger("ClimbDown"); // ClimbDown 애니메이션 트리거
-    }
-
-    private void ChasePlayer()
-    {
-        if (player != null)
+        if (cleaningPosition != null && !isWaiting)
         {
-            agent.destination = player.position;
-        }
-    }
+            agent.SetDestination(cleaningPosition.position);
 
-    private void DetectPlayer()
-    {
-        float distance = Vector3.Distance(transform.position, player.position);
-        Debug.Log("Distance to player: " + distance);  // 플레이어와의 거리를 로그로 출력
-        if (distance <= detectionRange)
-        {
-            isChasingPlayer = true;
-            //agent.isStopped = false;
-        }
-        else
-        {
-            isChasingPlayer = false;
+            if (Vector3.Distance(transform.position, cleaningPosition.position) < 1f)
+            {
+                if (!isWaiting)
+                {
+                    if (currentCoroutine != null)
+                    {
+                        StopCoroutine(currentCoroutine);
+                    }
+                    currentCoroutine = StartCoroutine(WaitAndClean());
+                }
+            }
         }
     }
 
-    // 애니메이션 이벤트를 통해 호출
-    public void OnClimbComplete()
+    void Chase()
     {
-        isClimbing = false;
-        //agent.isStopped = false;
-        lastActionTime = Time.time;
-        if (isOnDesk)
+        agent.SetDestination(player.position);
+
+        // 플레이어와의 거리가 loseSightRadius보다 크면 청소 상태로 돌아갑니다.
+        if (Vector3.Distance(transform.position, player.position) > loseSightRadius)
         {
-            deskNavMeshLink.SetActive(false); // 책상 링크 비활성화
-            isOnDesk = false;
-            //agent.destination = deskNavMeshLink.endTransform.position; // 책상 아래로 이동
-        }
-        else
-        {
-            deskNavMeshLink.SetActive(true); // 책상 링크 활성화
-            isOnDesk = true;
-            //agent.destination = deskNavMeshLink.startTransform.position; // 책상 위로 이동
+            Debug.Log($"{gameObject.name}이 플레이어를 잃어버리고 청소 위치로 돌아갑니다.");
+            currentState = State.Cleaning;
+            agent.SetDestination(cleaningPosition.position);
         }
     }
 
-    // 애니메이션 이벤트를 통해 호출
-    public void OnClimbDownComplete()
+    void Attack()
     {
-        isClimbing = false;
-        //agent.enabled = true; // NavMeshAgent 활성화
-        //agent.isStopped = false;
-        lastActionTime = Time.time;
-        if (!isChasingPlayer)
+        // 공격 로직 구현
+    }
+
+    void Search()
+    {
+        if (!isWaiting)
         {
-            deskNavMeshLink.SetActive(false); // 책상 링크 비활성화
-            //agent.destination = deskNavMeshLink.endTransform.position; // 책상 아래로 이동
+            if (currentCoroutine != null)
+            {
+                StopCoroutine(currentCoroutine);
+            }
+            currentCoroutine = StartCoroutine(WaitAndReturnToClean());
         }
     }
 
-    /*
-    private void OnTriggerEnter(Collider other)
+    void CheckPlayerVisibility()
     {
-        if (other.CompareTag("DeskTop") && !isOnDesk)
+        Vector3 directionToPlayer = (player.position - transform.position).normalized;
+        float distanceToPlayer = Vector3.Distance(player.position, transform.position);
+
+        if (distanceToPlayer <= sightRadius)
         {
-            StartClimbing();
+            float angleBetweenGiantAndPlayer = Vector3.Angle(transform.forward, directionToPlayer);
+            if (angleBetweenGiantAndPlayer <= sightAngle / 2)
+            {
+                RaycastHit hit;
+                if (Physics.Raycast(transform.position, directionToPlayer, out hit, sightRadius))
+                {
+                    if (hit.transform == player)
+                    {
+                        Debug.Log($"{gameObject.name}이 시야 반경 내에서 플레이어를 감지했습니다.");
+                        if (currentCoroutine != null)
+                        {
+                            StopCoroutine(currentCoroutine);
+                        }
+                        isWaiting = false;
+                        currentState = State.Chasing;
+                        return;
+                    }
+                }
+            }
         }
-        else if (other.CompareTag("DeskBottom") && isOnDesk)
+
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, soundRadius);
+        foreach (var hitCollider in hitColliders)
         {
-            StartClimbDown();
+            if (hitCollider.transform == player)
+            {
+                Debug.Log($"{gameObject.name}이 소리 반경 내에서 플레이어를 감지했습니다.");
+                if (currentCoroutine != null)
+                {
+                    StopCoroutine(currentCoroutine);
+                }
+                isWaiting = false;
+                currentState = State.Chasing;
+                return;
+            }
         }
     }
-    */
+
+    public void SetCleaningPosition(Transform position)
+    {
+        cleaningPosition = position;
+        Debug.Log($"{gameObject.name}가 새로운 청소 위치로 이동합니다: {cleaningPosition.name}");
+    }
+
+    public Transform GetCleaningPosition()
+    {
+        return cleaningPosition;
+    }
+
+    private IEnumerator WaitAndClean()
+    {
+        isWaiting = true;
+        Debug.Log($"{gameObject.name}가 청소 중입니다: {cleaningPosition.name}");
+        while (true)
+        {
+            if (CheckPlayerVisibilityRoutine())
+            {
+                break;
+            }
+            yield return new WaitForSeconds(1f);
+        }
+        isWaiting = false;
+    }
+
+    private IEnumerator WaitAndReturnToClean()
+    {
+        isWaiting = true;
+        Debug.Log($"{gameObject.name}가 청소 위치로 복귀합니다: {cleaningPosition.name}");
+        while (true)
+        {
+            if (CheckPlayerVisibilityRoutine())
+            {
+                break;
+            }
+            yield return new WaitForSeconds(1f);
+        }
+        isWaiting = false;
+        currentState = State.Cleaning;
+    }
+
+    bool CheckPlayerVisibilityRoutine()
+    {
+        Vector3 directionToPlayer = (player.position - transform.position).normalized;
+        float distanceToPlayer = Vector3.Distance(player.position, transform.position);
+
+        if (distanceToPlayer <= sightRadius)
+        {
+            float angleBetweenGiantAndPlayer = Vector3.Angle(transform.forward, directionToPlayer);
+            if (angleBetweenGiantAndPlayer <= sightAngle / 2)
+            {
+                RaycastHit hit;
+                if (Physics.Raycast(transform.position, directionToPlayer, out hit, sightRadius))
+                {
+                    if (hit.transform == player)
+                    {
+                        Debug.Log($"{gameObject.name}이 청소 도중 시야 반경 내에서 플레이어를 감지했습니다.");
+                        currentState = State.Chasing;
+                        return true;
+                    }
+                }
+            }
+        }
+
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, soundRadius);
+        foreach (var hitCollider in hitColliders)
+        {
+            if (hitCollider.transform == player)
+            {
+                Debug.Log($"{gameObject.name}이 청소 도중 소리 반경 내에서 플레이어를 감지했습니다.");
+                currentState = State.Chasing;
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        // 소리 범위 표시
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, soundRadius);
+
+        // 시야각 표시
+        Gizmos.color = Color.yellow;
+        Vector3 leftBoundary = Quaternion.Euler(0, -sightAngle / 2, 0) * transform.forward * sightRadius;
+        Vector3 rightBoundary = Quaternion.Euler(0, sightAngle / 2, 0) * transform.forward * sightRadius;
+        Gizmos.DrawLine(transform.position, transform.position + leftBoundary);
+        Gizmos.DrawLine(transform.position, transform.position + rightBoundary);
+        Gizmos.DrawWireSphere(transform.position, sightRadius);
+    }
+
+
+    private void SetAnimationState(string stateName, float transitionDuration = 0.1f, int StateLayer = 0)
+    {
+        if (_animator.HasState(StateLayer, Animator.StringToHash(stateName)))
+        {
+            _animator.CrossFadeInFixedTime(stateName, transitionDuration, StateLayer);
+
+            if (StateLayer == 1)
+                SetLayerPriority(1, 1);
+        }
+    }
+
+    private void SetLayerPriority(int StateLayer = 1, int Priority = 1) // 애니메이터의 레이어 우선순위 값(무게) 설정
+    {
+        _animator.SetLayerWeight(StateLayer, Priority);
+    }
 }
