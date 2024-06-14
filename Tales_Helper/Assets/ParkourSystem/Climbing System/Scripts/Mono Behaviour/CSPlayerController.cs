@@ -80,7 +80,6 @@ namespace DiasGames.Controller
             _mover = GetComponent<IMover>();
             _capsule = GetComponent<ICapsule>();
 
-
             if (hideCursor)
             {
                 Cursor.visible = false;
@@ -91,7 +90,23 @@ namespace DiasGames.Controller
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
             }
+            /*
+            string currentSceneName = SceneManager.GetActiveScene().name;
 
+            if (currentSceneName != "GiantMap")
+            {
+                if (hideCursor)
+                {
+                    Cursor.visible = false;
+                    Cursor.lockState = CursorLockMode.Locked;
+                }
+                else
+                {
+                    Cursor.visible = true;
+                    Cursor.lockState = CursorLockMode.None;
+                }
+            }
+            */
 
             // set right angle on start for camera
             _cinemachineTargetYaw = CinemachineCameraTarget.transform.eulerAngles.y;
@@ -266,7 +281,7 @@ namespace DiasGames.Controller
 
         private void LateUpdate()
         {
-            if (SceneManager.GetActiveScene().name != "GiantMap")
+            if (SceneManager.GetActiveScene().name != "GiantMap" && SceneManager.GetActiveScene().name != "GiantMap-Bedroom")
             {
                 // "GiantMap"이 아닌 씬에서만 실행할 함수
                 CameraRotation();
@@ -304,6 +319,32 @@ namespace DiasGames.Controller
             // Cinemachine will follow this target
             CinemachineCameraTarget.transform.rotation = Quaternion.Euler(_cinemachineTargetPitch + CameraAngleOverride, _cinemachineTargetYaw, 0.0f);
         }
+
+        /*
+        private void MoveObjectToPosition(GameObject obj, Transform targetPosition)
+        {
+            Rigidbody rb = obj.GetComponent<Rigidbody>();
+
+            bool wasRigidbodyKinematic = false;
+            if (rb != null)
+            {
+                wasRigidbodyKinematic = rb.isKinematic;
+                rb.isKinematic = true;
+            }
+
+            // 위치 강제 업데이트
+            obj.transform.position = targetPosition.position;
+            Debug.Log($"Force moved {obj.name} to {targetPosition.position}");
+            if (rb != null)
+            {
+                rb.isKinematic = wasRigidbodyKinematic;
+            }
+        }
+        public void TPplayerTrigger(Transform destination)
+        {
+            MoveObjectToPosition(this.gameObject.transform.parent.gameObject, destination); // 플레이어를 목표 위치로 이동
+        }
+        */
 
         private static float ClampAngle(float lfAngle, float lfMin, float lfMax)
         {

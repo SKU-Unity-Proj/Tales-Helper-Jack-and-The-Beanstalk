@@ -51,6 +51,9 @@ public class BGMController : MonoBehaviour
             case "GiantMap":
                 SoundManager.Instance.PlayBGM(SoundList.Celler);
                 break;
+            case "GiantMap-Bedroom":
+                SoundManager.Instance.PlayBGM(SoundList.Bedroom);
+                break;
             // 추가적인 씬에 대해 필요한 경우 추가
             default:
                 Debug.LogWarning("No BGM defined for scene: " + sceneName);

@@ -110,7 +110,8 @@ namespace DiasGames.Components
         {
             // 체력을 최대치로 회복
             _currentHP = 0;
-
+            OnDead?.Invoke();
+            OnCharacterDeath.Invoke();
             // 체력 변경 이벤트 호출
             OnHealthChanged?.Invoke();
         }

@@ -55,5 +55,6 @@ namespace DiasGames.Controller
 
             _isRestartingLevel = false;
         }
+
     }
 }

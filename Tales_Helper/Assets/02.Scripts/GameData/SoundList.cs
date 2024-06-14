@@ -22,5 +22,6 @@ public enum SoundList
     boxDrag1= 14,
     boxDrag2= 15,
     boxDrag3= 16,
+    Bedroom= 17,
 
 }

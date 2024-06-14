@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
 using System.Collections;
-using Unity.AI.Navigation;
 
 public class kitchenGiant : MonoBehaviour
 {
@@ -125,7 +124,6 @@ public class kitchenGiant : MonoBehaviour
                     // 청소 위치에 도착하면, 메니저를 통해 방향을 가져와서 설정
                     Vector3 targetDirection = manager.GetCleaningDirection(index, this.index);
                     Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
-                    Debug.Log("Current rotation: " + transform.rotation + ", Target rotation: " + targetRotation);
                     transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
 
                     _animator.SetBool("isCleaning", true);

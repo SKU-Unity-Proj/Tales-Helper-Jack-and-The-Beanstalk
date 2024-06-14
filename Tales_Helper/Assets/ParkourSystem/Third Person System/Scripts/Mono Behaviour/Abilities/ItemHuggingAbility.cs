@@ -1,5 +1,7 @@
 using DiasGames.Abilities;
 using DiasGames.Components;
+using UnityEngine.SceneManagement; // Add this line
+using System.Collections;
 using DiasGames.Debugging;
 using TMPro;
 using UnityEngine;
@@ -74,6 +76,12 @@ namespace DiasGames.Abilities
             {
                 StopAbility();
                 return;
+            }
+
+            // If the item's tag is "duck", start the coroutine to switch scenes
+            if (pickItem.CompareTag("duck"))
+            {
+                StartCoroutine(SwitchToEndingScene());
             }
 
             if (_action.pickUp) // E키를 다시 누르면 어빌리티 중지
@@ -184,6 +192,12 @@ namespace DiasGames.Abilities
                 _startInput.Normalize(); // 입력 정규화
 
             isJump = true; //점프 했음을 알림
+        }
+
+        private IEnumerator SwitchToEndingScene()
+        {
+            yield return new WaitForSeconds(3f); // 3초 대기
+            SceneManager.LoadScene("EndingAnimation"); // EndingAnimation 씬으로 전환
         }
     }
 }

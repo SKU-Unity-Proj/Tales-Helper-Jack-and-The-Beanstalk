@@ -17,7 +17,7 @@ static public class SettingsBootstrap
         Debug.Log(activeSceneName);
 
         // 씬 이름에 따라 다른 오브젝트를 로드
-        LoadSceneSpecificManagers(activeSceneName);
+        //LoadSceneSpecificManagers(activeSceneName);
 
     }
 
