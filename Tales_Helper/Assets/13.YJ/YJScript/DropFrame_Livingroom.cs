@@ -1,5 +1,6 @@
 using DiasGames.Abilities;
 using UnityEngine;
+using FC;
 
 public class DropFrame_Livingroom : MonoBehaviour
 {
@@ -7,6 +8,8 @@ public class DropFrame_Livingroom : MonoBehaviour
     public GameObject player;
     private PushHavyObjectAbility pushAbility;
     public GameObject swapCamArea;
+
+    public SoundList dropSound;
 
     public bool isDrop = true;
     public float GroundedOffset;
@@ -32,6 +35,7 @@ public class DropFrame_Livingroom : MonoBehaviour
         {
             pushAbility.StopAbilityFunction();
             oneAction = true;
+
             Invoke("ThisObjDestroy", 2f);
         }
 
@@ -43,13 +47,16 @@ public class DropFrame_Livingroom : MonoBehaviour
 
     private void ThisObjDestroy()
     {
+
+        SoundManager.Instance.PlayOneShotEffect((int)dropSound, transform.position, 2.5f);
         // 막아놓은 벽 없애기
         transform.parent.GetComponent<BoxCollider>().enabled = false;
-
+        this.transform.GetComponent<MeshCollider>().sharedMaterial = null;
         // 카메라 전환
         swapCamArea.SetActive(true);
+        
 
-        Destroy(this.transform.gameObject,1f);
+        //Destroy(this.transform.gameObject,1f);
     }
 
     /*

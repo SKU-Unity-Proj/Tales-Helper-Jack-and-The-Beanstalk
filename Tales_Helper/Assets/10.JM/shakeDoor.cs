@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using FC;
 public class shakeDoor : MonoBehaviour
 {
     public float shakeDuration = 1.0f; // 흔들리는 시간
@@ -10,6 +10,8 @@ public class shakeDoor : MonoBehaviour
 
     private Vector3 originalPosition;
     private float currentShakeDuration = 0.0f;
+
+    public SoundList openSound, closeSound;
 
     void Start()
     {
@@ -38,5 +40,14 @@ public class shakeDoor : MonoBehaviour
             currentShakeDuration = 0.0f;
             transform.localPosition = originalPosition;
         }
+    }
+
+    public void GiantPlaySwing()
+    {
+        SoundManager.Instance.PlayOneShotEffect((int)openSound, transform.position, 3f);
+    }
+    public void GiantPlayJump()
+    {
+        SoundManager.Instance.PlayOneShotEffect((int)closeSound, transform.position, 3f);
     }
 }

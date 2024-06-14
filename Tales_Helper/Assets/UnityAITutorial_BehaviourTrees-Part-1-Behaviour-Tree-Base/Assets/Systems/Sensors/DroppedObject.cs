@@ -6,6 +6,7 @@ public class DroppedObject : MonoBehaviour
 {
     public static DroppedObject Instance { get; private set; }
     public List<GameObject> DroppedObjects = new List<GameObject>(); // 떨어진 오브젝트 리스트
+    public GameObject GrabPoint; // 초기화할 객체를 선언합니다.
 
     private Transform giantTransform; // 이제 private로 선언
     public float raycastDistance = 50f; // 레이캐스트 거리
@@ -82,6 +83,10 @@ public class DroppedObject : MonoBehaviour
     {
         foreach (var droppedObject in DroppedObjects)
         {
+            if (droppedObject == null)
+            {
+                return false;
+            }
             if (droppedObject.name == "CheckGrab")
             {
                 // 거리 제한 없이 무조건 true 반환

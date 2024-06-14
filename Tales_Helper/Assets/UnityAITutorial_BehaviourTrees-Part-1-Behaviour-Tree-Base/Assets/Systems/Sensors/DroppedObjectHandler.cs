@@ -19,7 +19,7 @@ public class DroppedObjectHandler : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         // 매니저 인스턴스가 존재하는 경우에만 배열에 넣음
-        if (manager != null)
+        if (manager != null && collision.gameObject.CompareTag("Ground"))
         {
             manager.AddDroppedObject(this.gameObject);
         }

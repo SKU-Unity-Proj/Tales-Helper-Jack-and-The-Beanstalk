@@ -43,6 +43,11 @@ public class BTSetup : MonoBehaviour
         var chaseRoot = BTRoot.Add(new BTNode_Condition("Can Chase",
             () =>
             {
+                if (DroppedObject.Instance.CheckSpecialObjectCondition() == false)
+                {
+                    return false; // Coroutine이 완료될 때까지 기다림
+                }
+
                 if (DroppedObject.Instance.CheckSpecialObjectCondition())
                 {
                     StartCoroutine(StartChaseAfterDelay(2f));
@@ -220,7 +225,7 @@ public class BTSetup : MonoBehaviour
             });
         #endregion
 
-            #region 순찰노드
+        #region 순찰노드
         var wanderRoot = BTRoot.Add<BTNode_Sequence>("Wander");
         wanderRoot.Add<BTNode_Action>("Perform Wander",
             () =>

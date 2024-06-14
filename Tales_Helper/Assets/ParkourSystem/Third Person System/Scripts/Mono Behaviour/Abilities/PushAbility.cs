@@ -253,7 +253,7 @@ namespace DiasGames.Abilities
             {
                 index = Random.Range(0, _boxDragSound.Count);
             }
-            SoundManager.Instance.PlayOneShotEffect((int)_boxDragSound[index], boxsoundPos.position, 0.2f);
+            SoundManager.Instance.PlayOneShotEffect((int)_boxDragSound[index], boxsoundPos.position, 2f);
         }
     }
 }

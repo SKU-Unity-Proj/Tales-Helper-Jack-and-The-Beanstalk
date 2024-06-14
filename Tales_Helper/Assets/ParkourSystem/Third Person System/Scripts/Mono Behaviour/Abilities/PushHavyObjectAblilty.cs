@@ -4,7 +4,6 @@ using DiasGames.Components;
 using DiasGames.IK;
 using UnityEngine.Events;
 
-
 namespace DiasGames.Abilities
 {
     public class PushHavyObjectAbility : AbstractAbility
@@ -20,11 +19,13 @@ namespace DiasGames.Abilities
         private IKScheduler _ikScheduler;
         private Transform _camera;
 
-
         private IHDraggable _draggable;
         private List<Collider> _triggeredObjs = new List<Collider>();
 
- 
+        //sound
+        [SerializeField] private List<int> _boxDragSound = new List<int>();
+        [SerializeField] private Transform boxsoundPos;
+
         private bool _isMatchingTarget;
         private float _step;
 
@@ -36,6 +37,14 @@ namespace DiasGames.Abilities
 
         public UnityEvent onPushStart;
 
+        private bool _isDragging;
+        private float _soundCooldown = 0.5f; // 소리 재생 간격을 조절할 수 있는 변수
+        private float _lastSoundTime;
+
+        private float oldDist, maxDist = 0; // 이동거리 체크.
+        private float lastStepTime = 0f; // 마지막 발자국 소리 시간
+        private float stepInterval = 0.5f; // 최소 발자국 소리 간격
+        private int index;
 
         private void Awake()
         {
@@ -99,7 +108,7 @@ namespace DiasGames.Abilities
 
         public override void UpdateAbility()
         {
-            //HandleIK();
+            // HandleIK();
             UpdateTransform();
 
             if (_isMatchingTarget) return;
@@ -113,7 +122,7 @@ namespace DiasGames.Abilities
             _mover.SetPosition(targetPos);
             transform.rotation = _draggable.GetTarget().rotation;
 
-            // calculate input for realtive move
+            // calculate input for relative move
             Vector3 cameraFwd = Vector3.Scale(_camera.forward, new Vector3(1, 0, 1)).normalized;
             Vector3 relativeMove = _action.move.x * _camera.transform.right + _action.move.y * cameraFwd;
             relativeMove.Normalize();
@@ -133,6 +142,12 @@ namespace DiasGames.Abilities
             _animator.SetFloat(_animHorizontalID, hor, 0.1f, Time.deltaTime);
             _animator.SetFloat(_animVerticalID, ver, 0.1f, Time.deltaTime);
 
+            // Play sound if player has moved
+            if (hasMoved && Time.time - _lastSoundTime > _soundCooldown)
+            {
+                PlayFootStep();
+            }
+
             _lastPosition = transform.position;
         }
 
@@ -150,7 +165,6 @@ namespace DiasGames.Abilities
                 _ikScheduler.StopIK(AvatarIKGoal.RightHand);
             }
         }
-
 
         private void HandleIK()
         {
@@ -179,7 +193,6 @@ namespace DiasGames.Abilities
 
                     _ikScheduler.ApplyIK(rightHandPass);
                 }
-
             }
         }
 
@@ -204,6 +217,41 @@ namespace DiasGames.Abilities
         public void StopAbilityFunction()
         {
             StopAbility();
+        }
+
+        private void InitializeSoundList()
+        {
+            _boxDragSound.Add((int)SoundList.metalDrag1);
+            _boxDragSound.Add((int)SoundList.metalDrag2);
+            _boxDragSound.Add((int)SoundList.metalDrag3);
+        }
+
+        private void PlayFootStep()
+        {
+
+            if (_boxDragSound.Count <= 3)
+            {
+                InitializeSoundList();
+            }
+
+            if (_boxDragSound.Count > 3)
+            {
+                _boxDragSound.RemoveAt(0); // 첫 번째 요소 삭제
+            }
+
+
+            if (oldDist < maxDist || Time.time - lastStepTime < stepInterval)
+            {
+                return;
+            }
+            oldDist = maxDist = 0;
+            lastStepTime = Time.time; // 마지막 발자국 소리 시간 업데이트
+            int oldIndex = index;
+            while (oldIndex == index)
+            {
+                index = Random.Range(0, _boxDragSound.Count);
+            }
+            SoundManager.Instance.PlayOneShotEffect((int)_boxDragSound[index], boxsoundPos.position, 2f);
         }
     }
 }

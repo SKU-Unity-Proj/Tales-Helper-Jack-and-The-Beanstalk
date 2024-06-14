@@ -29,6 +29,7 @@ public class timelineEndcalCeller : MonoBehaviour
         {
             playerMovement = player.GetComponent<CSPlayerController>();
         }
+        EnablePlayerMovement();
     }
 
     private void Update()
@@ -82,6 +83,7 @@ public class timelineEndcalCeller : MonoBehaviour
             Debug.Log("타임라인 재생이 끝났습니다.");
             TimeLineCamPriority();
             EnablePlayerMovement();
+            director.enabled = false;
         }
     }
 

@@ -24,6 +24,7 @@ namespace DiasGames.Controller
 
         public GameObject ladder1;
         public GameObject ladder2;
+        public GameObject lever;
 
         public Transform cameraTransform; // Æ®·£½ºÆû Ä³½Ì.
         private Camera myCamera;
@@ -364,7 +365,8 @@ namespace DiasGames.Controller
             if (other.gameObject.CompareTag ("ladderCol2"))
             {
                 ladder2.SetActive(true);
-                Debug.Log("1");
+                lever.SetActive(true);
+                Debug.Log("2");
             }
 
             if (other.gameObject.CompareTag("clubCol"))
@@ -377,7 +379,7 @@ namespace DiasGames.Controller
                 }
             }
         }
-
+        
         private void UpdateCharacterActions()
         {
             _scheduler.characterActions.move = Move;
