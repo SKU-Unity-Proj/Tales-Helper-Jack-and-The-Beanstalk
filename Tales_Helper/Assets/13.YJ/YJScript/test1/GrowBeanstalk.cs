@@ -8,7 +8,7 @@ public class GrowBeanstalk : MonoBehaviour  //BeanStalk ÇÏÀ§¿¡ ´Þ¸° ¿ÀºêÁ§Æ®¿¡ º
     public float maxSize;
     public float growRate;
     private float scale = 1f;
-    public GameObject dust;
+    //public GameObject dust;
     public GameObject inventory; //ÀÎº¥Åä¸®¿¡ main UI ³Ö±â
     public GameObject inventoryOption; //ÀÎº¥Åä¸®¿¡ slot Options ³Ö±â
 
@@ -47,7 +47,7 @@ public class GrowBeanstalk : MonoBehaviour  //BeanStalk ÇÏÀ§¿¡ ´Þ¸° ¿ÀºêÁ§Æ®¿¡ º
     {
         yield return new WaitForSeconds(13f);
 
-        dust.SetActive(true);
+        //dust.SetActive(true);
 
         while (scale < maxSize)
         {
@@ -56,7 +56,7 @@ public class GrowBeanstalk : MonoBehaviour  //BeanStalk ÇÏÀ§¿¡ ´Þ¸° ¿ÀºêÁ§Æ®¿¡ º
 
             if (scale >= maxSize)
             {
-                dust.SetActive(false);
+                //dust.SetActive(false);
                 break;
             }
 

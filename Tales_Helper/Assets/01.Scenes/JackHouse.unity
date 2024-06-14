@@ -12505,17 +12505,17 @@ PrefabInstance:
     - target: {fileID: 5523606625301046339, guid: cc626daeb5beef84d9d78870227bcd3e,
         type: 3}
       propertyPath: landSound
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 5523606625301046339, guid: cc626daeb5beef84d9d78870227bcd3e,
-        type: 3}
-      propertyPath: jumpFootSound
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5523606625301046339, guid: cc626daeb5beef84d9d78870227bcd3e,
         type: 3}
+      propertyPath: jumpFootSound
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5523606625301046339, guid: cc626daeb5beef84d9d78870227bcd3e,
+        type: 3}
       propertyPath: jumpVoiceSound
-      value: 10
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 5523606625301046339, guid: cc626daeb5beef84d9d78870227bcd3e,
         type: 3}
@@ -20232,6 +20232,8 @@ MonoBehaviour:
   pushAnimationBlendState: Push Havy Blend
   horizontalFloatParam: Horizontal
   verticalFloatParam: Vertical
+  _boxDragSound: 
+  boxsoundPos: {fileID: 0}
   onPushStart:
     m_PersistentCalls:
       m_Calls:
@@ -29067,7 +29069,7 @@ MonoBehaviour:
   inventory: {fileID: 28840806}
 --- !u!114 &2132076679
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -29090,7 +29092,7 @@ MonoBehaviour:
   originBottle: {fileID: 0}
 --- !u!114 &2132076707
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -30172,6 +30174,11 @@ PrefabInstance:
       propertyPath: useBeanGuideText
       value: 
       objectReference: {fileID: 1596643316}
+    - target: {fileID: 5370905363671923857, guid: 58957bdfac69b6d468c36aa52b6d4a7b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5433176432852868181, guid: 58957bdfac69b6d468c36aa52b6d4a7b,
         type: 3}
       propertyPath: m_Layer
@@ -30242,8 +30249,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedComponents:
+    - {fileID: 8548585804289805514, guid: 58957bdfac69b6d468c36aa52b6d4a7b, type: 3}
+    - {fileID: 222688819257110132, guid: 58957bdfac69b6d468c36aa52b6d4a7b, type: 3}
+    m_RemovedGameObjects:
+    - {fileID: 5370905363671923857, guid: 58957bdfac69b6d468c36aa52b6d4a7b, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 8294808952528034270, guid: 58957bdfac69b6d468c36aa52b6d4a7b,
         type: 3}
