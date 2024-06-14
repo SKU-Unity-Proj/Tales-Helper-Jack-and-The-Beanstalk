@@ -8,6 +8,9 @@ public class kitchenGiant : MonoBehaviour
     public enum State { Cleaning, Chasing, Attacking, Searching }
     public State currentState;
 
+    public kitchenGiantManager manager; // 메니저 참조
+    public int index; // 이 거인의 인덱스
+
     private NavMeshAgent agent;
     private Animator _animator;
     public Transform player;
@@ -16,6 +19,7 @@ public class kitchenGiant : MonoBehaviour
     public float soundRadius = 5f;
     public float sightAngle = 120f; // 시야각
     public float loseSightRadius = 15f; // 플레이어를 잃어버리고 청소 위치로 돌아가는 범위
+    public float rotationSpeed = 90.0f; // 초당 90도 회전
 
     private Transform cleaningPosition;
     private bool isWaiting = false;
@@ -25,6 +29,7 @@ public class kitchenGiant : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<Animator>();
+
         agent.autoTraverseOffMeshLink = false;
 
         currentState = State.Cleaning;
@@ -62,30 +67,44 @@ public class kitchenGiant : MonoBehaviour
         Vector3 startPos = agent.transform.position;
         Vector3 endPos = linkData.endPos + Vector3.up * agent.baseOffset;
 
-        // 중간 제어점 계산
-        Vector3 controlPoint1 = startPos + (Vector3.up * 2.0f); // 위로 솟구치게 하는 제어점
-        Vector3 controlPoint2 = endPos + (Vector3.up * 2.0f);
+        Vector3 controlPoint1 = startPos + (Vector3.up * 0.5f); // 높이를 줄여 덜 드라마틱하게 조정
+        Vector3 controlPoint2 = endPos + (Vector3.up * 0.5f);
 
-        SetAnimationState("Jump up");  // 점프 애니메이션 시작
+        
+        _animator.SetBool("islanded", true);  // 점프 애니메이션 시작
+
+        //agent.updatePosition = false; // 에이전트의 위치 업데이트를 스크립트에서 제어
 
         float duration = Vector3.Distance(startPos, endPos) / agent.speed;
         float normalizedTime = 0.0f;
         while (normalizedTime < 1.0f)
         {
             float t = normalizedTime;
-            // 비저 곡선 공식
-            Vector3 position = (1 - t) * (1 - t) * (1 - t) * startPos +
-                               3 * (1 - t) * (1 - t) * t * controlPoint1 +
-                               3 * (1 - t) * t * t * controlPoint2 +
-                               t * t * t * endPos;
+            Vector3 position = BezierCurve(startPos, controlPoint1, controlPoint2, endPos, t);
             agent.transform.position = position;
 
             normalizedTime += Time.deltaTime / duration;
             yield return null;
         }
 
-        SetAnimationState("Jump down");  // 착지 애니메이션 시작
+        _animator.SetBool("islanded", false);  // 착지 애니메이션 시작
+        yield return new WaitForSeconds(0.1f); // 착지 애니메이션을 보장하기 위한 대기 시간
+
+        agent.speed = 0f;  // 착지할 때 속도를 임시로 0으로 설정
+        //agent.updatePosition = true; // 에이전트의 위치 업데이트를 다시 활성화
+        
         agent.CompleteOffMeshLink();
+        agent.speed = 3.5f; // 속도를 원래대로 복구
+
+
+    }
+
+    Vector3 BezierCurve(Vector3 start, Vector3 control1, Vector3 control2, Vector3 end, float t)
+    {
+        return Mathf.Pow(1 - t, 3) * start +
+               3 * Mathf.Pow(1 - t, 2) * t * control1 +
+               3 * (1 - t) * Mathf.Pow(t, 2) * control2 +
+               Mathf.Pow(t, 3) * end;
     }
 
     void Clean()
@@ -93,8 +112,7 @@ public class kitchenGiant : MonoBehaviour
         if (cleaningPosition != null && !isWaiting)
         {
             agent.SetDestination(cleaningPosition.position);
-
-            if (Vector3.Distance(transform.position, cleaningPosition.position) < 1f)
+            if (agent.remainingDistance <= agent.stoppingDistance && !agent.pathPending)
             {
                 if (!isWaiting)
                 {
@@ -103,13 +121,21 @@ public class kitchenGiant : MonoBehaviour
                         StopCoroutine(currentCoroutine);
                     }
                     currentCoroutine = StartCoroutine(WaitAndClean());
+
+                    // 청소 위치에 도착하면, 메니저를 통해 방향을 가져와서 설정
+                    Vector3 targetDirection = manager.GetCleaningDirection(index, this.index);
+                    Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
+                    Debug.Log("Current rotation: " + transform.rotation + ", Target rotation: " + targetRotation);
+                    transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+
+                    _animator.SetBool("isCleaning", true);
                 }
             }
         }
     }
-
-    void Chase()
+        void Chase()
     {
+        _animator.SetBool("isCleaning", false);
         agent.SetDestination(player.position);
 
         // 플레이어와의 거리가 loseSightRadius보다 크면 청소 상태로 돌아갑니다.
@@ -276,7 +302,6 @@ public class kitchenGiant : MonoBehaviour
         Gizmos.DrawLine(transform.position, transform.position + rightBoundary);
         Gizmos.DrawWireSphere(transform.position, sightRadius);
     }
-
 
     private void SetAnimationState(string stateName, float transitionDuration = 0.1f, int StateLayer = 0)
     {
