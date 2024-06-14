@@ -38,5 +38,8 @@ public enum SoundList
     metalDrag1= 30,
     metalDrag2= 31,
     metalDrag3= 32,
+    fallshelf1= 33,
+    fallshelf2= 34,
+    cellerRoar= 35,
 
 }
