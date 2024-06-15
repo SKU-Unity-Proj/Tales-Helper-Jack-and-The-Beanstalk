@@ -25,6 +25,7 @@ namespace DiasGames.Controller
         public GameObject ladder1;
         public GameObject ladder2;
         public GameObject lever;
+        public GameObject cellerGiant;
 
         public Transform cameraTransform; // Æ®·£½ºÆû Ä³½Ì.
         private Camera myCamera;
@@ -366,6 +367,7 @@ namespace DiasGames.Controller
             {
                 ladder2.SetActive(true);
                 lever.SetActive(true);
+                cellerGiant.SetActive(true);
                 Debug.Log("2");
             }
 
