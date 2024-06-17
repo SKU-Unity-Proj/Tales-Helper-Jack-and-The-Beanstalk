@@ -29,6 +29,9 @@ public class EpisodeControll : MonoBehaviour
             float y = PlayerPrefs.GetFloat("PlayerPosY");
             float z = PlayerPrefs.GetFloat("PlayerPosZ");
             transform.position = new Vector3(x, y, z);
+            Debug.Log(x);
+            Debug.Log(y);
+            Debug.Log(z);
         }
     }
 

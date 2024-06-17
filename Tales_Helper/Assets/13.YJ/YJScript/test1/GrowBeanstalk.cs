@@ -8,7 +8,7 @@ public class GrowBeanstalk : MonoBehaviour  //BeanStalk ÇÏÀ§¿¡ ´Þ¸° ¿ÀºêÁ§Æ®¿¡ º
     public float maxSize;
     public float growRate;
     private float scale = 1f;
-    //public GameObject dust;
+    public GameObject dust;
     public GameObject inventory; //ÀÎº¥Åä¸®¿¡ main UI ³Ö±â
     public GameObject inventoryOption; //ÀÎº¥Åä¸®¿¡ slot Options ³Ö±â
 
@@ -24,7 +24,7 @@ public class GrowBeanstalk : MonoBehaviour  //BeanStalk ÇÏÀ§¿¡ ´Þ¸° ¿ÀºêÁ§Æ®¿¡ º
         StartCoroutine(GrowBean());
         Invoke("CameraShakeStart", 11f);
     }
-    /*
+    
     void Update()
     {
         //´Ù ÀÚ¶ó¸é dust ²ô±â
@@ -36,7 +36,7 @@ public class GrowBeanstalk : MonoBehaviour  //BeanStalk ÇÏÀ§¿¡ ´Þ¸° ¿ÀºêÁ§Æ®¿¡ º
             }
         }
     }
-    */
+    
     void PlantBean()
     {
         Debug.Log("Timeline Play");
