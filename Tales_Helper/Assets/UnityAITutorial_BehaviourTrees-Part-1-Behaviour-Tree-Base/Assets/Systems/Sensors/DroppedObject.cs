@@ -83,10 +83,6 @@ public class DroppedObject : MonoBehaviour
     {
         foreach (var droppedObject in DroppedObjects)
         {
-            if (droppedObject == null)
-            {
-                return false;
-            }
             if (droppedObject.name == "CheckGrab")
             {
                 // 거리 제한 없이 무조건 true 반환

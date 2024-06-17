@@ -43,11 +43,6 @@ public class BTSetup : MonoBehaviour
         var chaseRoot = BTRoot.Add(new BTNode_Condition("Can Chase",
             () =>
             {
-                if (DroppedObject.Instance.CheckSpecialObjectCondition() == false)
-                {
-                    return false; // Coroutine이 완료될 때까지 기다림
-                }
-
                 if (DroppedObject.Instance.CheckSpecialObjectCondition())
                 {
                     StartCoroutine(StartChaseAfterDelay(2f));
