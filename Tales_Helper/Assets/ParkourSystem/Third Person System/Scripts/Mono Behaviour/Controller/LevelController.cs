@@ -9,6 +9,9 @@ namespace DiasGames.Controller
     {
         [SerializeField] private GameObject player = null;
         [SerializeField] private float delayToRestartLevel = 3f;
+        [SerializeField] private Transform playerTarget;
+
+        public Transform playerT;
 
         // player components
         private Health _playerHealth;
@@ -54,6 +57,21 @@ namespace DiasGames.Controller
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 
             _isRestartingLevel = false;
+        }
+
+        public void TPTrigger(Transform playerPos)
+        {
+            StartCoroutine(delayFuc(playerPos));
+
+            
+        }
+
+        private IEnumerator delayFuc(Transform playerPos)
+        {
+
+            yield return new WaitForSeconds(1f);
+            playerT.position = playerPos.localPosition;
+
         }
 
     }

@@ -142,6 +142,10 @@ namespace DiasGames.Controller
             {
                 BasicManager.Instance.RegisterPlayer(detectableTarget);
             }
+            else
+            {
+                Debug.LogError("DetectableTarget component is missing on the player.");
+            }
         }
 
         #region CAMERA Setting

@@ -45,7 +45,7 @@ public class BTSetup : MonoBehaviour
             {
                 if (DroppedObject.Instance.CheckSpecialObjectCondition())
                 {
-                    StartCoroutine(StartChaseAfterDelay(2f));
+                    Chase_CurrentTarget = BasicManager.Instance.PlayerTarget;
 
                     return true; // Coroutine이 완료될 때까지 기다림
                 }

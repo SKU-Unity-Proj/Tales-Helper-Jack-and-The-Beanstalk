@@ -7,9 +7,9 @@ public class kitchenGiant : MonoBehaviour
     public enum State { Cleaning, Chasing, Attacking, Searching }
     public State currentState;
 
-    public kitchenGiantManager manager; // 메니저 참조
     public int index; // 이 거인의 인덱스
 
+    public kitchenGiantManager manager; // 메니저 참조
     private NavMeshAgent agent;
     private Animator _animator;
     public Transform player;
@@ -26,6 +26,7 @@ public class kitchenGiant : MonoBehaviour
 
     void Start()
     {
+
         agent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<Animator>();
 
