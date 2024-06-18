@@ -25,7 +25,7 @@ namespace FC
                 index = Random.Range(0, stepSounds.Length);
             }
 
-            Debug.Log($"Playing footstep sound index: {index} at position: {transform.position}");
+            //Debug.Log($"Playing footstep sound index: {index} at position: {transform.position}");
             SoundManager.Instance.PlayOneShotEffect((int)stepSounds[index], transform.position, 3f);
         }
         public void GiantPlaySwing()
