@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class SceneChange : MonoBehaviour
 {
+    private bool oneTime=false;
     public enum SceneName
     {
         introamimation,
@@ -31,7 +32,12 @@ public class SceneChange : MonoBehaviour
     }
     private void LoadScene()
     {
-        SceneManager.LoadScene("GiantMap");
+        //SceneManager.LoadScene("GiantMap");
+        if(!oneTime)
+            LoadingSceneController.Instance.LoadScene("GiantMap");
+        else
+            return;
+        oneTime = true;
     }
 }
 

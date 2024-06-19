@@ -164,7 +164,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -8.805786, y: -775}
+  m_AnchoredPosition: {x: -8.805786, y: -1436}
   m_SizeDelta: {x: 1880, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &960149
@@ -6246,10 +6246,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 1980, y: 1280}
+  m_ReferenceResolution: {x: 2560, y: 1600}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
@@ -12666,6 +12666,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6040661103893324401, guid: cc626daeb5beef84d9d78870227bcd3e,
+        type: 3}
+      propertyPath: m_ReferenceResolution.x
+      value: 2560
+      objectReference: {fileID: 0}
+    - target: {fileID: 6040661103893324401, guid: cc626daeb5beef84d9d78870227bcd3e,
+        type: 3}
+      propertyPath: m_ReferenceResolution.y
+      value: 1600
       objectReference: {fileID: 0}
     - target: {fileID: 6040661103893324406, guid: cc626daeb5beef84d9d78870227bcd3e,
         type: 3}
@@ -26422,6 +26432,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Dust
+      objectReference: {fileID: 0}
+    - target: {fileID: 7751716926931602132, guid: 70e93a32f30a5f946bd6042f72af76ce,
+        type: 3}
+      propertyPath: prewarm
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7751716926931602132, guid: 70e93a32f30a5f946bd6042f72af76ce,
+        type: 3}
+      propertyPath: startDelay.scalar
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7751716926931602132, guid: 70e93a32f30a5f946bd6042f72af76ce,
         type: 3}

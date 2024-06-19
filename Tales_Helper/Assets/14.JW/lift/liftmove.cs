@@ -75,13 +75,13 @@ public class Liftmove : MonoBehaviour
     {
         if (check1F == false) //지상일 때를 판별
         {
-            Invoke("OpenDoor", 10.0f); //10초뒤 OpenDoor()실행
+            Invoke("OpenDoor", 13.0f); //10초뒤 OpenDoor()실행
             anim.SetTrigger("isDown"); 
             check1F = true; //기본값인 true로 돌아옴
         }
         else //지하일 때를 판별
         {
-            Invoke("OpenDoor", 10.0f); //10초뒤 OpenDoor()실행
+            Invoke("OpenDoor", 13.0f); //10초뒤 OpenDoor()실행
             anim.SetTrigger("isUp");
             check1F = false; //기본값인 false로 돌아옴
         }
