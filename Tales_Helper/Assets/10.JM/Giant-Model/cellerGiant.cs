@@ -30,7 +30,7 @@ public class cellerGiant : MonoBehaviour
     private bool isTrace = false;
     private bool isAttack = false;
 
-    private float delay = 4.0f;
+    private float delay = 3.3f;
 
     private void Start()
     {
