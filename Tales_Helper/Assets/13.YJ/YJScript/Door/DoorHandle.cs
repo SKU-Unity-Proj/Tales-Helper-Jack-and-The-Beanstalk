@@ -1,17 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class DoorHandle : MonoBehaviour
 {   
     public Animator doorAnim;
     private DroppedObject manager;
+    private NavMeshObstacle navMeshObstacle;
     [SerializeField] Transform doorPos;
 
     private void Start()
     {
         // DroppedObjectManager의 인스턴스를 찾아서 할당
         manager = DroppedObject.Instance;
+        navMeshObstacle = GetComponent<NavMeshObstacle>();
 
         // 매니저가 존재하지 않을 경우, 로그 메시지 출력 또는 오류 처리
         if (manager == null)
@@ -26,6 +29,9 @@ public class DoorHandle : MonoBehaviour
         if (col.CompareTag("Player"))
         {
             doorAnim.SetTrigger("Grab");
+
+            // 문이 열릴 때 NavMesh Obstacle 비활성화
+            navMeshObstacle.enabled = false;
 
             this.GetComponent<BoxCollider>().enabled = false;
             doorPos.GetComponent<BoxCollider>().enabled = true;

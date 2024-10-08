@@ -10,6 +10,13 @@ public class cellerGiant : MonoBehaviour
     [SerializeField] private Transform attackCol;
 
     [SerializeField] private float traceRange = 3f;
+
+    public float Speed // 속성으로 get/set 정의
+    {
+        get { return traceRange; }
+        set { traceRange = value; }
+    }
+
     [SerializeField] private float attackRange = 3f;
 
     private Transform playerTransform;
@@ -23,7 +30,7 @@ public class cellerGiant : MonoBehaviour
     private bool isTrace = false;
     private bool isAttack = false;
 
-    private float delay = 2.0f;
+    private float delay = 4.0f;
 
     private void Start()
     {
@@ -129,7 +136,7 @@ public class cellerGiant : MonoBehaviour
         if (player != null)
         {
             playerTransform = player.transform;
-            traceRange = 20.0f;  // 추적 범위를 15.0f로 확장
+            
             agent.SetDestination(playerTransform.position);
             isTrace = true;
             isAttack = false;
@@ -147,10 +154,8 @@ public class cellerGiant : MonoBehaviour
 
     private void Trace()
     {
-  
         if (playerTransform != null)
         {
-
             agent.SetDestination(playerTransform.position);
             if (Vector3.Distance(transform.position, playerTransform.position) <= attackRange)
             {

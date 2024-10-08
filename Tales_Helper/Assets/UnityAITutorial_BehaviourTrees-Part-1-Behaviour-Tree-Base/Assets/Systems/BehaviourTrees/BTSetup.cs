@@ -28,6 +28,8 @@ public class BTSetup : MonoBehaviour
     protected Animator anim;
     protected NavMeshAgent giant;
 
+    protected bool hasInteracted = false; // 상호작용 여부를 확인하는 변수
+
     void Awake()
     {
         anim = GetComponent<Animator>();
@@ -193,6 +195,23 @@ public class BTSetup : MonoBehaviour
         droppedObjectCondition.Add<BTNode_Action>("Interact With Dropped Object",
             () =>
             {
+                if (hasInteracted)
+                {
+                    // 이미 상호작용이 완료되었으므로 더 이상 처리하지 않음
+                    return BehaviourTree.ENodeStatus.Succeeded;
+                }
+
+                /*
+                // 탐색 중에 특별한 조건이 만족되면 추적 상태로 전환
+                if (DroppedObject.Instance.CheckSpecialObjectCondition())
+                {
+                    // 추적할 대상을 설정하고 탐색 노드를 빠져나감
+                    Chase_CurrentTarget = BasicManager.Instance.PlayerTarget;
+                    Debug.Log("탐색 노드에서 추적 상태로 전환됨.");
+                    return BehaviourTree.ENodeStatus.Succeeded; // 탐색을 완료하고 노드를 빠져나감
+                }
+                */
+
                 // 거인이 앉아 있는 경우, 먼저 일으켜 세움
                 if (anim.GetBool("Sitting"))
                 {
@@ -211,9 +230,11 @@ public class BTSetup : MonoBehaviour
                 // 탐색이 완료되었는지 확인
                 if (Agent.IsSearching())
                 {
+                    hasInteracted = true; // 상호작용 완료 플래그 설정
                     // 모든 떨어진 물체와의 상호작용이 완료되면 성공 상태 반환
                     return BehaviourTree.ENodeStatus.Succeeded;
                 }
+
 
                 // 아직 탐색 중이라면 InProgress 상태 유지
                 return BehaviourTree.ENodeStatus.InProgress;

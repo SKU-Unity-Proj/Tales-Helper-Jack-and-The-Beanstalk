@@ -367,15 +367,31 @@ namespace DiasGames.Controller
                 Debug.Log("1");
             }
 
-            if (other.gameObject.CompareTag ("ladderCol2"))
+            if (other.gameObject.CompareTag("ladderCol2"))
             {
-                ladder2.SetActive(true);
-                lever.SetActive(true);
+
                 cellerGiant.SetActive(true);
                 Debug.Log("2");
             }
 
+            if (other.gameObject.CompareTag ("ladderCol3"))
+            {
+                ladder2.SetActive(true);
+                lever.SetActive(true);
+                Debug.Log("3");
+            }
+
             if (other.gameObject.CompareTag("clubCol"))
+            {
+                Health playerHealth = this.transform.GetComponent<Health>();
+                if (playerHealth != null)
+                {
+                    // 플레이어의 체력을 0으로 설정
+                    playerHealth.Damage(playerHealth.CurrentHP);
+                }
+            }
+
+            if (other.gameObject.CompareTag("giantCol2"))
             {
                 Health playerHealth = this.transform.GetComponent<Health>();
                 if (playerHealth != null)

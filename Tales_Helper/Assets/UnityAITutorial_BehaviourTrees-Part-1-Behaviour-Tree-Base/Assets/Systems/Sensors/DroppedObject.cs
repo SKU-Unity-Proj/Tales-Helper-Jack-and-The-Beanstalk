@@ -80,14 +80,31 @@ public class DroppedObject : MonoBehaviour
     // 특별한 오브젝트('checkgrab')이 감지되었는지 확인하는 메소드
     public bool CheckSpecialObjectCondition()
     {
+        // 파괴된 오브젝트를 삭제할 임시 리스트 생성
+        List<GameObject> objectsToRemove = new List<GameObject>();
+
         foreach (var droppedObject in DroppedObjects)
         {
+            if (droppedObject == null)
+            {
+                // 파괴된 오브젝트는 추후 삭제할 리스트에 추가
+                objectsToRemove.Add(droppedObject);
+                continue;
+            }
+
             if (droppedObject.name == "CheckGrab")
             {
-                // 거리 제한 없이 무조건 true 반환
+                // 특별한 오브젝트가 감지되었을 때 true 반환
                 return true;
             }
         }
+
+        // 파괴된 오브젝트 리스트에서 제거
+        foreach (var obj in objectsToRemove)
+        {
+            DroppedObjects.Remove(obj);
+        }
+
         return false;
     }
     #endregion

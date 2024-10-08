@@ -14,15 +14,21 @@ public class kitchenGiant : MonoBehaviour
     private Animator _animator;
     public Transform player;
 
+    public Collider handCollider; // 손에 있는 스피어 콜라이더 참조
+
     public float sightRadius = 10f;
     public float soundRadius = 5f;
     public float sightAngle = 120f; // 시야각
     public float loseSightRadius = 15f; // 플레이어를 잃어버리고 청소 위치로 돌아가는 범위
     public float rotationSpeed = 90.0f; // 초당 90도 회전
 
+    public float attackRadius = 2.0f; // 공격 범위
+    public float attackCooldown = 1.5f; // 공격 쿨다운
+
     private Transform cleaningPosition;
     private bool isWaiting = false;
     private Coroutine currentCoroutine;
+    private bool canAttack = true; // 공격 가능 여부 플래그
 
     void Start()
     {
@@ -33,6 +39,8 @@ public class kitchenGiant : MonoBehaviour
         agent.autoTraverseOffMeshLink = false;
 
         currentState = State.Cleaning;
+
+        DisableCollider(); // 시작할 때 콜라이더를 비활성화
     }
 
     void Update()
@@ -137,18 +145,68 @@ public class kitchenGiant : MonoBehaviour
         _animator.SetBool("isCleaning", false);
         agent.SetDestination(player.position);
 
-        // 플레이어와의 거리가 loseSightRadius보다 크면 청소 상태로 돌아갑니다.
-        if (Vector3.Distance(transform.position, player.position) > loseSightRadius)
+        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+        if (distanceToPlayer <= attackRadius)
+        {
+            // 플레이어가 공격 범위에 들어오면 공격 상태로 전환
+            currentState = State.Attacking;
+        }
+        else if (distanceToPlayer > loseSightRadius)
         {
             Debug.Log($"{gameObject.name}이 플레이어를 잃어버리고 청소 위치로 돌아갑니다.");
             currentState = State.Cleaning;
             agent.SetDestination(cleaningPosition.position);
         }
+
     }
 
     void Attack()
     {
-        // 공격 로직 구현
+        // 공격 가능한 상태인지 확인
+        if (!canAttack) return;
+
+        // 하체는 계속 움직이면서 상체로만 공격 애니메이션 재생
+        //_animator.SetLayerWeight(1, 1); // Upper Body Layer의 우선순위 설정
+        _animator.SetTrigger("Attack"); // 상체 공격 애니메이션 트리거
+
+        EnableCollider();
+
+        canAttack = false; // 공격이 진행 중이므로 다시 공격하지 못하게 설정
+        StartCoroutine(AttackCooldown()); // 쿨다운 시작
+
+        // 플레이어를 계속 추적 (하체 애니메이션으로 이동)
+        agent.SetDestination(player.position);
+
+        // 공격이 끝나면 다시 추적 상태로 돌아갑니다.
+        if (Vector3.Distance(transform.position, player.position) > attackRadius)
+        {
+            currentState = State.Chasing;
+            DisableCollider();
+        }
+    }
+
+    IEnumerator AttackCooldown()
+    {
+        // 플레이어에게 데미지 적용
+        //player.GetComponent<PlayerHealth>().TakeDamage(10); // 임의로 10의 데미지를 줌, 플레이어에 맞는 TakeDamage 함수 구현 필요
+
+        yield return new WaitForSeconds(attackCooldown); // 공격 쿨다운 대기
+        canAttack = true; // 다시 공격 가능하게 설정
+    }
+
+
+    // 공격 애니메이션의 시작 부분에서 이 함수를 호출
+    public void EnableCollider()
+    {
+        handCollider.enabled = true; // 공격 시작 시 콜라이더 활성화
+        Debug.Log("Collider Enabled");
+    }
+
+    // 공격 애니메이션의 끝 부분에서 이 함수를 호출
+    public void DisableCollider()
+    {
+        handCollider.enabled = false; // 공격이 끝난 후 콜라이더 비활성화
+        Debug.Log("Collider Disabled");
     }
 
     void Search()
@@ -197,12 +255,28 @@ public class kitchenGiant : MonoBehaviour
             if (hitCollider.transform == player)
             {
                 Debug.Log($"{gameObject.name}이 소리 반경 내에서 플레이어를 감지했습니다.");
+
+                // 플레이어와의 거리를 계산
+                float playerDistance = Vector3.Distance(transform.position, player.position);
+
+                // 공격 범위 내에 있는지 확인
+                if (playerDistance <= attackRadius)
+                {
+                    Debug.Log($"{gameObject.name}이 공격 범위 내에 플레이어를 감지했습니다.");
+                    currentState = State.Attacking; // 공격 상태로 전환
+                }
+                else
+                {
+                    // 공격 범위 밖에 있으면 추적 상태로 전환
+                    Debug.Log($"{gameObject.name}이 추적 상태로 전환합니다.");
+                    currentState = State.Chasing; // 추적 상태로 전환
+                }
+
                 if (currentCoroutine != null)
                 {
                     StopCoroutine(currentCoroutine);
                 }
                 isWaiting = false;
-                currentState = State.Chasing;
                 return;
             }
         }
