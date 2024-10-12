@@ -98,6 +98,8 @@ public class CharacterAgent : CharacterBase
         Agent.updatePosition = true; // NavMeshAgent 제어 복원
         Agent.updateRotation = true;
         Agent.updateUpAxis = true;
+
+        Debug.Log("OffMeshLink 완료");
     }
 
     // 주어진 범위 내에서 임의의 위치 선택
@@ -378,6 +380,8 @@ public class CharacterAgent : CharacterBase
             Agent.SetDestination(hitResult.position);
             DestinationSet = true;
             ReachedDestination = false;
+
+            Debug.Log("Destination set to: " + hitResult.position); // 로그를 통해 목적지가 설정되는지 확인
         }
     }
 }

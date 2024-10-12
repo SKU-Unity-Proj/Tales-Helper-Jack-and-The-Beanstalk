@@ -16,7 +16,7 @@ public class BasicManager : MonoBehaviour
         else
         {
             Instance = this;
-            DontDestroyOnLoad(this.gameObject);
+            //DontDestroyOnLoad(this.gameObject);
         }
     }
 

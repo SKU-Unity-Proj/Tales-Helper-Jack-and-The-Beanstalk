@@ -96,7 +96,10 @@ namespace DiasGames.Abilities
             _step = Vector3.Distance(transform.position, _draggable.GetTarget().position) / positionSmoothnessTime;
             _isMatchingTarget = true;
 
-            onPushStart.Invoke();
+            Debug.Log("name :" + _draggable);
+
+            if (_draggable.ToString() == "Grab Trigger (DiasGames.Puzzle.HavyTrigger)")
+                onPushStart.Invoke();
         }
 
         public override bool ReadyToRun()
