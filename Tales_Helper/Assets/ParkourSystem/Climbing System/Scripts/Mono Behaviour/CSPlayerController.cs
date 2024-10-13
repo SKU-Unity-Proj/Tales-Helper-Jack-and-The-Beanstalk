@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.AI;
 #if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
 #endif
@@ -276,6 +277,16 @@ namespace DiasGames.Controller
         private void Update()
         {
             UpdateCharacterActions();
+
+            NavMeshHit hit;
+            if (NavMesh.SamplePosition(this.transform.position, out hit, 1.0f, NavMesh.AllAreas))
+            {
+                Debug.Log("Player is on NavMesh.");
+            }
+            else
+            {
+                Debug.LogError("Player is NOT on NavMesh.");
+            }
 
             if (CurrentRecoil > 0)
                 CurrentRecoil = Mathf.SmoothDamp(CurrentRecoil, 0, ref recoilReturnVel, 0.2f);

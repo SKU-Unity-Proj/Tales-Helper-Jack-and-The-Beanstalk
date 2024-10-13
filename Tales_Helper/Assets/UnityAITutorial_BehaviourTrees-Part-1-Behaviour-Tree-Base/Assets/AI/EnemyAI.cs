@@ -7,7 +7,7 @@ using TMPro;
 using UnityEditor;
 #endif // UNITY_EDITOR
 
-[RequireComponent(typeof(AwarenessSystem))]
+//[RequireComponent(typeof(AwarenessSystem))]
 public class EnemyAI : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI FeedbackDisplay;

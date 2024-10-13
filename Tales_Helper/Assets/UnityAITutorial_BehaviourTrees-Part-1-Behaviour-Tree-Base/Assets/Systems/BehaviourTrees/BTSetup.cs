@@ -38,6 +38,8 @@ public class BTSetup : MonoBehaviour
         LinkedAI = GetComponent<EnemyAI>();
         Sensors = GetComponent<AwarenessSystem>();
         restCondition = GetComponent<RestCondition>();
+        giant = GetComponent<NavMeshAgent>();
+        Chase_CurrentTarget = GetComponent<DetectableTarget>();
 
         var BTRoot = LinkedBT.RootNode.Add<BTNode_Selector>("Base Logic");
 
@@ -93,6 +95,21 @@ public class BTSetup : MonoBehaviour
         chaseRoot.Add<BTNode_Action>("Chase Target",
             () =>
             {
+
+                // Chase_CurrentTarget null 체크
+                if (Chase_CurrentTarget == null)
+                {
+                    Debug.LogError("Chase_CurrentTarget is null. Cannot chase.");
+                    return BehaviourTree.ENodeStatus.Failed;  // 적절한 상태 반환
+                }
+
+                // Agent null 체크
+                if (giant == null)
+                {
+                    Debug.LogError("NavMeshAgent is null.");
+                    return BehaviourTree.ENodeStatus.Failed;  // 적절한 상태 반환
+                }
+
                 // 거인이 앉아 있는 경우, 먼저 일으켜 세움
                 if (anim.GetBool("Sitting"))
                 {
@@ -102,6 +119,32 @@ public class BTSetup : MonoBehaviour
                 if (restCondition.IsStandingUp())
                 {
                     Agent.MoveToRun(Chase_CurrentTarget.transform.position);
+                }
+
+                // 타겟이 있을 때만 추적
+                if (Chase_CurrentTarget != null)
+                {
+                    // NavMesh 경로 계산
+                    NavMeshPath path = new NavMeshPath();
+                    if (giant.CalculatePath(Chase_CurrentTarget.transform.position, path))
+                    {
+                        if (path.status == NavMeshPathStatus.PathComplete)
+                        {
+                            // 경로가 유효하면 이동 시작
+                            Agent.MoveToRun(Chase_CurrentTarget.transform.position);
+                            Debug.Log("Chasing target: " + Chase_CurrentTarget.transform.name);
+                        }
+                        else
+                        {
+                            Debug.LogError("Path to target is invalid.");
+                            return BehaviourTree.ENodeStatus.Failed;
+                        }
+                    }
+                    else
+                    {
+                        Debug.LogError("Failed to calculate path to target.");
+                        return BehaviourTree.ENodeStatus.Failed;
+                    }
                 }
 
 
@@ -121,7 +164,14 @@ public class BTSetup : MonoBehaviour
              
 
                 // 추적 로직
-                Agent.MoveToRun(Chase_CurrentTarget.transform.position);
+                //Agent.MoveToRun(Chase_CurrentTarget.transform.position);
+               // Debug.Log(Chase_CurrentTarget.transform.name);
+                //Debug.Log("Chasing player at position: " + Chase_CurrentTarget.transform.position);
+
+                if (giant.pathStatus == NavMeshPathStatus.PathInvalid)
+                {
+                    Debug.LogError("Invalid path. NavMeshAgent cannot find a valid path.");
+                }
 
                 return BehaviourTree.ENodeStatus.InProgress;
             },
@@ -130,7 +180,6 @@ public class BTSetup : MonoBehaviour
 
                 if (Agent.IsKnockingDoor)
                 {
-                    Debug.Log("2");
                     Agent.StartKnockingDoor(doorPos.position, doorPos.rotation);
 
                     return BehaviourTree.ENodeStatus.InProgress;

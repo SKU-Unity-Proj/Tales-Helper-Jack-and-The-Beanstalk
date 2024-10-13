@@ -13,11 +13,12 @@ public enum EOffmeshLinkStatus
 [RequireComponent(typeof(NavMeshAgent))]
 public class CharacterAgent : CharacterBase
 {
-    [SerializeField] float NearestPointSearchRange = 5f; // 최근접 탐색 범위
+    [SerializeField] public float NearestPointSearchRange = 5f; // 최근접 탐색 범위
     [SerializeField] Transform attackCol;
 
     private NavMeshAgent Agent; // NavMeshAgent 컴포넌트
     private Animator anim; // 애니메이터 컴포넌트
+    private LivingRoomGiant isDestination; // 애니메이터 컴포넌트
 
     private float walkSpeed = 2.5f; // 걷기 속도
     private float runSpeed = 6.5f; // 뛰기 속도
@@ -37,6 +38,10 @@ public class CharacterAgent : CharacterBase
     {
         Agent = GetComponent<NavMeshAgent>(); // NavMeshAgent 컴포넌트 초기화
         anim = GetComponent<Animator>(); // Animator 컴포넌트 초기화
+        isDestination = GetComponent<LivingRoomGiant>();
+
+        Agent.autoRepath = true; // 경로가 유효하지 않을 때 자동으로 경로를 재계산
+        Agent.stoppingDistance = 1.5f; // 플레이어와의 적절한 거리를 설정
 
         // 거인 트렌스폼이 필요할 시 이거 쓰면 됨.
         /* 
@@ -147,7 +152,7 @@ public class CharacterAgent : CharacterBase
 
         this.Agent.speed = runSpeed;
 
-        anim.SetBool("Suprise", true);
+        //anim.SetBool("Suprise", true);
         anim.SetBool("Run", true);
 
         this.Agent.isStopped = false;
@@ -165,7 +170,7 @@ public class CharacterAgent : CharacterBase
     {
         // 거인이 interactionPos로 이동
         MoveTo(interactionPos);
-        yield return new WaitUntil(() => ReachedDestination);
+        yield return new WaitUntil(() => isDestination.HasReachedDestination());
 
         //Debug.Log(ReachedDestination);
         //Debug.Log(interactionPos);
@@ -295,27 +300,40 @@ public class CharacterAgent : CharacterBase
 
     public virtual void AttackToPlayer(GameObject player)
     {
+        // AI 일시 정지
         this.Agent.isStopped = true;
         this.Agent.velocity = Vector3.zero;
 
-        //--------- 플레이어 방향으로 회전 로직
-
+        // 플레이어 방향으로 회전
         Vector3 directionToTarget = player.transform.position - transform.position;
-        directionToTarget.y = 0; // 수직 방향 회전은 제외 (Y축 고정)
+        directionToTarget.y = 0; // Y축 고정
 
-        if (directionToTarget == Vector3.zero) return; // 이미 목표 방향을 바라보고 있으면 반환
-
-        Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
-
-        // 현재 회전에서 목표 회전으로 부드럽게 전환
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 15f); // 5는 회전 속도, 상황에 따라 조정 가능
+        if (directionToTarget != Vector3.zero) // 회전 필요 시
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 15f); // 회전 속도
+        }
 
         // 타격 트리거 on
         attackCol.GetComponent<SphereCollider>().enabled = true;
-        //----------
 
+        // 공격 애니메이션 실행
         SetAnimationState("Giant_Attack");
 
+        // 애니메이션 종료 후 AI 재개
+        StartCoroutine(ResumeAgentAfterAttack());
+    }
+
+    // 공격 후 다시 NavMeshAgent 동작 재개
+    private IEnumerator ResumeAgentAfterAttack()
+    {
+        // 공격 애니메이션 시간이 1.5초라고 가정
+        yield return new WaitForSeconds(1.5f);
+
+        // 타격 트리거 off
+        attackCol.GetComponent<SphereCollider>().enabled = false;
+
+        // AI 재개
         this.Agent.isStopped = false;
     }
 
@@ -373,15 +391,23 @@ public class CharacterAgent : CharacterBase
     #endregion
     public virtual void SetDestination(Vector3 destination)
     {
-        // find nearest spot on navmesh and move there
         NavMeshHit hitResult;
         if (NavMesh.SamplePosition(destination, out hitResult, NearestPointSearchRange, NavMesh.AllAreas))
         {
-            Agent.SetDestination(hitResult.position);
-            DestinationSet = true;
-            ReachedDestination = false;
-
-            Debug.Log("Destination set to: " + hitResult.position); // 로그를 통해 목적지가 설정되는지 확인
+            if (Agent.CalculatePath(hitResult.position, new NavMeshPath()))
+            {
+                Agent.SetDestination(hitResult.position);
+                DestinationSet = true;
+                ReachedDestination = false;
+            }
+            else
+            {
+                Debug.LogError("Failed to calculate path to destination.");
+            }
+        }
+        else
+        {
+            Debug.LogError("SamplePosition failed, no valid NavMesh position found.");
         }
     }
 }
