@@ -242,24 +242,39 @@ public class CharacterAgent : CharacterBase
 
         foreach (var obj in objectsToProcess)
         {
+            
             Debug.Log($"이동 시작: {obj.name} 위치로 이동 중.");
 
             // 물체의 위치로 이동
             MoveTo(obj.transform.position);
-            yield return new WaitUntil(() => AtDestination);
+
+            if (isDestination.ischase == true)
+                yield break;
+
+            yield return new WaitUntil(() => isDestination.HasReachedDestination());
 
             Debug.Log($"이동 완료: {obj.name} 위치에 도착함.");
 
             // 물체와 상호작용하는 애니메이션 실행
             anim.SetBool("SearchObj", true);
+
+            if (isDestination.ischase == true)
+                yield break;
+
             yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).IsName("Searching")); // 애니메이션 시작 대기
 
             Debug.Log($"애니메이션 시작: {obj.name}와 상호작용 중.");
+
+            if (isDestination.ischase == true)
+                yield break;
 
             // 애니메이션 완료까지 대기
             yield return new WaitUntil(() => IsSearching());
 
             Debug.Log($"애니메이션 완료: {obj.name}와의 상호작용 완료.");
+
+            if (isDestination.ischase == true)
+                yield break;
 
             // 애니메이션을 종료하고 다음 오브젝트로 넘어감
             anim.SetBool("SearchObj", false);
@@ -301,7 +316,7 @@ public class CharacterAgent : CharacterBase
     public virtual void AttackToPlayer(GameObject player)
     {
         // AI 일시 정지
-        this.Agent.isStopped = true;
+        //this.Agent.isStopped = true;
         this.Agent.velocity = Vector3.zero;
 
         // 플레이어 방향으로 회전
@@ -334,7 +349,7 @@ public class CharacterAgent : CharacterBase
         attackCol.GetComponent<SphereCollider>().enabled = false;
 
         // AI 재개
-        this.Agent.isStopped = false;
+        //this.Agent.isStopped = false;
     }
 
     public virtual void MissingPlayer(Vector3 destination)
