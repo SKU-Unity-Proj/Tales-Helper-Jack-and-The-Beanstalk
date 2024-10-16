@@ -14,13 +14,14 @@ public class LivingRoomGiant : MonoBehaviour
     private Animator anim;
     private RestCondition restCondition;
 
-    public enum GiantState { Idle, Wander, Chase, Search, Attack, Sitting }
+    public enum GiantState { Idle, Wander, Chase, Search, Attack, Sitting, Knocking }
     public GiantState currentState;
 
     [Header("Wander and Rest Settings")]
     [SerializeField] private float Wander_Range = 10f;
     [SerializeField] private Transform chairTransform; // 의자 Transform
     [SerializeField] private Transform doorPos;
+    [SerializeField] private Transform doorCol;
 
     public float sightRadius = 10f; // 시야 거리
     public float attackRadius = 2f; // 공격 범위
@@ -38,6 +39,7 @@ public class LivingRoomGiant : MonoBehaviour
     private bool hasInteracted = false;
     private bool isStandingUp = false; // 일어나는 중인지 여부
     private bool isWandering = false; // 순찰 중인지 여부
+    private bool isSearching = false; // 서치 상태 여부 플래그
 
     private float chaseTimer; // 추적 시간 타이머
     private float maxChaseDuration = 6f; // 추적 실패 시 6초 후 순찰 상태로 전환
@@ -57,15 +59,9 @@ public class LivingRoomGiant : MonoBehaviour
 
     void Update()
     {
-        // ESC 키를 눌렀을 때 퍼즈 상태를 전환
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            TogglePauseGame(); // 퍼즈 상태 토글
-        }
 
-        if (isPaused) return; // 퍼즈 상태일 때는 업데이트 중단
 
-        if (isPaused) return; // 퍼즈 상태일 때는 업데이트 중단
+        //if (isPaused) return; // 퍼즈 상태일 때 업데이트 중단
 
         switch (currentState)
         {
@@ -87,43 +83,16 @@ public class LivingRoomGiant : MonoBehaviour
             case GiantState.Sitting:
                 SittingState();
                 break;
+            case GiantState.Knocking: // 새롭게 추가된 Knocking 상태
+                KnockingState();
+                break;
         }
 
         CheckTargetVisibility(); // 플레이어 감지 여부 확인
     }
 
-    private void TogglePauseGame()
-    {
-        if (isPaused)
-        {
-            ResumeGame(); // 퍼즈 해제
-        }
-        else
-        {
-            PauseGame(); // 퍼즈 설정
-        }
-    }
 
-    public void PauseGame()
-    {
-        if (isPaused) return; // 이미 퍼즈 상태면 아무 작업도 하지 않음
-
-        isPaused = true; // 퍼즈 상태로 설정
-        anim.speed = 0; // 애니메이션 정지
-        navAgent.isStopped = true; // NavMeshAgent 멈추기
-        navAgent.velocity = Vector3.zero; // NavMeshAgent 속도 초기화
-        Debug.Log("Game Paused.");
-    }
-
-    public void ResumeGame()
-    {
-        if (!isPaused) return; // 퍼즈 상태가 아니면 아무 작업도 하지 않음
-
-        isPaused = false; // 퍼즈 해제
-        anim.speed = 1; // 애니메이션 재개
-        navAgent.isStopped = false; // NavMeshAgent 재개
-        Debug.Log("Game Resumed.");
-    }
+   
 
     // 상태별 메소드
 
@@ -160,24 +129,17 @@ public class LivingRoomGiant : MonoBehaviour
             Debug.Log("Rest condition met. Switching to Sitting state.");
         }
 
-        if (DroppedObject.Instance.CheckSpecialObjectCondition())
+
+        bool specialconditionMet = DroppedObject.Instance.CheckSpecialObjectCondition();
+        Debug.Log(specialconditionMet);
+        // 특별 조건이 발동되었는지 확인
+        if (specialconditionMet == true)
         {
-            // 추적 애니메이션 실행
-            anim.SetBool("Run", true);
+            // 일으켜 세우는 동작 없이 바로 추적 상태로 전환
+            currentState = GiantState.Knocking; // 즉시 추적 상태로 전환
 
-            player = BasicManager.Instance.PlayerTarget.transform;
-
-            StartCoroutine(TransitionToChase()); // 추적 상태로 전환
-
-            // NavMeshAgent의 경로가 유효하지 않거나 플레이어가 보이지 않는 경우, 경로를 재계산
-            if (navAgent.pathStatus == NavMeshPathStatus.PathInvalid || navAgent.remainingDistance > chaseRadius)
-            {
-                // 경로가 유효하지 않으면 경로를 다시 설정
-                navAgent.ResetPath();
-                giantAgent.MoveToRun(player.position);
-            }
-
-            Debug.Log($"Chasing player..."); // 추적 중인 상태 로그 출력
+            Debug.Log("Special condition met while sitting. Standing up and chasing player.");
+            return;
         }
     }
 
@@ -187,38 +149,10 @@ public class LivingRoomGiant : MonoBehaviour
 
         ischase = true;
 
-        if (DroppedObject.Instance.CheckSpecialObjectCondition())
-        {
-            // 추적 애니메이션 실행
-            anim.SetBool("Run", true);
-
-            player = BasicManager.Instance.PlayerTarget.transform;
-
-            // NavMeshAgent를 통해 플레이어 추적
-            giantAgent.MoveToRun(player.position);
-
-            // NavMeshAgent의 경로가 유효하지 않거나 플레이어가 보이지 않는 경우, 경로를 재계산
-            if (navAgent.pathStatus == NavMeshPathStatus.PathInvalid || navAgent.remainingDistance > chaseRadius)
-            {
-                // 경로가 유효하지 않으면 경로를 다시 설정
-                navAgent.ResetPath();
-                giantAgent.MoveToRun(player.position);
-            }
-
-            Debug.Log($"Chasing player..."); // 추적 중인 상태 로그 출력
-        }
-
-        if (giantAgent.IsKnockingDoor == true)
-        {
-            giantAgent.StartKnockingDoor(doorPos.position, doorPos.rotation);
-
-        }
-
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
         // 플레이어 위치에 대한 경로 설정 및 추적
         if (distanceToPlayer <= attackRadius)
         {
-            ischase = false;
             currentState = GiantState.Attack; // 공격 상태로 전환
             //chaseTimer = 0f; // 공격 상태로 전환되면 타이머 리셋
         }
@@ -256,37 +190,30 @@ public class LivingRoomGiant : MonoBehaviour
                 Debug.Log("Player lost, returning to Wander state.");
             }
         }
+
+        bool specialconditionMet = DroppedObject.Instance.CheckSpecialObjectCondition();
+        Debug.Log(specialconditionMet);
+        // 특별 조건이 발동되었는지 확인
+        if (specialconditionMet == true)
+        {
+            // 일으켜 세우는 동작 없이 바로 추적 상태로 전환
+            currentState = GiantState.Knocking; // 즉시 추적 상태로 전환
+
+            Debug.Log("Special condition met while sitting. Standing up and chasing player.");
+            return;
+        }
     }
 
     void SearchState()
     {
-        ischase = false;
+        // 서치 상태 시작
+        isSearching = true;
 
-        if (DroppedObject.Instance.CheckSpecialObjectCondition())
-        {
-            forceChase = true;
-            player = BasicManager.Instance.PlayerTarget.transform;
-
-            anim.SetBool("Run", true);
-            anim.SetBool("SearchObj", false);
-
-            StartCoroutine(TransitionToChase()); // 추적 상태로 전환
-
-            // NavMeshAgent의 경로가 유효하지 않거나 플레이어가 보이지 않는 경우, 경로를 재계산
-            if (navAgent.pathStatus == NavMeshPathStatus.PathInvalid || navAgent.remainingDistance > chaseRadius)
-            {
-                // 경로가 유효하지 않으면 경로를 다시 설정
-                navAgent.ResetPath();
-                giantAgent.MoveToRun(player.position);
-            }
-
-            Debug.Log($"Chasing player..."); // 추적 중인 상태 로그 출력
-        }
         // 이미 상호작용이 완료되었는지 확인
         if (hasInteracted)
         {
-            // 이미 상호작용이 완료되었으므로 더 이상 처리하지 않음
-            currentState = GiantState.Wander; // 상호작용이 완료되면 순찰 상태로 전환
+            isSearching = false; // 서치 상태 종료
+            currentState = GiantState.Wander; // 순찰 상태로 전환
             return;
         }
 
@@ -297,36 +224,40 @@ public class LivingRoomGiant : MonoBehaviour
             restCondition.ResetCondition(); // 휴식 상태 초기화
         }
 
-        // 현재 탐색 중인 떨어진 물체가 있는지 확인하고, 없으면 새로운 물체를 탐색 시작
+        // 현재 탐색 중인 물체가 있는지 확인하고, 없으면 탐색 시작
         if (!giantAgent.IsSearching() && DroppedObject.Instance.GetDroppedObjectsCount() > 0)
         {
             Debug.Log("Starting to search for dropped objects.");
-            giantAgent.SearchingObject(); // 떨어진 물체와 상호작용 시작
-            return; // 탐색을 계속 진행 중임을 반환
+            giantAgent.SearchingObject(); // 탐색 시작
+            return;
         }
 
         // 탐색이 완료되었는지 확인
         if (giantAgent.IsSearching())
         {
-            hasInteracted = true; // 상호작용 완료 플래그 설정
+            hasInteracted = true; // 상호작용 완료
             Debug.Log("Interaction with dropped object complete.");
-            currentState = GiantState.Wander; // 탐색이 완료되면 순찰 상태로 전환
+            isSearching = false; // 서치 상태 종료
+            currentState = GiantState.Wander; // 순찰 상태로 전환
             return;
         }
 
-        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
-        if (distanceToPlayer <= chaseRadius)
+        bool specialconditionMet = DroppedObject.Instance.CheckSpecialObjectCondition();
+        Debug.Log(specialconditionMet);
+        if (specialconditionMet)
         {
             anim.SetBool("Run", true);
             anim.SetBool("SearchObj", false);
-            currentState = GiantState.Chase; // 공격 상태로 전환
-            //chaseTimer = 0f; // 공격 상태로 전환되면 타이머 리셋
+            isSearching = false; // 서치 상태 종료
+            currentState = GiantState.Knocking; // Knocking 상태로 전환
+            Debug.Log("Special condition met. Switching to Knocking state.");
+            return;
         }
 
-        // 아직 탐색 중이라면 진행 상태 유지
+        // 탐색 진행 중
         Debug.Log("Searching in progress...");
-        return;
     }
+
 
 
     void AttackState()
@@ -343,60 +274,67 @@ public class LivingRoomGiant : MonoBehaviour
         }
         else
         {
+            giantAgent.MissingPlayer(player.transform.position);
             currentState = GiantState.Chase; // 공격 후 플레이어가 범위 밖에 있으면 다시 추적 상태로 전환
             Debug.Log("Player moved out of attack range, switching to Chase.");
+        }
+
+        bool specialconditionMet = DroppedObject.Instance.CheckSpecialObjectCondition();
+        Debug.Log(specialconditionMet);
+        // 특별 조건이 발동되었는지 확인
+        if (specialconditionMet == true)
+        {
+            // 일으켜 세우는 동작 없이 바로 추적 상태로 전환
+            currentState = GiantState.Knocking; // 즉시 추적 상태로 전환
+
+            Debug.Log("Special condition met while sitting. Standing up and chasing player.");
+            return;
         }
     }
 
     void SittingState()
     {
+        bool specialconditionMet = DroppedObject.Instance.CheckSpecialObjectCondition();
+
         // 1. 거인이 앉으러 가고 있는 도중 플레이어를 발견한 경우
         if (player != null && !isStandingUp && !anim.GetBool("Sitting")) // 아직 앉지 않았을 때
         {
-            if (DroppedObject.Instance.CheckSpecialObjectCondition())
-            {
-                player = BasicManager.Instance.PlayerTarget.transform;
-                // 일으켜 세우는 동작 없이 바로 추적 상태로 전환
-                currentState = GiantState.Chase; // 즉시 추적 상태로 전환
-            }
             // 일으켜 세우는 동작 없이 바로 추적 상태로 전환
             currentState = GiantState.Chase; // 즉시 추적 상태로 전환
             Debug.Log("Player detected while moving to sit. Switching to Chase state.");
+
             return;
         }
 
         // 2. 거인이 이미 앉아 있는 상태에서 플레이어를 발견한 경우
         if (player != null && anim.GetBool("Sitting")) // 이미 앉은 상태에서 플레이어를 발견
         {
-            // 일어서서 추적 상태로 전환
             isStandingUp = true; // 거인이 일어나는 중임을 표시
-           
+
+            // 일반적인 추적 상태 전환
             giantAgent.StandUpChase(); // 일어서서 추적 동작 실행
             restCondition.ResetCondition(); // 휴식 상태 초기화
 
             anim.SetBool("Sitting", false); // 앉는 애니메이션 중단
-            anim.SetBool("Run", true); // 앉는 애니메이션 중단
+            anim.SetBool("Run", true); // 추적 애니메이션 시작
 
             StartCoroutine(TransitionToChase()); // 추적 상태로 전환
-                                                 // 1. 특별 조건이 발동되었는지 확인
-            if (DroppedObject.Instance.CheckSpecialObjectCondition())
-            {
-                player = BasicManager.Instance.PlayerTarget.transform;
-                // 일어서서 추적 상태로 전환
-                isStandingUp = true; // 거인이 일어나는 중임을 표시
-
-                giantAgent.StandUpChase(); // 일어서서 추적 동작 실행
-                restCondition.ResetCondition(); // 휴식 상태 초기화
-
-                anim.SetBool("Sitting", false); // 앉는 애니메이션 중단
-                anim.SetBool("Run", true); // 앉는 애니메이션 중단
-
-                StartCoroutine(TransitionToChase()); // 추적 상태로 전환
-                return;
-            }
-
             Debug.Log("Player detected while sitting. Standing up and switching to Chase state.");
             return;
+        }
+        else
+        {
+            Debug.Log(specialconditionMet);
+            // 특별 조건이 발동되었는지 확인
+            if (specialconditionMet == true)
+            {
+                transform.rotation = Quaternion.Lerp(transform.rotation, doorPos.rotation, Time.deltaTime * 5f);
+                // 일으켜 세우는 동작 없이 바로 추적 상태로 전환
+                currentState = GiantState.Knocking; // 즉시 추적 상태로 전환
+
+                Debug.Log("Special condition met while sitting. Standing up and chasing player.");
+                return;
+            }
         }
 
         // 3. 목적지(의자)에 도착하지 않았다면 계속 이동
@@ -419,11 +357,65 @@ public class LivingRoomGiant : MonoBehaviour
 
     }
 
+    // Knocking 상태 처리
+    void KnockingState()
+    {
 
+        // 앉기 상태를 강제로 중단하고 목표로 문 위치를 설정
+        anim.SetBool("Sitting", false);
+        anim.SetBool("Run", true);
+
+        if (anim.GetBool("Sitting"))
+        {
+            giantAgent.StandUpChase(); // 일어서서 추적 동작 실행
+            giantAgent.MoveToRun(doorPos.position); // 이동 시작
+            //transform.rotation = Quaternion.Lerp(transform.rotation, doorPos.rotation, Time.deltaTime * 5f);
+            StartCoroutine(DelayedWarp(2.5f, doorPos.position)); // 1.5초 후 워프 실행
+
+        }
+
+        if (!anim.GetBool("Sitting"))
+        {
+           // transform.rotation = Quaternion.Lerp(transform.rotation, doorPos.rotation, Time.deltaTime * 5f);
+            giantAgent.MoveToRun(doorPos.position); // 이동 시작
+            StartCoroutine(DelayedWarp(2.5f, doorPos.position)); // 1.5초 후 워프 실행
+
+        }
+
+        if (navAgent.CalculatePath(doorPos.position, new NavMeshPath()))
+        {
+            Debug.Log("Moving to door...");
+            navAgent.isStopped = false;
+            giantAgent.MoveToRun(doorPos.position);
+            doorCol.GetComponent<BoxCollider>().enabled = true;
+        }
+        else
+        {
+            Debug.LogError("No valid path to door.");
+        }
+
+        if (giantAgent.IsKnockingDoor)
+        {
+            giantAgent.StartKnockingDoor(doorPos.position, doorPos.rotation);
+        }
+    }
+    private IEnumerator DelayedWarp(float delay, Vector3 targetPosition)
+    {
+        yield return new WaitForSeconds(delay); // 1.5초 딜레이
+        navAgent.Warp(targetPosition); // 강제로 위치 이동
+        navAgent.stoppingDistance = 0f; // 스톱핑 거리 설정
+        Debug.Log("Warped to target position.");
+    }
 
     // 플레이어 감지 로직
     void CheckTargetVisibility()
     {
+        if (currentState == GiantState.Knocking)
+            return;
+
+        // 만약 서치 상태라면 플레이어 감지 중단
+        if (isSearching) return;
+
         foreach (var target in DetectableTargetManager.Instance.AllTargets)
         {
             Vector3 directionToTarget = (target.transform.position - transform.position).normalized;
@@ -453,7 +445,7 @@ public class LivingRoomGiant : MonoBehaviour
                 else
                 {
                     currentState = GiantState.Chase; // 추적 상태로 전환
-                    //chaseTimer = 0f; // 추적 상태로 전환할 때 타이머 초기화
+                    chaseTimer = 0f; // 추적 상태로 전환할 때 타이머 초기화
                     Debug.Log("Player detected in chase range. Switching to Chase state.");
                 }
                 return;
@@ -486,6 +478,35 @@ public class LivingRoomGiant : MonoBehaviour
         }
         return false; // 아직 목적지에 도착하지 않음
     }
+    private IEnumerator DisableAndEnableGiant(float delay)
+    {
+        // 거인 비활성화
+        gameObject.SetActive(false);
+        Debug.Log("Giant disabled.");
+
+        // 딜레이 후 재활성화
+        yield return new WaitForSeconds(delay);
+        gameObject.SetActive(true);
+        Debug.Log("Giant enabled.");
+    }
+
+    private void SetAnimationState(string stateName, float transitionDuration = 0.1f, int StateLayer = 0)
+    {
+        if (anim.HasState(StateLayer, Animator.StringToHash(stateName)))
+        {
+            anim.CrossFadeInFixedTime(stateName, transitionDuration, StateLayer);
+
+            if (StateLayer == 1)
+                SetLayerPriority(1, 1);
+        }
+
+    }
+
+    private void SetLayerPriority(int StateLayer = 1, int Priority = 1) // 애니메이터의 레이어 우선순위 값(무게) 설정
+    {
+        anim.SetLayerWeight(StateLayer, Priority);
+    }
+
 }
 
 

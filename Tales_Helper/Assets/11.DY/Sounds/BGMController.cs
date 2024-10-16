@@ -42,6 +42,12 @@ public class BGMController : MonoBehaviour
         Debug.Log("PlayBGMForScene called for scene: " + sceneName); // 메서드 호출 디버그 출력
         switch (sceneName)
         {
+            case "YGMainMenu":
+                SoundManager.Instance.PlayBGM(SoundList.mainMenu);
+                break;
+            case "IntroAnimation":
+                SoundManager.Instance.PlayBGM(SoundList.introAnimation);
+                break;
             case "GiantHouse":
                 SoundManager.Instance.PlayBGM(SoundList.GiantHouse);
                 break;

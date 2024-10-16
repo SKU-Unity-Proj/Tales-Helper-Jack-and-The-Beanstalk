@@ -19,7 +19,7 @@ public class cellerGiant : MonoBehaviour
 
     [SerializeField] private float attackRange = 3f;
 
-    private Transform playerTransform;
+    public Transform playerTransform;
     public LayerMask playerLayer;
     private Collider[] playerCheck;
 
@@ -73,8 +73,11 @@ public class cellerGiant : MonoBehaviour
         {
             this.transform.position = stopPos.position;
 
-            agent.isStopped = true;
-            SetAnimationState("Stop");
+            if (!agent.isStopped) // 이미 멈춰있는지 확인
+            {
+                agent.isStopped = true;
+                SetAnimationState("Stop", 0.1f); // 애니메이션 상태 설정
+            }
         }
     }
 

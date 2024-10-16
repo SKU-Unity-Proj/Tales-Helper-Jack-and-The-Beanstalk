@@ -31,15 +31,15 @@ public class DoorHandle : MonoBehaviour
             doorAnim.SetTrigger("Grab");
 
             // 문이 열릴 때 NavMesh Obstacle 비활성화
-            navMeshObstacle.enabled = false;
+            this.navMeshObstacle.carving = false;
 
             this.GetComponent<BoxCollider>().enabled = false;
-            doorPos.GetComponent<BoxCollider>().enabled = true;
+            //doorPos.GetComponent<BoxCollider>().enabled = true;
 
             // 매니저 인스턴스가 존재하는 경우에만 배열에 넣음
             if (manager != null)
             {
-                manager.AddDroppedObject(this.gameObject);
+                manager.AddDroppedObject(this.gameObject, true);
             }
         }
     }

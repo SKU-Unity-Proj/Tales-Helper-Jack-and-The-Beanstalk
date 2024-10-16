@@ -41,5 +41,7 @@ public enum SoundList
     fallshelf1= 33,
     fallshelf2= 34,
     cellerRoar= 35,
+    mainMenu= 36,
+    introAnimation= 37,
 
 }

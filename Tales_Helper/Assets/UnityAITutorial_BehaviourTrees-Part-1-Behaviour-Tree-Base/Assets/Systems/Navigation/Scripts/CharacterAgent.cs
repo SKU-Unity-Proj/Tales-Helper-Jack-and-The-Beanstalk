@@ -16,12 +16,14 @@ public class CharacterAgent : CharacterBase
     [SerializeField] public float NearestPointSearchRange = 5f; // 최근접 탐색 범위
     [SerializeField] Transform attackCol;
 
+
     private NavMeshAgent Agent; // NavMeshAgent 컴포넌트
     private Animator anim; // 애니메이터 컴포넌트
     private LivingRoomGiant isDestination; // 애니메이터 컴포넌트
+    private DroppedObject manager;
 
     private float walkSpeed = 2.5f; // 걷기 속도
-    private float runSpeed = 6.5f; // 뛰기 속도
+    private float runSpeed = 5.0f; // 뛰기 속도
 
     bool DestinationSet = false; // 목적지 설정 여부
     bool ReachedDestination = false; // 목적지 도달 여부
@@ -43,6 +45,13 @@ public class CharacterAgent : CharacterBase
         Agent.autoRepath = true; // 경로가 유효하지 않을 때 자동으로 경로를 재계산
         Agent.stoppingDistance = 1.5f; // 플레이어와의 적절한 거리를 설정
 
+        manager = DroppedObject.Instance;
+        // 매니저가 존재하지 않을 경우, 로그 메시지 출력 또는 오류 처리
+        if (manager == null)
+        {
+            Debug.LogError("DroppedObjectManager 인스턴스를 찾을 수 없습니다.");
+            // 필요한 경우, 여기에 추가적인 오류 처리 코드를 추가
+        }
         // 거인 트렌스폼이 필요할 시 이거 쓰면 됨.
         /* 
         // 거인의 Transform을 가져옴
@@ -135,7 +144,7 @@ public class CharacterAgent : CharacterBase
     // 지정된 목적지로 이동
     public virtual void MoveTo(Vector3 destination)
     {
-        CancelCurrentCommand();
+        //CancelCurrentCommand();
 
         this.Agent.speed = walkSpeed;
         anim.SetBool("Move", true);
@@ -145,7 +154,7 @@ public class CharacterAgent : CharacterBase
 
     public virtual void MoveToRun(Vector3 destination)
     {
-        CancelCurrentCommand();
+        //CancelCurrentCommand();
 
         this.Agent.isStopped = true;
         this.Agent.velocity = Vector3.zero;
@@ -237,6 +246,7 @@ public class CharacterAgent : CharacterBase
     {
         // 처리할 오브젝트의 복사본 리스트 생성
         var objectsToProcess = new List<GameObject>(DroppedObject.Instance.DroppedObjects);
+        bool specialconditionMet = DroppedObject.Instance.CheckSpecialObjectCondition();
 
         Debug.Log("SearchingProcess 시작됨.");
 
@@ -249,6 +259,11 @@ public class CharacterAgent : CharacterBase
             MoveTo(obj.transform.position);
 
             if (isDestination.ischase == true)
+            {
+                DroppedObject.Instance.DroppedObjects.Clear();
+                yield break;
+            }              
+            else if(specialconditionMet == true)
                 yield break;
 
             yield return new WaitUntil(() => isDestination.HasReachedDestination());
@@ -259,6 +274,11 @@ public class CharacterAgent : CharacterBase
             anim.SetBool("SearchObj", true);
 
             if (isDestination.ischase == true)
+            {
+                DroppedObject.Instance.DroppedObjects.Clear();
+                yield break;
+            }
+            else if (specialconditionMet == true)
                 yield break;
 
             yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).IsName("Searching")); // 애니메이션 시작 대기
@@ -266,14 +286,25 @@ public class CharacterAgent : CharacterBase
             Debug.Log($"애니메이션 시작: {obj.name}와 상호작용 중.");
 
             if (isDestination.ischase == true)
+            {
+                DroppedObject.Instance.DroppedObjects.Clear();
+                yield break;
+            }
+            else if (specialconditionMet == true)
                 yield break;
 
             // 애니메이션 완료까지 대기
             yield return new WaitUntil(() => IsSearching());
 
             Debug.Log($"애니메이션 완료: {obj.name}와의 상호작용 완료.");
+            manager.RemoveDroppedObject(obj);
 
             if (isDestination.ischase == true)
+            {
+                DroppedObject.Instance.DroppedObjects.Clear();
+                yield break;
+            }
+            else if (specialconditionMet == true)
                 yield break;
 
             // 애니메이션을 종료하고 다음 오브젝트로 넘어감
@@ -316,7 +347,7 @@ public class CharacterAgent : CharacterBase
     public virtual void AttackToPlayer(GameObject player)
     {
         // AI 일시 정지
-        //this.Agent.isStopped = true;
+        this.Agent.isStopped = true;
         this.Agent.velocity = Vector3.zero;
 
         // 플레이어 방향으로 회전
@@ -349,14 +380,14 @@ public class CharacterAgent : CharacterBase
         attackCol.GetComponent<SphereCollider>().enabled = false;
 
         // AI 재개
-        //this.Agent.isStopped = false;
+        this.Agent.isStopped = false;
     }
 
     public virtual void MissingPlayer(Vector3 destination)
     {
-        CancelCurrentCommand();
+        //CancelCurrentCommand();
 
-        //attackCol.GetComponent<SphereCollider>().enabled = false;
+        attackCol.GetComponent<SphereCollider>().enabled = false;
 
         this.Agent.speed = runSpeed;
 
@@ -391,16 +422,24 @@ public class CharacterAgent : CharacterBase
 
         MoveTo(intractionPos);
 
+        
+
         while (Quaternion.Angle(transform.rotation, doorRotation) > 0.1f)
         {
             transform.rotation = Quaternion.Lerp(transform.rotation, doorRotation, Time.deltaTime * 5f);
             yield return null;
         }
 
+        Agent.Warp(intractionPos); // 강제로 위치 이동
+                                   //yield return new WaitUntil(() => isDestination.HasReachedDestination());
         // 타격 트리거 on
         attackCol.GetComponent<SphereCollider>().enabled = true;
 
+
         anim.SetBool("Knocking", true);
+
+        manager.SpecialObjects.Clear();
+
 
     }
     #endregion
