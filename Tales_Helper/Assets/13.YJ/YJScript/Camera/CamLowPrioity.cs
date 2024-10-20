@@ -1,12 +1,19 @@
 using UnityEngine;
 using Cinemachine;
 
-public class CamLowPrioity : MonoBehaviour
+public class CamLowPriority : MonoBehaviour
 {
-    public CinemachineVirtualCamera VirtualCamera;
+    public CinemachineBrain cinemachineBrain;
 
     public void OnClickDownPriority()
     {
-        VirtualCamera.Priority = 0;
+        if (cinemachineBrain != null && cinemachineBrain.ActiveVirtualCamera != null)
+        {
+            CinemachineVirtualCamera activeCamera = cinemachineBrain.ActiveVirtualCamera as CinemachineVirtualCamera;
+            if (activeCamera != null)
+            {
+                activeCamera.Priority = 0;
+            }
+        }
     }
 }
