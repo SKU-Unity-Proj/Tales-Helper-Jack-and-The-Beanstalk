@@ -28,6 +28,9 @@ namespace DiasGames.Controller
         public GameObject lever;
         public GameObject cellerGiant;
 
+        public GameObject guideEffectPrefab; // 반짝이는 이펙트 프리팹
+        public Transform[] targetPositions;  // 이펙트가 이동할 목표 위치들
+
         public Transform cameraTransform; // 트랜스폼 캐싱.
         private Camera myCamera;
         private Vector3 relCameraPos; // 플레이어로부터 카메라까지의 벡터.
