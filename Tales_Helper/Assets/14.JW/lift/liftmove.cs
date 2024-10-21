@@ -1,3 +1,4 @@
+using DiasGames;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,6 +16,8 @@ public class Liftmove : MonoBehaviour
     private bool check1F = false; //엘레베이터 위치를 판별하기 위함
 
     public MeshRenderer lightMeshRenderer; // 엘베 표시등
+
+    public AbilityScheduler abilityScheduler; // 캐릭터 움직임 
 
     void Start()
     {
@@ -54,7 +57,7 @@ public class Liftmove : MonoBehaviour
 
             CloseDoor(); 
 
-            Invoke("Startlift", 4.0f); //4초뒤 Startlift() 실행
+            Invoke("Startlift", 4.0f);
             
 
         }
@@ -68,6 +71,7 @@ public class Liftmove : MonoBehaviour
     }
     void OpenDoor()
     {
+        abilityScheduler.enabled = true;
         leftanim.SetBool("isClose", false);
         rightanim.SetBool("isClose", false);
     }
@@ -75,15 +79,17 @@ public class Liftmove : MonoBehaviour
     {
         if (check1F == false) //지상일 때를 판별
         {
-            Invoke("OpenDoor", 13.0f); //10초뒤 OpenDoor()실행
+            abilityScheduler.enabled = false;
+            Invoke("OpenDoor", 16.0f);
             anim.SetTrigger("isDown"); 
-            check1F = true; //기본값인 true로 돌아옴
+            check1F = true;
         }
         else //지하일 때를 판별
         {
-            Invoke("OpenDoor", 13.0f); //10초뒤 OpenDoor()실행
+            abilityScheduler.enabled = false;
+            Invoke("OpenDoor", 16.0f);
             anim.SetTrigger("isUp");
-            check1F = false; //기본값인 false로 돌아옴
+            check1F = false;
         }
     }
 
