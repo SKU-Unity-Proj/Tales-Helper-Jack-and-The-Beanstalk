@@ -11,6 +11,12 @@ public class MainMenu : MonoBehaviour
     public AudioSource BGM;
     public AudioSource SoundEffect;
 
+    private void OnEnable()
+    {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+    }
+
     // 플레이 버튼
     public void OnClickPlayBtn()
     {
