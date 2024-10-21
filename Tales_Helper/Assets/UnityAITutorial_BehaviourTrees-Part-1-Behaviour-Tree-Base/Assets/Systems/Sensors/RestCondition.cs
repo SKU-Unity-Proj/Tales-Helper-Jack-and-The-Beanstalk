@@ -26,7 +26,7 @@ public class RestCondition : MonoBehaviour
         if (!isConditionMet)
         {
             timer += deltaTime;
-            Debug.Log($"RestCondition Timer: {timer} / {TimeToRest}"); // 타이머 로그 출력
+            //Debug.Log($"RestCondition Timer: {timer} / {TimeToRest}"); // 타이머 로그 출력
 
             if (timer >= TimeToRest)
             {

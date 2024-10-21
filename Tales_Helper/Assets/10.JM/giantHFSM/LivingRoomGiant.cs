@@ -118,7 +118,7 @@ public class LivingRoomGiant : MonoBehaviour
         else
         {
             // 아직 목적지에 도달하지 않은 경우는 이동 중 상태 유지
-            Debug.Log("Moving to destination...");
+            //Debug.Log("Moving to destination...");
         }
 
         // 휴식 조건 확인
@@ -126,19 +126,19 @@ public class LivingRoomGiant : MonoBehaviour
         if (restCondition.CheckCondition())
         {
             currentState = GiantState.Sitting; // 휴식 조건이 만족되면 앉는 상태로 전환
-            Debug.Log("Rest condition met. Switching to Sitting state.");
+            //Debug.Log("Rest condition met. Switching to Sitting state.");
         }
 
 
         bool specialconditionMet = DroppedObject.Instance.CheckSpecialObjectCondition();
-        Debug.Log(specialconditionMet);
+        //Debug.Log(specialconditionMet);
         // 특별 조건이 발동되었는지 확인
         if (specialconditionMet == true)
         {
             // 일으켜 세우는 동작 없이 바로 추적 상태로 전환
             currentState = GiantState.Knocking; // 즉시 추적 상태로 전환
 
-            Debug.Log("Special condition met while sitting. Standing up and chasing player.");
+            //Debug.Log("Special condition met while sitting. Standing up and chasing player.");
             return;
         }
     }
@@ -172,13 +172,13 @@ public class LivingRoomGiant : MonoBehaviour
                 giantAgent.MoveToRun(player.position);
             }
 
-            Debug.Log($"Chasing player..."); // 추적 중인 상태 로그 출력
+            //Debug.Log($"Chasing player..."); // 추적 중인 상태 로그 출력
         }
         else
         {
             // 추적 범위를 벗어난 경우, 추적 실패 시간을 증가시킴
             chaseTimer += Time.deltaTime;
-            Debug.Log($"Player out of range. Chase Timer: {chaseTimer} / {maxChaseDuration}"); // 타이머 로그 출력
+            //Debug.Log($"Player out of range. Chase Timer: {chaseTimer} / {maxChaseDuration}"); // 타이머 로그 출력
 
             // 추적 실패 시간이 초과되면 순찰로 전환
             if (chaseTimer >= maxChaseDuration)
@@ -187,12 +187,12 @@ public class LivingRoomGiant : MonoBehaviour
                 anim.SetBool("Run", false);
                 currentState = GiantState.Wander;
                 chaseTimer = 0f; // 타이머 리셋
-                Debug.Log("Player lost, returning to Wander state.");
+                //Debug.Log("Player lost, returning to Wander state.");
             }
         }
 
         bool specialconditionMet = DroppedObject.Instance.CheckSpecialObjectCondition();
-        Debug.Log(specialconditionMet);
+        //Debug.Log(specialconditionMet);
         // 특별 조건이 발동되었는지 확인
         if (specialconditionMet == true)
         {
@@ -227,7 +227,7 @@ public class LivingRoomGiant : MonoBehaviour
         // 현재 탐색 중인 물체가 있는지 확인하고, 없으면 탐색 시작
         if (!giantAgent.IsSearching() && DroppedObject.Instance.GetDroppedObjectsCount() > 0)
         {
-            Debug.Log("Starting to search for dropped objects.");
+            //Debug.Log("Starting to search for dropped objects.");
             giantAgent.SearchingObject(); // 탐색 시작
             return;
         }
@@ -236,26 +236,26 @@ public class LivingRoomGiant : MonoBehaviour
         if (giantAgent.IsSearching())
         {
             hasInteracted = true; // 상호작용 완료
-            Debug.Log("Interaction with dropped object complete.");
+            //Debug.Log("Interaction with dropped object complete.");
             isSearching = false; // 서치 상태 종료
             currentState = GiantState.Wander; // 순찰 상태로 전환
             return;
         }
 
         bool specialconditionMet = DroppedObject.Instance.CheckSpecialObjectCondition();
-        Debug.Log(specialconditionMet);
+        //Debug.Log(specialconditionMet);
         if (specialconditionMet)
         {
             anim.SetBool("Run", true);
             anim.SetBool("SearchObj", false);
             isSearching = false; // 서치 상태 종료
             currentState = GiantState.Knocking; // Knocking 상태로 전환
-            Debug.Log("Special condition met. Switching to Knocking state.");
+            //Debug.Log("Special condition met. Switching to Knocking state.");
             return;
         }
 
         // 탐색 진행 중
-        Debug.Log("Searching in progress...");
+        //Debug.Log("Searching in progress...");
     }
 
 
@@ -270,24 +270,24 @@ public class LivingRoomGiant : MonoBehaviour
         {
             //anim.SetTrigger("Attack"); // 공격 애니메이션 트리거
             giantAgent.AttackToPlayer(player.gameObject);
-            Debug.Log("Attacking the player.");
+            //Debug.Log("Attacking the player.");
         }
         else
         {
             giantAgent.MissingPlayer(player.transform.position);
             currentState = GiantState.Chase; // 공격 후 플레이어가 범위 밖에 있으면 다시 추적 상태로 전환
-            Debug.Log("Player moved out of attack range, switching to Chase.");
+            //Debug.Log("Player moved out of attack range, switching to Chase.");
         }
 
         bool specialconditionMet = DroppedObject.Instance.CheckSpecialObjectCondition();
-        Debug.Log(specialconditionMet);
+        //Debug.Log(specialconditionMet);
         // 특별 조건이 발동되었는지 확인
         if (specialconditionMet == true)
         {
             // 일으켜 세우는 동작 없이 바로 추적 상태로 전환
             currentState = GiantState.Knocking; // 즉시 추적 상태로 전환
 
-            Debug.Log("Special condition met while sitting. Standing up and chasing player.");
+            //Debug.Log("Special condition met while sitting. Standing up and chasing player.");
             return;
         }
     }
@@ -301,7 +301,7 @@ public class LivingRoomGiant : MonoBehaviour
         {
             // 일으켜 세우는 동작 없이 바로 추적 상태로 전환
             currentState = GiantState.Chase; // 즉시 추적 상태로 전환
-            Debug.Log("Player detected while moving to sit. Switching to Chase state.");
+            //Debug.Log("Player detected while moving to sit. Switching to Chase state.");
 
             return;
         }
@@ -319,12 +319,12 @@ public class LivingRoomGiant : MonoBehaviour
             anim.SetBool("Run", true); // 추적 애니메이션 시작
 
             StartCoroutine(TransitionToChase()); // 추적 상태로 전환
-            Debug.Log("Player detected while sitting. Standing up and switching to Chase state.");
+            //Debug.Log("Player detected while sitting. Standing up and switching to Chase state.");
             return;
         }
         else
         {
-            Debug.Log(specialconditionMet);
+            //Debug.Log(specialconditionMet);
             // 특별 조건이 발동되었는지 확인
             if (specialconditionMet == true)
             {
@@ -332,7 +332,7 @@ public class LivingRoomGiant : MonoBehaviour
                 // 일으켜 세우는 동작 없이 바로 추적 상태로 전환
                 currentState = GiantState.Knocking; // 즉시 추적 상태로 전환
 
-                Debug.Log("Special condition met while sitting. Standing up and chasing player.");
+                //Debug.Log("Special condition met while sitting. Standing up and chasing player.");
                 return;
             }
         }
