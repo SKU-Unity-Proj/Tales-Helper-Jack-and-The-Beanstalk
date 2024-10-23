@@ -146,7 +146,7 @@ public class AwarenessSystem : MonoBehaviour
             if (Targets[targetGO].Awareness >= 2f)
             {
                 LinkedAI.OnFullyDetected(targetGO); // 완전히 감지된 경우
-                Agent.AttackToPlayer(targetGO);
+                //Agent.AttackToPlayer(targetGO);
             }
             else if (Targets[targetGO].Awareness >= 1f && Targets[targetGO].Awareness < 2f)
             {

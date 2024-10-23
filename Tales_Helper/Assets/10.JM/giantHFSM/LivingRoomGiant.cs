@@ -268,26 +268,19 @@ public class LivingRoomGiant : MonoBehaviour
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
         if (distanceToPlayer <= attackRadius)
         {
-            //anim.SetTrigger("Attack"); // 공격 애니메이션 트리거
-            giantAgent.AttackToPlayer(player.gameObject);
-            //Debug.Log("Attacking the player.");
+            giantAgent.AttackPlayerInRange(player.gameObject);
         }
         else
         {
             giantAgent.MissingPlayer(player.transform.position);
             currentState = GiantState.Chase; // 공격 후 플레이어가 범위 밖에 있으면 다시 추적 상태로 전환
-            //Debug.Log("Player moved out of attack range, switching to Chase.");
         }
 
         bool specialconditionMet = DroppedObject.Instance.CheckSpecialObjectCondition();
-        //Debug.Log(specialconditionMet);
         // 특별 조건이 발동되었는지 확인
         if (specialconditionMet == true)
         {
-            // 일으켜 세우는 동작 없이 바로 추적 상태로 전환
             currentState = GiantState.Knocking; // 즉시 추적 상태로 전환
-
-            //Debug.Log("Special condition met while sitting. Standing up and chasing player.");
             return;
         }
     }

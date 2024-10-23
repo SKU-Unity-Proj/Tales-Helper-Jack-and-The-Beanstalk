@@ -343,14 +343,18 @@ public class CharacterAgent : CharacterBase
     #endregion
 
     #region 플레이어 공격
-
-    public virtual void AttackToPlayer(GameObject player)
+    public void AttackPlayerInRange(GameObject player)
     {
         // AI 일시 정지
         this.Agent.isStopped = true;
         this.Agent.velocity = Vector3.zero;
 
-        // 플레이어 방향으로 회전
+        // 공격 애니메이션을 바로 실행
+        anim.SetBool("Attack", true);
+
+        StartCoroutine(attackDelay(0.5f));
+
+        // 플레이어 방향으로 회전 (회전과 공격을 동시에 수행)
         Vector3 directionToTarget = player.transform.position - transform.position;
         directionToTarget.y = 0; // Y축 고정
 
@@ -360,38 +364,65 @@ public class CharacterAgent : CharacterBase
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 15f); // 회전 속도
         }
 
-        // 타격 트리거 on
-        attackCol.GetComponent<SphereCollider>().enabled = true;
-
-        // 공격 애니메이션 실행
-        SetAnimationState("Giant_Attack");
-
         // 애니메이션 종료 후 AI 재개
         StartCoroutine(ResumeAgentAfterAttack());
     }
+
+    private IEnumerator attackDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        attackCol.GetComponent<SphereCollider>().enabled = true;
+    }
+
+    /*
+    public virtual void AttackToPlayer(GameObject player)
+    {
+        // AI 일시 정지
+        //this.Agent.isStopped = true;
+        this.Agent.velocity = Vector3.zero;
+
+        // 공격 애니메이션을 바로 실행
+        SetAnimationState("Giant_Attack", 0.1f);
+
+        // 플레이어 방향으로 회전 (회전과 공격을 동시에 수행)
+        Vector3 directionToTarget = player.transform.position - transform.position;
+        directionToTarget.y = 0; // Y축 고정
+
+        if (directionToTarget != Vector3.zero) // 회전 필요 시
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 15f); // 회전 속도
+        }
+
+        // 애니메이션 종료 후 AI 재개
+        //StartCoroutine(ResumeAgentAfterAttack());
+    }
+        */
 
     // 공격 후 다시 NavMeshAgent 동작 재개
     private IEnumerator ResumeAgentAfterAttack()
     {
         // 공격 애니메이션 시간이 1.5초라고 가정
-        yield return new WaitForSeconds(1.5f);
-
-        // 타격 트리거 off
-        attackCol.GetComponent<SphereCollider>().enabled = false;
+        yield return new WaitForSeconds(2.5f);
 
         // AI 재개
         this.Agent.isStopped = false;
+        attackCol.GetComponent<SphereCollider>().enabled = false;
     }
+
+
 
     public virtual void MissingPlayer(Vector3 destination)
     {
         //CancelCurrentCommand();
 
-        attackCol.GetComponent<SphereCollider>().enabled = false;
+        //attackCol.GetComponent<SphereCollider>().enabled = false;
 
         this.Agent.speed = runSpeed;
 
         anim.SetBool("Attack", false);
+
+        attackCol.GetComponent<SphereCollider>().enabled = false;
 
         SetDestination(destination);
     }

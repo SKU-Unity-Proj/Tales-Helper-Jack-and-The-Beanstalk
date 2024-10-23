@@ -150,7 +150,7 @@ public class BTSetup : MonoBehaviour
 
                 if (Sensors.IsPlayerFullyDetected() == true) // IsPlayerFullyDetected는 예시 메소드로, 실제 구현 필요
                 {
-                    Agent.AttackToPlayer(Chase_CurrentTarget.gameObject); // 플레이어 공격 실행
+                    //Agent.AttackToPlayer(Chase_CurrentTarget.gameObject); // 플레이어 공격 실행
 
                     if (Sensors.IsPlayerMissingDetected() == true)
                     {

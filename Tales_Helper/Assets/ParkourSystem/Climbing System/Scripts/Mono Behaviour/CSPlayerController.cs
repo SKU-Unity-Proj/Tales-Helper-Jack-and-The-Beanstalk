@@ -377,11 +377,13 @@ namespace DiasGames.Controller
 
         private void OnTriggerEnter(Collider other)
         {
+            /*
             if (other.gameObject.CompareTag("ladderCol1"))
             {
                 ladder1.SetActive(false);
                 Debug.Log("1");
             }
+            */
 
             if (other.gameObject.CompareTag("ladderCol2"))
             {
