@@ -1,85 +1,54 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-static public class SettingsBootstrap
+public class SettingsBootstrap : MonoBehaviour
 {
+    private static bool _isInitialized;
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-    public static void LoadSettingsScene()
+    public static void Initialize()
     {
-        // 공통적으로 로드해야 할 매니저들
+        if (_isInitialized) return;
+
         LoadCommonManagers();
 
-        // 현재 활성화된 씬을 가져옴
-        Scene activeScene = SceneManager.GetActiveScene();
-        string activeSceneName = activeScene.name;
+        // 씬 로드 후 특정 매니저 로드 조건을 위한 이벤트 등록
+        SceneManager.sceneLoaded += OnSceneLoaded;
 
-        Debug.Log(activeSceneName);
-
-        // 씬 이름에 따라 다른 오브젝트를 로드
-        //LoadSceneSpecificManagers(activeSceneName);
-
+        _isInitialized = true;
     }
 
+    //모든씬에 필요한 메니저 로드
     private static void LoadCommonManagers()
     {
-        if (GameObject.FindObjectOfType<DataManager>() == null)
-        {
-            new GameObject("DataManager", typeof(DataManager));
-        }
-        if (GameObject.FindObjectOfType<SoundManager>() == null)
-        {
-            new GameObject("SoundManager", typeof(SoundManager));
-        }
-        if (GameObject.FindObjectOfType<EffectManager>() == null)
-        {
-            new GameObject("EffectManager", typeof(EffectManager));
-        }
-        if (GameObject.FindObjectOfType<BGMController>() == null)
-        {
-            new GameObject("BGMController", typeof(BGMController));
-        }
-        if (GameObject.FindObjectOfType<SettingsManager>() == null)
-        {
-            new GameObject("SettingsManager", typeof(SettingsManager));
-        }
+        CreateSingleton<DataManager>("DataManager");
+        CreateSingleton<SoundManager>("SoundManager");
+        CreateSingleton<EffectManager>("EffectManager");
+        CreateSingleton<BGMController>("BGMController");
+        CreateSingleton<SettingsManager>("SettingsManager");
     }
 
     private static void LoadSceneSpecificManagers(string sceneName)
     {
-        switch (sceneName)
+        //특정 씬에서만 필요한 매니저 로드
+        if (sceneName == "GiantMap")
         {
-            case "GiantHouse":
-                LoadGiantHouseManagers();
-                break;
-            case "JackHouse":
-                LoadJackHouseManagers();
-                break;
-            case "GiantMap":
-                LoadGiantMapManagers();
-                break;
-            // 추가적인 씬에 대한 로직 추가
-            default:
-                Debug.LogWarning("No specific managers defined for scene: " + sceneName);
-                break;
+            CreateSingleton<BasicManager>("BasicManager");
+            CreateSingleton<DetectableTargetManager>("DetectableTargetManager");
+            CreateSingleton<HearingManager>("HearingManager");
         }
     }
 
-    private static void LoadGiantHouseManagers()
+    private static void CreateSingleton<T>(string managerName) where T : Component
     {
-     
-        // GiantHouse 씬에 필요한 추가적인 매니저들 로드
+        if (GameObject.FindObjectOfType<T>() == null)
+        {
+            new GameObject(managerName, typeof(T));
+        }
     }
-
-    private static void LoadJackHouseManagers()
+    private static void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-     
-        // JackHouse 씬에 필요한 추가적인 매니저들 로드
-    }
-
-    private static void LoadGiantMapManagers()
-    {
- 
-        // GiantMap 씬에 필요한 추가적인 매니저들 로드
+        Debug.Log($"Current scene: {scene.name}"); // 씬 이름 확인 로그
+        LoadSceneSpecificManagers(scene.name);
     }
 }

@@ -11,7 +11,7 @@ using UnityEngine;
 
 public class BaseData : ScriptableObject // 클래스 인스턴스와는 별도로 대량의 데이터를 저장하는 데 사용할 수 있는 데이터 컨테이너
 {
-    public const string dataDirectory = "/09.ResourcesData/Resources/Data/";
+    public const string dataDirectory = "/9.ResourcesData/Resources/Data/";
     public string[] names = null;
 
     //배열은 Length 리스트는 Count 
