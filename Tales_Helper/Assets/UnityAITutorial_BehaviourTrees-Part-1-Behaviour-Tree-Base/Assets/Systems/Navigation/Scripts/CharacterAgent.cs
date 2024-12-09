@@ -28,6 +28,9 @@ public class CharacterAgent : CharacterBase
     bool DestinationSet = false; // 목적지 설정 여부
     bool ReachedDestination = false; // 목적지 도달 여부
 
+    public Vector3 targetRotation = new Vector3(0, -85, 0); // 목표 회전값
+    public float rotationDuration = 2.0f; // 회전 지속 시간
+
     EOffmeshLinkStatus OffMeshLinkStatus = EOffmeshLinkStatus.NotStarted; // OffmeshLink 상태
 
     public bool IsMoving => Agent.velocity.magnitude > float.Epsilon; // 이동 중 여부
@@ -269,6 +272,11 @@ public class CharacterAgent : CharacterBase
             yield return new WaitUntil(() => isDestination.HasReachedDestination());
 
             Debug.Log($"이동 완료: {obj.name} 위치에 도착함.");
+
+            Quaternion startRotation = transform.rotation; // 현재 회전값
+            Quaternion endRotation = Quaternion.Euler(targetRotation); // 목표 회전값
+
+            transform.rotation = Quaternion.Slerp(startRotation, endRotation, 2.5f);
 
             // 물체와 상호작용하는 애니메이션 실행
             anim.SetBool("SearchObj", true);
