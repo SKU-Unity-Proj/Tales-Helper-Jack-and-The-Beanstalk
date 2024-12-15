@@ -144,7 +144,7 @@ namespace DiasGames.Controller
             DetectableTarget detectableTarget = GetComponent<DetectableTarget>();
             if (detectableTarget != null)
             {
-                BasicManager.Instance.RegisterPlayer(detectableTarget);
+                //BasicManager.Instance.RegisterPlayer(detectableTarget);
             }
             else
             {
