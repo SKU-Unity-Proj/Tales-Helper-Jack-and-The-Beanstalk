@@ -5,10 +5,11 @@ using UnityEngine.AI;
 using UnityEngine.InputSystem;
 #endif
 using DiasGames.Components;
+using Fusion;
 
 namespace DiasGames.Controller
 {
-    public class CSPlayerController : MonoBehaviour
+    public class CSPlayerController : NetworkBehaviour
     {
         public Transform player;
         public Vector3 pivotOffset = new Vector3(0.0f, 1.0f, 0.0f);
@@ -139,18 +140,7 @@ namespace DiasGames.Controller
             ResetFOV();
             ResetMaxVerticalAngle();
         }
-        private void Start()
-        {
-            DetectableTarget detectableTarget = GetComponent<DetectableTarget>();
-            if (detectableTarget != null)
-            {
-                //BasicManager.Instance.RegisterPlayer(detectableTarget);
-            }
-            else
-            {
-                Debug.LogError("DetectableTarget component is missing on the player.");
-            }
-        }
+       
 
         #region CAMERA Setting
         //초기화 함수
@@ -277,7 +267,7 @@ namespace DiasGames.Controller
                 _health.OnDead -= Die;
         }
 
-        private void Update()
+        public override void FixedUpdateNetwork()
         {
             UpdateCharacterActions();
             /*

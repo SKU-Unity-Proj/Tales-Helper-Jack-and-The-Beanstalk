@@ -2,7 +2,7 @@
 using Fusion;
 using UnityEngine;
 
-namespace _01_03_Movement_Camera
+namespace DiasGames
 {
     public class PlayerSpawner : SimulationBehaviour, IPlayerJoined
     {
