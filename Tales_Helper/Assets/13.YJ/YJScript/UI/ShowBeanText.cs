@@ -7,6 +7,7 @@ namespace XEntity.InventoryItemSystem
     public class ShowBeanText : MonoBehaviour  //콩 심는 곳 도착했을 때 Text를 띄워주는 스크립트 BeanTalkCollider에 부착
     {
         public Animator talkPanel;
+        public GameObject beanStalk;
 
         private void OnTriggerEnter(Collider other)
         {
@@ -14,6 +15,7 @@ namespace XEntity.InventoryItemSystem
             {
                 StartCoroutine("PanelUpDown");
                 ItemManager.Instance.canPlant = true;
+                beanStalk.SetActive(true);
             }
         }
 
