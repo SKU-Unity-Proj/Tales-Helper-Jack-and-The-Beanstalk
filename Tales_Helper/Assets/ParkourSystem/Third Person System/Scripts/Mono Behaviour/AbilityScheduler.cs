@@ -2,11 +2,10 @@ using System;
 using UnityEngine;
 using DiasGames.Abilities;
 using DiasGames.Combat;
-using Fusion;
 
 namespace DiasGames
 {
-    public class AbilityScheduler : NetworkBehaviour
+    public class AbilityScheduler : MonoBehaviour
     {
         private AbstractAbility[] CharAbilities = null;
         private AbstractCombat[] CharCombats = null;
@@ -45,7 +44,7 @@ namespace DiasGames
             enabled = false;
         }
 
-        public override void FixedUpdateNetwork()
+        private void Update()
         {
             CheckAbilitiesStates();
 
