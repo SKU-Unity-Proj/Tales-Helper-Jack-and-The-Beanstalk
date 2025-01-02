@@ -2,6 +2,80 @@ using UnityEngine;
 
 public class PickLight : MonoBehaviour
 {
+    public GameObject pickItem = null; // 주운 아이템 등록
+    public GameObject pickItem_light = null; // 주운 아이템 라이트 등록
+    public Transform targetPos; // 아이템 안고 있을 위치
+    public float radius = 1f; // 아이템이 있는지 체크하는 원의 크기
+
+    public GameObject zombieStopLight;
+
+    public bool isPicking = false; // 움직임 제어
+    private Vector3 originalPosition; // 움직임 제어 위치
+    private Quaternion originalRotation;
+
+    void Start()
+    {
+        if (zombieStopLight == null)
+        {
+            zombieStopLight = GameObject.Find("ZombieStopLight"); //캐릭터 모델 안에 있음
+        }
+        zombieStopLight.SetActive(false);
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            CheckItem(); //아이템 찾기
+        }
+
+    }
+
+    void CheckItem()
+    {
+        Collider[] colliders = Physics.OverlapSphere(transform.position + transform.forward, radius, 1 << 12);
+
+        if (colliders != null)
+        {
+            foreach (Collider collider in colliders)
+            {
+                //위치 등록
+                SavePositionAndRotation();
+                isPicking = true;
+
+                //아이템 등록
+                pickItem = collider.gameObject;
+                pickItem_light = collider.transform.GetChild(1).gameObject;
+
+                // 부모로 보내기
+                pickItem.transform.SetParent(targetPos);
+                pickItem_light.SetActive(false);
+
+                // 라이트 켜기
+                zombieStopLight.SetActive(true);
+
+                //아이템으로 회전
+                Vector3 vec = pickItem.gameObject.transform.position - transform.position;
+                Quaternion targetRotation = Quaternion.LookRotation(vec);
+                transform.rotation = targetRotation;
+            }
+
+        }
+        else
+        {
+            pickItem = null;
+        }
+    }
+
+    void SavePositionAndRotation()
+    {
+        originalPosition = transform.position;
+        originalRotation = transform.rotation;
+    }
+
+
+
+    /*
     private Animator anim;
 
     public GameObject pickItem = null; // 주운 아이템 등록
@@ -37,7 +111,7 @@ public class PickLight : MonoBehaviour
         TargetSetParent();
 
         //움직임 제어
-        if(isPicking)
+        if (isPicking)
             StopMovement();
     }
 
@@ -65,7 +139,7 @@ public class PickLight : MonoBehaviour
                 Quaternion targetRotation = Quaternion.LookRotation(vec);
                 transform.rotation = targetRotation;
             }
-            
+
         }
         else
         {
@@ -101,5 +175,5 @@ public class PickLight : MonoBehaviour
     {
         transform.position = originalPosition;
         transform.rotation = originalRotation;
-    }
+    }*/
 }

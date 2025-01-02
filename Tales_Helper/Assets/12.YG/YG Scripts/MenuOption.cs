@@ -55,7 +55,8 @@ public class MenuOption : MonoBehaviour
     // 백 버튼
     public void OnClickBackBtn()
     {
-        Invoke("BackPuaseBtn", 1.4f);
+        BackPuaseBtn();
+        //Invoke("BackPuaseBtn", 1.4f);
     }
 
     // 사운드 조절

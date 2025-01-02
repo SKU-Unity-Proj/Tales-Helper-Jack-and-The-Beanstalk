@@ -27,7 +27,8 @@ public class Chapter : MonoBehaviour
     // 백 버튼
     public void OnClickBackBtn()
     {
-        Invoke("BackPauseBtn", 1.4f);
+        BackPauseBtn();
+        //Invoke("BackPauseBtn", 1.4f);
     }
 
     // ch1 버튼

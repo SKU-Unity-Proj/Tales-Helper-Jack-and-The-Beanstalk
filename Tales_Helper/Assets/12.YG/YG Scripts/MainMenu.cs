@@ -20,7 +20,8 @@ public class MainMenu : MonoBehaviour
     // 플레이 버튼
     public void OnClickPlayBtn()
     {
-        Invoke("PlayPauseBtn", 0.2f);
+        PlayPauseBtn();
+        //Invoke("PlayPauseBtn", 0.2f);
     }
     void PlayPauseBtn()
     {
@@ -30,7 +31,8 @@ public class MainMenu : MonoBehaviour
     // 처음부터 시작 버튼
     public void OnClickRestartBtn()
     {
-        Invoke("RestartPauseBtn", 0.2f);
+        RestartPauseBtn();
+        //Invoke("RestartPauseBtn", 0.2f);
     }
     void RestartPauseBtn()
     {
@@ -40,8 +42,8 @@ public class MainMenu : MonoBehaviour
     // 챕터 버튼
     public void OnClickChapterBtn()
     {
-        Invoke("ChapterPauseBtn", 1.4f);
-
+        ChapterPauseBtn();
+        //Invoke("ChapterPauseBtn", 1.4f);
     }
     void ChapterPauseBtn()
     {
@@ -54,7 +56,8 @@ public class MainMenu : MonoBehaviour
     // 옵션 버튼
     public void OnClickOptionBtn()
     {
-        Invoke("OptionPauseBtn", 1.4f);
+        OptionPauseBtn();
+        //Invoke("OptionPauseBtn", 1.4f);
     }
     void OptionPauseBtn()
     {
