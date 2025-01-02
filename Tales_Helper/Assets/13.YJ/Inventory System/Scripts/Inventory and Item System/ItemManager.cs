@@ -59,7 +59,7 @@ namespace XEntity.InventoryItemSystem
             
             if(canPlant)
             {
-                beanStalk.SetActive(true);
+                //beanStalk.SetActive(true);
                 slot.Remove(1);
             }
         }

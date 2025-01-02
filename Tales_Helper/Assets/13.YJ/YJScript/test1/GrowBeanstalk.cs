@@ -21,8 +21,8 @@ public class GrowBeanstalk : MonoBehaviour  //BeanStalk 하위에 달린 오브젝트에 �
 
         InventoryOff();
         PlantBean();
-        StartCoroutine(GrowBean());
-        Invoke("CameraShakeStart", 11f);
+        //StartCoroutine(GrowBean());
+        //Invoke("CameraShakeStart", 11f);
     }
     
     void Update()
