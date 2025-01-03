@@ -9,17 +9,11 @@ public class GrowBeanstalk : MonoBehaviour  //BeanStalk 하위에 달린 오브젝트에 �
     public float growRate;
     private float scale = 1f;
     public GameObject dust;
-    public GameObject inventory; //인벤토리에 main UI 넣기
-    public GameObject inventoryOption; //인벤토리에 slot Options 넣기
 
     public PlayableDirector playableDirector;
-    public GameObject useBeanGuideText;
 
     void Start()
     {
-        useBeanGuideText.SetActive(false);
-
-        InventoryOff();
         PlantBean();
         //StartCoroutine(GrowBean());
         //Invoke("CameraShakeStart", 11f);
@@ -70,11 +64,5 @@ public class GrowBeanstalk : MonoBehaviour  //BeanStalk 하위에 달린 오브젝트에 �
 
         CameraShakeManager.Instance.SetShakeDegree(1.5f,1.5f);
         CameraShakeManager.Instance.SetShakeTime(8.8f);
-    }
-
-    void InventoryOff()
-    {
-        inventory.SetActive(false);
-        inventoryOption.SetActive(false);
     }
 }

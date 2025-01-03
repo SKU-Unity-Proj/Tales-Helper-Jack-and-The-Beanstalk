@@ -29,7 +29,6 @@ public class QuestManager : MonoBehaviour
     //꺼져있어야 할 오브젝트
     private void Start()
     {
-        questObject[5].SetActive(false);
         questObject[6].SetActive(false);
         questObject[7].SetActive(false);
     }
@@ -48,27 +47,19 @@ public class QuestManager : MonoBehaviour
                 }
                 if (questActionIndex == 2) //보부상과 대화 이후
                 {
-                    questObject[1].gameObject.layer = 0; //상인 레이어 X
                     questObject[2].SetActive(false); //2000 느낌표 X
                     cow.SetActive(false); //소 X
                     questObject[7].SetActive(true); // 보부상 소 O 
                     questObject[5].SetActive(true); //콩주머니 O
-                }
-                break;
 
-            case 20:
-                if (questActionIndex == 1) //콩주머니 가져간 후
-                {
                     audioSource.Play();
-                    questObject[6].SetActive(true); //인벤에 넣을 콩주머니 O
                     questObject[5].SetActive(false); //콩주머니 X
-                    questObject[1].gameObject.layer = 8; //상인 레이어 O
                     questObject[0].SetActive(true); //1000 느낌표 O
                 }
                 break;
 
-            case 30:
-                if (questActionIndex == 1) //엄마와 대화 이후
+            case 20:
+                if (questActionIndex == 1)
                 {
                     StartCoroutine("ShowBridge");
                     StartCoroutine("ShakeCamera");
@@ -78,6 +69,7 @@ public class QuestManager : MonoBehaviour
                     questObject[4].SetActive(false); //울타리 X
                 }
                 break;
+
         }
     }
 
@@ -87,13 +79,10 @@ public class QuestManager : MonoBehaviour
         questList.Add(10, new QuestData("마을에 소 팔기"
                                         , new int[] { 1000, 2000 }));
 
-        questList.Add(20, new QuestData("콩 받기"
-                                        , new int[] { 5000 }));
-
-        questList.Add(30, new QuestData("엄마랑 대화하기"
+        questList.Add(20, new QuestData("엄마랑 대화하기"
                                         , new int[] { 1000 }));
 
-        questList.Add(40, new QuestData("콩 심기"
+        questList.Add(30, new QuestData("콩 심기"
                                         , new int[] { 0 }));
     }
 

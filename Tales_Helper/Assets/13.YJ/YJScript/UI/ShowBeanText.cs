@@ -14,8 +14,7 @@ namespace XEntity.InventoryItemSystem
         {
             if (other.CompareTag("Player"))
             {
-                StartCoroutine("PanelUpDown");
-                ItemManager.Instance.canPlant = true;
+                //StartCoroutine("PanelUpDown");
                 beanStalk.SetActive(true);
 
                 other.GetComponent<CSPlayerController>().enabled = false;
@@ -23,14 +22,14 @@ namespace XEntity.InventoryItemSystem
             }
         }
 
-        IEnumerator PanelUpDown()
-        {
-            talkPanel.SetBool("isShow", true);
+        //IEnumerator PanelUpDown()
+        //{
+        //    talkPanel.SetBool("isShow", true);
 
-            yield return new WaitForSeconds(2.5f);
+        //    yield return new WaitForSeconds(2.5f);
 
-            this.gameObject.SetActive(false);
-            talkPanel.SetBool("isShow", false);
-        }
+        //    this.gameObject.SetActive(false);
+        //    talkPanel.SetBool("isShow", false);
+        //}
     }
 }

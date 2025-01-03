@@ -32,31 +32,23 @@ public class MenuOption : MonoBehaviour
 
         // 기본 렌더링 파이프라인을 설정합니다.
         SetPipeline(Dropdown.value);
+
+        LoadGraphicsSettings();
+        LoadResolutionSettings();
+        LoadAudioSettings();
     }
 
     // 사운드 버튼
     public void OnClickSoundBtn()
     {
-        SoundEffect.Play();
-        soundOption.SetActive(true);
-        graphicOption.SetActive(false);
         bgmSlider.onValueChanged.AddListener(OnBgmSliderValueChanged);
         soundEffectSlider.onValueChanged.AddListener(OnSoundEffectSliderValueChanged);
-    }
-
-    // 그래픽 버튼
-    public void OnClickKeyBtn()
-    {
-        SoundEffect.Play();
-        soundOption.SetActive(false);
-        graphicOption.SetActive(true);
     }
 
     // 백 버튼
     public void OnClickBackBtn()
     {
         BackPuaseBtn();
-        //Invoke("BackPuaseBtn", 1.4f);
     }
 
     // 사운드 조절
@@ -72,9 +64,10 @@ public class MenuOption : MonoBehaviour
     // 그래픽 설정
     public void SetPipeline(int value)
     {
-        Debug.Log("Selected pipeline index: " + value);
         QualitySettings.SetQualityLevel(value, true);
         QualitySettings.renderPipeline = RenderPipelineAssets[value];
+
+        Debug.Log("Selected pipeline index: " + value);
         Debug.Log("Current Quality Level: " + QualitySettings.GetQualityLevel());
         Debug.Log("Current Render Pipeline: " + QualitySettings.renderPipeline);
     }
@@ -82,9 +75,99 @@ public class MenuOption : MonoBehaviour
     void BackPuaseBtn()
     {
         SoundEffect.Play();
-        soundOption.SetActive(false);
-        graphicOption.SetActive(false);
         mainView.SetActive(true);
         optionView.SetActive(false);
     }
+
+    /// <summary>
+    /// GPT 그래픽 설정
+    /// </summary>
+
+    [Header("Graphics Settings")]
+    public TMP_Dropdown graphicsDropdown;
+
+    [Header("Resolution Settings")]
+    public TMP_Dropdown resolutionDropdown;
+    private Resolution[] resolutions;
+
+    [Header("Audio Settings")]
+    public Slider volumeSlider;
+    public TMP_Text volumeText;
+
+    #region Graphics
+    void LoadGraphicsSettings()
+    {
+        graphicsDropdown.ClearOptions();
+        List<string> options = new List<string>() { "Low", "Medium", "High", "Ultra" };
+        graphicsDropdown.AddOptions(options);
+
+        int savedQuality = PlayerPrefs.GetInt("GraphicsQuality", 3);
+        graphicsDropdown.value = savedQuality;
+        graphicsDropdown.RefreshShownValue();
+        QualitySettings.SetQualityLevel(savedQuality);
+
+        graphicsDropdown.onValueChanged.AddListener(SetGraphicsQuality);
+    }
+
+    public void SetGraphicsQuality(int qualityIndex)
+    {
+        QualitySettings.SetQualityLevel(qualityIndex);
+        PlayerPrefs.SetInt("GraphicsQuality", qualityIndex);
+    }
+    #endregion
+
+    #region Resolution
+    void LoadResolutionSettings()
+    {
+        resolutionDropdown.ClearOptions();
+        resolutions = Screen.resolutions;
+        List<string> options = new List<string>();
+
+        int currentResolutionIndex = 0;
+        for (int i = 0; i < resolutions.Length; i++)
+        {
+            string option = resolutions[i].width + " x " + resolutions[i].height;
+            options.Add(option);
+
+            if (resolutions[i].width == Screen.currentResolution.width &&
+                resolutions[i].height == Screen.currentResolution.height)
+            {
+                currentResolutionIndex = i;
+            }
+        }
+
+        resolutionDropdown.AddOptions(options);
+        resolutionDropdown.value = PlayerPrefs.GetInt("ResolutionIndex", currentResolutionIndex);
+        resolutionDropdown.RefreshShownValue();
+
+        resolutionDropdown.onValueChanged.AddListener(SetResolution);
+    }
+
+    public void SetResolution(int resolutionIndex)
+    {
+        Resolution resolution = resolutions[resolutionIndex];
+        Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
+        PlayerPrefs.SetInt("ResolutionIndex", resolutionIndex);
+    }
+    #endregion
+
+    #region Audio
+    void LoadAudioSettings()
+    {
+        float savedVolume = PlayerPrefs.GetFloat("Volume", 0.5f);
+        volumeSlider.value = savedVolume;
+        volumeText.text = Mathf.RoundToInt(savedVolume * 100) + "%";
+
+        AudioListener.volume = savedVolume;
+
+        volumeSlider.onValueChanged.AddListener(SetVolume);
+    }
+
+    public void SetVolume(float volume)
+    {
+        AudioListener.volume = volume;
+        volumeText.text = Mathf.RoundToInt(volume * 100) + "%";
+        PlayerPrefs.SetFloat("Volume", volume);
+    }
+    #endregion
 }

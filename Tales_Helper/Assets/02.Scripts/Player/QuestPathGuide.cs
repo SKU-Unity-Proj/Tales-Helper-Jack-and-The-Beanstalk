@@ -187,7 +187,7 @@ public class QuestPathGuide : MonoBehaviour
         int questId = questManager.questId;
         int actionIndex = questManager.questActionIndex;
 
-        Debug.Log($"[QuestPathRenderer] 현재 퀘스트 ID: {questId}, ActionIndex: {actionIndex}");
+        //Debug.Log($"[QuestPathRenderer] 현재 퀘스트 ID: {questId}, ActionIndex: {actionIndex}");
 
         switch (questId)
         {

@@ -65,7 +65,6 @@ public class MainMenu : MonoBehaviour
         mainView.SetActive(false);
         chapterView.SetActive(false);
         optionView.SetActive(true);
-        graphicOption.SetActive(false);
     }
     
     // 종료 버튼

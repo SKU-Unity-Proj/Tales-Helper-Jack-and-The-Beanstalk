@@ -19,10 +19,9 @@ public class TalkManager : MonoBehaviour
     void GenerateData()
     {
         //NPC1 = 1000, NPC2 = 2000
-        talkData.Add(1000, new string[] { "잭 엄마:0" });
+        talkData.Add(1000, new string[] { "어디 있다가 이제 오는거니?:0" });
         talkData.Add(2000, new string[] { "괜찮은 물건이 있으면 내가 또 바꿔주마.:0" });
         talkData.Add(3000, new string[] { "이 곳에 콩을 심으면 되겠다." });
-        talkData.Add(5000, new string[] { "콩을 얻었다!" });
 
         //Quest Talk ((대화+퀘스트) 순서 + 누군지)
         talkData.Add(10 + 1000, new string[] 
@@ -37,9 +36,12 @@ public class TalkManager : MonoBehaviour
             "소를 팔러 가는 모양인데 나한테 팔지 않겠나?:0",
             "나에게 소를 주면 이 마법의 콩을 주마:0"});
 
-        talkData.Add(30 + 1000, new string[]
+        talkData.Add(20 + 1000, new string[]
             {"잭! 비싼 소를 이깟 콩이랑 바꿔오면 어떡하니!:0",
             "저기 다리 건너에 버리고 와:0"});
+
+        talkData.Add(30 + 1000, new string[]
+            {"내가 정말 못 살겠구나!:0"});
 
 
 
