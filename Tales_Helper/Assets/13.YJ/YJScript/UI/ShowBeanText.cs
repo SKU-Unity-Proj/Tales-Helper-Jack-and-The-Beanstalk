@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DiasGames.Controller;
 
 namespace XEntity.InventoryItemSystem
 {
@@ -16,6 +17,9 @@ namespace XEntity.InventoryItemSystem
                 StartCoroutine("PanelUpDown");
                 ItemManager.Instance.canPlant = true;
                 beanStalk.SetActive(true);
+
+                other.GetComponent<CSPlayerController>().enabled = false;
+                other.GetComponent<Animator>().enabled = false;
             }
         }
 

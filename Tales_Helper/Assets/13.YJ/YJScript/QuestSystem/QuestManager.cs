@@ -10,6 +10,7 @@ public class QuestManager : MonoBehaviour
     public int questActionIndex = 0; //퀘스트 대화 순서
     public GameObject[] questObject;
     public GameObject cow;
+    public Transform plantingPoint; // '콩 심기' 위치
 
     Dictionary<int, QuestData> questList;
 
