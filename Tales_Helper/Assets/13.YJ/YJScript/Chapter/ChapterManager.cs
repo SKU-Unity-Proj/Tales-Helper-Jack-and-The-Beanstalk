@@ -4,25 +4,17 @@ using UnityEngine;
 
 public class ChapterManager : MonoBehaviour
 {
-    static GameObject container;
-
-    public GameObject player;
-    public GameObject[] gameObjects;
-    int highChapter = 0;
-
     #region 싱글톤
-    // ---싱글톤으로 선언--- //
-    static ChapterManager instance;
+    // --- 싱글톤으로 선언 --- //
+    private static ChapterManager instance;
     public static ChapterManager Instance
     {
         get
         {
-            if (!instance)
+            if (instance == null)
             {
-                container = new GameObject();
-                container.name = "DataManager";
-                instance = container.AddComponent(typeof(ChapterManager)) as ChapterManager;
-                DontDestroyOnLoad(container);
+                instance = FindObjectOfType<ChapterManager>();
+                DontDestroyOnLoad(instance);
             }
             return instance;
         }
@@ -34,6 +26,8 @@ public class ChapterManager : MonoBehaviour
 
     // --- 저장용 클래스 변수 --- //
     public Data data = new Data();
+
+    public int SelectChapter = 1234;
 
     private void Start()
     {
@@ -53,9 +47,6 @@ public class ChapterManager : MonoBehaviour
             data = JsonUtility.FromJson<Data>(FromJsonData);
             print("불러오기 완료");
         }
-
-        GetHighestClearedChapterIndex();
-        StartCoroutine(SettingPosition());
     }
 
 
@@ -80,61 +71,22 @@ public class ChapterManager : MonoBehaviour
 
     public void UnlockChapter(int chapterNum)
     {
-        data.isChapterCleared[chapterNum] = true;
+        if (chapterNum <= data.isChapterCleared.Length)
+            data.isChapterCleared[chapterNum] = true;
+        else
+            return;
 
         SaveGameData();
     }
 
-    //위치 및 상황 세팅하기
-    IEnumerator SettingPosition()
+    public void LockChapter(int chapterNum)
     {
-        yield return new WaitForSeconds(0.1f);
-        switch (highChapter)
-        {
-            case 0:
-                player.transform.localPosition = new Vector3(-1.3f, 3.7f, 104.2f);
-                gameObjects[0].SetActive(false);
-                gameObjects[1].GetComponent<Lock>().SettingChapter();
-                Debug.Log("SettingChapter : " + highChapter);
-                break;
-            case 1:
-                player.transform.localPosition = new Vector3(-5.1f, 4.4f, 179f);
-                Debug.Log("SettingChapter : " + highChapter);
-                break;
-            case 2:
-                player.transform.localPosition = new Vector3(0, 0, 0);
-                Debug.Log("SettingChapter : " + highChapter);
-                break;
-            case 3:
-                player.transform.localPosition = new Vector3(0, 0, 0);
-                Debug.Log("SettingChapter : " + highChapter);
-                break;
-            case 4:
-                player.transform.localPosition = new Vector3(0, 0, 0);
-                Debug.Log("SettingChapter : " + highChapter);
-                break;
-            case -1:
-                player.transform.localPosition = new Vector3(-2f, 0.4f, 62.1f);
-                Debug.Log("SettingChapter : 처음");
-                break;
+        if (chapterNum <= data.isChapterCleared.Length)
+            data.isChapterCleared[chapterNum] = false;
+        else
+            return;
 
-        }
-    }
-
-
-    // 가장 높은 챕터 값 구하기
-    public int GetHighestClearedChapterIndex()
-    {
-        // isChapterCleared 배열에서 true 값을 찾아 가장 큰 인덱스 반환
-        for (int i = data.isChapterCleared.Length - 1; i >= 0; i--)
-        {
-            if (data.isChapterCleared[i])  // true 값인 경우
-            {
-                return highChapter = i; // 가장 높은 인덱스 반환
-            }
-        }
-
-        return highChapter = -1;
+        SaveGameData();
     }
 
 }
