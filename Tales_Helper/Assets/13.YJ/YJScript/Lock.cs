@@ -35,8 +35,10 @@ public class Lock : MonoBehaviour
         if (collision.gameObject.CompareTag("Key"))
         {
             anim.SetTrigger("Unlock");
-            
+
             collision.gameObject.SetActive(false);
+
+            ChapterManager.Instance.UnlockChapter(0);
         }
     }
 
@@ -46,5 +48,10 @@ public class Lock : MonoBehaviour
             Door2Anim.SetTrigger("Open");
         else
             Debug.LogWarning("문열림 애니메이션 없음");
+    }
+
+    public void SettingChapter()
+    {
+        anim.SetTrigger("Unlock");
     }
 }

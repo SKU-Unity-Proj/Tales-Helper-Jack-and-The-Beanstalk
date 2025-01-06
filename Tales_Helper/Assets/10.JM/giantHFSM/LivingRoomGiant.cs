@@ -439,7 +439,7 @@ public class LivingRoomGiant : MonoBehaviour
                 {
                     currentState = GiantState.Chase; // 추적 상태로 전환
                     chaseTimer = 0f; // 추적 상태로 전환할 때 타이머 초기화
-                    Debug.Log("Player detected in chase range. Switching to Chase state.");
+                    //Debug.Log("Player detected in chase range. Switching to Chase state.");
                 }
                 return;
             }
