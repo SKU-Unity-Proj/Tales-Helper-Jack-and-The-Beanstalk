@@ -2359,6 +2359,37 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1185783596}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &131577761
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 131577762}
+  m_Layer: 0
+  m_Name: sitPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &131577762
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 131577761}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 48.767, y: 0.777, z: -64.58029}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &131806976 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 444919323889495227, guid: 627a4d8aa750390489c08b6212b9b54b,
@@ -20358,15 +20389,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b878db997bbca143885c43536127aff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  agent: {fileID: 1073175688}
+  animator: {fileID: 1073175689}
   player: {fileID: 137866151}
   obstacleMask:
     serializedVersion: 2
     m_Bits: 983040
-  agent: {fileID: 1073175688}
   hearingRange: 10
   detectRange: 15
   viewAngle: 90
   wanderRadius: 5
+  attackRadius: 2
+  sofaPos: {fileID: 131577762}
 --- !u!54 &1073175685
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -53066,3 +53100,4 @@ SceneRoots:
   - {fileID: 1215361513}
   - {fileID: 207923211}
   - {fileID: 1586504690}
+  - {fileID: 131577762}

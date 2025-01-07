@@ -29,27 +29,32 @@ public class ConditionNode : BehaviorNode
         if (distanceToPlayer <= hearingRange)
         {
             Debug.Log("[ConditionNode] 소리 감지 성공");
+
+            //  시야 감지
+            Vector3 directionToPlayer = (player.position - agent.position).normalized;
+            float angle = Vector3.Angle(agent.forward, directionToPlayer);
+
+            if (distanceToPlayer <= detectRange && angle <= viewAngle / 2)
+            {
+                if (!Physics.Raycast(agent.position, directionToPlayer, distanceToPlayer, obstacleMask))
+                {
+                    Debug.Log("[ConditionNode] 시야 감지 성공 → ChaseState로 전환");
+                    chaseState.Execute(); // ChaseState로 이동
+                    return NodeState.SUCCESS;
+                }
+            }
+            else
+            {
+                Debug.Log("[ConditionNode] 시야 감지 실패");
+                return NodeState.FAILURE; // 탐지 실패
+            }
+
+            return NodeState.RUNNING;
         }
         else
         {
             Debug.Log("[ConditionNode] 소리 감지 실패");
             return NodeState.FAILURE; // 탐지 실패
         }
-
-        //  시야 감지
-        Vector3 directionToPlayer = (player.position - agent.position).normalized;
-        float angle = Vector3.Angle(agent.forward, directionToPlayer);
-
-        if (distanceToPlayer <= detectRange && angle <= viewAngle / 2)
-        {
-            if (!Physics.Raycast(agent.position, directionToPlayer, distanceToPlayer, obstacleMask))
-            {
-                Debug.Log("[ConditionNode] 시야 감지 성공 → ChaseState로 전환");
-                return chaseState.Execute(); // ChaseState로 이동
-            }
-        }
-
-        Debug.Log("[ConditionNode] 시야 감지 실패");
-        return NodeState.FAILURE; // 탐지 실패
     }
 }
