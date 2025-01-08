@@ -65,6 +65,9 @@ public class WanderState : BehaviorNode
             return NodeState.SUCCESS;
         }
 
+        GiantAIController controller = agent.GetComponent<GiantAIController>();
+        controller?.DebugState(NodeState.RUNNING, "WanderState");
+
         return NodeState.RUNNING;
     }
     private void ResetAnimator()

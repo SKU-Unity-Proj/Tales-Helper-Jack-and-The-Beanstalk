@@ -32,8 +32,17 @@ public class GiantAIController : MonoBehaviour
 
     void Update()
     {
+        if (rootNode == null)
+        {
+            Debug.LogError("[GiantAIController] rootNode가 초기화되지 않았습니다!");
+            return;
+        }
+
+        // 루트 노드 실행 및 반환 상태 확인
         NodeState result = rootNode.Execute();
-        DebugState(result);
+
+        // 현재 실행 중인 노드의 상태를 확인
+        DebugState(result, rootNode.GetType().Name);
     }
 
     /// <summary>
@@ -83,26 +92,13 @@ public class GiantAIController : MonoBehaviour
 
 
     #region 상태 디버그
-    void DebugState(NodeState state)
+    public void DebugState(NodeState state, string executingState)
     {
-        string newState = "";
-
-        switch (state)
-        {
-            case NodeState.SUCCESS:
-                newState = "SUCCESS";
-                break;
-            case NodeState.FAILURE:
-                newState = "FAILURE";
-                break;
-            case NodeState.RUNNING:
-                newState = "RUNNING";
-                break;
-        }
+        string newState = $"{executingState} → {state}";
 
         if (currentState != newState)
         {
-            Debug.Log($"[GiantAIController] 현재 상태: {newState}");
+            Debug.Log($"[GiantAIController] 현재 실행 중인 노드: {executingState}, 반환된 상태: {state}");
             currentState = newState;
         }
     }

@@ -37,6 +37,7 @@ public class AttackState : BehaviorNode
         {
             Debug.Log("[AttackState] 플레이어를 놓침 → WanderState로 이동");
             StopAttack();
+
             wanderState.Execute();
             return NodeState.SUCCESS;
         }
@@ -67,6 +68,9 @@ public class AttackState : BehaviorNode
             Debug.Log("[AttackState] 공격 시작 → Coroutine 실행");
             attackCoroutine = agent.gameObject.GetComponent<MonoBehaviour>().StartCoroutine(AttackCoroutine());
         }
+
+        GiantAIController controller = agent.GetComponent<GiantAIController>();
+        controller?.DebugState(NodeState.SUCCESS, "AttackState");
 
         return NodeState.RUNNING;
     }

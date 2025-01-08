@@ -39,6 +39,10 @@ public class ChaseState : BehaviorNode
         {
             Debug.Log("[ChaseState] 플레이어가 존재하지 않거나 놓침 → WanderState로 이동");
             wanderState.Execute();
+
+            GiantAIController controller = agent.GetComponent<GiantAIController>();
+            controller?.DebugState(NodeState.SUCCESS, "ChaseState");
+
             return NodeState.SUCCESS;
         }
 
@@ -46,10 +50,17 @@ public class ChaseState : BehaviorNode
         {
             Debug.Log("[ChaseState] 공격 범위 내 → AttackState로 전환");
             attackState.Execute();
+
+            GiantAIController controller = agent.GetComponent<GiantAIController>();
+            controller?.DebugState(NodeState.SUCCESS, "ChaseState");
+
             return NodeState.SUCCESS;
         }
 
         agent.SetDestination(player.position);
+
+        GiantAIController chaseController = agent.GetComponent<GiantAIController>();
+        chaseController?.DebugState(NodeState.RUNNING, "ChaseState");
 
         return NodeState.RUNNING;
     }
