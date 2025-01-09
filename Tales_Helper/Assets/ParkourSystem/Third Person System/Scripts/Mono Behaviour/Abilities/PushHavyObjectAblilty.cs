@@ -127,8 +127,6 @@ namespace DiasGames.Abilities
             // HandleIK();
             UpdateTransform();
 
-            Debug.Log(mirrorTransform.name);
-
             if (_isMatchingTarget) return;
 
             // E 키로 미러 회전
