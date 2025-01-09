@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DiasGames.Components;
@@ -14,6 +15,10 @@ namespace DiasGames.Abilities
         [SerializeField] private string pushAnimationBlendState = "Push Havy Blend";
         [SerializeField] private string horizontalFloatParam = "Horizontal";
         [SerializeField] private string verticalFloatParam = "Vertical";
+
+        [SerializeField] private float rotationSpeed = 50f; // 회전 속도
+
+        private Transform mirrorTransform; // 미러의 Transform
 
         private IMover _mover;
         private IKScheduler _ikScheduler;
@@ -81,7 +86,14 @@ namespace DiasGames.Abilities
             foreach (var trigger in _triggeredObjs)
             {
                 if (trigger.TryGetComponent(out _draggable))
+                {
+                    // 미러 오브젝트의 부모 확인
+                    if (trigger.transform.parent != null && trigger.transform.parent.CompareTag("Mirro"))
+                    {
+                        mirrorTransform = trigger.transform.parent; // 미러 Transform 저장
+                    }
                     return true;
+                }
             }
 
             return false;
@@ -97,6 +109,7 @@ namespace DiasGames.Abilities
             _isMatchingTarget = true;
 
             Debug.Log("name :" + _draggable);
+            Debug.Log("name :" + _draggable.ToString());
 
             if (_draggable.ToString() == "Grab Trigger (DiasGames.Puzzle.HavyTrigger)")
                 onPushStart.Invoke();
@@ -114,7 +127,19 @@ namespace DiasGames.Abilities
             // HandleIK();
             UpdateTransform();
 
+            Debug.Log(mirrorTransform.name);
+
             if (_isMatchingTarget) return;
+
+            // E 키로 미러 회전
+            if (Input.GetButton("PickUp") && mirrorTransform != null)
+            {
+                RotateMirror(true); // 시계 방향
+            }
+            else if (Input.GetKey(KeyCode.Q) && mirrorTransform != null)
+            {
+                RotateMirror(false); // 반시계 방향
+            }
 
             if (_action.interact)
                 StopAbility();
@@ -146,7 +171,7 @@ namespace DiasGames.Abilities
             _animator.SetFloat(_animVerticalID, ver, 0.1f, Time.deltaTime);
 
             // Play sound if player has moved
-            if (hasMoved && Time.time - _lastSoundTime > _soundCooldown)
+            if (mirrorTransform == null &&  hasMoved && Time.time - _lastSoundTime > _soundCooldown)
             {
                 PlayFootStep();
             }
@@ -229,9 +254,20 @@ namespace DiasGames.Abilities
             _boxDragSound.Add((int)SoundList.metalDrag3);
         }
 
+        private void RotateMirror(bool isClockwise)
+        {
+            if (mirrorTransform == null) return;
+
+            // 미러 회전
+            float direction = isClockwise ? 1f : -1f;
+            mirrorTransform.Rotate(0, direction * rotationSpeed * Time.deltaTime, 0, Space.World);
+
+            // 캐릭터 회전을 부드럽게 처리
+            //RotateCharacterTowardsMirrorSmoothly();
+        }
+
         private void PlayFootStep()
         {
-
             if (_boxDragSound.Count <= 3)
             {
                 InitializeSoundList();

@@ -41,6 +41,7 @@ Material:
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
+  - _EMISSION_ON
   - _NORMALMAP
   m_InvalidKeywords: []
   m_LightmapFlags: 4
@@ -148,6 +149,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MetallicMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -274,7 +279,7 @@ Material:
     - _DoubleSidedNormalMode: 1
     - _DstBlend: 0
     - _DstBlendAlpha: 0
-    - _Emission: 0
+    - _Emission: 1
     - _EmissionFlashing: 0
     - _EmissionFlashingInterval: 0
     - _EmissionFlashingMin: 0
@@ -313,6 +318,7 @@ Material:
     - _MatCapIntensity: 0
     - _MaterialID: 1
     - _Metallic: 1
+    - _MetallicIntensity: 0
     - _MetallicRemapMax: 1
     - _MetallicRemapMin: 0
     - _Mode: 0
