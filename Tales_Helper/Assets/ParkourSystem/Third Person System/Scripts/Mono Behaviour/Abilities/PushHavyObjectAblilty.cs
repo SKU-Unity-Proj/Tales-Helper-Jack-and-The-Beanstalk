@@ -258,13 +258,16 @@ namespace DiasGames.Abilities
         {
             if (mirrorTransform == null) return;
 
-            // 미러 회전
-            float direction = isClockwise ? 1f : -1f;
-            mirrorTransform.Rotate(0, direction * rotationSpeed * Time.deltaTime, 0, Space.World);
+            // 미러를 포함한 부모 오브젝트를 회전
+            Transform parentTransform = mirrorTransform.parent != null ? mirrorTransform.parent : mirrorTransform;
 
-            // 캐릭터 회전을 부드럽게 처리
-            //RotateCharacterTowardsMirrorSmoothly();
+            // 회전 방향 설정 (시계 방향 또는 반시계 방향)
+            float direction = isClockwise ? 1f : -1f;
+
+            // 부모 오브젝트의 Y축 기준 회전
+            parentTransform.Rotate(0, direction * rotationSpeed * Time.deltaTime, 0, Space.World);
         }
+
 
         private void PlayFootStep()
         {
