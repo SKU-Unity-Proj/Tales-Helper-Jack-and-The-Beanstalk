@@ -39,7 +39,7 @@ public class ValveController : MonoBehaviour
         while (totalRotation < 720f) // 한 바퀴 회전 (360도)
         {
             float rotationStep = rotationSpeed * Time.deltaTime; // 프레임 기반 회전량 계산
-            valveTransform.Rotate(0, rotationStep, 0); // Z축 기준으로 회전
+            valveTransform.Rotate(0, -rotationStep, 0); // Z축 기준으로 회전
             totalRotation += rotationStep;
             yield return null;
         }
