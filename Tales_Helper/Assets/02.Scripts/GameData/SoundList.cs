@@ -43,5 +43,8 @@ public enum SoundList
     cellerRoar= 35,
     mainMenu= 36,
     introAnimation= 37,
+    windowOpen= 38,
+    ValveSound= 39,
+    lockSound= 40,
 
 }
