@@ -48,7 +48,7 @@ public class LaserDevice : MonoBehaviour
                 if (((1 << hit.collider.gameObject.layer) & reflectionMask) != 0)
                 {
                     // 레이저 반사 처리
-                    Debug.Log($"Laser reflected by: {hit.collider.gameObject.name}");
+                    //Debug.Log($"Laser reflected by: {hit.collider.gameObject.name}");
                     laserOrigin = hit.point + hit.normal * 0.01f; // 오프셋 추가
                     laserDirection = Vector3.Reflect(laserDirection, hit.normal); // 반사 경로 계산
                     reflections++;
@@ -68,7 +68,7 @@ public class LaserDevice : MonoBehaviour
                     return;
                 }
                 // 차단 처리: reflectionMask와 targetMask에 포함되지 않은 물체
-                Debug.Log($"Laser blocked by: {hit.collider.gameObject.name}");
+                //Debug.Log($"Laser blocked by: {hit.collider.gameObject.name}");
                 break; // 레이저 중단
             }
             IsHittingTarget = false;
