@@ -31,9 +31,9 @@ public class MenuOption : MonoBehaviour
         Dropdown.RefreshShownValue(); // UI를 업데이트합니다.
 
         // 기본 렌더링 파이프라인을 설정합니다.
-        SetPipeline(Dropdown.value);
+        SetPipeline(0);
 
-        LoadGraphicsSettings();
+        //LoadGraphicsSettings();
         LoadResolutionSettings();
         LoadAudioSettings();
     }
@@ -101,7 +101,7 @@ public class MenuOption : MonoBehaviour
         List<string> options = new List<string>() { "Low", "Medium", "High", "Ultra" };
         graphicsDropdown.AddOptions(options);
 
-        int savedQuality = PlayerPrefs.GetInt("GraphicsQuality", 3);
+        int savedQuality = PlayerPrefs.GetInt("GraphicsQuality", 4);
         graphicsDropdown.value = savedQuality;
         graphicsDropdown.RefreshShownValue();
         QualitySettings.SetQualityLevel(savedQuality);
