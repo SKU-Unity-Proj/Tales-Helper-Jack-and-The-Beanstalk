@@ -21,7 +21,7 @@ public class CameraTriggerManager : MonoBehaviour
         public GameObject zoneObject; // 카메라 존을 나타내는 게임 오브젝트
     }
 
-    [SerializeField] private CameraZone[] cameraZones; // 에디터에서 설정할 수 있는 카메라 존 배열
+    [SerializeField] public CameraZone[] cameraZones; // 에디터에서 설정할 수 있는 카메라 존 배열
     public CinemachineStateDrivenCamera stateDrivenCamera; // 상태 기반 Cinemachine 카메라
     private CinemachineVirtualCamera activeCamera = null; // 현재 활성화된 가상 카메라
 

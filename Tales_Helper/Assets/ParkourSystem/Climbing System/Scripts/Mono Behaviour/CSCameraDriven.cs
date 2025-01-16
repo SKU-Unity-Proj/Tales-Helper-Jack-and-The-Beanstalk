@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CSCameraDriven : MonoBehaviour
 {
+    private Collider currentZone; // 현재 플레이어가 있는 Zone
     private CameraTriggerManager cameraTriggerManager;
 
     void Start()
@@ -13,41 +14,47 @@ public class CSCameraDriven : MonoBehaviour
         cameraTriggerManager = FindObjectOfType<CameraTriggerManager>();
     }
 
-    // 오브젝트가 트리거 콜라이더에 진입할 때 자동으로 호출
-    private void OnTriggerEnter(Collider other)
+    private void FixedUpdate()
     {
-        //카메라존 태그가 없으면 실행X
-        if (other.CompareTag("CameraZone"))
+        foreach (var zone in cameraTriggerManager.cameraZones)
         {
-            // 현재 충돌한 콜라이더에 해당하는 카메라 존을 가져옴
-            var cameraZone = cameraTriggerManager.GetCameraZoneFromCollider(other);
+            Collider zoneCollider = zone.zoneObject.GetComponent<Collider>();
 
-            // 이는 해당 카메라 존에 진입했을 때, 그 카메라를 활성화하는 데 사용
-            if (cameraZone != null)
+            if (zoneCollider.bounds.Contains(this.transform.position))
             {
-                cameraZone.camera.Priority = 11;
+                // 플레이어가 새로운 존에 진입한 경우
+                if (currentZone != zoneCollider)
+                {
+                    EnterZone(zoneCollider);
+                    currentZone = zoneCollider;
+                }
+            }
+            else if (currentZone == zoneCollider)
+            {
+                // 플레이어가 현재 존에서 벗어난 경우
+                ExitZone(zoneCollider);
+                currentZone = null;
             }
         }
-        else
-            return;
     }
 
-    // 오브젝트가 트리거 콜라이더에서 벗어날 때 자동으로 호출
-    private void OnTriggerExit(Collider other)
+    private void EnterZone(Collider zone)
     {
-        //카메라존 태그가 없으면 실행X
-        if (other.CompareTag("CameraZone"))
+        var cameraZone = cameraTriggerManager.GetCameraZoneFromCollider(zone);
+        if (cameraZone != null)
         {
-            // 현재 충돌한 콜라이더에 해당하는 카메라 존을 가져옴
-            var cameraZone = cameraTriggerManager.GetCameraZoneFromCollider(other);
-
-            // 이는 해당 카메라 존에 진입했을 때, 그 카메라를 활성화하는 데 사용
-            if (cameraZone != null)
-            {
-                cameraZone.camera.Priority = 0;
-            }
+            cameraZone.camera.Priority = 11; // 카메라 우선순위 높임
+            Debug.Log($"Entered Zone: {zone.name}");
         }
-        else
-            return;
+    }
+
+    private void ExitZone(Collider zone)
+    {
+        var cameraZone = cameraTriggerManager.GetCameraZoneFromCollider(zone);
+        if (cameraZone != null)
+        {
+            cameraZone.camera.Priority = 0; // 카메라 우선순위 초기화
+            Debug.Log($"Exited Zone: {zone.name}");
+        }
     }
 }
