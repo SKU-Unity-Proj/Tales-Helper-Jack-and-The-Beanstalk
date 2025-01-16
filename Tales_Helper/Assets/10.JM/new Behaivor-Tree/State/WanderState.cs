@@ -8,6 +8,7 @@ public class WanderState : BehaviorNode
 
     private ConditionNode conditionNode;
     private SitState sitState;
+    private SearchState searchState;
 
     private float wanderRadius;
     private float originalSpeed;
@@ -16,12 +17,13 @@ public class WanderState : BehaviorNode
     private int wanderCount = 0; // ·£´ý À§Ä¡ ¹æ¹® È½¼ö
     private const int MaxWanderCount = 5; // ÃÖ´ë ¹æ¹® È½¼ö
 
-    public WanderState(NavMeshAgent agent, float wanderRadius, ConditionNode conditionNode, SitState sitState, Animator animator)
+    public WanderState(NavMeshAgent agent, float wanderRadius, ConditionNode conditionNode, SitState sitState, SearchState searchState, Animator animator)
     {
         this.agent = agent;
         this.wanderRadius = wanderRadius;
         this.conditionNode = conditionNode;
         this.sitState = sitState;
+        this.searchState = searchState;
         this.animator = animator;
 
         this.originalSpeed = agent.speed;

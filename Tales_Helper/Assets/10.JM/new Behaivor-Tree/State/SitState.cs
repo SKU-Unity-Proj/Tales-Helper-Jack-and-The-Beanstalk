@@ -10,23 +10,38 @@ public class SitState : BehaviorNode
 
     private ConditionNode conditionNode;
     private ChaseState chaseState;
+    private SearchState searchState;
 
     private Coroutine sitCoroutine = null;
     private bool isSitting = false;
     private bool isStandingUp = false;
 
-    public SitState(NavMeshAgent agent, Transform sofaPosition, Animator animator, ConditionNode conditionNode, ChaseState chaseState)
+    public SitState(NavMeshAgent agent, Transform sofaPosition, Animator animator, ConditionNode conditionNode, ChaseState chaseState, SearchState searchState)
     {
         this.agent = agent;
         this.sofaPosition = sofaPosition;
         this.animator = animator;
         this.conditionNode = conditionNode;
         this.chaseState = chaseState;
+        this.searchState = searchState;
     }
 
     public override NodeState Execute()
     {
         Debug.Log("[State] 현재 상태: SitState");
+
+        // 드롭 오브젝트 감지 확인
+        if (DroppedObject.Instance.CheckCondition())
+        {
+            Debug.Log("[SitState] 드롭 오브젝트 감지 → SearchState로 이동");
+            if (sitCoroutine != null)
+            {
+                StopSitCoroutine();
+            }
+
+            searchState.Execute();
+            return NodeState.SUCCESS;
+        }
 
         // 플레이어 감지 확인
         if (conditionNode.Execute() == NodeState.SUCCESS && !isStandingUp)
@@ -63,6 +78,15 @@ public class SitState : BehaviorNode
         {
             Debug.Log("[SitState] 소파로 이동 중... 남은 거리: " + agent.remainingDistance);
 
+            // 드롭 오브젝트 감지
+            if (DroppedObject.Instance.CheckCondition())
+            {
+                Debug.Log("[SitState] 이동 중 드롭 오브젝트 감지 → SearchState로 이동");
+                StopSitCoroutine();
+                searchState.Execute();
+                yield break;
+            }
+
             if (conditionNode.Execute() == NodeState.SUCCESS)
             {
                 Debug.Log("[SitState] 이동 중 플레이어 감지 → ChaseState로 이동");
@@ -90,6 +114,15 @@ public class SitState : BehaviorNode
         // 앉은 상태 유지
         while (isSitting)
         {
+            // 드롭 오브젝트 감지
+            if (DroppedObject.Instance.CheckCondition())
+            {
+                Debug.Log("[SitState] 앉은 상태에서 드롭 오브젝트 감지 → SearchState로 이동");
+                StopSitCoroutine();
+                searchState.Execute();
+                yield break;
+            }
+
             if (conditionNode.Execute() == NodeState.SUCCESS)
             {
                 Debug.Log("[SitState] 앉은 상태에서 플레이어 감지 → ChaseState로 이동");

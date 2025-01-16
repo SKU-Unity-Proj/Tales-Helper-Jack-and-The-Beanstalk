@@ -45,11 +45,19 @@ public class DroppedObject : MonoBehaviour
     {
         if (isSpecial)
         {
-            SpecialObjects.Add(obj);
+            // SpecialObjects 리스트에 중복되지 않도록 확인
+            if (!SpecialObjects.Contains(obj))
+            {
+                SpecialObjects.Add(obj);
+            }
         }
         else
         {
-            DroppedObjects.Add(obj);
+            // DroppedObjects 리스트에 중복되지 않도록 확인
+            if (!DroppedObjects.Contains(obj))
+            {
+                DroppedObjects.Add(obj);
+            }
         }
     }
 

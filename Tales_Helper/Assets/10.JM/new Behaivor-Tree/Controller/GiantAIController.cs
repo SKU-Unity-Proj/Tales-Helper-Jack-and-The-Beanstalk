@@ -43,6 +43,12 @@ public class GiantAIController : MonoBehaviour
 
         // 현재 실행 중인 노드의 상태를 확인
         DebugState(result, rootNode.GetType().Name);
+
+        // 상태 전환 후 트리 다시 빌드
+        if (result == NodeState.SUCCESS || result == NodeState.FAILURE)
+        {
+            BuildBehaviorTree(); // 상태 전환마다 다시 빌드
+        }
     }
 
     /// <summary>
@@ -51,7 +57,10 @@ public class GiantAIController : MonoBehaviour
     void BuildBehaviorTree()
     {
         // WanderState 생성 (ConditionNode는 나중에 설정)
-        WanderState wander = new WanderState(agent, wanderRadius, null, null, animator);
+        WanderState wander = new WanderState(agent, wanderRadius, null, null, null, animator);
+
+        // SearchState 생성
+        SearchState search = new SearchState(agent, animator, DroppedObject.Instance, wander);
 
         // AttackState 생성 (chase는 나중에 참조)
         AttackState attack = new AttackState(agent, player, attackRadius, detectRange, animator, null, wander);
@@ -65,10 +74,10 @@ public class GiantAIController : MonoBehaviour
         // ConditionNode 생성
         ConditionNode condition = new ConditionNode(transform, player, hearingRange, viewAngle, detectRange, obstacleMask, chase);
 
-        SitState sit = new SitState(agent, sofaPos, animator, condition, chase);
+        SitState sit = new SitState(agent, sofaPos, animator, condition, chase, search);
 
         // WanderState에 ConditionNode와 SitState 참조 추가
-        wander = new WanderState(agent, wanderRadius, condition, sit, animator);
+        wander = new WanderState(agent, wanderRadius, condition, sit, search, animator);
 
 
         // SequenceNode (Wander → Sit)
@@ -86,6 +95,7 @@ public class GiantAIController : MonoBehaviour
         SelectorNode rootSelector = new SelectorNode();
         rootSelector.AddChild(wanderSequence); // WanderState (기본 상태)
         rootSelector.AddChild(chaseSequence); // 탐지 성공 시 행동
+        rootSelector.AddChild(search); // 탐색 상태 추가
 
         rootNode = rootSelector;
     }

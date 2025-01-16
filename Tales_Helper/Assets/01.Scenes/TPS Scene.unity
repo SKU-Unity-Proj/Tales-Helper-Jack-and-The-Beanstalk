@@ -2416,7 +2416,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &135093086
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -13376,6 +13376,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Debug UI
       objectReference: {fileID: 0}
+    - target: {fileID: 4285378370527511582, guid: c8460a0161fbec444932257e5b9c0fe9,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6624029645797739653, guid: c8460a0161fbec444932257e5b9c0fe9,
         type: 3}
       propertyPath: m_SizeDelta.y
@@ -20398,7 +20403,7 @@ MonoBehaviour:
   hearingRange: 10
   detectRange: 15
   viewAngle: 90
-  wanderRadius: 5
+  wanderRadius: 8
   attackRadius: 2
   sofaPos: {fileID: 131577762}
 --- !u!54 &1073175685
@@ -24493,8 +24498,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1249695593}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.24170677, y: -0, z: -0, w: 0.9703494}
-  m_LocalPosition: {x: 81.08, y: 19.34, z: -28.22}
+  m_LocalRotation: {x: -0.07267042, y: 0.061715808, z: -0.004889784, w: -0.99543273}
+  m_LocalPosition: {x: 59.89, y: 16.31, z: -69.62}
   m_LocalScale: {x: 3.5811, y: 2.7732, z: 2.5076}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -26609,7 +26614,7 @@ GameObject:
   - component: {fileID: 1358698946}
   m_Layer: 0
   m_Name: Ground
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -30064,7 +30069,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!54 &1495501679
 Rigidbody:
   m_ObjectHideFlags: 0
