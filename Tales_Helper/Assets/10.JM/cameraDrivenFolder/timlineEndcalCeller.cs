@@ -8,6 +8,8 @@ public class timelineEndcalCeller : MonoBehaviour
 {
     [SerializeField] private PlayableDirector director;
     [SerializeField] private CinemachineVirtualCamera timelineCam;
+    [SerializeField] private CinemachineVirtualCamera cellertimelineCam;
+    [SerializeField] private CinemachineVirtualCamera cellertimelineCam2;
     [SerializeField] private GameObject player;
     [SerializeField] private float holdDuration = 3f; // F키를 누르고 있어야 하는 시간
 
@@ -90,6 +92,8 @@ public class timelineEndcalCeller : MonoBehaviour
     void TimeLineCamPriority()
     {
         timelineCam.Priority = 0;
+        cellertimelineCam.Priority = 0;
+        cellertimelineCam2.Priority = 0;
     }
 
     void DisablePlayerMovement()

@@ -81,7 +81,7 @@ namespace DiasGames.Abilities
                 _stoppingRaise = false;
 
                 _raiseCount++;
-                if (_raiseCount <= 2)
+                if (_raiseCount <= 1)
                 {
                     SetAnimationState(RaiseAnimationState);
                 }
@@ -129,10 +129,10 @@ namespace DiasGames.Abilities
                     _animator.Play(_animator.GetCurrentAnimatorStateInfo(0).fullPathHash, -1, newTime);
 
                 }
-                else if (_interactCount == 4 && _raiseCount <= 2)  // 다섯 번째 입력에서
+                else if (_interactCount == 4 && _raiseCount <= 1)  // 다섯 번째 입력에서
                 {
                     _animator.speed = 1;  // 에니메이션 재개
-                    onRaiseStartSecondTime.Invoke();  // 2번 이하 실행 이벤트
+                    onRaiseStartSecondTime.Invoke();  // 1번 이하 실행 이벤트
 
                     _interactCount = 0;   // 카운트 초기화
 
