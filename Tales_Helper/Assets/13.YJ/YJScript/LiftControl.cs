@@ -4,54 +4,18 @@ using UnityEngine;
 
 public class LiftControl : MonoBehaviour
 {
-    public int touchingObjects = 0; // 현재 닿고 있는 오브젝트의 수
     public Animator anim_Box;
     public Animator anim_Bucket;
 
-    void Update()
-    {
-        switch (touchingObjects)
-        {
-            case 0:
-                anim_Box.SetInteger("haveObject", 0);
-                anim_Bucket.SetInteger("haveObject", 0);
-                break;
-            case 1:
-                anim_Box.SetInteger("haveObject", 1);
-                anim_Bucket.SetInteger("haveObject", 1);
-                break;
-            case 2:
-                anim_Box.SetInteger("haveObject", 2);
-                anim_Bucket.SetInteger("haveObject", 2);
-                break;
-            default:
-                anim_Box.SetInteger("haveObject", 2);
-                anim_Bucket.SetInteger("haveObject", 2);
-                break;
-        }
-    }
     private void OnTriggerEnter(Collider other)
     {
-        touchingObjects++;
-        if (touchingObjects > 2)
-            touchingObjects = 2;
-        /*
-        //낙하 속도 초기화
-        Rigidbody rb = other.GetComponent<Rigidbody>();
-        if (rb != null)
-        {
-            rb.velocity = Vector3.zero;
-        }
-
-        other.transform.SetParent(gameObject.transform);
-        */
-        //Debug.Log("ItemIn");
+        anim_Bucket.SetBool("Weight", true);
+        anim_Box.SetBool("Weight", true);
     }
 
     private void OnTriggerExit(Collider other)
     {
-        touchingObjects--;
-
-        //Debug.Log("ItemOut");
+        anim_Bucket.SetBool("Weight", false);
+        anim_Box.SetBool("Weight", false);
     }
 }
