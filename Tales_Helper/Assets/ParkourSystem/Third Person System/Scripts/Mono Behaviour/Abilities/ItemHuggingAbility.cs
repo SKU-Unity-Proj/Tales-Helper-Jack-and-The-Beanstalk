@@ -19,6 +19,7 @@ namespace DiasGames.Abilities
 
         [SerializeField] private float radius = 1f; // 아이템이 있는지 체크하는 원의 크기
         public Transform targetPos; // 아이템 안고 있을 위치
+        public Transform hammerPos; // 아이템 안고 있을 위치
         public GameObject pickItem = null; // 주운 아이템 등록
         public bool haveItem = false; // 아이템 들고 있는지 상태 체크
         public bool liftingWait = false; // 집어드는 모션 기다리는 동안 움직임 제어
@@ -52,9 +53,18 @@ namespace DiasGames.Abilities
 
             if (haveItem)
             {
-                liftingWait = true;
-                StartIdle();
+                if (pickItem.CompareTag("Hammer"))
+                {
+                    liftingWait = true;
+                    SetAnimationState("Hammer");
+                }
+                else
+                {
+                    liftingWait = true;
+                    StartIdle();
+                }
             }
+
         }
 
 
@@ -94,8 +104,16 @@ namespace DiasGames.Abilities
             {
                 if (isJump && _mover.GetVelocity().y < -3f) // 점프 후 착지
                 {
-                    SetAnimationState("Grounded", 0.25f);
-                    isJump = false;
+                    if (pickItem.CompareTag("Hammer"))
+                    {
+                        SetAnimationState("Hammer", 0.25f);
+                        isJump = false;
+                    }
+                    else
+                    {
+                        SetAnimationState("Grounded", 0.25f);
+                        isJump = false;
+                    }
                 }
 
                 if (_action.jump)
@@ -107,19 +125,38 @@ namespace DiasGames.Abilities
         {
             if (pickItem != null) // 물건 내려놓고 상태 초기화
             {
-                pickItem.transform.position = targetPos.transform.position + targetPos.transform.forward * 0.5f;
-                itemRigid.velocity = Vector3.zero;
-                itemRigid.angularVelocity = Vector3.zero;
+                if (pickItem.CompareTag("Hammer"))
+                {
+                    pickItem.transform.position = hammerPos.transform.position + hammerPos.transform.forward * 0.5f;
+                    itemRigid.velocity = Vector3.zero;
+                    itemRigid.angularVelocity = Vector3.zero;
 
-                pickItem.transform.parent = null;
+                    pickItem.transform.parent = null;
 
-                pickItem = null;
-                haveItem = false;
-                liftingWait = false;
+                    pickItem = null;
+                    haveItem = false;
+                    liftingWait = false;
 
-                SetLayerPriority(1, 0); // 상체 애니메이션 우선순위 낮추기 (애니메이션 끄기)
+                    SetLayerPriority(1, 0); // 상체 애니메이션 우선순위 낮추기 (애니메이션 끄기)
 
-                SetAnimationState("Grounded", 0.3f, 1);
+                    SetAnimationState("Grounded", 0.3f, 1);
+                }
+                else
+                {
+                    pickItem.transform.position = targetPos.transform.position + targetPos.transform.forward * 0.5f;
+                    itemRigid.velocity = Vector3.zero;
+                    itemRigid.angularVelocity = Vector3.zero;
+
+                    pickItem.transform.parent = null;
+
+                    pickItem = null;
+                    haveItem = false;
+                    liftingWait = false;
+
+                    SetLayerPriority(1, 0); // 상체 애니메이션 우선순위 낮추기 (애니메이션 끄기)
+
+                    SetAnimationState("Grounded", 0.3f, 1);
+                }
             }
         }
 
@@ -162,8 +199,30 @@ namespace DiasGames.Abilities
         {
             if (haveItem && pickItem != null)
             {
-                pickItem.transform.SetParent(targetPos);
+                if (pickItem.CompareTag("Hammer"))
+                {
+                    pickItem.transform.SetParent(hammerPos);
+
+                    if ((Input.GetKeyDown(KeyCode.R)))
+                    {
+                        StartCoroutine(AttackProcess(4.1f));
+                    }
+                }
+                else
+                    pickItem.transform.SetParent(targetPos);
             }
+        }
+
+        private IEnumerator AttackProcess(float delay)
+        {
+            this.transform.GetComponent<Mover>().enabled = false;
+            _animator.CrossFadeInFixedTime("Hammer Attack", 0.0f); // 점프 애니메이션 재생
+
+            yield return new WaitForSeconds(delay);
+
+            this.transform.GetComponent<Mover>().enabled = true;
+
+            yield break;
         }
 
         private void PerformJump()
@@ -172,7 +231,12 @@ namespace DiasGames.Abilities
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * _mover.GetGravity()); // 점프에 필요한 속도 계산
 
             _mover.SetVelocity(velocity); // 속도 설정
-            _animator.CrossFadeInFixedTime("Air.Jump", 0.0f); // 점프 애니메이션 재생
+
+            if(pickItem.CompareTag("Hammer"))
+                _animator.CrossFadeInFixedTime("Hammer Jump", 0.0f); // 점프 애니메이션 재생
+            else
+                _animator.CrossFadeInFixedTime("Air.Jump", 0.0f); // 점프 애니메이션 재생
+
             _startSpeed = speedOnAir; // 시작 속도 설정
 
             if (_startInput.magnitude > 0.1f)
@@ -186,9 +250,6 @@ namespace DiasGames.Abilities
             yield return new WaitForSeconds(4f); // 3초 대기
             SceneManager.LoadScene("EndingAnimation"); // EndingAnimation 씬으로 전환
         }
-
-
-
 
 
         /*
