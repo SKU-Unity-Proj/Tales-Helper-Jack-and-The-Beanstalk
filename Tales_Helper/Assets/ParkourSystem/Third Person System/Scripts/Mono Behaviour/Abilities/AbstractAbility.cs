@@ -21,6 +21,8 @@ namespace DiasGames.Abilities
 
         // 애니메이터 컴포넌트 참조
         protected Animator _animator = null;
+        // 애니메이터 컴포넌트 참조
+        protected Rigidbody _rigidbody = null;
 
         // 어빌리티 시작 및 종료 시간
         public float StartTime { get; private set; } = 0;
@@ -42,6 +44,7 @@ namespace DiasGames.Abilities
         {
             // 애니메이터 컴포넌트를 가져옴
             _animator = GetComponent<Animator>();
+            _rigidbody = GetComponent<Rigidbody>();
         }
 
         public void StartAbility()

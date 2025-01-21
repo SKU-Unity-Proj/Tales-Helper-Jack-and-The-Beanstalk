@@ -1,5 +1,6 @@
 using DiasGames.Abilities;
 using DiasGames.Components;
+using DiasGames.Controller;
 using UnityEngine.SceneManagement; // Add this line
 using System.Collections;
 using DiasGames.Debugging;
@@ -34,6 +35,7 @@ namespace DiasGames.Abilities
         [SerializeField] private Transform originBottle;
 
         private bool isJump = false;
+        private bool isAttack = false;
         private float _startSpeed;
         private Vector2 _startInput;
 
@@ -74,6 +76,7 @@ namespace DiasGames.Abilities
             {
                 _mover.Move(_action.move, speed);
 
+                Debug.Log(isAttack);
                 HuggingItem();
             }
 
@@ -203,8 +206,9 @@ namespace DiasGames.Abilities
                 {
                     pickItem.transform.SetParent(hammerPos);
 
-                    if ((Input.GetKeyDown(KeyCode.R)))
+                    if ((_mover.IsGrounded() && Input.GetKeyDown(KeyCode.R)) && !isAttack)
                     {
+                        isAttack = true;
                         StartCoroutine(AttackProcess(4.1f));
                     }
                 }
@@ -215,14 +219,22 @@ namespace DiasGames.Abilities
 
         private IEnumerator AttackProcess(float delay)
         {
-            this.transform.GetComponent<Mover>().enabled = false;
-            _animator.CrossFadeInFixedTime("Hammer Attack", 0.0f); // 점프 애니메이션 재생
+            if (isAttack)
+            {
+                this.transform.GetComponent<Mover>().enabled = false;
+                this.transform.GetComponent<CSPlayerController>().enabled = false;
+                _rigidbody.constraints = RigidbodyConstraints.FreezeAll;
 
-            yield return new WaitForSeconds(delay);
+                _animator.CrossFadeInFixedTime("Hammer Attack", 0.0f); // 점프 애니메이션 재생
 
-            this.transform.GetComponent<Mover>().enabled = true;
+                yield return new WaitForSeconds(delay);
 
-            yield break;
+                this.transform.GetComponent<Mover>().enabled = true;
+                this.transform.GetComponent<CSPlayerController>().enabled = true;
+                _rigidbody.constraints = RigidbodyConstraints.None;
+
+                isAttack = false;
+            }
         }
 
         private void PerformJump()
